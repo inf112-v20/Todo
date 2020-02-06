@@ -21,7 +21,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import javax.print.attribute.standard.OrientationRequested;
 
-public class HelloWorld extends InputAdapter implements ApplicationListener {
+public class TestGame extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
     private BitmapFont font;
     TiledMap tiledMap;

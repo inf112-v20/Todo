@@ -11,6 +11,6 @@ public class Main {
         cfg.width = 1000;
         cfg.height = 1000;
 
-        new LwjglApplication(new HelloWorld(), cfg);
+        new LwjglApplication(new TestGame(), cfg);
     }
 }
