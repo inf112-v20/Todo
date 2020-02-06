@@ -59,14 +59,14 @@ hanskes med av hele teamet i plenum; hvor alles stemmer teller likt.
 * Må kunne spilles over LAN Nettverk
 * En runde består av 5 faser
 * Før hver runde:
-..* Del ut kort
-..* Roboter blir plassert på brettet
-..* Spillere lager program
+    * Del ut kort
+    * Roboter blir plassert på brettet
+    * Spillere lager program
 * Kortene låses når runden starter
 * Etter runder skal
-..* Roboter repareres
-..* Powerdown skje
-..* Dele ut kort
+    * Roboter repareres
+    * Powerdown skje
+    * Dele ut kort
 
 
 **Første iterasjon av spillet**
