@@ -10,11 +10,11 @@ og Haskell. Flere av teammedlemmene har hatt relevante prosjekter på fritiden, 
 har Alvar satt opp en egen server.
 
 Teamet:
-**Pål** 		- Teamleder
-**Eskil** 		- Kundeansvarlig
-**Alvar** 		- Utvikler
-**Øyvind** 	- Utvikler
-**Sigve** 		- Utvikler
+- **Pål**       - Teamleder
+- **Eskil** 		- Kundeansvarlig
+- **Alvar** 		- Utvikler
+- **Øyvind** 	  - Utvikler
+- **Sigve** 		- Utvikler
 
 
 **Begrunnelse for valg av roller**
