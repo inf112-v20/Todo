@@ -2,6 +2,8 @@ package inf112.skeleton.app;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -19,7 +21,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import javax.print.attribute.standard.OrientationRequested;
 
-public class HelloWorld implements ApplicationListener {
+public class HelloWorld extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
     private BitmapFont font;
     TiledMap tiledMap;
@@ -57,12 +59,15 @@ public class HelloWorld implements ApplicationListener {
         staticTiledMapTile = new StaticTiledMapTile(textureRegion[0][0]);
         playerCell.setTile(staticTiledMapTile);
         playerPosition = new Vector2(0,0);
+
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
     public void dispose() {
         batch.dispose();
         font.dispose();
+        texture.dispose();
     }
 
     @Override
@@ -71,6 +76,32 @@ public class HelloWorld implements ApplicationListener {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         mapRenderer.render();
         playerLayer.setCell((int)playerPosition.x, (int)playerPosition.y, playerCell);
+    }
+
+    @Override
+    public boolean keyUp(int keyCode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyDown(int keyCode) {
+        if (keyCode == Input.Keys.DOWN) {
+            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, null);
+            playerPosition.set(playerPosition.x, playerPosition.y - 1);
+        }
+        if (keyCode == Input.Keys.UP) {
+            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, null);
+            playerPosition.set(playerPosition.x, playerPosition.y + 1);
+        }
+        if (keyCode == Input.Keys.LEFT) {
+            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, null);
+            playerPosition.set(playerPosition.x - 1, playerPosition.y);
+        }
+        if (keyCode == Input.Keys.RIGHT) {
+            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, null);
+            playerPosition.set(playerPosition.x + 1, playerPosition.y);
+        }
+        return false;
     }
 
     @Override
