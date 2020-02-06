@@ -59,14 +59,14 @@ hanskes med av hele teamet i plenum; hvor alles stemmer teller likt.
 * Må kunne spilles over LAN Nettverk
 * En runde består av 5 faser
 * Før hver runde:
-..* Del ut kort
-..* Roboter blir plassert på brettet
-..* Spillere lager program
+    * Del ut kort
+    * Roboter blir plassert på brettet
+    * Spillere lager program
 * Kortene låses når runden starter
 * Etter runder skal
-..* Roboter repareres
-..* Powerdown skje
-..* Dele ut kort
+    * Roboter repareres
+    * Powerdown skje
+    * Dele ut kort
 
 
 **Første iterasjon av spillet**
@@ -76,6 +76,12 @@ I første iterasjon av spillet (dvs første innlevering) ønsker vi å kun inklu
 **Deloppgave 3**
 **Prosjektmetodikker**
 Vi ønsker være fleksible og ikke nødvendigvis knytte oss 100% til én bestemt prosjektmetodikk. Vi har valgt elementer av forskjellige prosjektmetodikker som vi tenker hjelper oss som et team oppnå målene vi har satt til de forskjellige tidsfristene. Vi ønsker å begrense mengden arbeid på prosjektbrettet slik at vi alltid arbeider med de aller viktigste elementene av prosjektet. Denne utviklingen vil vi at skal primært være testdrevet, slik at vi kan garantere robust og sikker kode. Vi ønsker at hele teamet skal ha en dyp forståelse for produktet, derfor ønsker vi å programmere i par (Ihvertfall de viktigste elementene av prosjektet). Ved å bruke parprogrammering kan vi garantere at koden vi leverer vil være forståelig og at teammedlemmene oppnår et godt/dypt samarbeid
+
+**Møte organisering**
+Vi tenker å møtes 2 ganger i uken, der en av gangene er gruppetimen på fredag.
+I utgangspunktet møtes vi to ganger i uken, som regel mandag eller tirsdag og gruppetimen på fredag. Utenom er vi alle aktive på slack. Før hvert møte lager vi en agenda, der det er hver enkelt sin jobb å skrive inn ønsker.
+Vi har alle ganske lik kompetanse, så vi prøver å dele ut oppgaver etter hvert og redistribuere etter behov (tidsfrister, vanskelighetsgrad).  
+
 
 
 
