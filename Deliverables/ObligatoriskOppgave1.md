@@ -77,6 +77,12 @@ I første iterasjon av spillet (dvs første innlevering) ønsker vi å kun inklu
 **Prosjektmetodikker**
 Vi ønsker være fleksible og ikke nødvendigvis knytte oss 100% til én bestemt prosjektmetodikk. Vi har valgt elementer av forskjellige prosjektmetodikker som vi tenker hjelper oss som et team oppnå målene vi har satt til de forskjellige tidsfristene. Vi ønsker å begrense mengden arbeid på prosjektbrettet slik at vi alltid arbeider med de aller viktigste elementene av prosjektet. Denne utviklingen vil vi at skal primært være testdrevet, slik at vi kan garantere robust og sikker kode. Vi ønsker at hele teamet skal ha en dyp forståelse for produktet, derfor ønsker vi å programmere i par (Ihvertfall de viktigste elementene av prosjektet). Ved å bruke parprogrammering kan vi garantere at koden vi leverer vil være forståelig og at teammedlemmene oppnår et godt/dypt samarbeid
 
+**Møte organisering**
+Vi tenker å møtes 2 ganger i uken, der en av gangene er gruppetimen på fredag.
+I utgangspunktet møtes vi to ganger i uken, som regel mandag eller tirsdag og gruppetimen på fredag. Utenom er vi alle aktive på slack. Før hvert møte lager vi en agenda, der det er hver enkelt sin jobb å skrive inn ønsker.
+Vi har alle ganske lik kompetanse, så vi prøver å dele ut oppgaver etter hvert og redistribuere etter behov (tidsfrister, vanskelighetsgrad).  
+
+
 
 
 
