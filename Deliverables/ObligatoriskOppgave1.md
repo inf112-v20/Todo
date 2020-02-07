@@ -79,7 +79,7 @@ Vi ønsker være fleksible og ikke nødvendigvis knytte oss 100% til én bestemt
 
 **Møte organisering**
 Vi tenker å møtes 2 ganger i uken, der en av gangene er gruppetimen på fredag.
-I utgangspunktet møtes vi to ganger i uken, som regel mandag eller tirsdag og gruppetimen på fredag. Utenom er vi alle aktive på slack. Før hvert møte lager vi en agenda, der det er hver enkelt sin jobb å skrive inn ønsker.
+I utgangspunktet møtes vi to ganger i uken, som regel mandag eller tirsdag og gruppetimen på fredag. Utenom er vi alle aktive på slack. Før hvert møte lager vi en event i google calander, så i beskrivelsen legger alle til teamaer de ønsker å ta opp på møtet.
 Vi har alle ganske lik kompetanse, så vi prøver å dele ut oppgaver etter hvert og redistribuere etter behov (tidsfrister, vanskelighetsgrad).  
 
 
