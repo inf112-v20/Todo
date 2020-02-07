@@ -21,12 +21,6 @@ public class TestGameTest
 
     @Test
     public void PlayerDoesNotMoveIfMovementKeysAreNotPressed() {
-        float x = game.playerPosition.x;
-        float y = game.playerPosition.y;
-        game.keyDown(Input.Keys.SPACE);
-        assertEquals(x, game.playerPosition.x, 0.0001);
-        assertEquals(y, game.playerPosition.y, 0.0001);
-
     }
 
     @Test
