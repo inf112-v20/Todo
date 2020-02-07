@@ -4,16 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Vector2;
-import inf112.core.testingUtils.GdxTestRunner;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Unit test for TestGame
  */
-@RunWith(GdxTestRunner.class)
 public class TestGameTest
 {
     TestGame game;
