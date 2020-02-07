@@ -70,11 +70,6 @@ public class TestGame extends InputAdapter implements ApplicationListener {
     }
 
     @Override
-    public boolean keyUp(int keyCode) {
-        return false;
-    }
-
-    @Override
     public boolean keyDown(int keyCode) {
         clearPlayerLayer();
         if (keyCode == Input.Keys.DOWN) {
