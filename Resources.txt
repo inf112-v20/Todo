@@ -1,3 +1,1 @@
 Recources used:
-
-https://github.com/TomGrill/gdx-testing
