@@ -83,6 +83,22 @@ I utgangspunktet møtes vi to ganger i uken, som regel mandag eller tirsdag og g
 Vi har alle ganske lik kompetanse, så vi prøver å dele ut oppgaver etter hvert og redistribuere etter behov (tidsfrister, vanskelighetsgrad).  
 
 
+**Deloppgave 4**
+**Brukerhistorier**
+* Som spiller ønsker jeg å kunne se spillbrettet slik at jeg kan planlegge hvor jeg kan bevege roboten min.
+    * For å oppnå dette målet fulgte vi veiledningen(tutorialen) som var vedlagt prosjektet.
+* Som spiller ønsker jeg å kunne se roboten dukke opp på spillbrettet, slik at jeg har oversikt over hvor jeg står og hva som er mine omgivelser.
+    * For å oppnå dette målet fulgte vi veiledningen(tutorialen) som var vedlagt prosjektet.
+* Som spiller ønsker jeg å kunne åpne applikasjonen uavhengig av hvilket operativsystem jeg bruker, fordi jeg vil kunne spille på Windows, Mac og Linux.
+    * For å oppnå dette målet fulgte vi veiledningen(tutorialen) som var vedlagt prosjektet. Prosjektet burde kjøre ovrealt siden vi bruker programmeringsspråket Java.
+    
+
+**Retrospektiv**
+- Vi synes parprogrammering fungerte veldig bra
+- Vi synes det har fungert bra med mange møter, vi vil heller møtes ofte og kort enn sjeldent og lange.
+     - Det er også veldig greit å ha en agenda til hvert møte.
+- Det er mange ting vi ikke har fått prøvd helt ordentlig enda, så er litt vanskelig å si hvordan vi liker det.
+
 
 
 
