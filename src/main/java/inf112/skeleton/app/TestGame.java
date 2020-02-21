@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -16,12 +18,12 @@ import inf112.core.player.Player;
 
 public class TestGame implements ApplicationListener {
     private TiledMap tiledMap;
-    private TiledMapTileLayer playerLayer;
+    private TiledMapTileLayer playerLayer, spawnLayer;
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
     private Texture texture;
     private TextureRegion[] textureRegions;
-    private Player player;
+    private Player player1, player2;
     private int mapWidth, mapHeight;                   // #tiles in each direction
     private int tilePixelWidth, tilePixelHeight;
 
@@ -50,8 +52,9 @@ public class TestGame implements ApplicationListener {
         playerLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Player");
         texture = new Texture("player.png");
         textureRegions = TextureRegion.split(texture, tilePixelWidth, tilePixelHeight)[0];
-        player = new Player(playerLayer, textureRegions[0]);
-        Gdx.input.setInputProcessor(player);
+        player1 = new Player(playerLayer, textureRegions[0]);
+        player2 = new Player(playerLayer, textureRegions[2], 5, 5);
+        Gdx.input.setInputProcessor(player1);
     }
 
     @Override
@@ -65,7 +68,8 @@ public class TestGame implements ApplicationListener {
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        player.updatePosition();
+        player1.updatePosition();
+        player2.updatePosition();
         mapRenderer.setView(camera);
         mapRenderer.render();
     }
