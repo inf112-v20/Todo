@@ -14,10 +14,14 @@ public class Player extends InputAdapter {
     private TiledMapTileLayer layer;
 
     public Player(TiledMapTileLayer playerLayer, TextureRegion region) {
+        this(playerLayer, region, 0, 0);
+    }
+
+    public Player(TiledMapTileLayer playerLayer, TextureRegion region, int xPos, int yPos) {
         this.layer = playerLayer;
         this.cell = new Cell();
         this.cell.setTile(new StaticTiledMapTile(region));
-        this.position = new Vector2(0,0);
+        this.position = new Vector2(xPos,yPos);
     }
 
     @Override

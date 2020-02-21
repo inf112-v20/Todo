@@ -29,7 +29,7 @@ public class TestGame implements ApplicationListener {
     @Override
     public void create() {
         // load the map and get dimension
-        tiledMap = new TmxMapLoader().load("testmap.tmx");
+        tiledMap = new TmxMapLoader().load("testmap3.tmx");
         MapProperties properties = tiledMap.getProperties();
         mapWidth = properties.get("width", Integer.class);
         mapHeight = properties.get("height", Integer.class);
