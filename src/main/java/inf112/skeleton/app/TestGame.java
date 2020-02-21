@@ -20,7 +20,7 @@ public class TestGame implements ApplicationListener {
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
     private Texture texture;
-    private TextureRegion[][] textureRegions;
+    private TextureRegion[] textureRegions;
     private Player player;
     private int mapWidth, mapHeight;                   // #tiles in each direction
     private int tilePixelWidth, tilePixelHeight;
@@ -28,7 +28,7 @@ public class TestGame implements ApplicationListener {
 
     @Override
     public void create() {
-        // map setup and getting dimension info
+        // load the map and get dimension
         tiledMap = new TmxMapLoader().load("testmap.tmx");
         MapProperties properties = tiledMap.getProperties();
         mapWidth = properties.get("width", Integer.class);
@@ -36,21 +36,21 @@ public class TestGame implements ApplicationListener {
         tilePixelWidth = properties.get("tilewidth", Integer.class);
         tilePixelHeight = properties.get("tileheight", Integer.class);
 
+        // set unit scale, how many pixels per world unit (1 unit == tilePixelHeight pixels)
+        float unitScale = (float) 1/tilePixelHeight;
+        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, unitScale);
+
         // camera setup
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, mapWidth, mapHeight);
+        camera.setToOrtho(false, mapWidth, mapHeight);                           // show this many units of the world
         camera.position.set((float) mapWidth / 2, (float) mapHeight / 2,0);    // centers the camera
         camera.update();
-
-        // tileMapRenderer setup
-        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, (float) 1/tilePixelHeight);
-        mapRenderer.setView(camera);
 
         // player setup
         playerLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Player");
         texture = new Texture("player.png");
-        textureRegions = TextureRegion.split(texture, tilePixelWidth, tilePixelHeight);
-        player = new Player(playerLayer, textureRegions[0][0]);
+        textureRegions = TextureRegion.split(texture, tilePixelWidth, tilePixelHeight)[0];
+        player = new Player(playerLayer, textureRegions[0]);
         Gdx.input.setInputProcessor(player);
     }
 
@@ -65,7 +65,7 @@ public class TestGame implements ApplicationListener {
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        player.updateMyPosition();
+        player.updatePosition();
         mapRenderer.setView(camera);
         mapRenderer.render();
     }

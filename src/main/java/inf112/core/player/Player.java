@@ -12,11 +12,9 @@ public class Player extends InputAdapter {
     private Vector2 position;
     private Cell cell;
     private TiledMapTileLayer layer;
-    private TextureRegion region;
 
     public Player(TiledMapTileLayer playerLayer, TextureRegion region) {
         this.layer = playerLayer;
-        this.region = region;
         this.cell = new Cell();
         this.cell.setTile(new StaticTiledMapTile(region));
         this.position = new Vector2(0,0);
@@ -27,19 +25,19 @@ public class Player extends InputAdapter {
         clearLayer();
         switch (keycode) {
             case (Input.Keys.UP):
-                position.y += 1;
+                moveUp();
                 break;
             case (Input.Keys.DOWN):
-                position.y -= 1;
+                moveDown();
                 break;
             case (Input.Keys.RIGHT):
-                position.x += 1;
+                moveRight();
                 break;
             case (Input.Keys.LEFT):
-                position.x -= 1;
+                moveLeft();
                 break;
             case (Input.Keys.SPACE):
-                position.set(0f, 0f);
+                resetPosition();
                 break;
             default:
                 return false;
@@ -51,7 +49,19 @@ public class Player extends InputAdapter {
         layer.setCell((int) position.x, (int) position.y, null);
     }
 
-    public void updateMyPosition() {
-        layer.setCell((int)position.x, (int)position.y, cell);
+    public void updatePosition() {
+        if (layer.getCell((int) position.x, (int) position.y) == null)
+            layer.setCell((int)position.x, (int)position.y, cell);
     }
+
+    public void moveUp() {   this.position.y += 1;   }
+
+    public void moveDown() {   this.position.y -= 1;   }
+
+    public void moveRight() {   this.position.x += 1;   }
+
+    public void moveLeft() {   this.position.x -= 1;   }
+
+    public void resetPosition() {   this.position.set(0f, 0f);   }
+
 }
