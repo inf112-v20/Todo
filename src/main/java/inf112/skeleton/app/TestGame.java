@@ -34,7 +34,7 @@ public class TestGame extends InputAdapter implements ApplicationListener {
 
     @Override
     public void create() {
-        tiledMap = new TmxMapLoader().load("testmap.tmx");
+        tiledMap = new TmxMapLoader().load("maps/testmap.tmx");
         playerLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Player");
 
         camera = new OrthographicCamera();
@@ -44,7 +44,7 @@ public class TestGame extends InputAdapter implements ApplicationListener {
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, (float) 1/TILE_SIZE);
         mapRenderer.setView(camera);
 
-        texture = new Texture("player.png");
+        texture = new Texture("img/player.png");
         textureRegion = TextureRegion.split(texture, TILE_SIZE,TILE_SIZE);
         playerCell = new Cell();
         staticTiledMapTile = new StaticTiledMapTile(textureRegion[0][0]);
