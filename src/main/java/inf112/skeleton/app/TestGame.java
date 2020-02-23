@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -31,7 +29,7 @@ public class TestGame implements ApplicationListener {
     @Override
     public void create() {
         // load the map and get dimension
-        tiledMap = new TmxMapLoader().load("testmap3.tmx");
+        tiledMap = new TmxMapLoader().load("maps/testmap3.tmx");
         MapProperties properties = tiledMap.getProperties();
         mapWidth = properties.get("width", Integer.class);
         mapHeight = properties.get("height", Integer.class);
@@ -50,7 +48,7 @@ public class TestGame implements ApplicationListener {
 
         // player setup
         playerLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Player");
-        texture = new Texture("player.png");
+        texture = new Texture("img/player.png");
         textureRegions = TextureRegion.split(texture, tilePixelWidth, tilePixelHeight)[0];
         player1 = new Player(playerLayer, textureRegions[0]);
         player2 = new Player(playerLayer, textureRegions[2], 5, 5);
