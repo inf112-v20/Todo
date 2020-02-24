@@ -11,28 +11,32 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import inf112.core.board.GameBoard;
+import inf112.core.board.LayeredBoard;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
 
 
 public class TestGame implements ApplicationListener {
-    private TiledMap tiledMap;
-    private TiledMapTileLayer playerLayer, spawnLayer;
+    private TiledMapTileLayer playerLayer, spawnLayer, checkpointLayer;
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
-    private Texture texture;
+    private Texture texture, tilesTextures;
     private TextureRegion[] textureRegions;
     private Player player1, player2;
     private MovementHandler movementHandler;
     private int mapWidth, mapHeight;                   // #tiles in each direction
     private int tilePixelWidth, tilePixelHeight;
+    private GameBoard board;
 
 
     @Override
     public void create() {
         // load the map and get dimension
-        tiledMap = new TmxMapLoader().load("maps/testmap3.tmx");
-        MapProperties properties = tiledMap.getProperties();
+        GameBoard board = new GameBoard();
+        board.makeBoard();
+
+        MapProperties properties = board.getTiledmap().getProperties();
         mapWidth = properties.get("width", Integer.class);
         mapHeight = properties.get("height", Integer.class);
         tilePixelWidth = properties.get("tilewidth", Integer.class);
@@ -40,7 +44,7 @@ public class TestGame implements ApplicationListener {
 
         // set unit scale, how many pixels per world unit (1 unit == tilePixelHeight pixels)
         float unitScale = (float) 1/tilePixelHeight;
-        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, unitScale);
+        mapRenderer = new OrthogonalTiledMapRenderer(board.getTiledmap(), unitScale);
 
         // camera setup
         camera = new OrthographicCamera();
@@ -53,20 +57,24 @@ public class TestGame implements ApplicationListener {
         textureRegions = TextureRegion.split(texture, tilePixelWidth, tilePixelHeight)[0];
         player1 = new Player("Player1", textureRegions[0]);
         player2 = new Player("Player2", textureRegions[2], 5, 5);
-        playerLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Player");
-        movementHandler = new MovementHandler(playerLayer);
+
+
+        movementHandler = new MovementHandler(board.getPlayers());
         movementHandler.add(player1);
         movementHandler.add(player2);
         movementHandler.setActive(player1);
 
         Gdx.input.setInputProcessor(movementHandler);
+
+
+
     }
 
     @Override
     public void dispose() {
         texture.dispose();
         mapRenderer.dispose();
-        tiledMap.dispose();
+        board.getTiledmap().dispose();
     }
 
     @Override

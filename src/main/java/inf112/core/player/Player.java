@@ -1,5 +1,6 @@
 package inf112.core.player;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
@@ -19,6 +20,7 @@ public class Player {
     private Vector2 position;
     private Cell cell;
     private Rotation rotation;
+    private PlayerCheckpoint checkpoint;
 
     public Player() {
         this("Player");
@@ -39,6 +41,7 @@ public class Player {
         this.cell.setTile(new StaticTiledMapTile(region));
         this.position = new Vector2(xPos,yPos);
         this.rotation = Rotation.NORTH;
+        this.checkpoint = new PlayerCheckpoint(this.getX(), this.getY());
     }
 
 
@@ -48,6 +51,8 @@ public class Player {
 
     public Cell getCell() {   return cell;   }
 
+    public Cell getCheckpointCell() { return checkpoint.getCell(); }
+
     public int getX() {   return (int) position.x;   }
 
     public int getY() {   return (int) position.y;   }
@@ -56,7 +61,9 @@ public class Player {
 
     public void setRotation(Rotation rotation) {   this.rotation = rotation;   }
 
-    public void resetPosition() {   this.position.set(0f, 0f);   }
+    public void resetPosition() {   this.position.set(this.checkpoint.getX(), this.checkpoint.getY());   }
+
+    public void setCheckpoint(int xPos, int yPos) { this.checkpoint.setPosition( xPos,  yPos); }
 
     public void moveForward() {
         switch (rotation) {
