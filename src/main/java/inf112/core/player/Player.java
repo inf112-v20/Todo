@@ -1,71 +1,135 @@
 package inf112.core.player;
 
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 
-public class Player extends InputAdapter {
+import java.util.Objects;
+
+/**
+ * A simple representation of a logical as well as a graphical player/robot.
+ *
+ * @author eskil
+ */
+public class Player {
+    private static int playerCount = 0;
+    private String name;
+    private int id;
     private Vector2 position;
     private Cell cell;
-    private TiledMapTileLayer layer;
+    private Rotation rotation;
 
-    public Player(TiledMapTileLayer playerLayer, TextureRegion region) {
-        this(playerLayer, region, 0, 0);
+    public Player() {
+        this("Player");
     }
 
-    public Player(TiledMapTileLayer playerLayer, TextureRegion region, int xPos, int yPos) {
-        this.layer = playerLayer;
+    public Player(String name) {
+        this(name, new TextureRegion());
+    }
+
+    public Player(String name, TextureRegion region) {
+        this(name, region, 0, 0);
+    }
+
+    public Player(String name, TextureRegion region, int xPos, int yPos) {
+        this.name = name;
+        this.id = ++playerCount;
         this.cell = new Cell();
         this.cell.setTile(new StaticTiledMapTile(region));
         this.position = new Vector2(xPos,yPos);
+        this.rotation = Rotation.NORTH;
+    }
+
+
+    public String getName() {   return name;   }
+
+    public int getId() {   return id;   }
+
+    public Cell getCell() {   return cell;   }
+
+    public int getX() {   return (int) position.x;   }
+
+    public int getY() {   return (int) position.y;   }
+
+    public Rotation getRotation() {   return rotation;   }
+
+    public void setRotation(Rotation rotation) {   this.rotation = rotation;   }
+
+    public void resetPosition() {   this.position.set(0f, 0f);   }
+
+    public void moveForward() {
+        switch (rotation) {
+            case NORTH:
+                position.y += 1;
+                break;
+            case SOUTH:
+                position.y -= 1;
+                break;
+            case WEST:
+                position.x -= 1;
+                break;
+            case EAST:
+                position.x += 1;
+                break;
+            default:
+                throw new IllegalStateException("Illegal Rotation");
+        }
+    }
+
+    public void rotateLeft() {
+        switch (rotation) {
+            case NORTH:
+                this.rotation = Rotation.WEST;
+                break;
+            case SOUTH:
+                this.rotation = Rotation.EAST;
+                break;
+            case WEST:
+                this.rotation = Rotation.SOUTH;
+                break;
+            case EAST:
+                this.rotation = Rotation.NORTH;
+                break;
+            default:
+                throw new IllegalStateException("Illegal Rotation");
+        }
+        this.cell.setRotation(rotation.getCellRotation());
+    }
+
+    public void rotateRight() {
+        switch (rotation) {
+            case NORTH:
+                this.rotation = Rotation.EAST;
+                break;
+            case SOUTH:
+                this.rotation = Rotation.WEST;
+                break;
+            case WEST:
+                this.rotation = Rotation.NORTH;
+                break;
+            case EAST:
+                this.rotation = Rotation.SOUTH;
+                break;
+            default:
+                throw new IllegalStateException("Illegal Rotation");
+        }
+        this.cell.setRotation(rotation.getCellRotation());
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Player)) return false;
+        Player player = (Player) o;
+        return id == player.id &&
+                name.equals(player.name);
     }
 
     @Override
-    public boolean keyDown(int keycode) {
-        clearLayer();
-        switch (keycode) {
-            case (Input.Keys.UP):
-                moveUp();
-                break;
-            case (Input.Keys.DOWN):
-                moveDown();
-                break;
-            case (Input.Keys.RIGHT):
-                moveRight();
-                break;
-            case (Input.Keys.LEFT):
-                moveLeft();
-                break;
-            case (Input.Keys.SPACE):
-                resetPosition();
-                break;
-            default:
-                return false;
-        }
-        return true;
+    public int hashCode() {
+        return Objects.hash(name, id);
     }
-
-    private void clearLayer() {
-        layer.setCell((int) position.x, (int) position.y, null);
-    }
-
-    public void updatePosition() {
-        if (layer.getCell((int) position.x, (int) position.y) == null)
-            layer.setCell((int)position.x, (int)position.y, cell);
-    }
-
-    public void moveUp() {   this.position.y += 1;   }
-
-    public void moveDown() {   this.position.y -= 1;   }
-
-    public void moveRight() {   this.position.x += 1;   }
-
-    public void moveLeft() {   this.position.x -= 1;   }
-
-    public void resetPosition() {   this.position.set(0f, 0f);   }
 
 }
