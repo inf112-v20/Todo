@@ -92,4 +92,9 @@ public class MovementHandler extends InputAdapter {
         }
         return true;
     }
+
+    private void moveForward() {
+
+        activePlayer.moveForward();
+    }
 }

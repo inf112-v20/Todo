@@ -18,7 +18,7 @@ public class Player {
     private int id;
     private Vector2 position;
     private Cell cell;
-    private Rotation rotation;
+    private Direction direction;
 
     public Player() {
         this("Player");
@@ -38,7 +38,7 @@ public class Player {
         this.cell = new Cell();
         this.cell.setTile(new StaticTiledMapTile(region));
         this.position = new Vector2(xPos,yPos);
-        this.rotation = Rotation.NORTH;
+        this.direction = Direction.NORTH;
     }
 
 
@@ -52,14 +52,18 @@ public class Player {
 
     public int getY() {   return (int) position.y;   }
 
-    public Rotation getRotation() {   return rotation;   }
+    public Direction getDirection() {   return direction;   }
 
-    public void setRotation(Rotation rotation) {   this.rotation = rotation;   }
+    public void setDirection(Direction direction) {   this.direction = direction;   }
 
     public void resetPosition() {   this.position.set(0f, 0f);   }
 
     public void moveForward() {
-        switch (rotation) {
+        move(direction);
+    }
+
+    public void move(Direction dir) {
+        switch (dir) {
             case NORTH:
                 position.y += 1;
                 break;
@@ -73,48 +77,37 @@ public class Player {
                 position.x += 1;
                 break;
             default:
-                throw new IllegalStateException("Illegal Rotation");
+                throw new IllegalStateException("Illegal direction");
         }
     }
 
+    /**
+     * Rotates both the logical and the graphical representation of the player 90 degrees to the left
+     * of current direction.
+     */
     public void rotateLeft() {
-        switch (rotation) {
-            case NORTH:
-                this.rotation = Rotation.WEST;
-                break;
-            case SOUTH:
-                this.rotation = Rotation.EAST;
-                break;
-            case WEST:
-                this.rotation = Rotation.SOUTH;
-                break;
-            case EAST:
-                this.rotation = Rotation.NORTH;
-                break;
-            default:
-                throw new IllegalStateException("Illegal Rotation");
-        }
-        this.cell.setRotation(rotation.getCellRotation());
+        // cell rotation is a number in {0,1,2,3}
+        // a rotation to the left means increasing that number by 1
+        // this is following the logic given in TiledMapTileLayer.Cell
+        int newCellRotation = (direction.getCellRotation() + 1) % 4;
+        this.direction = Direction.getDirection(newCellRotation);
+        this.cell.setRotation(direction.getCellRotation());
     }
 
+
+    /**
+     * Rotates both the logical and the graphical representation of the player 90 degrees to the right
+     * of current direction.
+     */
     public void rotateRight() {
-        switch (rotation) {
-            case NORTH:
-                this.rotation = Rotation.EAST;
-                break;
-            case SOUTH:
-                this.rotation = Rotation.WEST;
-                break;
-            case WEST:
-                this.rotation = Rotation.NORTH;
-                break;
-            case EAST:
-                this.rotation = Rotation.SOUTH;
-                break;
-            default:
-                throw new IllegalStateException("Illegal Rotation");
-        }
-        this.cell.setRotation(rotation.getCellRotation());
+        // cell rotation is a number in {0,1,2,3}
+        // a rotation to the right means decreasing that number by 1
+        // this is following the logic given in TiledMapTileLayer.Cell
+        int newCellRotation = direction.getCellRotation() - 1;
+        if (newCellRotation < 0)
+            newCellRotation +=4;
+        this.direction = Direction.getDirection(newCellRotation);
+        this.cell.setRotation(direction.getCellRotation());
     }
 
 
