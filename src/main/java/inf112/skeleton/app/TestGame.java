@@ -6,13 +6,12 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
 
 
@@ -24,6 +23,7 @@ public class TestGame implements ApplicationListener {
     private Texture texture;
     private TextureRegion[] textureRegions;
     private Player player1, player2;
+    private MovementHandler movementHandler;
     private int mapWidth, mapHeight;                   // #tiles in each direction
     private int tilePixelWidth, tilePixelHeight;
 
@@ -49,12 +49,17 @@ public class TestGame implements ApplicationListener {
         camera.update();
 
         // player setup
-        playerLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Player");
         texture = new Texture("player.png");
         textureRegions = TextureRegion.split(texture, tilePixelWidth, tilePixelHeight)[0];
-        player1 = new Player(playerLayer, textureRegions[0]);
-        player2 = new Player(playerLayer, textureRegions[2], 5, 5);
-        Gdx.input.setInputProcessor(player1);
+        player1 = new Player("Player1", textureRegions[0]);
+        player2 = new Player("Player2", textureRegions[2], 5, 5);
+        playerLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Player");
+        movementHandler = new MovementHandler(playerLayer);
+        movementHandler.add(player1);
+        movementHandler.add(player2);
+        movementHandler.setActive(player1);
+
+        Gdx.input.setInputProcessor(movementHandler);
     }
 
     @Override
@@ -68,8 +73,7 @@ public class TestGame implements ApplicationListener {
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        player1.updatePosition();
-        player2.updatePosition();
+        movementHandler.update();
         mapRenderer.setView(camera);
         mapRenderer.render();
     }
