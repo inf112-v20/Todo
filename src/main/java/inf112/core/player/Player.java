@@ -54,6 +54,10 @@ public class Player {
 
     public int getY() {   return (int) position.y;   }
 
+    public Vector2 getPosition() {
+        return new Vector2(position.x, position.y);
+    }
+
     public Direction getDirection() {   return direction;   }
 
     public void setDirection(Direction direction) {   this.direction = direction;   }

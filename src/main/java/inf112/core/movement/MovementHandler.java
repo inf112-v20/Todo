@@ -4,11 +4,14 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A basic InputAdapter-implementation that is in control of moving the players logically as well
@@ -28,8 +31,8 @@ public class MovementHandler extends InputAdapter {
         this.board = board;
         this.playerLayer = board.getPlayers();
         this.backupLayer = board.getBackups();
-        this.collisionHandler = new CollisionHandler(board);
         this.players = new ArrayList<>();
+        this.collisionHandler = new CollisionHandler(board, players);
     }
 
     public MovementHandler() {
@@ -91,7 +94,7 @@ public class MovementHandler extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
-        clearLayer();
+        //clearLayer();
         switch (keycode) {
             case Input.Keys.UP:
                 moveForward();
@@ -116,11 +119,26 @@ public class MovementHandler extends InputAdapter {
     }
 
     private void moveForward() {
+        ArrayList<Player> playerList = new ArrayList<>();
+        playerList = collisionHandler.playerCollide(activePlayer.getPosition(), activePlayer.getDirection(), playerList);
+
+        for (Player player : playerList) {
+            playerLayer.setCell(player.getX(), player.getY(), null);    // clear layer
+            player.move(activePlayer.getDirection());
+            playerLayer.setCell(player.getX(), player.getY(), player.getCell());
+        }
+        playerLayer.setCell(activePlayer.getX(), activePlayer.getY(), null);
         activePlayer.moveForward();
-        if (!onBoard(activePlayer)) {
-            activePlayer.resetPosition();
-            activePlayer.setDirection(Direction.NORTH);
-            activePlayer.getCell().setRotation(activePlayer.getDirection().getCellRotation());
+        playerLayer.setCell(activePlayer.getX(), activePlayer.getY(), activePlayer.getCell());
+        checkOutOfBounds(activePlayer);
+
+    }
+
+    public void checkOutOfBounds(Player player) {
+        if (!onBoard(player)) {
+            player.resetPosition();
+            player.setDirection(Direction.NORTH);
+            player.getCell().setRotation(player.getDirection().getCellRotation());
         }
     }
 }
