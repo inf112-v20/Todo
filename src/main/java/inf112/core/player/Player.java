@@ -1,5 +1,6 @@
 package inf112.core.player;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
@@ -48,6 +49,7 @@ public class Player {
 
     public Cell getCell() {   return cell;   }
 
+
     public int getX() {   return (int) position.x;   }
 
     public int getY() {   return (int) position.y;   }
@@ -56,7 +58,7 @@ public class Player {
 
     public void setDirection(Direction direction) {   this.direction = direction;   }
 
-    public void resetPosition() {   this.position.set(0f, 0f);   }
+    public void resetPosition() {   this.position.set(0f,0f);   }
 
     public void moveForward() {
         move(direction);
