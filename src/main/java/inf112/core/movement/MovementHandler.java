@@ -72,6 +72,14 @@ public class MovementHandler extends InputAdapter {
             playerLayer.setCell(player.getX(), player.getY(), player.getCell());
     }
 
+    public Boolean onBoard(Player player){
+        int playerX = player.getX();
+        int playerY = player.getY();
+        if (playerY < 0 || playerY >= playerLayer.getHeight()) { return false; }
+        else if (playerX < 0 || playerX >= playerLayer.getWidth()) { return false; }
+        else return true;
+    }
+
     public void setCheckpoint(){
         checkpointLayer.setCell(activePlayer.getX(), activePlayer.getY(), activePlayer.getCell());
     }
@@ -82,15 +90,19 @@ public class MovementHandler extends InputAdapter {
         switch (keycode) {
             case Input.Keys.UP:
                 activePlayer.moveForward();
+                if (!onBoard(activePlayer)) activePlayer.resetPosition();
                 break;
             case Input.Keys.LEFT:
                 activePlayer.rotateLeft();
+                if (!onBoard(activePlayer)) activePlayer.resetPosition();
                 break;
             case Input.Keys.RIGHT:
                 activePlayer.rotateRight();
+                if (!onBoard(activePlayer)) activePlayer.resetPosition();
                 break;
             case Input.Keys.SPACE:
                 activePlayer.resetPosition();
+                if (!onBoard(activePlayer)) activePlayer.resetPosition();
                 break;
             case Input.Keys.S:
                 // TODO switch active player
