@@ -18,25 +18,21 @@ import inf112.core.player.Player;
 
 
 public class TestGame implements ApplicationListener {
-    public float batch;
-    private TiledMapTileLayer playerLayer, spawnLayer, checkpointLayer;
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
-    private Texture texture, tilesTextures;
+    private Texture texture;
     private TextureRegion[] textureRegions;
     private Player player1, player2;
     private MovementHandler movementHandler;
     private int mapWidth, mapHeight;                   // #tiles in each direction
     private int tilePixelWidth, tilePixelHeight;
     private GameBoard board;
-    private TiledMap tiledMap;
 
 
     @Override
     public void create() {
         // load the map and get dimension
-        GameBoard board = new GameBoard(this);
-        tiledMap = board.getTiledmap();
+        board = new GameBoard(this);
 
         MapProperties properties = board.getTiledmap().getProperties();
         mapWidth = properties.get("width", Integer.class);
@@ -59,8 +55,7 @@ public class TestGame implements ApplicationListener {
         textureRegions = TextureRegion.split(texture, tilePixelWidth, tilePixelHeight)[0];
         player1 = new Player("Player1", textureRegions[0]);
         player2 = new Player("Player2", textureRegions[2], 5, 5);
-        playerLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Player");
-        movementHandler = new MovementHandler(playerLayer);
+        movementHandler = new MovementHandler(board.getPlayers());
         movementHandler.add(player1);
         movementHandler.add(player2);
         movementHandler.setActive(player1);
@@ -73,7 +68,7 @@ public class TestGame implements ApplicationListener {
     public void dispose() {
         texture.dispose();
         mapRenderer.dispose();
-       // board.dispose();
+        board.dispose();
     }
 
     @Override
