@@ -32,7 +32,7 @@ public class TestGame implements ApplicationListener {
     @Override
     public void create() {
         // load the map and get dimension
-        board = new GameBoard(this);
+        board = new GameBoard();
 
         MapProperties properties = board.getTiledmap().getProperties();
         mapWidth = properties.get("width", Integer.class);
@@ -55,7 +55,7 @@ public class TestGame implements ApplicationListener {
         textureRegions = TextureRegion.split(texture, tilePixelWidth, tilePixelHeight)[0];
         player1 = new Player("Player1", textureRegions[0]);
         player2 = new Player("Player2", textureRegions[2], 5, 5);
-        movementHandler = new MovementHandler(board.getPlayers());
+        movementHandler = new MovementHandler(board);
         movementHandler.add(player1);
         movementHandler.add(player2);
         movementHandler.setActive(player1);

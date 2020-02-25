@@ -7,10 +7,7 @@ import inf112.skeleton.app.TestGame;
 
 public class GameBoard extends LayeredBoard {
 
-    private TestGame game;
-
-    public GameBoard(TestGame game){
-        this.game = game;
+    public GameBoard(){
         makeBoard();
     }
 }

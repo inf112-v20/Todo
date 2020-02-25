@@ -26,7 +26,7 @@ public class PlayerCollisionHandlerTest {
         playerLayer = new TiledMapTileLayer(5, 5, 100, 100);
         playerLayer.setCell(player1.getX(), player1.getY(), player1.getCell());
         playerLayer.setCell(player2.getX(), player2.getY(), player2.getCell());
-        collisionHandler = new CollisionHandler(playerLayer);
+        collisionHandler = new CollisionHandler();
     }
 
     @Test
