@@ -2,7 +2,7 @@ package inf112.core.movement;
 
 import com.badlogic.gdx.Input;
 import inf112.core.player.Player;
-import inf112.core.player.Rotation;
+import inf112.core.player.Direction;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -48,7 +48,7 @@ public class MovementHandlerTest {
 
     @Test
     public void keyPressMovesActivePlayerOneForwardTest() {
-        player1.setRotation(Rotation.NORTH);
+        player1.setDirection(Direction.NORTH);
         int oldPlayerX = player1.getX();
         int oldPlayerY = player1.getY();
         movementHandler.add(player1);

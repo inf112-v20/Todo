@@ -2,6 +2,7 @@ package inf112.core.movement;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.core.player.Player;
 
@@ -19,6 +20,7 @@ public class MovementHandler extends InputAdapter {
     private List<Player> players;
     private Player activePlayer;                 // movement will affect this player. Should be changed actively
     private TiledMapTileLayer playerLayer;       // layer in which all player cells are placed (for graphics)
+    private TiledMapTileLayer checkpointLayer;
 
     public MovementHandler() {
         this(new TiledMapTileLayer(0,0,0,0));
@@ -70,18 +72,37 @@ public class MovementHandler extends InputAdapter {
             playerLayer.setCell(player.getX(), player.getY(), player.getCell());
     }
 
+    public Boolean onBoard(Player player){
+        int playerX = player.getX();
+        int playerY = player.getY();
+        if (playerY < 0 || playerY >= playerLayer.getHeight()) { return false; }
+        else if (playerX < 0 || playerX >= playerLayer.getWidth()) { return false; }
+        else return true;
+    }
+
+    public void setCheckpoint(){
+        checkpointLayer.setCell(activePlayer.getX(), activePlayer.getY(), activePlayer.getCell());
+    }
+
     @Override
     public boolean keyDown(int keycode) {
         clearLayer();
         switch (keycode) {
             case Input.Keys.UP:
                 activePlayer.moveForward();
+                if (!onBoard(activePlayer)) activePlayer.resetPosition();
                 break;
             case Input.Keys.LEFT:
                 activePlayer.rotateLeft();
+                if (!onBoard(activePlayer)) activePlayer.resetPosition();
                 break;
             case Input.Keys.RIGHT:
                 activePlayer.rotateRight();
+                if (!onBoard(activePlayer)) activePlayer.resetPosition();
+                break;
+            case Input.Keys.SPACE:
+                activePlayer.resetPosition();
+                if (!onBoard(activePlayer)) activePlayer.resetPosition();
                 break;
             case Input.Keys.S:
                 // TODO switch active player
@@ -91,5 +112,10 @@ public class MovementHandler extends InputAdapter {
                 return false;
         }
         return true;
+    }
+
+    private void moveForward() {
+
+        activePlayer.moveForward();
     }
 }
