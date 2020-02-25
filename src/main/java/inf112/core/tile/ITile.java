@@ -1,18 +1,18 @@
 package inf112.core.tile;
 
-public interface Tile {
+public interface ITile {
 
     /**
      *
      * @return x-coordinate of tile on map
      */
-    int getX();
+    float getX();
 
     /**
      *
      * @return y-coordinate of tile on map
      */
-    int getY();
+    float getY();
 
     /**
      *

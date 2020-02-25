@@ -2,6 +2,8 @@ package inf112.core.tile;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Hashtable;
+import java.util.Map;
 
 public enum TileId {
 
@@ -22,6 +24,8 @@ public enum TileId {
 
     private int id;
 
+    private static Map<Integer, TileId> idTable = createIdTable();
+
     private ArrayList<Direction> directions;
 
     TileId(int id, Direction ... directions) {
@@ -29,7 +33,19 @@ public enum TileId {
         Collections.addAll(this.directions, directions);
     }
 
-    public ArrayList<Direction> getDirections() { return this.directions; }
+    public static Map<Integer, TileId> createIdTable() {
+        Map<Integer, TileId> idTable = new Hashtable<>();
+        for(TileId tileId : TileId.values()) {
+            idTable.put(tileId.id, tileId);
+        }
+        return idTable;
+    }
+
+    public static Map<Integer, TileId> getIdTable() {
+        return idTable;
+    }
+
+    public ArrayList<Direction> getDirections() { return directions; }
 
     public int getId() { return this.id; }
 }
