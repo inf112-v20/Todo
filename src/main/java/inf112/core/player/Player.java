@@ -20,6 +20,7 @@ public class Player {
     private Vector2 position;
     private Cell cell;
     private Direction direction;
+    private PlayerBackup backup;
 
     public Player() {
         this("Player");
@@ -40,6 +41,7 @@ public class Player {
         this.cell.setTile(new StaticTiledMapTile(region));
         this.position = new Vector2(xPos,yPos);
         this.direction = Direction.NORTH;
+        this.backup = new PlayerBackup(xPos, yPos);
     }
 
 
@@ -58,7 +60,9 @@ public class Player {
 
     public void setDirection(Direction direction) {   this.direction = direction;   }
 
-    public void resetPosition() {   this.position.set(0f,0f);   }
+    public void resetPosition() {   this.position.set(this.backup.getX(),this.backup.getY());   }
+
+    public void setBackup(int xPos, int yPos) { this.backup = new PlayerBackup(xPos, yPos); }
 
     public void moveForward() {
         move(direction);

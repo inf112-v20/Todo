@@ -102,6 +102,9 @@ public class MovementHandler extends InputAdapter {
             case Input.Keys.RIGHT:
                 activePlayer.rotateRight();
                 break;
+            case Input.Keys.C:
+                activePlayer.setBackup(activePlayer.getX(),activePlayer.getY());
+                break;
             case Input.Keys.SPACE:
                 activePlayer.resetPosition();
                 break;
