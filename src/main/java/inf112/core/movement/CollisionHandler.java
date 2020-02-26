@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
+import inf112.core.tile.Attributes;
 import inf112.core.tile.TileId;
 
 import java.util.ArrayList;
@@ -35,10 +36,35 @@ public class CollisionHandler {
         return playerList;
     }
 
-    public boolean canGo(Vector2 startPos, Direction direction) {
-        Vector2 newPosition = go(startPos, direction);
-        return false;
+    /**
+     * very un-elegant solution to colliding with walls
+     *
+     * @param startPosition
+     * @param direction
+     * @return boolean
+     */
+    public boolean canGo(Vector2 startPosition, Direction direction) {
+        //TODO make good
+        Vector2 endPosition = go(startPosition, direction);
+        TileId tileStart = gameBoard.getCollidables().get(startPosition);
+        TileId tileEnd = gameBoard.getCollidables().get(endPosition);
+        if(tileStart != null){
+            System.out.println(tileStart.getFacingDirections());
+            for(Direction dir : tileStart.getFacingDirections()){
+                if(dir.equals(direction))
+                    return false;
+            }
+        }
+        if(tileEnd != null){
+            System.out.println(tileEnd.getFacingDirections());
+            for(Direction dir : tileEnd.getFacingDirections()){
+                if(dir.equals(Direction.invert(direction)))
+                    return false;
+            }
+        }
+        return true;
     }
+
 
     public static Vector2 go(Vector2 position, Direction direction) {
         switch (direction) {
