@@ -1,5 +1,8 @@
 package inf112.core.tile;
 
+/**
+ * Interface for a basic tile object
+ */
 public interface ITile {
 
     /**

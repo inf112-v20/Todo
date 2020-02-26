@@ -1,10 +1,17 @@
 package inf112.core.tile;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.Map;
+import inf112.core.player.Direction;
 
+import java.util.*;
+import static inf112.core.tile.Attributes.*;
+
+/**
+ * TileId enum used for storing the attributes of all the different tiles that we can put on a tiledMap
+ * with the getTileId function we can quickly translate the id of a TiledMapTile into a TileId with attributes
+ * and functions we can use
+ *
+ * @author Alvar
+ */
 public enum TileId {
 
     /**
@@ -29,7 +36,8 @@ public enum TileId {
     private ArrayList<Attributes> attributes;
 
     TileId(int id, Attributes... attributes) {
-        this.id = id;
+        //id of tiles are shifted by 1 for some reason
+        this.id = id + 1;
         this.attributes = new ArrayList<>();
         Collections.addAll(this.attributes, attributes);
     }
@@ -50,7 +58,16 @@ public enum TileId {
         return getIdTable().get(id);
     };
 
-    public ArrayList<Attributes> getAttributes() { return attributes; }
+    public List<Direction> getFacingDirections() {
+        List<Direction> facingDirections = new ArrayList<>();
+        for(Attributes a : attributes){
+            if(a.equals(NORTH) || a.equals(SOUTH) || a.equals(WEST) || a.equals(EAST))
+                facingDirections.add(Attributes.translateDir(a));
+        }
+        return facingDirections;
+    }
+
+    public List<Attributes> getAttributes() { return attributes; }
 
     public int getId() { return this.id; }
 }

@@ -130,15 +130,18 @@ public class MovementHandler extends InputAdapter {
         playerList = collisionHandler.playerCollide(activePlayer.getPosition(), activePlayer.getDirection(), playerList);
 
         for (Player player : playerList) {
-            playerLayer.setCell(player.getX(), player.getY(), null);    // clear layer
-            player.move(activePlayer.getDirection());
-            playerLayer.setCell(player.getX(), player.getY(), player.getCell());
+            if(collisionHandler.canGo(player.getPosition(), player.getDirection())) {
+                playerLayer.setCell(player.getX(), player.getY(), null);    // clear layer
+                player.move(activePlayer.getDirection());
+                playerLayer.setCell(player.getX(), player.getY(), player.getCell());
+            }
         }
-        playerLayer.setCell(activePlayer.getX(), activePlayer.getY(), null);
-        activePlayer.moveForward();
-        playerLayer.setCell(activePlayer.getX(), activePlayer.getY(), activePlayer.getCell());
+        if(collisionHandler.canGo(activePlayer.getPosition(), activePlayer.getDirection())) {
+            playerLayer.setCell(activePlayer.getX(), activePlayer.getY(), null);
+            activePlayer.moveForward();
+            playerLayer.setCell(activePlayer.getX(), activePlayer.getY(), activePlayer.getCell());
+        }
         checkOutOfBounds(activePlayer);
-
     }
 
     public void checkOutOfBounds(Player player) {
