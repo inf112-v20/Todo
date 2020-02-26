@@ -56,6 +56,9 @@ public class TestGame implements ApplicationListener {
         player1 = new Player("Player1", textureRegions[0]);
         player2 = new Player("Player2", textureRegions[1], 5, 5);
         player3 = new Player("Player3", textureRegions[2], 5, 6);
+        player1.setBackup(0,0);
+        player2.setBackup(1,0);
+        player3.setBackup(2,0);
         movementHandler = new MovementHandler(board);
         movementHandler.add(player1);
         movementHandler.add(player2);

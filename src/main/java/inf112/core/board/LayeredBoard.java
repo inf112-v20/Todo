@@ -7,7 +7,11 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import static inf112.core.board.MapLayer.*;
 
 public abstract class LayeredBoard {
-    private TiledMap tiledmap;
+    protected TiledMap tiledmap;
+
+    protected TiledMapTileLayer background;
+    protected TiledMapTileLayer players;
+    protected TiledMapTileLayer backups;
 
     public void makeBoard(){
         this.tiledmap = new TmxMapLoader().load("maps/testmap3.tmx");
