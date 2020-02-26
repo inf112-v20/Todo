@@ -7,5 +7,4 @@ public class ProgramCard {
     private int priority;
     private String name;
 
-
 }
