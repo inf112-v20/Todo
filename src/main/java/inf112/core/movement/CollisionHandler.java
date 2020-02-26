@@ -35,6 +35,11 @@ public class CollisionHandler {
         return playerList;
     }
 
+    public boolean canGo(Vector2 startPos, Direction direction) {
+        Vector2 newPosition = go(startPos, direction);
+        return false;
+    }
+
     public static Vector2 go(Vector2 position, Direction direction) {
         switch (direction) {
             case NORTH:

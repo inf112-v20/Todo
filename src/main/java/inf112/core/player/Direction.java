@@ -33,4 +33,18 @@ public enum Direction {
                 return direction;
         throw new IllegalArgumentException("Invalid Cell rotation, see TiledMapTileLayer.Cell");
     }
+
+    public static Direction invert(Direction direction) {
+        switch (direction) {
+            case NORTH:
+                return SOUTH;
+            case SOUTH:
+                return NORTH;
+            case WEST:
+                return EAST;
+            case EAST:
+                return WEST;
+        }
+        return direction;
+    }
 }
