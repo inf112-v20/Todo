@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
+import inf112.core.tile.TileId;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -47,5 +48,10 @@ public class CollisionHandler {
             default:
                 throw new IllegalArgumentException("Illegal direction given.");
         }
+    }
+
+    public TileId getTileId(Vector2 position, String layerName) {
+        int id = ((TiledMapTileLayer) gameBoard.getTiledmap().getLayers().get(layerName)).getCell((int) position.x, (int) position.y).getTile().getId();
+        return TileId.getTileId(id);
     }
 }
