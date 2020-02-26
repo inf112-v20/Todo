@@ -23,6 +23,7 @@ public class GameBoard extends LayeredBoard {
     }
 
     public Boolean onBoard(Player player){
+        TiledMapTileLayer players = getLayer(PLAYER_LAYER);
         int playerX = player.getX();
         int playerY = player.getY();
         if (playerY < 0 || playerY >= players.getHeight()) { return false; }
