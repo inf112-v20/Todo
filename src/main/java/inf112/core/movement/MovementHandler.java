@@ -115,22 +115,33 @@ public class MovementHandler extends InputAdapter {
      * Moves the given player one unit in its current direction (both logially and graphically).
      * Any other players affected by this movement will also be moved in the same manner.
      *
-     * NB: Will not handle wall collision (yet)
      *
      * @param playerToBeMoved
      */
     public void moveForward(Player playerToBeMoved) {
+        move(playerToBeMoved, playerToBeMoved.getDirection());
+    }
+
+    /**
+     * Moves the given player one unit in given direction (both logially and graphically).
+     * Any other players affected by this movement will also be moved in the same manner.
+     * @param playerToBeMoved
+     * @param direction
+     */
+    public void move(Player playerToBeMoved, Direction direction) {
         List<Player> affectedPlayers = new ArrayList<>();
+        affectedPlayers.add(playerToBeMoved);
         collisionHandler.gatherAffectedPlayers(playerToBeMoved.getPositionCopy(), playerToBeMoved.getDirection(), affectedPlayers);
 
         // we need to move the players affected by activePlayer's move intent in the same direction
-        for (Player affectedPlayer : affectedPlayers)
-            moveUnchecked(affectedPlayer, playerToBeMoved.getDirection());
+        Player last = affectedPlayers.get(0);
+        if(collisionHandler.canGo(last.getPositionCopy(), playerToBeMoved.getDirection()))
+            for (Player affectedPlayer : affectedPlayers)
+                moveUnchecked(affectedPlayer, playerToBeMoved.getDirection());
 
-        moveForwardUnchecked(playerToBeMoved);
+
         handleOutOfBounds(playerToBeMoved);
     }
-
     
     /**
      * Moves the given player one unit in its current direction (both logically and graphically),
