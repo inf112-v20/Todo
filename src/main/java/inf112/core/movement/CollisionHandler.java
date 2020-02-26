@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
+import inf112.core.tile.Attributes;
 import inf112.core.tile.TileId;
 import inf112.core.util.VectorMovement;
 
@@ -33,9 +34,49 @@ public class CollisionHandler {
             }
     }
 
-    public boolean canGo(Vector2 startPos, Direction direction) {
-        Vector2 newPosition = VectorMovement.generateNew(startPos, direction);
-        return false;
+    /**
+     * very un-elegant solution to colliding with walls
+     *
+     * @param startPosition
+     * @param direction
+     * @return boolean
+     */
+    public boolean canGo(Vector2 startPosition, Direction direction) {
+        //TODO make good
+        Vector2 endPosition = go(startPosition, direction);
+        TileId tileStart = gameBoard.getCollidables().get(startPosition);
+        TileId tileEnd = gameBoard.getCollidables().get(endPosition);
+        if(tileStart != null){
+            System.out.println(tileStart.getFacingDirections());
+            for(Direction dir : tileStart.getFacingDirections()){
+                if(dir.equals(direction))
+                    return false;
+            }
+        }
+        if(tileEnd != null){
+            System.out.println(tileEnd.getFacingDirections());
+            for(Direction dir : tileEnd.getFacingDirections()){
+                if(dir.equals(Direction.invert(direction)))
+                    return false;
+            }
+        }
+        return true;
+    }
+
+
+    public static Vector2 go(Vector2 position, Direction direction) {
+        switch (direction) {
+            case NORTH:
+                return new Vector2(position.x, position.y + 1);
+            case EAST:
+                return new Vector2(position.x + 1, position.y);
+            case SOUTH:
+                return new Vector2(position.x, position.y - 1);
+            case WEST:
+                return new Vector2(position.x - 1, position.y);
+            default:
+                throw new IllegalArgumentException("Illegal direction given.");
+        }
     }
 
     public TileId getTileId(Vector2 position, String layerName) {

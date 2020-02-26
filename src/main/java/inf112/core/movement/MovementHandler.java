@@ -130,7 +130,7 @@ public class MovementHandler extends InputAdapter {
         moveForwardUnchecked(playerToBeMoved);
         handleOutOfBounds(playerToBeMoved);
     }
-
+    
     /**
      * Moves the given player one unit in its current direction (both logically and graphically),
      * without any regard to the player's surroundings. Use with care.
