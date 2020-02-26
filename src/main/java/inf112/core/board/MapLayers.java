@@ -1,0 +1,23 @@
+package inf112.core.board;
+
+import org.jetbrains.annotations.NotNull;
+
+public enum MapLayers {
+    BASE_LAYER("Base"),
+    PLAYER_LAYER("Player"),
+    COLLIDABLE_LAYER("Collidable"),
+    LASER_LAYER("Laser"),
+    BACKUP_LAYER("Backup"),
+    SPAWN_LAYER("Spawn"),
+    ;
+
+    private String name;
+
+    MapLayers(@NotNull String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}

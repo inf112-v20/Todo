@@ -1,13 +1,10 @@
 package inf112.core.board;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import inf112.skeleton.app.TestGame;
-import org.junit.Test;
+
+import static inf112.core.board.MapLayers.*;
 
 public abstract class LayeredBoard {
     private TiledMap tiledmap;
@@ -19,9 +16,9 @@ public abstract class LayeredBoard {
     public void makeBoard(){
         this.tiledmap = new TmxMapLoader().load("maps/testmap3.tmx");
 
-        this.background = (TiledMapTileLayer) tiledmap.getLayers().get("Floor");
-        this.players = (TiledMapTileLayer) tiledmap.getLayers().get("Player");
-        this.backups = (TiledMapTileLayer) tiledmap.getLayers().get("Backup");
+        this.background = (TiledMapTileLayer) tiledmap.getLayers().get(BASE_LAYER.getName());
+        this.players = (TiledMapTileLayer) tiledmap.getLayers().get(PLAYER_LAYER.getName());
+        this.backups = (TiledMapTileLayer) tiledmap.getLayers().get(BACKUP_LAYER.getName());
     }
     public TiledMap getTiledmap(){
         return tiledmap;
