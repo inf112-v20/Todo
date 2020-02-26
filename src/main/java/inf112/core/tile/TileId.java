@@ -5,6 +5,13 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Map;
 
+/**
+ * TileId enum used for storing the attributes of all the different tiles that we can put on a tiledMap
+ * with the getTileId function we can quickly translate the id of a TiledMapTile into a TileId with attributes
+ * and functions we can use
+ *
+ * @author Alvar
+ */
 public enum TileId {
 
     /**

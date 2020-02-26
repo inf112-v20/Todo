@@ -2,7 +2,11 @@ package inf112.core.board;
 
 import org.jetbrains.annotations.NotNull;
 
-
+/**
+ * MapLayer enum used for easily adding new layers
+ *
+ * @author Alvar
+ */
 public enum MapLayer {
     BASE_LAYER("Base"),
     PLAYER_LAYER("Player"),
