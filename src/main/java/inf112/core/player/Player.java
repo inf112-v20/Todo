@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
+import inf112.core.util.VectorMovement;
 
 import java.util.Objects;
 
@@ -56,8 +57,8 @@ public class Player {
 
     public int getY() {   return (int) position.y;   }
 
-    public Vector2 getPosition() {
-        return new Vector2(position.x, position.y);
+    public Vector2 getPositionCopy() {
+        return position.cpy();
     }
 
     public Direction getDirection() {   return direction;   }
@@ -73,22 +74,7 @@ public class Player {
     }
 
     public void move(Direction dir) {
-        switch (dir) {
-            case NORTH:
-                position.y += 1;
-                break;
-            case SOUTH:
-                position.y -= 1;
-                break;
-            case WEST:
-                position.x -= 1;
-                break;
-            case EAST:
-                position.x += 1;
-                break;
-            default:
-                throw new IllegalStateException("Illegal direction");
-        }
+        VectorMovement.go(position, dir);
     }
 
     /**

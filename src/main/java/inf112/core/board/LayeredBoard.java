@@ -10,11 +10,11 @@ import inf112.skeleton.app.TestGame;
 import org.junit.Test;
 
 public abstract class LayeredBoard {
-    private TiledMap tiledmap;
+    protected TiledMap tiledmap;
 
-    private TiledMapTileLayer background;
-    private TiledMapTileLayer players;
-    private TiledMapTileLayer backups;
+    protected TiledMapTileLayer background;
+    protected TiledMapTileLayer players;
+    protected TiledMapTileLayer backups;
 
     public void makeBoard(){
         this.tiledmap = new TmxMapLoader().load("maps/testmap3.tmx");

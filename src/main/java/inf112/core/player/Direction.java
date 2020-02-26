@@ -3,7 +3,7 @@ package inf112.core.player;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 
 /**
- * A direction enum specifically designed for integrating the cardinal directions of a robot with
+ * A direction enum specifically designed to two-way map the cardinal directions of a robot with
  * TiledMapTileLayer.Cell's representation of directions (rotation).
  *
  * @author eskil
