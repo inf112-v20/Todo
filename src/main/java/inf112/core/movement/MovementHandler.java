@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static inf112.core.board.MapLayer.*;
+
 /**
  * A basic InputAdapter-implementation that is in control of moving the players logically as well
  * as graphically.
@@ -31,8 +33,8 @@ public class MovementHandler extends InputAdapter {
 
     public MovementHandler(GameBoard board) {
         this.board = board;
-        this.playerLayer = board.getPlayers();
-        this.backupLayer = board.getBackups();
+        this.playerLayer = board.getLayer(PLAYER_LAYER);
+        this.backupLayer = board.getLayer(BACKUP_LAYER);
         this.players = new ArrayList<>();
         this.collisionHandler = new CollisionHandler(board, players);
     }
