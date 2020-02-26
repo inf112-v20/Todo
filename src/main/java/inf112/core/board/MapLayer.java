@@ -2,6 +2,7 @@ package inf112.core.board;
 
 import org.jetbrains.annotations.NotNull;
 
+
 public enum MapLayer {
     BASE_LAYER("Base"),
     PLAYER_LAYER("Player"),
