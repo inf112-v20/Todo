@@ -98,7 +98,7 @@ public class MovementHandler extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
-        //clearLayer();
+        clearLayer();
         switch (keycode) {
             case Input.Keys.UP:
                 moveForward();
