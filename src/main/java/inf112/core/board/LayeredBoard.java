@@ -27,6 +27,8 @@ public abstract class LayeredBoard {
     }
 
     /**
+     *
+     *
      * @return Hashtable containing TileId's with a position vector as key
      */
     public Map<Vector2, TileId> mapCollidables() {

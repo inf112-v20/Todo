@@ -69,6 +69,8 @@ public class Player {
 
     public void setBackup(int xPos, int yPos) { this.backup = new PlayerBackup(xPos, yPos); }
 
+    public void setBackupHere() { setBackup((int) position.x, (int) position.y);}
+
     public void moveForward() {
         move(direction);
     }

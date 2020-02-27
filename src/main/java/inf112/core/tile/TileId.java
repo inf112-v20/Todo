@@ -30,10 +30,9 @@ public enum TileId {
     ;
 
     private int id;
-
+    private ArrayList<Attributes> attributes;
     private static Map<Integer, TileId> idTable = createIdTable();
 
-    private ArrayList<Attributes> attributes;
 
     TileId(int id, Attributes... attributes) {
         //id of tiles are shifted by 1 for some reason

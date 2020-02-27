@@ -1,4 +1,4 @@
-package inf112.core.screens;
+package inf112.core.unused;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

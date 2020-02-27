@@ -74,7 +74,7 @@ public class MovementHandler extends InputAdapter {
         playerLayer.setCell(activePlayer.getX(), activePlayer.getY(), null);
     }
 
-    public void update() {
+    public void drawPlayers() {
         for (Player player : players)
             playerLayer.setCell(player.getX(), player.getY(), player.getCell());
     }
@@ -87,7 +87,7 @@ public class MovementHandler extends InputAdapter {
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Input.Keys.UP:
-                moveForward(activePlayer);
+                attemptToMoveForward(activePlayer);
                 break;
             case Input.Keys.LEFT:
                 activePlayer.rotateLeft();
@@ -96,7 +96,7 @@ public class MovementHandler extends InputAdapter {
                 activePlayer.rotateRight();
                 break;
             case Input.Keys.C:
-                activePlayer.setBackup(activePlayer.getX(),activePlayer.getY());
+                activePlayer.setBackupHere();
                 break;
             case Input.Keys.SPACE:
                 activePlayer.resetPosition();
@@ -118,29 +118,28 @@ public class MovementHandler extends InputAdapter {
      *
      * @param playerToBeMoved
      */
-    public void moveForward(Player playerToBeMoved) {
-        move(playerToBeMoved, playerToBeMoved.getDirection());
+    public void attemptToMoveForward(Player playerToBeMoved) {
+        attemptToMove(playerToBeMoved, playerToBeMoved.getDirection());
     }
 
     /**
-     * Moves the given player one unit in given direction (both logially and graphically).
+     * Attempts to move the given player one unit in given direction (both logially and graphically).
      * Any other players affected by this movement will also be moved in the same manner.
+     * The movement would result in a player moving through something collidable, it will NOT happen.
+     *
      * @param playerToBeMoved
      * @param direction
      */
-    public void move(Player playerToBeMoved, Direction direction) {
+    public void attemptToMove(Player playerToBeMoved, Direction direction) {
         List<Player> affectedPlayers = new ArrayList<>();
-        affectedPlayers.add(playerToBeMoved);
         collisionHandler.gatherAffectedPlayers(playerToBeMoved.getPositionCopy(), playerToBeMoved.getDirection(), affectedPlayers);
 
-        // we need to move the players affected by activePlayer's move intent in the same direction
         Player last = affectedPlayers.get(0);
         if(collisionHandler.canGo(last.getPositionCopy(), playerToBeMoved.getDirection()))
-            for (Player affectedPlayer : affectedPlayers)
+            for (Player affectedPlayer : affectedPlayers) {
                 moveUnchecked(affectedPlayer, playerToBeMoved.getDirection());
-
-
-        handleOutOfBounds(playerToBeMoved);
+                handleOutOfBounds(affectedPlayer);
+            }
     }
     
     /**
@@ -166,11 +165,18 @@ public class MovementHandler extends InputAdapter {
         playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), playerToBeMoved.getCell());   // draw player  (graphically)
     }
 
+    /**
+     * Checks if the player is outside the board dimensions, and if so, resets the players
+     * position and rotation both logically and graphically.
+     *
+     * @param player
+     */
     public void handleOutOfBounds(Player player) {
         if (!board.onBoard(player)) {
             player.resetPosition();
             player.setDirection(Direction.NORTH);
             player.getCell().setRotation(player.getDirection().getCellRotation());
+            playerLayer.setCell(player.getX(), player.getY(), player.getCell());
         }
     }
 }
