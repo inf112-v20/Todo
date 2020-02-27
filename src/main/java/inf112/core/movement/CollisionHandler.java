@@ -47,14 +47,12 @@ public class CollisionHandler {
         TileId tileStart = gameBoard.getCollidables().get(startPosition);
         TileId tileEnd = gameBoard.getCollidables().get(endPosition);
         if(tileStart != null){
-            System.out.println(tileStart.getFacingDirections());
             for(Direction dir : tileStart.getFacingDirections()){
                 if(dir.equals(direction))
                     return false;
             }
         }
         if(tileEnd != null){
-            System.out.println(tileEnd.getFacingDirections());
             for(Direction dir : tileEnd.getFacingDirections()){
                 if(dir.equals(Direction.invert(direction)))
                     return false;
