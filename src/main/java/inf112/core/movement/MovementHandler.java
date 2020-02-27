@@ -89,6 +89,9 @@ public class MovementHandler extends InputAdapter {
             case Input.Keys.UP:
                 attemptToMoveForward(activePlayer);
                 break;
+            case Input.Keys.DOWN:
+                AttemtToMoveBackward(activePlayer);
+                break;
             case Input.Keys.LEFT:
                 activePlayer.rotateLeft();
                 break;
@@ -122,6 +125,8 @@ public class MovementHandler extends InputAdapter {
         attemptToMove(playerToBeMoved, playerToBeMoved.getDirection());
     }
 
+    public void AttemtToMoveBackward(Player playerToBeMoved) { attemptToMove(playerToBeMoved, Direction.invert(playerToBeMoved.getDirection())); }
+
     /**
      * Attempts to move the given player one unit in given direction (both logially and graphically).
      * Any other players affected by this movement will also be moved in the same manner.
@@ -132,12 +137,12 @@ public class MovementHandler extends InputAdapter {
      */
     public void attemptToMove(Player playerToBeMoved, Direction direction) {
         List<Player> affectedPlayers = new ArrayList<>();
-        collisionHandler.gatherAffectedPlayers(playerToBeMoved.getPositionCopy(), playerToBeMoved.getDirection(), affectedPlayers);
+        collisionHandler.gatherAffectedPlayers(playerToBeMoved.getPositionCopy(), direction, affectedPlayers);
 
         Player last = affectedPlayers.get(0);
-        if(collisionHandler.canGo(last.getPositionCopy(), playerToBeMoved.getDirection()))
+        if(collisionHandler.canGo(last.getPositionCopy(), direction))
             for (Player affectedPlayer : affectedPlayers) {
-                moveUnchecked(affectedPlayer, playerToBeMoved.getDirection());
+                moveUnchecked(affectedPlayer, direction);
                 handleOutOfBounds(affectedPlayer);
             }
     }

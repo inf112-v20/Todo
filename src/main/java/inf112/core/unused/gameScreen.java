@@ -20,7 +20,7 @@ public class gameScreen implements Screen {
 
     @Override
     public void show() {
-        map = new TmxMapLoader().load("maps/testmap2.tmx");
+        map = new TmxMapLoader().load("maps/testmap3.tmx");
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, MAP_SIZE_X, MAP_SIZE_Y);

@@ -49,6 +49,6 @@ public enum Attributes {
             case EAST:
                 return Direction.EAST;
         }
-        throw new IllegalArgumentException("can only be used with direactional attributes");
+        throw new IllegalArgumentException("can only be used with directional attributes");
     }
 }
