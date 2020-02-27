@@ -11,6 +11,8 @@ public enum MapLayer {
     BASE_LAYER("Base"),
     PLAYER_LAYER("Player"),
     COLLIDABLE_LAYER("Collidable"),
+    ACTIVATABLE_LAYER("Activatable"),
+    VOID_LAYER("Void"),
     LASER_LAYER("Laser"),
     BACKUP_LAYER("Backup"),
     SPAWN_LAYER("Spawn"),
