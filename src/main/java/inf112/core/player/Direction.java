@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 public enum Direction {
     NORTH(Cell.ROTATE_0), WEST(Cell.ROTATE_90), SOUTH(Cell.ROTATE_180), EAST(Cell.ROTATE_270);
 
-    public static final Direction[] DIRECTIONS = {NORTH, WEST, SOUTH, EAST};
     private int cellRotation;
 
     Direction(int cellRotation) {
@@ -28,7 +27,7 @@ public enum Direction {
      * @throws IllegalArgumentException when cellRotation doesn't map to a certain Direction
      */
     public static Direction getDirection(int cellRotation) {
-        for (Direction direction : DIRECTIONS)
+        for (Direction direction : Direction.values())
             if (direction.getCellRotation() == cellRotation)
                 return direction;
         throw new IllegalArgumentException("Invalid Cell rotation, see TiledMapTileLayer.Cell");

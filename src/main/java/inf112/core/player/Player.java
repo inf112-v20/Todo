@@ -44,13 +44,11 @@ public class Player {
         this.backup = new PlayerBackup(xPos, yPos);
     }
 
-
     public String getName() {   return name;   }
 
     public int getId() {   return id;   }
 
     public Cell getCell() {   return cell;   }
-
 
     public int getX() {   return (int) position.x;   }
 
@@ -64,19 +62,21 @@ public class Player {
 
     public void setDirection(Direction direction) {   this.direction = direction;   }
 
-    public void resetPosition() {   this.position.set(this.backup.getX(),this.backup.getY());   }
+    public void resetPosition() {   this.position.set(backup.getX(), backup.getY());   }
 
     public void setBackup(int xPos, int yPos) { this.backup = new PlayerBackup(xPos, yPos); }
 
     public void setBackupHere() { setBackup((int) position.x, (int) position.y);}
 
-    public void moveForward() {
-        move(direction);
-    }
-
+    /**
+     * Moves the logical representation of the player one unit in the given direction.
+     *
+     * @param dir
+     */
     public void move(Direction dir) {
         VectorMovement.go(position, dir);
     }
+
 
     /**
      * Rotates both the logical and the graphical representation of the player 90 degrees to the left
@@ -97,9 +97,6 @@ public class Player {
      * of current direction.
      */
     public void rotateRight() {
-        // cell rotation is a number in {0,1,2,3}
-        // a rotation to the right means decreasing that number by 1
-        // this is following the logic given in TiledMapTileLayer.Cell
         int newCellRotation = direction.getCellRotation() - 1;
         if (newCellRotation < 0)
             newCellRotation +=4;

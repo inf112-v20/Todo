@@ -5,7 +5,6 @@ import inf112.core.player.Direction;
 
 public class VectorMovement {
 
-
     public static Vector2 generateNew(Vector2 vector, Direction direction) {
         switch (direction) {
             case NORTH:
