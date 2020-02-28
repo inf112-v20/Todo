@@ -13,24 +13,25 @@ Vi vurderer å utnevne en *grafisk designer* som skal være ansvarlig for design
  
 *Er det noen erfaringer enten team-messig eller mtp prosjektmetodikk som er verdt å nevne?*
 
-
+Vi har erfart at bruk av prosjekt-brettet fra kanban er veldig praktisk når det kommer til å holde oversikt over hva alle de andre på gruppen jobber med, samt å finne nye oppgaver en selv kan jobbe med. 
 
 
 *Hvordan fungerer kommunikasjonen for dere?*
 
-Gruppen kommuniserer ofte med hverandre, og alle gruppemedlemmer deltar aktivt i planleggingen av prosjektet. Vi bruker Slack og Messenger som kommunikasjonsmidler, og ellers møtes vi personlig. På Slack avtales møter, og viktige dokumenter og lenker holdes orden på. Vi har en uformell gruppesamtale på Messenger hvor vi kan ta opp mer “casual” temaer dersom det skulle være behov for det.
+Gruppen kommuniserer ofte med hverandre, og alle gruppemedlemmer deltar aktivt i planleggingen av prosjektet. Vi bruker Slack og Messenger som kommunikasjonsmidler, og ellers møtes vi personlig. På Slack avtales møter, og viktige dokumenter og lenker holdes orden på. Vi har en uformell gruppesamtale
+ på Messenger hvor vi kan ta opp mer “casual” temaer dersom det skulle være behov for det.
 Gruppemedlemmene treffes skremmende ofte utenfor planlagte tidsrom; i forelesninger enkelte av oss har felles, og tilfeldig på lesesalen hvor mange av oss tilbringer en del tid. Så vi har det enkelt for å slå av en prat om nye prosjektutfordringer også utenfor gruppemøtene og kommunikasjonsmidlene.
 
 **Gjør et kort retrospektiv hvor dere vurderer hva dere har klart til nå, og hva som kan forbedres. Dette skal handle om prosjektstruktur, ikke kode. Dere kan selvsagt diskutere kode, men dette handler ikke om feilretting, men om hvordan man jobber og kommuniserer.**
-Vi hadde i utgangspunktet bestemt oss for ha et løst forhold til valg av prosjektmetodikk (tydeligvis en mislikt fremgangsmåte ifølge retteskjemaet, selv om vi ble fortalt av gruppeleder at dette var null stress. Ja, jeg er salty), men å spesielt prøve ut følgende prinsipper fra smidig utvikling: parprogrammering, scrum sprints med en slags scum master, og testdrevet utvikling.
+Vi hadde i utgangspunktet bestemt oss for ha et løst forhold til valg av prosjektmetodikk , men å spesielt prøve ut følgende prinsipper fra smidig utvikling: parprogrammering, scrum sprints med en slags scrum master, og testdrevet utvikling.
 
-Av disse tre prinsippene har parprogrammering klart fungert best. Vi opplever flere positive sider ved denne metoden. For det første har det fungerer bra for å oppdatere medlemmer om hvordan deler av koden de ikke har sett før fungerer. For det andre merkes det veldig godt at to hoder tenker bedre enn ett; 
-vi finner gjerne flere løsninger på et problem, drøfter de ulike løsningene, og bestemmer oss for løsningen vi liker best.
+Av disse tre prinsippene har parprogrammering klart fungert best. Vi opplever flere positive sider ved denne metoden. For det første har det fungert bra for å oppdatere medlemmer om hvordan deler av koden de ikke har sett før fungerer. For det andre finner vi gjerne flere løsninger på et problem, drøfter de ulike løsningene, og bestemmer oss for løsningen vi liker best.
 
-Et scrum sprint skal gjerne vare i to uker til en måned. Etter vi hadde laget user stories og fordelt dem i arbeidsoppgaver, bestemte vi oss raskt for å la kommende sprint vare i kun én uke, ettersom oppgavene virket ganske simple. Dette viste seg å ikke stemme. Vi brukte mye av den første uken bare på å lære oss grunnleggende LibGDX-funksjonalitet. 
-Uforutsett mye tid gikk til lesing og tutorials, 
-og vi kom oss ikke raskt i gang med arbeidet. Vi bestemte oss derfor bare for å utvide sprinten med en uke (til innleveringsfristen av obligatorisk oppgave 2).
-To be continued ...
+Etter vi hadde laget user stories og fordelt dem i arbeidsoppgaver, bestemte vi oss raskt for å la kommende sprint vare i kun én uke, ettersom oppgavene virket ganske simple. Dette viste seg på en måte å ikke stemme. Vi brukte mye av den første uken bare på finne ut hvordan vi skulle sammenkoble LibGDX og forretningslogikk. Uforutsett mye tid gikk til lesing og tutorials, 
+og vi kom oss ikke raskt i gang med selve kodingen. Vi bestemte oss derfor bare for å utvide sprinten med en uke. Da klarte vi å bli ferdig med arbeidsoppgavene med god margin.
+Et forbedringspotensiale i denne sammenheng: vi bør i neste sprint på forhånd bestemme oss for hvem som skal gjøre hvilke arbeidsoppgaver, i stedet for at noen bare tar første og beste oppgave. Slik får vi bedre kontroll og oversikt over hva alle medlemmer skal gjøre i denne omgangen.
+
+Testdrevet utvikling har vi egentlig forsøkt ut i liten grad. De viktigste klassene som har kommet frem under denne sprinten er avhengig av å instansiere et TiledMap, noe som gir NullPointerException når det gjøres i test-klassene. Dermed har ikke det vært mulig å lage sentrale tester. !!!! Insert her noe om at det kommer vi til å fikse, aka forbedringspotensiale ;)
 
 I og med at vi var tidlig ute med å avtale mange møter, og prioriterte planlegging over programmering de første ukene fikk vi en veldig god sans for hvordan prosjektet skulle struktureres. Vi har valgt å samle relaterte klasser som er avhengige av hverandre. 
 
@@ -39,8 +40,83 @@ Av commithistorikken vår kan det virke som om kun noen av oss har bidratt til u
 Vi har ikke giddet å drive med rotering av PCer vi jobber på for å tegne et kunstig bilde av bidragsmangfoldighet. Bunnlinjen her er at alle bidrar gjennom parprogrammering.
 
 
+**Bli enige om maks tre forbedringspunkter fra retrospektivet, som skal følges opp under neste sprint**
+1) Mer testdrevet utvikling? Har vært vanskelig å gjøre i og med at vi alle er nye til libgdx. Så utviklingen fram til nå har handlet mye om å bli kjent med systemet, 
+og har primært blitt testet manuelt. 
+
 **Deloppgave 2: Krav**
 
+**Brukerhistorier**
+* Som spiller ønsker jeg å ha medspiller på brettet, slik at jeg har noen å spille med.
+    * Arbeidsoppaver
+        * Få på plass enda et Player-objekt som representerer den nye spilleren
+        * Kunne lage flere unike Player-objekt som representerer en ny spiller
+        * InputHandler for Spillklassen som håndterer inputs for alle de forskjellige playersene
+    * Akseptansekrav:  Hvis jeg starter spillet skal jeg se en annen spiller på kartet
+* Som spiller ønsker jeg at jeg kan dytte et robot på kartet i den retningen jeg beveger meg, slik at roboter ikke kan stå oppå hverandre.
+    * Arbeidsoppgaver
+        * Klasse som sørger for at dersom en spiller beveger seg mot en annen spiller, så beveges begge spillerene i den retningen
+    * Akseptansekrav: Hvis jeg prøver å bevege meg inn i en robot, skal roboten bevege seg i samme retning som roboten min beveger seg. Dette gjelder også hvis flere roboter står på rekke. De skal heller ikke bli dyttet hvis de treffer en vegg.
+* Som spiller ønsker jeg at det skal være vegger på kartet, slik at roboten min blir stoppet om den forsøker å bevege seg der.
+    * Arbeidsoppgaver
+        * Generell klasse for alle slags mulige tiles på det statiske brettet
+        * Veggobject (med rotasjon?)
+        * En eller annen klasse som håndterer kollisjon
+    * Akseptansekrav: Dersom roboten min beveger seg ut av brettet så skal roboten min bli plassert på chechpointet sitt.
+
+**Forklar kort hvordan dere har prioritert oppgavene fremover.**
+
+Vi har prioritert oppgaver som er direkte knyttet med spillbrettet og robotens bevegelse. Det vil si oppgaver som angår funksjonalitet. På kanban brettet har vi fortsatt en del oppgaver knyttet til dette som vi må håndtere før vi kan begynne på nye oppgaver. Etter dette vil vi håndtere oppgaver som programkort og faser og runder.
+
+
+**Oppdater hvilke krav dere har prioritert, hvor langt dere har kommet og hva dere har gjort siden forrige gang.**
+Fram til nå har vi prioritert oppgaver direkte knyttet til robotenes bevegelse. Vi har kommet godt i gang med dette og har allerede implementert funksjonalitet som:
+
+- backUp
+- Kan falle ut av banen, og respawne på backup
+- Vegger (i alle retningen og kombinasjoner av dem)
+- Kan dytte roboter 
+    - Roboter kan ikke dytter gjennom vegger
+
+Vi har valgt å legge alt av grafikk til side for denne innleveringen, og heller prioritere kode-aspektene av oppgaven.
+
+**Husk å skrive hvilke bugs som finnes i de kravene dere har utført (dersom det finnes bugs).**
+Så vidt vi vet finnes det for øyeblikket ingen bugs. Det er litt vanskelig å si hva som klassifiseres som bugs, i og med at prosjektet ikke er ferdig implementert. Vi har valgt å se på bugs som “uventet adferd”, noe vi ikke har funnet noe av enda.
+
+
+**Deloppgave 3: Kode**
+
+*Testing*
+
+Vi har laget et enviroment for manuelle tester
+
+*Manuelle tester:*
+
+1) Bruker piltastene til å teste robotens bevegelse
+
+    a. Der pil-opp refererer til å bevege seg framover
+    
+    b. Pil-ned beveger seg bakover
+    
+    c. Pil-høyre roterer roboten mot høyre
+    
+    d. Pil-venstre roterer roboten mot venstre.
+    
+2) Roter spilleren direkte mot en vegg. Dersom det er en:
+
+    a. Vegg på venstre side og du beveger deg mot venstre bør roboten ikke beveges
+    
+    b. Vegg på høyre side og du beveger deg mot høyre bør roboten ikke beveges
+    
+    c. Vegg over roboten og du beveger deg oppover bør roboten ikke beveges
+    
+    d. Vegg under roboten og du beveger deg nedover bør roboten ikke beveges
+    
+3) Plasser spilleren direkte til høyre eller venstre for en av de andre robotene på banen, beveg deg så mot roboten. Forventet resultat vil være at begge robotene beveger seg i samme retnings som piltasten.
+
+4) Plasser spilleren direkte over eller under begge de to andre robotene på banen. Beveg deg så mot robotene. Det forventede resultatet vil være at begge robotene beveger seg i samme retning som piltasten
+
+5)  Repeter test 4, men plasser alle robotene inntil en vegg. Beveg deg nå mot robotene. Det forventede resultatet vil være at ingen av robotene beveger seg.
 
 
 
@@ -71,10 +147,11 @@ Vi jobbet videre med kodingen, siden flere jobbet med ulike deler snakket vi en 
 En bad merge oppstod og ble pushet til master, slik at produktet krasjet ved oppstart. Dette ble raskt fikset i plenum, men vi kjente alle litt på 
 (og hadde litt godt av) panikken som følger av en bad merge.
 
+*28.02.2020 (Pål, Eskil, Alvar og Øyvind)*
 
-**Bli enige om maks tre forbedringspunkter fra retrospektivet, som skal følges opp under neste sprint**
-1) Mer testdrevet utvikling? Har vært vanskelig å gjøre i og med at vi alle er nye til libgdx. Så utviklingen fram til nå har handlet mye om å bli kjent med systemet, 
-og har primært blitt testet manuelt. 
+Vi arbeidet med å fullføre den andre obligatoriske innleveringen.
+
+
 
 
 
