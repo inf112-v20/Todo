@@ -211,7 +211,89 @@ Vi anser fortsatt MVP som det absolutte minimum av funksjonalitet som vi trenger
     * Få utdelt programkort
     * Legge ned et program
     * Tape/vinne
-   	
+*   Brukergrensesnitt som lar brukeren:
+    *   Se spill-brettet grafisk
+    *   programmere roboten sin
+    *   velge powerdown
+*   Rammeverk for lokal multiplayer
+
+**Oppdater hvilke krav dere har prioritert, hvor langt dere har kommet og hva dere har gjort siden forrige gang.**
+
+Fram til nå har vi prioritert oppgaver direkte knyttet til robotenes bevegelse. Vi har kommet godt i gang med dette og har allerede implementert funksjonalitet som:
+
+
+
+*   BackUp
+*   Kan falle ut av banen, og respawne på backup
+*   Vegger (i alle mulige retninger, og kombinasjoner av dem)
+*   Kan dytte roboter
+    *   Roboter kan ikke dyttes gjennom vegger
+
+Vi har valgt å legge alt av grafikk til side for denne innleveringen, og heller prioritere kode-aspektene av oppgaven.
+
+**Husk å skrive hvilke bugs som finnes i de kravene dere har utført (dersom det finnes bugs). **
+
+Vi har naturligvis den “medfødte” buggen/feilmeldingen fortsatt dersom man bruker nyere versjoner av java enn java 8. Det vil si “_WARNING: An illegal reflective access operation has occurred_”
+
+Ellers vet vi om én bug. La oss si at spilleren kontrollerer robot1, og at en av de to andre er robot2. La oss si at robot2 har sin spawn ved siden av “kanten” til mappet. Det betyr at dersom robot2 beveger seg én enhet i retning kanten, vil den respawne der den stod, som om ingenting har skjedd. Buggen inntreffer om robot1 “skubber” robot2 til sin spawn, og at robot1 så dytter robot2 av mappet. Da blir robot1 stående der hvor robot2 skal stå. Den logiske posisjonen til begge robotene er den samme, men robot1 tegnes på kartet. Om robot1 nå flytter seg, er ikke robot2 lengre grafisk tilstede. Men robot2 er logisk til stede. Robot2 har altså blitt usynlig.
+
+Denne buggen virker viktig å få gjort noe med nå, men det er den egentlig ikke. I det virkelige spillet blir aldri robotenes spawn plasseres inntil brettets “kant”, så problemet vil ikke oppstå. 
+
+**Kravlista er lang, men det er ikke nødvendig å levere på alle kravene hvis det ikke er realistisk. Det er viktigere at de oppgavene som er utført holder høy kvalitet. Utførte oppgaver skal være ferdige**
+
+**Deloppgave 3: Kode**
+
+**Prosjektet skal kunne bygge, testes og kjøres på Linux, Windows og OSX. **
+
+Prosjektet kjører fint i windows og linux. Vi har ikke hatt muligheten til å teste det for OSX, men ser ingen grunn til at det ikke skulle fungere der.
+
+**Testing:**
+
+Vi har inkludert enkle men omfattende tester av spillerens rotasjon. Og at vegger returnerer riktig attributter.
+
+Vi har hatt problemer med å legge til tester som inkluderer brettet da brettet er direkte knyttet til grafikken. For å fikse dette kreves det av vi implementerer et headless rammeverk noe vi enda ikke har prioritert. Dette har vi valgt å legge til side for denne implementasjonen siden vi har vært så fokuserte på å implementere robot-funksjonalitet som enkelt kan testes med manuelle tester. Dessuten vil vi måtte abstrahere en del kode fra player og movementhandler klassene, noe som ville ført til at vi måtte skrive testene på nytt igjen senere uansett. Så istedenfor å bruker overflødig tid på det har vi fokusert på funksjonalitet og manuelle tester.
+
+Vi har laget et environment (dvs map) for manuelle tester. I og med at vi ikke har implementert funksjonalitet for gears, lasere, liv, eller hull på mappen er det enda ganske begrenset hva som fungerer som det skal på banen. 
+
+**Manuelle tester:**
+
+
+
+1. _Grunnleggende bevegelse_
+
+    Bruker piltastene til å teste robotens bevegelse. 
+
+    1. Der pil-opp refererer til å bevege seg framover
+    2. Pil-ned beveger seg bakover
+    3. Pil-høyre roterer roboten mot høyre
+    4. Pil-venstre roterer roboten mot venstre. 
+2. _Grunnleggende vegg-oppførsel_
+
+    Roter spilleren direkte mot en vegg. Dersom det er en:
+
+    5. Vegg på venstre side og du beveger deg mot venstre bør roboten ikke beveges
+    6. Vegg på høyre side og du beveger deg mot høyre bør roboten ikke beveges
+    7. Vegg over roboten og du beveger deg oppover bør roboten ikke beveges
+    8. Vegg under roboten og du beveger deg nedover bør roboten ikke beveges
+3. _Dytting av andre roboter_
+
+    Plasser spilleren direkte til høyre eller venstre for en av de andre robotene på banen, beveg deg så mot roboten. Forventet resultat vil være at begge robotene beveger seg i samme retnings som piltasten.
+
+4. _Dytting av flere roboter_
+
+    Plasser spilleren direkte over eller under begge de to andre robotene på banen. Beveg deg så mot robotene. Det forventede resultatet vil være at alle robotene beveger seg i samme retning som piltasten
+
+5. _Dytting av flere roboter mot vegg_
+
+    Repeter test 4, men plasser robotene slik at roboten lengst vekke fra spilleren er inntil en vegg. Beveg deg nå mot robotene. Det forventede resultatet vil være at ingen av robotene beveger seg.
+
+6. _Grunnleggende backup-oppførsel_
+
+    Flytt roboten fra startpunktet hele veien opp til toppen av banen. Der finnes den glippe i veggene. Når roboten beveger seg ut av banen er det forventet at roboten skal flyttes tilbake til backup lokasjonen sin. Backup lokasjonen vil “by default” være lokasjonen roboten startet på. Vi har valgt å inkludere muligheten til å endre backupen ved å trykke på C, og muligheten til å flytte roboten til checkpoint ved å trykke på mellomrom.
+
+7. _Backup-oppførsel for “ikke-aktive” roboter_
+
+    Dytt en annen robot helt til toppen av banen, samme sted som i test 6. Dytt så denne roboten utenfor banen. Forventet resultat er at den dyttende roboten flyttes til sin backup-posisjon, mens spillerens robot flyttes der hvor den dyttende stod i utgangspunktet.    	
 
 
 
