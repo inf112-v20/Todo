@@ -1,7 +1,23 @@
 ## **Obligatorisk oppgave 2**
 **Deloppgave 1: Prosjekt og prosjektstruktur**
 
+*Hvordan fungerer rollene i teamet?*
+
+Vi har på mange måter ikke hatt bruk for rollene enda. Men vi ser at dette antageligvis kommer til å endre seg etterhvert som prosjektet øker i kompleksitet. 
+Derfor velger vi å beholde rollene akkurat slik de er nå.
+
+*Trenger dere andre roller? Skriv ned noen linjer om hva de ulike rollene faktisk innebærer for dere.*
+
+Vi vurderer å utnevne en *grafisk designer* som skal være ansvarlig for design av egentilpasset tilesheets for spillbrettet og for spillerne (roboter).
+ Den som har denne rollen vil også styre hvordan menyen vil se ut senere. 
+ 
+*Er det noen erfaringer enten team-messig eller mtp prosjektmetodikk som er verdt å nevne?*
+
+
+
+
 *Hvordan fungerer kommunikasjonen for dere?*
+
 Gruppen kommuniserer ofte med hverandre, og alle gruppemedlemmer deltar aktivt i planleggingen av prosjektet. Vi bruker Slack og Messenger som kommunikasjonsmidler, og ellers møtes vi personlig. På Slack avtales møter, og viktige dokumenter og lenker holdes orden på. Vi har en uformell gruppesamtale på Messenger hvor vi kan ta opp mer “casual” temaer dersom det skulle være behov for det.
 Gruppemedlemmene treffes skremmende ofte utenfor planlagte tidsrom; i forelesninger enkelte av oss har felles, og tilfeldig på lesesalen hvor mange av oss tilbringer en del tid. Så vi har det enkelt for å slå av en prat om nye prosjektutfordringer også utenfor gruppemøtene og kommunikasjonsmidlene.
 
