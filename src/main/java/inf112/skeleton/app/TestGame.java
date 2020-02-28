@@ -33,7 +33,6 @@ public class TestGame implements ApplicationListener {
     public void create() {
         // load the map and get dimension
         board = new GameBoard();
-
         MapProperties properties = board.getTiledmap().getProperties();
         mapWidth = properties.get("width", Integer.class);
         mapHeight = properties.get("height", Integer.class);
@@ -64,9 +63,9 @@ public class TestGame implements ApplicationListener {
         movementHandler.add(player2);
         movementHandler.add(player3);
         movementHandler.setActive(player1);
+        movementHandler.drawPlayers();
 
         Gdx.input.setInputProcessor(movementHandler);
-
     }
 
     @Override
@@ -80,7 +79,6 @@ public class TestGame implements ApplicationListener {
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        movementHandler.update();
         mapRenderer.setView(camera);
         mapRenderer.render();
     }

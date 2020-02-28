@@ -1,4 +1,4 @@
-package inf112.core.screens;
+package inf112.core.unused;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -20,7 +20,7 @@ public class gameScreen implements Screen {
 
     @Override
     public void show() {
-        map = new TmxMapLoader().load("maps/testmap2.tmx");
+        map = new TmxMapLoader().load("maps/testmap3.tmx");
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, MAP_SIZE_X, MAP_SIZE_Y);

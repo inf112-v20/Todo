@@ -15,7 +15,7 @@ public abstract class LayeredBoard {
     protected TiledMap tiledmap;
 
     public void makeBoard(){
-        this.tiledmap = new TmxMapLoader().load("maps/testmap3.tmx");
+        this.tiledmap = new TmxMapLoader().load("maps/testingMap.tmx");
     }
 
     public TiledMapTileLayer getLayer(MapLayer mapLayer) {
@@ -27,6 +27,8 @@ public abstract class LayeredBoard {
     }
 
     /**
+     *
+     *
      * @return Hashtable containing TileId's with a position vector as key
      */
     public Map<Vector2, TileId> mapCollidables() {
@@ -42,7 +44,6 @@ public abstract class LayeredBoard {
                     collidables.put(new Vector2(i, j), tileId);
             }
         }
-        System.out.println(collidables.values());
         return collidables;
     }
 

@@ -1,6 +1,5 @@
 package inf112.core.player;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
@@ -68,6 +67,8 @@ public class Player {
     public void resetPosition() {   this.position.set(this.backup.getX(),this.backup.getY());   }
 
     public void setBackup(int xPos, int yPos) { this.backup = new PlayerBackup(xPos, yPos); }
+
+    public void setBackupHere() { setBackup((int) position.x, (int) position.y);}
 
     public void moveForward() {
         move(direction);
