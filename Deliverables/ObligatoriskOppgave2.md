@@ -3,26 +3,30 @@
 
 *Hvordan fungerer rollene i teamet?*
 
-Vi har på mange måter ikke hatt bruk for rollene enda. Men vi ser at dette antageligvis kommer til å endre seg etterhvert som prosjektet øker i kompleksitet. 
-Derfor velger vi å beholde rollene akkurat slik de er nå.
+I praksis har vi stort sett ikke merket til rollebesetningen. Det viser seg at alle på gruppen er flinke til å ta initiativ til møter, delege av oppgaver etc, så vi har ikke ligget spesielt merke til at vi har en teamleder. Kundekontakten vår har ikke vært i kontakt med kunden, siden vi ikke har hørt noe eksplisitt innkalling fra kunden. Likevel kommer antageligvis dette til å endre seg etterhvert som prosjektet øker i kompleksitet. Derfor velger vi å beholde rollene akkurat slik de er nå.
 
 *Trenger dere andre roller? Skriv ned noen linjer om hva de ulike rollene faktisk innebærer for dere.*
 
-Vi vurderer å utnevne en *grafisk designer* som skal være ansvarlig for design av egentilpasset tilesheets for spillbrettet og for spillerne (roboter).
- Den som har denne rollen vil også styre hvordan menyen vil se ut senere. 
+Vi vurderer å utnevne en *grafisk designer* som skal være ansvarlig for design av egentilpasset tilesheets for spillbrettet og for spillerne (roboter). Den som har denne rollen vil også styre hvordan menyen vil se ut senere. Vi venter forøvrig med dette, da vi ikke har kommet langt nok i utviklingsprosessen for at dette skal bli relevant.
  
 *Er det noen erfaringer enten team-messig eller mtp prosjektmetodikk som er verdt å nevne?*
 
-Vi har erfart at bruk av prosjekt-brettet fra kanban er veldig praktisk når det kommer til å holde oversikt over hva alle de andre på gruppen jobber med, samt å finne nye oppgaver en selv kan jobbe med. 
+Vi har erfart at bruk av prosjekt-brettet fra scrum er veldig praktisk når det kommer til å holde oversikt over hva alle de andre på gruppen jobber med, samt å finne nye oppgaver en selv kan jobbe med. 
+Teamet er svært effektive under sprints og får gjort svært mange punkter på prosjekt-brettet.
 
 
 *Hvordan fungerer kommunikasjonen for dere?*
 
-Gruppen kommuniserer ofte med hverandre, og alle gruppemedlemmer deltar aktivt i planleggingen av prosjektet. Vi bruker Slack og Messenger som kommunikasjonsmidler, og ellers møtes vi personlig. På Slack avtales møter, og viktige dokumenter og lenker holdes orden på. Vi har en uformell gruppesamtale
- på Messenger hvor vi kan ta opp mer “casual” temaer dersom det skulle være behov for det.
+Gruppen kommuniserer ofte med hverandre, og alle gruppemedlemmer deltar aktivt i planleggingen av prosjektet. Vi bruker Slack og Messenger som kommunikasjonsmidler, og ellers møtes vi personlig. På Slack avtales møter, og viktige dokumenter og lenker holdes orden på. Vi har en uformell gruppesamtale på Messenger hvor vi kan ta opp mer “casual” temaer dersom det skulle være behov for det.
 Gruppemedlemmene treffes skremmende ofte utenfor planlagte tidsrom; i forelesninger enkelte av oss har felles, og tilfeldig på lesesalen hvor mange av oss tilbringer en del tid. Så vi har det enkelt for å slå av en prat om nye prosjektutfordringer også utenfor gruppemøtene og kommunikasjonsmidlene.
+Vi forsøker også å ha en åpen holdning til spørsmålsstilling om hvordan koden fungerer og henger sammen, og også kritikk av hverandres kodedesign, navngiving, mm. Lurer en av oss på hvordan koden en annen skrev fungerer, er det bare å spørre. Vi er alle opptatt av at alle skal forstå mest mulig av koden. Vi er enige om at spesielt kritikk kan være utfordrende, men nødvendig for å oppnå best mulig helhetlig design. Da må dette naturligvis gjøres på en konstruktiv måte. Nå har vi ikke opplevd noe særlig til akkurat dette, men vi er enige om at det bør være en mulighet.
+
+*Hvordan fungerer gruppedynamikken?*
+
+Dynamikken i gruppen er bra. Vi kommuniserer enkelt med hverandre, både over nett og når vi snakker sammen. Støter vi på en utfordring vi sliter å få til, tar vi gjerne kontakt med andre gruppemedlemmer om råd. Eventuelt tar vi opp sånne ting i plenum på gruppemøtene. I så fall er alle villige til å komme med innspill for å komme frem til best mulig løsning. Vi liker å løse utfordringer sammen, og det gir også ofte det beste resultatet. Ellers er stemningen lett og uformell, og vi trives i hverandres selskap. 
 
 **Gjør et kort retrospektiv hvor dere vurderer hva dere har klart til nå, og hva som kan forbedres. Dette skal handle om prosjektstruktur, ikke kode. Dere kan selvsagt diskutere kode, men dette handler ikke om feilretting, men om hvordan man jobber og kommuniserer.**
+
 Vi hadde i utgangspunktet bestemt oss for ha et løst forhold til valg av prosjektmetodikk , men å spesielt prøve ut følgende prinsipper fra smidig utvikling: parprogrammering, scrum sprints med en slags scrum master, og testdrevet utvikling.
 
 Av disse tre prinsippene har parprogrammering klart fungert best. Vi opplever flere positive sider ved denne metoden. For det første har det fungert bra for å oppdatere medlemmer om hvordan deler av koden de ikke har sett før fungerer. For det andre finner vi gjerne flere løsninger på et problem, drøfter de ulike løsningene, og bestemmer oss for løsningen vi liker best.
@@ -151,6 +155,81 @@ En bad merge oppstod og ble pushet til master, slik at produktet krasjet ved opp
 
 Vi arbeidet med å fullføre den andre obligatoriske innleveringen.
 
+
+**Deloppgave 2: Krav**
+
+*For hvert krav dere jobber med, må dere lage 1) ordentlige brukerhistorier, 2) akseptansekriterier og 3) arbeidsoppgaver. Husk at akseptansekriterier ofte skrives mer eller mindre som tester*
+
+* Som spiller ønsker jeg å ha medspiller på brettet, slik at jeg har noen å spille med.
+   	Arbeidsoppgaver:
+    * Få på plass enda et Player-objekt som representerer den nye spilleren
+    * Kunne lage flere unike Player-objekt som representerer en ny spiller
+    * InputHandler for Spillklassen som håndterer inputs for alle de forskjellige playersene
+    
+    Akseptansekrav: Hvis jeg starter spillet skal jeg se en annen spiller på kartet
+
+* Som spiller ønsker jeg at jeg kan dytte et robot på kartet i den retningen jeg beveger meg, slik at roboter ikke kan stå oppå hverandre.
+  	Arbeidsoppgaver:
+    * Klasse som sørger for at dersom en spiller beveger seg mot en annen spiller, så beveges begge spillerne i den retningen
+    
+    Akseptansekrav: Hvis jeg prøver å bevege meg inn i en robot, skal roboten bevege seg i samme retning som roboten min beveger seg. Dette gjelder også hvis flere roboter står på rekke. De skal heller ikke bli dyttet hvis de treffer en vegg.
+
+* Som spiller ønsker jeg at det skal være vegger på kartet, slik at roboten min blir stoppet om den forsøker å bevege seg der.
+  Arbeidsoppgaver:
+    * Generell klasse for alle slags mulige tiles på det statiske brettet
+    * Veggobject (med rotasjon?)
+    * En eller annen klasse som håndterer kollisjon
+    
+    Akseptansekrav: Hvis roboten min beveger prøver å bevege seg inn i en vegg, skal den ikke bevege seg.
+
+
+* Som spiller ønsker jeg at roboten min plasseres på checkpoint dersom den beveger seg ut av brettet, slik at den ikke står plassert ulovlig.
+  Arbeidsoppgaver:
+    * Playerklassen må ha en origin som den kan respawne på
+    * Klasse som skjekker om bevegelsen tar spiller ut av kartet, og som flytter spilleren til spawn
+    
+    Akseptansekrav: Dersom roboten min beveger seg ut av brettet så skal roboten min bli plassert på chechpointet sitt. 
+
+
+*Dersom dere har oppgaver som dere skal til å starte med, hvor dere har oversikt over både brukerhistorie, akseptansekriterier og arbeidsoppgaver, kan dere ta med disse i innleveringen også.*
+
+* Som spiller ønsker jeg at roboten min skal rotere dersom roboten stiller seg på et tannhjul
+ Arbeidsoppgaver: 
+    * Akseptansekrav: Dersom roboten stiller seg på et tannhjul seg roboten rotere i samme retning som tannhjulet
+
+* Som spiller ønsker jeg at roboten min skal bevege seg i retningen av et samlebånd dersom den stiller seg på et samlebånd
+    * Akseptansekrav: Dersom en robot stiller seg på et samlebånd skal den bevege seg i retningen av samlebåndet
+
+
+**Forklar kort hvordan dere har prioritert oppgavene fremover.**
+
+Vi har prioritert oppgaver som er direkte knyttet med spillbrettet og robotens bevegelse. Det vil si oppgaver som angår funksjonalitet. På scrumbrettet har vi fortsatt en del oppgaver knyttet til dette som vi må håndtere før vi kan begynne på nye oppgaver. Etter dette vil vi håndtere oppgaver som programkort og faser og runder.
+
+
+*Forklar kort hvilke hovedkrav dere anser som en del av MVP og hvorfor. Hvis det er gjort endringer i rekkefølge utfra hva som er gitt fra kunde, hvorfor er dette gjort?*
+
+Vi anser fortsatt MVP som det absolutte minimum av funksjonalitet som vi trenger for at spillet kan fungere, MVP er da:
+* Et Kart som inneholder alle spill-objektene vi trenger for å spille RoboRally. Kartet må altså inneholde:
+    * Vegger
+    * Laser
+    * Flag
+    * Hull
+    * Tannhjul
+    * Transportbånd
+    * Skiftenøkkel
+    * Roboter
+* En overordnet spill-klasse som behandler spill-logikk og viser kartet grafisk til brukeren.
+* En Robot som kan
+    * Bevege seg
+    * Miste liv
+    * Dø
+    * Gjennoppstå
+    * Powerdown
+* En spiller som kan:
+    * Få utdelt programkort
+    * Legge ned et program
+    * Tape/vinne
+   	
 
 
 
