@@ -1,11 +1,9 @@
 package inf112.core.movement;
 
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
-import inf112.core.tile.Attributes;
 import inf112.core.tile.TileId;
 import inf112.core.util.VectorMovement;
 
