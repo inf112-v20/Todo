@@ -63,19 +63,6 @@ Alt i alt: vi har gått fra å ha et løst forhold til prosjektmetodikk til nå 
 
 Av commithistorikken vår kan det virke som om kun noen av oss har bidratt til utviklingen av koden. Dette er ikke tilfellet, da vi i stor grad har drevet med parprogrammering. Vi har ikke giddet å drive med rotering av PCer vi jobber på for å tegne et kunstig bilde av bidragsmangfoldighet. Bunnlinjen her er at alle bidrar gjennom parprogrammering.
 
-**Møtereferater**
-
-*Møte/gruppetime 21.20.2020 (Eskil, Øyvind, Alvar)*
-Gruppen arbeidet med å finne brukerhistorier for ønsket oppførsel til neste innlevering.
-
-*Møte 25.02.2020 (Alle gruppemedlemmer deltok)*
-Siden flere var borte forrige uke gikk vi gjennom koden i plenum, og fikk alle up to speed på oblig 2, og hva vi må gjøre annerledes (flere tester f.eks)  og hvordan vi skal komme videre med koden. Etter møtet skled vi naturlig inn i en slags sprint og fikk gjort mange av punktene på prosjekt-brettet.
-
-*Møte 26.02.2020 (Alle gruppemedlemmer deltok)*
-Vi jobbet videre med kodingen, siden flere jobbet med ulike deler snakket vi en del sammen. En bad merge oppstod og ble pushet til master, slik at produktet krasjet ved oppstart. Dette ble raskt fikset i plenum, men vi kjente alle litt på (og hadde litt godt av) panikken som følger av en bad merge.
-
-*Møte/Gruppetime 28.02.2020. (Eskil, Øyvind, Alvar og Pål deltok)*
-Vi arbeidet med å fullføre den andre obligatoriske innleveringen. 
 
 *Hvordan er gruppedynamikken?*
 
@@ -222,7 +209,6 @@ Vi anser fortsatt MVP som det absolutte minimum av funksjonalitet som vi trenger
 Fram til nå har vi prioritert oppgaver direkte knyttet til robotenes bevegelse. Vi har kommet godt i gang med dette og har allerede implementert funksjonalitet som:
 
 
-
 *   BackUp
 *   Kan falle ut av banen, og respawne på backup
 *   Vegger (i alle mulige retninger, og kombinasjoner av dem)
@@ -239,7 +225,6 @@ Ellers vet vi om én bug. La oss si at spilleren kontrollerer robot1, og at en a
 
 Denne buggen virker viktig å få gjort noe med nå, men det er den egentlig ikke. I det virkelige spillet blir aldri robotenes spawn plasseres inntil brettets “kant”, så problemet vil ikke oppstå. 
 
-**Kravlista er lang, men det er ikke nødvendig å levere på alle kravene hvis det ikke er realistisk. Det er viktigere at de oppgavene som er utført holder høy kvalitet. Utførte oppgaver skal være ferdige**
 
 **Deloppgave 3: Kode**
 
@@ -256,7 +241,6 @@ Vi har hatt problemer med å legge til tester som inkluderer brettet da brettet 
 Vi har laget et environment (dvs map) for manuelle tester. I og med at vi ikke har implementert funksjonalitet for gears, lasere, liv, eller hull på mappen er det enda ganske begrenset hva som fungerer som det skal på banen. 
 
 **Manuelle tester:**
-
 
 
 1. _Grunnleggende bevegelse_
