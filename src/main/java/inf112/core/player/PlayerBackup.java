@@ -2,6 +2,11 @@ package inf112.core.player;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * A simple class for keeping track of the player backup location.
+ *
+ * @author pål
+ */
 public class PlayerBackup {
     private Vector2 position;
 

@@ -1,23 +1,19 @@
-package inf112.skeleton.app;
+package inf112.core.screens;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import inf112.core.board.GameBoard;
-import inf112.core.board.LayeredBoard;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
 
 
-public class TestGame implements ApplicationListener {
+public class GameScreen implements Screen {
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
     private Texture texture;
@@ -30,7 +26,7 @@ public class TestGame implements ApplicationListener {
 
 
     @Override
-    public void create() {
+    public void show() {
         // load the map and get dimension
         board = new GameBoard();
         MapProperties properties = board.getTiledmap().getProperties();
@@ -76,7 +72,12 @@ public class TestGame implements ApplicationListener {
     }
 
     @Override
-    public void render() {
+    public void hide() {
+        dispose();    // hva er forskjellen på hide() og dispose() ??
+    }
+
+    @Override
+    public void render(float v) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         mapRenderer.setView(camera);
