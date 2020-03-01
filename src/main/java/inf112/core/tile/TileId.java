@@ -26,7 +26,16 @@ public enum TileId {
     WALL_SOUTH_EAST(7, Attributes.SOUTH, Attributes.EAST),
     WALL_NORTH_EAST(15, Attributes.NORTH, Attributes.EAST),
     WALL_NORTH_WEST(23, Attributes.NORTH, Attributes.WEST),
-    WALL_SOUTH_WEST(31, Attributes.SOUTH, Attributes.WEST)
+    WALL_SOUTH_WEST(31, Attributes.SOUTH, Attributes.WEST),
+
+    SPAWN_PLAYER1(120),
+    SPAWN_PLAYER2(121),
+    SPAWN_PLAYER3(122),
+    SPAWN_PLAYER4(123),
+    SPAWN_PLAYER5(128),
+    SPAWN_PLAYER6(129),
+    SPAWN_PLAYER7(130),
+    SPAWN_PLAYER8(131),
     ;
 
     private int id;

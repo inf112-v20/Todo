@@ -49,16 +49,12 @@ public class GameScreen implements Screen {
         texture = new Texture("img/player.png");
         textureRegions = TextureRegion.split(texture, tilePixelWidth, tilePixelHeight)[0];
         player1 = new Player("Player1", textureRegions[0]);
-        player2 = new Player("Player2", textureRegions[1], 5, 5);
-        player3 = new Player("Player3", textureRegions[2], 5, 6);
-        player1.setBackup(0,0);
-        player2.setBackup(1,0);
-        player3.setBackup(2,0);
+        player2 = new Player("Player2", textureRegions[1]);
+        player3 = new Player("Player3", textureRegions[2]);
         movementHandler = new MovementHandler(board);
-        movementHandler.add(player1);
-        movementHandler.add(player2);
-        movementHandler.add(player3);
+        movementHandler.add(player1, player2, player3);
         movementHandler.setActive(player1);
+        movementHandler.moveAllToSpawn();
         movementHandler.drawPlayers();
 
         Gdx.input.setInputProcessor(movementHandler);

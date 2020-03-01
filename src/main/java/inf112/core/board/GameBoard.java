@@ -10,15 +10,16 @@ import static inf112.core.board.MapLayer.*;
 
 public class GameBoard extends LayeredBoard {
 
-    Map<Vector2, TileId> collidablesMap;
+    Map<Vector2, TileId> collidablesMap, spawnsMap;
 
     public GameBoard(){
         makeBoard();
         collidablesMap = super.mapCollidables();
+        spawnsMap = super.mapSpawns();
     }
 
     public Boolean onBoard(Player player){
-        TiledMapTileLayer players = getLayer(PLAYER_LAYER);
+        TiledMapTileLayer players = super.getLayer(PLAYER_LAYER);
         int playerX = player.getX();
         int playerY = player.getY();
         if (playerY < 0 || playerY >= players.getHeight()) { return false; }
@@ -26,4 +27,6 @@ public class GameBoard extends LayeredBoard {
         else return true;
     }
     public Map<Vector2, TileId> getCollidables() { return collidablesMap; }
+
+    public Map<Vector2, TileId> getSpawns() { return spawnsMap; }
 }
