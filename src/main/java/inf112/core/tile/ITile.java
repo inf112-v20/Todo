@@ -19,6 +19,12 @@ public interface ITile {
 
     /**
      *
+     * @return id of TileMap Object
+     */
+    int getId();
+
+    /**
+     *
      * @return TileId of tile
      */
     TileId getTileId();

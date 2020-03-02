@@ -24,6 +24,9 @@ public abstract class AbstractTile implements ITile{
     }
 
     @Override
+    public int getId() { return id; }
+
+    @Override
     public TileId getTileId() {
         return TileId.getTileId(id);
     }
