@@ -1,5 +1,6 @@
 package inf112.core.map;
 
+import com.badlogic.gdx.math.Vector2;
 import inf112.core.tile.Attributes;
 import inf112.core.tile.TileId;
 import org.junit.Before;
@@ -67,5 +68,10 @@ public class TileIdTest {
         List<Attributes> attributes = TileId.WALL_SOUTH_EAST.getAttributes();
         for(Attributes attribute : attributes)
             assert(attribute.equals(Attributes.EAST) || attribute.equals(Attributes.SOUTH));
+    }
+
+    @Test
+    public void instanciateOnTileIdWallsShouldReturnAWallTileObject() {
+        //assert(TileId.WALL_NORTH.instanciate(new Vector2(1, 1)) instanceof  WallTile);
     }
 }

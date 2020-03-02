@@ -1,7 +1,10 @@
 package inf112.core.tile;
 
+import com.badlogic.gdx.math.Vector2;
 import inf112.core.player.Direction;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import static inf112.core.tile.Attributes.*;
 
@@ -18,32 +21,33 @@ public enum TileId {
      * Wall-tiles. Walls have a list of directions, walls that cover multiple sides of a tile
      * will have multiple directions.
      */
-    WALL_SOUTH(28, Attributes.SOUTH),
-    WALL_NORTH(30, Attributes.NORTH),
-    WALL_WEST(29, Attributes.WEST),
-    WALL_EAST(22, Attributes.EAST),
+    WALL_SOUTH(28, PlaceholderTile.class, Attributes.SOUTH),
+    WALL_NORTH(30, PlaceholderTile.class, Attributes.NORTH),
+    WALL_WEST(29, PlaceholderTile.class, Attributes.WEST),
+    WALL_EAST(22, PlaceholderTile.class, Attributes.EAST),
 
-    WALL_SOUTH_EAST(7, Attributes.SOUTH, Attributes.EAST),
-    WALL_NORTH_EAST(15, Attributes.NORTH, Attributes.EAST),
-    WALL_NORTH_WEST(23, Attributes.NORTH, Attributes.WEST),
-    WALL_SOUTH_WEST(31, Attributes.SOUTH, Attributes.WEST),
+    WALL_SOUTH_EAST(7, PlaceholderTile.class, Attributes.SOUTH, Attributes.EAST),
+    WALL_NORTH_EAST(15, PlaceholderTile.class, Attributes.NORTH, Attributes.EAST),
+    WALL_NORTH_WEST(23, PlaceholderTile.class, Attributes.NORTH, Attributes.WEST),
+    WALL_SOUTH_WEST(31, PlaceholderTile.class, Attributes.SOUTH, Attributes.WEST),
 
-    SPAWN_PLAYER1(120),
-    SPAWN_PLAYER2(121),
-    SPAWN_PLAYER3(122),
-    SPAWN_PLAYER4(123),
-    SPAWN_PLAYER5(128),
-    SPAWN_PLAYER6(129),
-    SPAWN_PLAYER7(130),
-    SPAWN_PLAYER8(131),
+    SPAWN_PLAYER1(120, PlaceholderTile.class),
+    SPAWN_PLAYER2(121, PlaceholderTile.class),
+    SPAWN_PLAYER3(122, PlaceholderTile.class),
+    SPAWN_PLAYER4(123, PlaceholderTile.class),
+    SPAWN_PLAYER5(128, PlaceholderTile.class),
+    SPAWN_PLAYER6(129, PlaceholderTile.class),
+    SPAWN_PLAYER7(130, PlaceholderTile.class),
+    SPAWN_PLAYER8(131, PlaceholderTile.class),
     ;
 
     private int id;
+    private Class<ITile> implClass;
     private ArrayList<Attributes> attributes;
     private static Map<Integer, TileId> idTable = createIdTable();
 
 
-    TileId(int id, Attributes... attributes) {
+    TileId(int id, Class<? extends ITile> implClass , Attributes... attributes) {
         //id of tiles are shifted by 1 for some reason
         this.id = id + 1;
         this.attributes = new ArrayList<>();
@@ -57,6 +61,8 @@ public enum TileId {
         }
         return idTable;
     }
+
+    public Class<? extends ITile> getImplClass() {return implClass;}
 
     private static Map<Integer, TileId> getIdTable() {
         return idTable;
@@ -75,7 +81,21 @@ public enum TileId {
         return facingDirections;
     }
 
+    public ITile instanciate(Vector2 pos) {
+        try {
+            Constructor<? extends ITile> constructor = this.implClass.getDeclaredConstructor(Vector2.class, TileId.class);
+            return constructor.newInstance(pos.cpy(), this);
+        } catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
     public List<Attributes> getAttributes() { return attributes; }
 
     public int getId() { return this.id; }
+
+    public List<TileId> getWalls() {
+        return null;
+    }
 }

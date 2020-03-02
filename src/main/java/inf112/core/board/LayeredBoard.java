@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.tile.TileId;
 
+import java.lang.reflect.Constructor;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Vector;
@@ -48,9 +49,9 @@ public abstract class LayeredBoard {
             for (int y = 0; y < layer.getHeight(); y++) {
                 if (layer.getCell(x, y) == null)
                     continue;
-                int id = layer.getCell(x, y).getTile().getId();
-                TileId tileId = TileId.getTileId(id);
+                TileId tileId = TileId.getTileId(layer.getCell(x, y).getTile().getId());
                 if (tileId != null)
+                    
                     table.put(new Vector2(x, y), tileId);
             }
         return table;
