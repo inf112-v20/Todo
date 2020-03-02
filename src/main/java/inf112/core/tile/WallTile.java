@@ -17,6 +17,15 @@ public class WallTile extends AbstractTile implements CollidableTile {
 
     @Override
     public boolean willCollide(Vector2 pos, Direction direction) {
+        if(getPos().equals(pos)) {
+            if(getDirections().contains(direction)) {
+                return true;
+            }
+        } else {
+            if(getDirections().contains(Direction.invert(direction))) {
+                return true;
+            }
+        }
         return false;
     }
 }

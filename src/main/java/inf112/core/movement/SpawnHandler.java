@@ -3,6 +3,7 @@ package inf112.core.movement;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
 import inf112.core.player.Player;
+import inf112.core.tile.ITile;
 import inf112.core.tile.TileId;
 
 import java.util.Hashtable;
@@ -21,10 +22,10 @@ public class SpawnHandler {
     public SpawnHandler(GameBoard gameBoard) {
         this.playerIdToSpawnMapping = new Hashtable<>();
 
-        Map<Vector2, TileId> spawnToTileIdMapping = gameBoard.getSpawns();
+        Map<Vector2, ITile> spawnToTileIdMapping = gameBoard.getSpawns();
 
         for (Vector2 spawnPos : spawnToTileIdMapping.keySet()) {
-            Integer playerId = tileIdToPlayerId(spawnToTileIdMapping.get(spawnPos));
+            Integer playerId = tileIdToPlayerId(spawnToTileIdMapping.get(spawnPos).getTileId());
             playerIdToSpawnMapping.put(playerId, spawnPos);
         }
     }
