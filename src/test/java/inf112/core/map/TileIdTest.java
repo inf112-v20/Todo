@@ -3,12 +3,15 @@ package inf112.core.map;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.tile.Attributes;
 import inf112.core.tile.TileId;
+import inf112.core.tile.WallTile;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class TileIdTest {
 
@@ -71,7 +74,7 @@ public class TileIdTest {
     }
 
     @Test
-    public void instanciateOnTileIdWallsShouldReturnAWallTileObject() {
-        //assert(TileId.WALL_NORTH.instanciate(new Vector2(1, 1)) instanceof  WallTile);
+    public void instantiateOnTileIdWallsShouldReturnAWallTileObject() {
+        assertThat(TileId.WALL_NORTH.instantiate(new Vector2(1, 1)), instanceOf(WallTile.class));
     }
 }

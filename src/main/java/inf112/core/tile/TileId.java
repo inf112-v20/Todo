@@ -6,6 +6,7 @@ import inf112.core.player.Direction;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+
 import static inf112.core.tile.Attributes.*;
 
 /**
@@ -21,15 +22,15 @@ public enum TileId {
      * Wall-tiles. Walls have a list of directions, walls that cover multiple sides of a tile
      * will have multiple directions.
      */
-    WALL_SOUTH(28, PlaceholderTile.class, Attributes.SOUTH),
-    WALL_NORTH(30, PlaceholderTile.class, Attributes.NORTH),
-    WALL_WEST(29, PlaceholderTile.class, Attributes.WEST),
-    WALL_EAST(22, PlaceholderTile.class, Attributes.EAST),
+    WALL_SOUTH(28, WallTile.class, Attributes.SOUTH),
+    WALL_NORTH(30, WallTile.class, Attributes.NORTH),
+    WALL_WEST(29, WallTile.class, Attributes.WEST),
+    WALL_EAST(22, WallTile.class, Attributes.EAST),
 
-    WALL_SOUTH_EAST(7, PlaceholderTile.class, Attributes.SOUTH, Attributes.EAST),
-    WALL_NORTH_EAST(15, PlaceholderTile.class, Attributes.NORTH, Attributes.EAST),
-    WALL_NORTH_WEST(23, PlaceholderTile.class, Attributes.NORTH, Attributes.WEST),
-    WALL_SOUTH_WEST(31, PlaceholderTile.class, Attributes.SOUTH, Attributes.WEST),
+    WALL_SOUTH_EAST(7, WallTile.class, Attributes.SOUTH, Attributes.EAST),
+    WALL_NORTH_EAST(15, WallTile.class, Attributes.NORTH, Attributes.EAST),
+    WALL_NORTH_WEST(23, WallTile.class, Attributes.NORTH, Attributes.WEST),
+    WALL_SOUTH_WEST(31, WallTile.class, Attributes.SOUTH, Attributes.WEST),
 
     SPAWN_PLAYER1(120, PlaceholderTile.class),
     SPAWN_PLAYER2(121, PlaceholderTile.class),
@@ -42,14 +43,15 @@ public enum TileId {
     ;
 
     private int id;
-    private Class<ITile> implClass;
+    private Class<? extends ITile> implementationClass;
     private ArrayList<Attributes> attributes;
     private static Map<Integer, TileId> idTable = createIdTable();
 
 
-    TileId(int id, Class<? extends ITile> implClass , Attributes... attributes) {
+    TileId(int id, Class<? extends ITile> implementationClass , Attributes... attributes) {
         //id of tiles are shifted by 1 for some reason
         this.id = id + 1;
+        this.implementationClass = implementationClass;
         this.attributes = new ArrayList<>();
         Collections.addAll(this.attributes, attributes);
     }
@@ -62,7 +64,7 @@ public enum TileId {
         return idTable;
     }
 
-    public Class<? extends ITile> getImplClass() {return implClass;}
+    public Class<? extends ITile> getImplementationClass() {return implementationClass;}
 
     private static Map<Integer, TileId> getIdTable() {
         return idTable;
@@ -81,9 +83,12 @@ public enum TileId {
         return facingDirections;
     }
 
-    public ITile instanciate(Vector2 pos) {
+    public ITile instantiate(Vector2 pos) {
+        if(implementationClass == null)
+            return null;
+
         try {
-            Constructor<? extends ITile> constructor = this.implClass.getDeclaredConstructor(Vector2.class, TileId.class);
+            Constructor<? extends ITile> constructor = implementationClass.getDeclaredConstructor(Vector2.class, TileId.class);
             return constructor.newInstance(pos.cpy(), this);
         } catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
@@ -94,8 +99,4 @@ public enum TileId {
     public List<Attributes> getAttributes() { return attributes; }
 
     public int getId() { return this.id; }
-
-    public List<TileId> getWalls() {
-        return null;
-    }
 }
