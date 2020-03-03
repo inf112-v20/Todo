@@ -5,12 +5,14 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class AbstractTile implements ITile{
 
     private float xVal, yVal;
-    private int id;
+    private Vector2 pos;
+    private TileId tileId;
 
-    public AbstractTile(Vector2 coordinates, int id) {
+    public AbstractTile(Vector2 coordinates, TileId tileId) {
         this.xVal = coordinates.x;
         this.yVal = coordinates.y;
-        this.id = id;
+        pos = coordinates.cpy();
+        this.tileId = tileId;
     }
 
     @Override
@@ -24,7 +26,15 @@ public abstract class AbstractTile implements ITile{
     }
 
     @Override
+    public Vector2 getPos() {
+        return pos;
+    }
+
+    @Override
+    public int getId() { return tileId.getId(); }
+
+    @Override
     public TileId getTileId() {
-        return TileId.getTileId(id);
+        return tileId;
     }
 }

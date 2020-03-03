@@ -3,6 +3,7 @@ package inf112.core.movement;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
@@ -22,18 +23,28 @@ public class MovementHandler extends InputAdapter {
     private Player activePlayer;                 // movement will affect this player. Should be changed actively
     private TiledMapTileLayer playerLayer;       // layer in which all player cells are placed (for graphics)
     private CollisionHandler collisionHandler;
+    private SpawnHandler spawnHandler;
 
     public MovementHandler(GameBoard board) {
         this.board = board;
         this.playerLayer = board.getLayer(PLAYER_LAYER);
         this.players = new ArrayList<>();
         this.collisionHandler = new CollisionHandler(board, players);
+        this.spawnHandler = new SpawnHandler(board);
     }
 
     public boolean add(Player player) {
         if (contains(player))
             return false;
         return players.add(player);
+    }
+
+    public boolean add(Player... playersToBeAdded) {
+        boolean allAdded = true;
+        for (Player player : playersToBeAdded)
+            if (!add(player))
+                allAdded = false;
+        return allAdded;
     }
 
     public boolean contains(Player player) {
@@ -50,6 +61,7 @@ public class MovementHandler extends InputAdapter {
         for (Player player : players)
             playerLayer.setCell(player.getX(), player.getY(), player.getCell());
     }
+
 
     @Override
     public boolean keyDown(int keycode) {
@@ -71,10 +83,6 @@ public class MovementHandler extends InputAdapter {
                 break;
             case Input.Keys.SPACE:
                 moveToBackup(activePlayer);
-                break;
-            case Input.Keys.S:
-                // TODO switch active player
-                // dette er egentlig utenfor oppgaven, da activePlayer settes til eieren av programkortet med høyest verdi
                 break;
             default:
                 return false;
@@ -158,5 +166,22 @@ public class MovementHandler extends InputAdapter {
         if (!board.onBoard(playerToBeMoved)) {
             moveToBackup(playerToBeMoved);
         }
+    }
+
+    /**
+     * Moves all players to their associated spawn point.
+     *
+     * Should be called exactly once; when the game initiates.
+     */
+    public void moveAllToSpawn() {
+        // set all player's backup position to their associated spawn point
+        for (Player player : players) {
+            Vector2 spawnPosition = spawnHandler.getSpawnPosition(player);
+            if (spawnPosition != null)
+                player.setBackup((int) spawnPosition.x, (int) spawnPosition.y);
+        }
+        // move all players to backup/spawn
+        for (Player player : players)
+            moveToBackup(player);
     }
 }
