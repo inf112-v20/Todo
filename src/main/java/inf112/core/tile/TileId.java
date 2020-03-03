@@ -14,7 +14,6 @@ import static inf112.core.tile.Attributes.*;
  * with the getTileId function we can quickly translate the id of a TiledMapTile into a TileId with attributes
  * and functions we can use
  *
- * @author Alvar
  */
 public enum TileId {
 
