@@ -1,10 +1,19 @@
 package inf112.core.programcards;
 
-import java.util.List;
-
-public class ProgramCard {
-    private List<BasicMovement> Sequence;
-    private int priority;
+public abstract class ProgramCard {
     private String name;
+    private int priority;
 
+    public ProgramCard(String name, int priority){
+        this.name = name;
+        this.priority = priority;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
 }
