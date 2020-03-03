@@ -31,14 +31,14 @@ public enum TileId {
     WALL_NORTH_WEST(23, WallTile.class, Attributes.NORTH, Attributes.WEST),
     WALL_SOUTH_WEST(31, WallTile.class, Attributes.SOUTH, Attributes.WEST),
 
-    SPAWN_PLAYER1(120, PlaceholderTile.class),
-    SPAWN_PLAYER2(121, PlaceholderTile.class),
-    SPAWN_PLAYER3(122, PlaceholderTile.class),
-    SPAWN_PLAYER4(123, PlaceholderTile.class),
-    SPAWN_PLAYER5(128, PlaceholderTile.class),
-    SPAWN_PLAYER6(129, PlaceholderTile.class),
-    SPAWN_PLAYER7(130, PlaceholderTile.class),
-    SPAWN_PLAYER8(131, PlaceholderTile.class),
+    SPAWN_PLAYER1(120, SpawnTile.class),
+    SPAWN_PLAYER2(121, SpawnTile.class),
+    SPAWN_PLAYER3(122, SpawnTile.class),
+    SPAWN_PLAYER4(123, SpawnTile.class),
+    SPAWN_PLAYER5(128, SpawnTile.class),
+    SPAWN_PLAYER6(129, SpawnTile.class),
+    SPAWN_PLAYER7(130, SpawnTile.class),
+    SPAWN_PLAYER8(131, SpawnTile.class),
     ;
 
     private int id;

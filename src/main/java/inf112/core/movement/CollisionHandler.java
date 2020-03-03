@@ -5,7 +5,6 @@ import inf112.core.board.GameBoard;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
 import inf112.core.tile.CollidableTile;
-import inf112.core.tile.TileId;
 import inf112.core.util.VectorMovement;
 import java.util.List;
 
