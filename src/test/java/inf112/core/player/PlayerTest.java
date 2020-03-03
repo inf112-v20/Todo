@@ -22,9 +22,51 @@ public class PlayerTest {
     }
 
     @Test
+    public void rotateLeftFromWestShouldReturnSouth() {
+        testPlayer.setDirection(WEST);
+        testPlayer.rotateLeft();
+        assertEquals(testPlayer.getDirection(), SOUTH);
+    }
+
+    @Test
+    public void rotateLeftFromSouthShouldReturnEast() {
+        testPlayer.setDirection(SOUTH);
+        testPlayer.rotateLeft();
+        assertEquals(testPlayer.getDirection(), EAST);
+    }
+
+    @Test
+    public void rotateLeftFromEastShouldReturnNorth() {
+        testPlayer.setDirection(EAST);
+        testPlayer.rotateLeft();
+        assertEquals(testPlayer.getDirection(), NORTH);
+    }
+
+    @Test
     public void rotateRightFromNorthShouldReturnEast() {
         testPlayer.setDirection(NORTH);
         testPlayer.rotateRight();
         assertEquals(testPlayer.getDirection(), EAST);
+    }
+
+    @Test
+    public void rotateRightFromEastShouldReturnSouth() {
+        testPlayer.setDirection(EAST);
+        testPlayer.rotateRight();
+        assertEquals(testPlayer.getDirection(), SOUTH);
+    }
+
+    @Test
+    public void rotateRightFromSouthShouldReturnWest() {
+        testPlayer.setDirection(SOUTH);
+        testPlayer.rotateRight();
+        assertEquals(testPlayer.getDirection(), WEST);
+    }
+
+    @Test
+    public void rotateRightFromWestShouldReturnNorth() {
+        testPlayer.setDirection(WEST);
+        testPlayer.rotateRight();
+        assertEquals(testPlayer.getDirection(), NORTH);
     }
 }

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>inf112</OriginalElement>
+  <nodes>
+    <node x="590.5387780112044" y="275.0">inf112.core.tile.Attributes</node>
+    <node x="864.8269607843138" y="1731.0">inf112.core.movement.CollisionHandler</node>
+    <node x="67.84991246498589" y="1068.0">inf112.core.board.LayeredBoard</node>
+    <node x="788.7189600840336" y="1886.0">inf112.core.movement.MovementHandler</node>
+    <node x="842.2189600840336" y="2601.0">inf112.desktop.Main</node>
+    <node x="1320.0189600840336" y="661.0">inf112.core.player.PlayerBackup</node>
+    <node x="343.84991246498595" y="1024.0">inf112.core.map.TileIdTest</node>
+    <node x="1213.5189600840336" y="947.0">inf112.core.player.Player</node>
+    <node x="10.5" y="585.0">inf112.core.board.MapLayer</node>
+    <node x="1022.0189600840336" y="672.0">inf112.core.util.VectorMovement</node>
+    <node x="842.7189600840336" y="2388.0">inf112.core.roborally.RoboRally</node>
+    <node x="841.6832457983193" y="1497.0">inf112.core.tile.AbstractTile</node>
+    <node x="842.7189600840336" y="2153.0">inf112.core.screens.GameScreen</node>
+    <node x="803.6832457983193" y="1090.0">inf112.core.tile.ITile</node>
+    <node x="357.3436274509805" y="1487.0">inf112.core.board.GameBoard</node>
+    <node x="960.7437149859945" y="0.0">inf112.core.player.Direction</node>
+    <node x="632.5387780112044" y="552.0">inf112.core.tile.TileId</node>
+    <node x="1330.7269607843136" y="1410.0">inf112.core.player.PlayerTest</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="inf112.core.tile.ITile" target="inf112.core.tile.TileId">
+      <point x="0.0" y="-48.5" />
+      <point x="870.1832457983193" y="907.0" />
+      <point x="790.6816351540615" y="907.0" />
+      <point x="35.14285714285711" y="157.5" />
+    </edge>
+    <edge source="inf112.core.screens.GameScreen" target="inf112.core.movement.MovementHandler">
+      <point x="12.0" y="-92.5" />
+      <point x="926.7189600840336" y="2113.0" />
+      <point x="977.7189600840336" y="2113.0" />
+      <point x="63.0" y="103.5" />
+    </edge>
+    <edge source="inf112.core.tile.TileId" target="inf112.core.tile.Attributes">
+      <point x="0.0" y="-157.5" />
+      <point x="755.5387780112044" y="527.0" />
+      <point x="773.0387780112044" y="527.0" />
+      <point x="73.0" y="113.5" />
+    </edge>
+    <edge source="inf112.core.map.TileIdTest" target="inf112.core.tile.Attributes">
+      <point x="-99.5" y="-114.5" />
+      <point x="443.34991246498595" y="907.0" />
+      <point x="359.41973039215685" y="907.0" />
+      <point x="359.41973039215685" y="527.0" />
+      <point x="627.0387780112044" y="527.0" />
+      <point x="-73.0" y="113.5" />
+    </edge>
+    <edge source="inf112.core.screens.GameScreen" target="inf112.core.player.Player">
+      <point x="60.0" y="-92.5" />
+      <point x="974.7189600840336" y="2133.0" />
+      <point x="1320.2269607843136" y="2133.0" />
+      <point x="1320.2269607843136" y="1390.0" />
+      <point x="1357.5189600840336" y="1390.0" />
+      <point x="48.0" y="191.5" />
+    </edge>
+    <edge source="inf112.core.movement.CollisionHandler" target="inf112.core.board.GameBoard">
+      <point x="-104.0" y="-37.5" />
+      <point x="942.8269607843138" y="1701.0" />
+      <point x="586.5102941176472" y="1701.0" />
+      <point x="104.16666666666663" y="58.5" />
+    </edge>
+    <edge source="inf112.core.movement.CollisionHandler" target="inf112.core.util.VectorMovement">
+      <point x="52.0" y="-37.5" />
+      <point x="1098.8269607843138" y="1711.0" />
+      <point x="1088.5189600840336" y="1711.0" />
+      <point x="-66.5" y="37.5" />
+    </edge>
+    <edge source="inf112.desktop.Main" target="inf112.core.roborally.RoboRally">
+      <point x="0.0" y="-26.5" />
+      <point x="0.0" y="81.5" />
+    </edge>
+    <edge source="inf112.core.movement.MovementHandler" target="inf112.core.player.Direction">
+      <point x="-112.0" y="-103.5" />
+      <point x="802.7189600840336" y="1866.0" />
+      <point x="0.0" y="1866.0" />
+      <point x="0.0" y="225.0" />
+      <point x="972.3687149859945" y="225.0" />
+      <point x="-81.375" y="102.5" />
+    </edge>
+    <edge source="inf112.core.player.Player" target="inf112.core.player.PlayerBackup">
+      <point x="76.79999999999995" y="-191.5" />
+      <point x="1386.3189600840335" y="927.0" />
+      <point x="1440.0189600840336" y="927.0" />
+      <point x="40.0" y="48.5" />
+    </edge>
+    <edge source="inf112.core.movement.CollisionHandler" target="inf112.core.tile.TileId">
+      <point x="-52.0" y="-37.5" />
+      <point x="994.8269607843138" y="1711.0" />
+      <point x="986.1832457983193" y="1711.0" />
+      <point x="986.1832457983193" y="887.0" />
+      <point x="860.967349439776" y="887.0" />
+      <point x="105.42857142857144" y="157.5" />
+    </edge>
+    <edge source="inf112.core.tile.AbstractTile" target="inf112.core.tile.ITile">
+      <point x="-33.5" y="-48.5" />
+      <point x="875.1832457983193" y="1360.0" />
+      <point x="870.1832457983193" y="1360.0" />
+      <point x="0.0" y="48.5" />
+    </edge>
+    <edge source="inf112.core.board.LayeredBoard" target="inf112.core.board.MapLayer">
+      <point x="-64.0" y="-70.5" />
+      <point x="131.8499124649859" y="927.0" />
+      <point x="126.33333333333337" y="927.0" />
+      <point x="46.33333333333334" y="124.5" />
+    </edge>
+    <edge source="inf112.core.movement.MovementHandler" target="inf112.core.movement.CollisionHandler">
+      <point x="0.0" y="-103.5" />
+      <point x="914.7189600840336" y="1826.0" />
+      <point x="955.8269607843138" y="1826.0" />
+      <point x="-91.0" y="37.5" />
+    </edge>
+    <edge source="inf112.core.board.LayeredBoard" target="inf112.core.tile.TileId">
+      <point x="64.0" y="-70.5" />
+      <point x="259.8499124649859" y="917.0" />
+      <point x="650.110206582633" y="917.0" />
+      <point x="-105.42857142857144" y="157.5" />
+    </edge>
+    <edge source="inf112.core.movement.MovementHandler" target="inf112.core.board.GameBoard">
+      <point x="-56.0" y="-103.5" />
+      <point x="858.7189600840336" y="1846.0" />
+      <point x="446.17696078431385" y="1846.0" />
+      <point x="446.17696078431385" y="1701.0" />
+      <point x="461.51029411764716" y="1701.0" />
+      <point x="-20.833333333333314" y="58.5" />
+    </edge>
+    <edge source="inf112.core.player.PlayerTest" target="inf112.core.player.Player">
+      <point x="0.0" y="-135.5" />
+      <point x="1479.7269607843136" y="1390.0" />
+      <point x="1395.9189600840334" y="1390.0" />
+      <point x="86.39999999999986" y="191.5" />
+    </edge>
+    <edge source="inf112.core.board.GameBoard" target="inf112.core.board.MapLayer">
+      <point x="-104.16666666666669" y="-58.5" />
+      <point x="378.1769607843138" y="1390.0" />
+      <point x="57.34991246498589" y="1390.0" />
+      <point x="57.34991246498589" y="927.0" />
+      <point x="80.0" y="927.0" />
+      <point x="0.0" y="124.5" />
+    </edge>
+    <edge source="inf112.core.util.VectorMovement" target="inf112.core.player.Direction">
+      <point x="0.0" y="-37.5" />
+      <point x="1155.0189600840336" y="255.0" />
+      <point x="1065.3687149859945" y="255.0" />
+      <point x="11.625" y="102.5" />
+    </edge>
+    <edge source="inf112.core.board.GameBoard" target="inf112.core.board.LayeredBoard">
+      <point x="-62.5" y="-58.5" />
+      <point x="419.8436274509805" y="1380.0" />
+      <point x="131.8499124649859" y="1380.0" />
+      <point x="-64.0" y="70.5" />
+    </edge>
+    <edge source="inf112.core.movement.MovementHandler" target="inf112.core.board.MapLayer">
+      <point x="-84.0" y="-103.5" />
+      <point x="830.7189600840336" y="1856.0" />
+      <point x="25.91666666666663" y="1856.0" />
+      <point x="25.91666666666663" y="927.0" />
+      <point x="33.66666666666663" y="927.0" />
+      <point x="-46.33333333333337" y="124.5" />
+    </edge>
+    <edge source="inf112.core.movement.CollisionHandler" target="inf112.core.player.Direction">
+      <point x="0.0" y="-37.5" />
+      <point x="1046.8269607843138" y="1711.0" />
+      <point x="1005.7189600840336" y="1711.0" />
+      <point x="1005.7189600840336" y="255.0" />
+      <point x="1042.1187149859945" y="255.0" />
+      <point x="-11.625" y="102.5" />
+    </edge>
+    <edge source="inf112.core.roborally.RoboRally" target="inf112.core.screens.GameScreen">
+      <point x="0.0" y="-81.5" />
+      <point x="0.0" y="92.5" />
+    </edge>
+    <edge source="inf112.core.board.GameBoard" target="inf112.core.player.Player">
+      <point x="104.16666666666663" y="-58.5" />
+      <point x="586.5102941176472" y="1370.0" />
+      <point x="1223.1189600840335" y="1370.0" />
+      <point x="-86.40000000000009" y="191.5" />
+    </edge>
+    <edge source="inf112.core.player.PlayerTest" target="inf112.core.player.Direction">
+      <point x="99.33333333333326" y="-135.5" />
+      <point x="1579.060294117647" y="1390.0" />
+      <point x="1540.7436274509803" y="1390.0" />
+      <point x="1540.7436274509803" y="225.0" />
+      <point x="1135.1187149859945" y="225.0" />
+      <point x="81.375" y="102.5" />
+    </edge>
+    <edge source="inf112.core.player.Player" target="inf112.core.util.VectorMovement">
+      <point x="-76.79999999999995" y="-191.5" />
+      <point x="1232.7189600840336" y="927.0" />
+      <point x="1221.5189600840336" y="927.0" />
+      <point x="66.5" y="37.5" />
+    </edge>
+    <edge source="inf112.core.map.TileIdTest" target="inf112.core.tile.TileId">
+      <point x="99.5" y="-114.5" />
+      <point x="642.3499124649859" y="927.0" />
+      <point x="685.2530637254902" y="927.0" />
+      <point x="-70.28571428571428" y="157.5" />
+    </edge>
+    <edge source="inf112.core.screens.GameScreen" target="inf112.core.board.GameBoard">
+      <point x="-60.0" y="-92.5" />
+      <point x="854.7189600840336" y="2133.0" />
+      <point x="424.17696078431385" y="2133.0" />
+      <point x="424.17696078431385" y="1711.0" />
+      <point x="378.1769607843138" y="1711.0" />
+      <point x="-104.16666666666669" y="58.5" />
+    </edge>
+    <edge source="inf112.core.tile.AbstractTile" target="inf112.core.tile.TileId">
+      <point x="33.5" y="-48.5" />
+      <point x="942.1832457983193" y="1360.0" />
+      <point x="947.1832457983193" y="1360.0" />
+      <point x="947.1832457983193" y="897.0" />
+      <point x="825.8244922969187" y="897.0" />
+      <point x="70.28571428571428" y="157.5" />
+    </edge>
+    <edge source="inf112.core.tile.TileId" target="inf112.core.player.Direction">
+      <point x="82.0" y="-157.5" />
+      <point x="837.5387780112044" y="527.0" />
+      <point x="823.4937149859945" y="527.0" />
+      <point x="823.4937149859945" y="245.0" />
+      <point x="1018.8687149859945" y="245.0" />
+      <point x="-34.875" y="102.5" />
+    </edge>
+    <edge source="inf112.core.movement.MovementHandler" target="inf112.core.player.Player">
+      <point x="112.0" y="-103.5" />
+      <point x="1026.7189600840336" y="1866.0" />
+      <point x="1291.4769607843136" y="1866.0" />
+      <point x="1291.4769607843136" y="1370.0" />
+      <point x="1319.1189600840335" y="1370.0" />
+      <point x="9.599999999999909" y="191.5" />
+    </edge>
+    <edge source="inf112.core.player.Player" target="inf112.core.player.Direction">
+      <point x="0.0" y="-191.5" />
+      <point x="1309.5189600840336" y="235.0" />
+      <point x="1111.8687149859945" y="235.0" />
+      <point x="58.125" y="102.5" />
+    </edge>
+    <edge source="inf112.core.tile.Attributes" target="inf112.core.player.Direction">
+      <point x="0.0" y="-113.5" />
+      <point x="700.0387780112044" y="235.0" />
+      <point x="995.6187149859945" y="235.0" />
+      <point x="-58.125" y="102.5" />
+    </edge>
+    <edge source="inf112.core.movement.CollisionHandler" target="inf112.core.player.Player">
+      <point x="104.0" y="-37.5" />
+      <point x="1150.8269607843138" y="1711.0" />
+      <point x="1172.4387780112045" y="1711.0" />
+      <point x="1172.4387780112045" y="1380.0" />
+      <point x="1242.3189600840335" y="1380.0" />
+      <point x="-67.20000000000005" y="191.5" />
+    </edge>
+    <edge source="inf112.core.board.GameBoard" target="inf112.core.tile.TileId">
+      <point x="62.5" y="-58.5" />
+      <point x="544.8436274509804" y="1360.0" />
+      <point x="793.1832457983193" y="1360.0" />
+      <point x="793.1832457983193" y="917.0" />
+      <point x="755.5387780112044" y="917.0" />
+      <point x="0.0" y="157.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.30000000000000016" x="1219.6666666666667" y="389.99999999999966" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>packageLocal</VISIBILITY>
+</Diagram>
+

@@ -4,10 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
+import inf112.core.tile.CollidableTile;
 import inf112.core.tile.TileId;
 import inf112.core.util.VectorMovement;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,10 +24,6 @@ public class CollisionHandler {
     public CollisionHandler(GameBoard gameBoard, List<Player> players) {
         this.gameBoard = gameBoard;
         this.players = players;
-    }
-
-    public CollisionHandler() {
-        this(new GameBoard(), new ArrayList<Player>());
     }
 
     /**
@@ -57,28 +52,16 @@ public class CollisionHandler {
      * @return false if the suggested movement meets a collidable tile, and true otherwise
      */
     public boolean canGo(Vector2 startPosition, Direction direction) {
-        //TODO make good
         Vector2 endPosition = VectorMovement.generateNew(startPosition, direction);
-        TileId tileStart = gameBoard.getCollidables().get(startPosition);
-        TileId tileEnd = gameBoard.getCollidables().get(endPosition);
-        if(tileStart != null){
-            for(Direction dir : tileStart.getFacingDirections()){
-                if(dir.equals(direction))
-                    return false;
-            }
-        }
-        if(tileEnd != null){
-            for(Direction dir : tileEnd.getFacingDirections()){
-                if(dir.equals(Direction.invert(direction)))
-                    return false;
-            }
-        }
+        CollidableTile startTile = (CollidableTile) gameBoard.getCollidables().get(startPosition);
+        CollidableTile endTile = (CollidableTile) gameBoard.getCollidables().get(endPosition);
+        if(startTile != null)
+            if(startTile.willCollide(startPosition, direction))
+                return false;
+        if(endTile != null)
+            if(endTile.willCollide(startPosition, direction))
+                return false;
+
         return true;
     }
-
-// denne kan fjernes, ikke sant?
-//    public TileId getTileId(Vector2 position, String layerName) {
-//        int id = ((TiledMapTileLayer) gameBoard.getTiledmap().getLayers().get(layerName)).getCell((int) position.x, (int) position.y).getTile().getId();
-//        return TileId.getTileId(id);
-//    }
 }
