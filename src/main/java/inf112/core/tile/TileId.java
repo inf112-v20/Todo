@@ -82,6 +82,7 @@ public enum TileId {
         return facingDirections;
     }
 
+
     public ITile instantiate(Vector2 pos) {
         if(implementationClass == null)
             return null;
