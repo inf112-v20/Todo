@@ -14,6 +14,7 @@ import static inf112.core.tile.Attributes.*;
  * with the getTileId function we can quickly translate the id of a TiledMapTile into a TileId with attributes
  * and functions we can use
  *
+ * @author Alvar
  */
 public enum TileId {
 
@@ -21,16 +22,19 @@ public enum TileId {
      * Wall-tiles. Walls have a list of directions, walls that cover multiple sides of a tile
      * will have multiple directions.
      */
-    WALL_SOUTH(28, WallTile.class, Attributes.SOUTH),
-    WALL_NORTH(30, WallTile.class, Attributes.NORTH),
-    WALL_WEST(29, WallTile.class, Attributes.WEST),
-    WALL_EAST(22, WallTile.class, Attributes.EAST),
+    WALL_SOUTH(28, WallTile.class, SOUTH),
+    WALL_NORTH(30, WallTile.class,NORTH),
+    WALL_WEST(29, WallTile.class, WEST),
+    WALL_EAST(22, WallTile.class, EAST),
 
-    WALL_SOUTH_EAST(7, WallTile.class, Attributes.SOUTH, Attributes.EAST),
-    WALL_NORTH_EAST(15, WallTile.class, Attributes.NORTH, Attributes.EAST),
-    WALL_NORTH_WEST(23, WallTile.class, Attributes.NORTH, Attributes.WEST),
-    WALL_SOUTH_WEST(31, WallTile.class, Attributes.SOUTH, Attributes.WEST),
+    WALL_SOUTH_EAST(7, WallTile.class, SOUTH, EAST),
+    WALL_NORTH_EAST(15, WallTile.class, NORTH, EAST),
+    WALL_NORTH_WEST(23, WallTile.class, NORTH, WEST),
+    WALL_SOUTH_WEST(31, WallTile.class, SOUTH, WEST),
 
+    /**
+     * Spawn-tiles. SpawnTiles are assigned to corresponding player and designate their original spawn-point
+     */
     SPAWN_PLAYER1(120, SpawnTile.class),
     SPAWN_PLAYER2(121, SpawnTile.class),
     SPAWN_PLAYER3(122, SpawnTile.class),
@@ -46,7 +50,11 @@ public enum TileId {
     private ArrayList<Attributes> attributes;
     private static Map<Integer, TileId> idTable = createIdTable();
 
-
+    /**
+     * @param id id of tile corresponding to the id of its graphical representation in the TileMap TileSheet
+     * @param implementationClass ITile object that represents a given TileId
+     * @param attributes Attributes of Tile
+     */
     TileId(int id, Class<? extends ITile> implementationClass , Attributes... attributes) {
         //id of tiles are shifted by 1 for some reason
         this.id = id + 1;
@@ -55,6 +63,10 @@ public enum TileId {
         Collections.addAll(this.attributes, attributes);
     }
 
+    /**
+     * Creates a lookup Table for TileIds
+     * @return hashtable
+     */
     private static Map<Integer, TileId> createIdTable() {
         Map<Integer, TileId> idTable = new Hashtable<>();
         for(TileId tileId : TileId.values()) {
@@ -73,6 +85,10 @@ public enum TileId {
         return getIdTable().get(id);
     };
 
+    /**
+     * Converts Attribute directions to playerDirections for comparisons
+     * @return List of Directions
+     */
     public List<Direction> getFacingDirections() {
         List<Direction> facingDirections = new ArrayList<>();
         for(Attributes a : attributes){
@@ -82,7 +98,12 @@ public enum TileId {
         return facingDirections;
     }
 
-
+    /**
+     *
+     *
+     * @param pos position of ITile to be instantiated
+     * @return Correct ITile object depending on TileId it is created from
+     */
     public ITile instantiate(Vector2 pos) {
         if(implementationClass == null)
             return null;
