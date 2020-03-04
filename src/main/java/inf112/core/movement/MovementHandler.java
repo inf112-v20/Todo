@@ -177,8 +177,7 @@ public class MovementHandler extends InputAdapter {
         // set all player's backup position to their associated spawn point
         for (Player player : players) {
             Vector2 spawnPosition = spawnHandler.getSpawnPosition(player);
-            if (spawnPosition != null)
-                player.setBackup((int) spawnPosition.x, (int) spawnPosition.y);
+            player.setBackup((int) spawnPosition.x, (int) spawnPosition.y);
         }
         // move all players to backup/spawn
         for (Player player : players)

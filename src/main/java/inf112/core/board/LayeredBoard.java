@@ -4,30 +4,27 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
-import inf112.core.tile.CollidableTile;
 import inf112.core.tile.ITile;
 import inf112.core.tile.TileId;
 
-import java.lang.reflect.Constructor;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Vector;
 
 import static inf112.core.board.MapLayer.*;
 
 public abstract class LayeredBoard {
-    protected TiledMap tiledmap;
+    protected TiledMap tiledMap;
 
     public void makeBoard(){
-        this.tiledmap = new TmxMapLoader().load("maps/testingMap.tmx");
+        this.tiledMap = new TmxMapLoader().load("maps/testingMap.tmx");
     }
 
     public TiledMapTileLayer getLayer(MapLayer mapLayer) {
-        return (TiledMapTileLayer) tiledmap.getLayers().get(mapLayer.getName());
+        return (TiledMapTileLayer) tiledMap.getLayers().get(mapLayer.getName());
     }
 
-    public TiledMap getTiledmap(){
-        return tiledmap;
+    public TiledMap getTiledMap(){
+        return tiledMap;
     }
 
     /**
@@ -61,6 +58,6 @@ public abstract class LayeredBoard {
     }
 
     public void dispose(){
-        tiledmap.dispose();
+        tiledMap.dispose();
     }
 }

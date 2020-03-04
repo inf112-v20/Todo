@@ -29,7 +29,7 @@ public class GameScreen implements Screen {
     public void show() {
         // load the map and get dimension
         board = new GameBoard();
-        MapProperties properties = board.getTiledmap().getProperties();
+        MapProperties properties = board.getTiledMap().getProperties();
         mapWidth = properties.get("width", Integer.class);
         mapHeight = properties.get("height", Integer.class);
         tilePixelWidth = properties.get("tilewidth", Integer.class);
@@ -37,7 +37,7 @@ public class GameScreen implements Screen {
 
         // set unit scale, how many pixels per world unit (1 unit == tilePixelHeight pixels)
         float unitScale = (float) 1/tilePixelHeight;
-        mapRenderer = new OrthogonalTiledMapRenderer(board.getTiledmap(), unitScale);
+        mapRenderer = new OrthogonalTiledMapRenderer(board.getTiledMap(), unitScale);
 
         // camera setup
         camera = new OrthographicCamera();
