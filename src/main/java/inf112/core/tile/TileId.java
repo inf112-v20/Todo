@@ -22,15 +22,15 @@ public enum TileId {
      * Wall-tiles. Walls have a list of directions, walls that cover multiple sides of a tile
      * will have multiple directions.
      */
-    WALL_SOUTH(28, WallTile.class, SOUTH),
-    WALL_NORTH(30, WallTile.class,NORTH),
-    WALL_WEST(29, WallTile.class, WEST),
-    WALL_EAST(22, WallTile.class, EAST),
+    WALL_SOUTH(28, WallTile.class, COLLIDABLE, SOUTH),
+    WALL_NORTH(30, WallTile.class, COLLIDABLE, NORTH),
+    WALL_WEST(29, WallTile.class, COLLIDABLE, WEST),
+    WALL_EAST(22, WallTile.class, COLLIDABLE, EAST),
 
-    WALL_SOUTH_EAST(7, WallTile.class, SOUTH, EAST),
-    WALL_NORTH_EAST(15, WallTile.class, NORTH, EAST),
-    WALL_NORTH_WEST(23, WallTile.class, NORTH, WEST),
-    WALL_SOUTH_WEST(31, WallTile.class, SOUTH, WEST),
+    WALL_SOUTH_EAST(7, WallTile.class, COLLIDABLE, SOUTH, EAST),
+    WALL_NORTH_EAST(15, WallTile.class, COLLIDABLE, NORTH, EAST),
+    WALL_NORTH_WEST(23, WallTile.class, COLLIDABLE, NORTH, WEST),
+    WALL_SOUTH_WEST(31, WallTile.class, COLLIDABLE, SOUTH, WEST),
 
     /**
      * Spawn-tiles. SpawnTiles are assigned to corresponding player and designate their original spawn-point

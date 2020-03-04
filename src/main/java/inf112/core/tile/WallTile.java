@@ -15,6 +15,14 @@ public class WallTile extends AbstractTile implements CollidableTile {
         return getTileId().getFacingDirections();
     }
 
+    /**
+     * Function for checking if a Tile moving in a certain direction collides with this wall
+     * Because of implementation in collisionHandler willCollide will only be called for tiles that moving Tile
+     * is currently on, or going to.
+     * @param pos position some ITile is moving from
+     * @param direction Direction ITile is moving
+     * @return True if moving Tile collides with wall
+     */
     @Override
     public boolean willCollide(Vector2 pos, Direction direction) {
         if(getPos().equals(pos)) {
