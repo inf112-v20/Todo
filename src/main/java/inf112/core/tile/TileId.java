@@ -50,6 +50,27 @@ public enum TileId {
     PUSHER_WALL_EVEN_EAST(1, WallTile.class, COLLIDABLE, EAST),
     PUSHER_WALL_EVEN_WEST(3, WallTile.class, COLLIDABLE, WEST),
 
+    /**
+     * Laser-wall-tiles. They are wall-tiles but with a laser-shooter facing the opposite direction of the wall.
+     * Laser-shooters will shoot a laser in its direction during the laser-phase of every round.
+     */
+    LASER_WALL_NORTH(44, WallTile.class, COLLIDABLE, SHOOTS_LASER, NORTH),
+    LASER_WALL_SOUTH(36, WallTile.class, COLLIDABLE, SHOOTS_LASER, SOUTH),
+    LASER_WALL_WEST(37, WallTile.class, COLLIDABLE, SHOOTS_LASER, WEST),
+    LASER_WALL_EAST(45, WallTile.class, COLLIDABLE, SHOOTS_LASER, EAST),
+
+    /**
+     * Double-Laser-wall-tiles. They are wall-tiles but with a double laser-shooter facing the opposite direction of the wall.
+     * Laser-shooters will shoot a laser in its direction during the laser-phase of every round.
+     */
+    LASER_WALL_DOUBLE_NORTH(93, WallTile.class, COLLIDABLE, SHOOTS_LASER, NORTH),
+    LASER_WALL_DOUBLE_SOUTH(86, WallTile.class, COLLIDABLE, SHOOTS_LASER, SOUTH),
+    LASER_WALL_DOUBLE_WEST(92, WallTile.class, COLLIDABLE, SHOOTS_LASER, WEST),
+    LASER_WALL_DOUBLE_EAST(94, WallTile.class, COLLIDABLE, SHOOTS_LASER, EAST),
+
+    /**
+     * Hole-tiles. A player that steps on a hole-tile will fall to their death.
+     */
     HOLE_WARNING_ROUND(5, HoleTile.class, VOID),
     HOLE_WARNING_ROUND_2(90, HoleTile.class, VOID),
     HOLE_NO_WARNING(91, HoleTile.class, VOID),
