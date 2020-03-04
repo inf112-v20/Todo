@@ -33,6 +33,41 @@ public enum TileId {
     WALL_SOUTH_WEST(31, WallTile.class, COLLIDABLE, SOUTH, WEST),
 
     /**
+     * Pusher-wall-tiles. They are wall-tiles but with a pusher facing the opposite direction of the wall.
+     * Odd pushers will push the player in their direction on rounds 1, 3, and 5.
+     */
+    PUSHER_WALL_ODD_NORTH(8, WallTile.class, COLLIDABLE, NORTH),
+    PUSHER_WALL_ODD_SOUTH(2, WallTile.class, COLLIDABLE, SOUTH),
+    PUSHER_WALL_ODD_EAST(9, WallTile.class, COLLIDABLE, EAST),
+    PUSHER_WALL_ODD_WEST(11, WallTile.class, COLLIDABLE, WEST),
+
+    /**
+     * Pusher-wall-tiles. They are wall-tiles but with a pusher facing the opposite direction of the wall.
+     * Even pushers will push the player in their direction on rounds 1, 3, and 5.
+     */
+    PUSHER_WALL_EVEN_NORTH(0, WallTile.class, COLLIDABLE, NORTH),
+    PUSHER_WALL_EVEN_SOUTH(10, WallTile.class, COLLIDABLE, SOUTH),
+    PUSHER_WALL_EVEN_EAST(1, WallTile.class, COLLIDABLE, EAST),
+    PUSHER_WALL_EVEN_WEST(3, WallTile.class, COLLIDABLE, WEST),
+
+    HOLE_WARNING_ROUND(5, HoleTile.class, VOID),
+    HOLE_WARNING_ROUND_2(90, HoleTile.class, VOID),
+    HOLE_NO_WARNING(91, HoleTile.class, VOID),
+    HOLE_WARNING_NORTH_WEST(104, HoleTile.class, VOID),
+    HOLE_WARNING_NORTH(105, HoleTile.class, VOID),
+    HOLE_WARNING_NORTH_EAST(106, HoleTile.class, VOID),
+    HOLE_WARNING_EAST(107, HoleTile.class, VOID),
+    HOLE_WARNING_WEST(115, HoleTile.class, VOID),
+    HOLE_WARNING_SOUTH_WEST(112, HoleTile.class, VOID),
+    HOLE_WARNING_SOUTH(113, HoleTile.class, VOID),
+    HOLE_WARNING_SOUTH_EAST(114, HoleTile.class, VOID),
+    HOLE_WARNING_NORTH_EAST_SOUTH(108, HoleTile.class, VOID),
+    HOLE_WARNING_NORTH_WEST_SOUTH(116, HoleTile.class, VOID),
+    HOLE_WARNING_SOUTH_WEST_EAST(109, HoleTile.class, VOID),
+    HOLE_WARNING_NORTH_WEST_EAST(117, HoleTile.class, VOID),
+
+
+    /**
      * Spawn-tiles. SpawnTiles are assigned to corresponding player and designate their original spawn-point
      */
     SPAWN_PLAYER1(120, SpawnTile.class),
