@@ -100,7 +100,6 @@ public enum TileId {
 
     /**
      *
-     *
      * @param pos position of ITile to be instantiated
      * @return Correct ITile object depending on TileId it is created from
      */

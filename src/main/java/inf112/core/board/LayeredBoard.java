@@ -11,12 +11,13 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import static inf112.core.board.MapLayer.*;
+import static inf112.core.board.MapNames.*;
 
 public abstract class LayeredBoard {
     protected TiledMap tiledMap;
 
     public void makeBoard(){
-        this.tiledMap = new TmxMapLoader().load("maps/testingMap.tmx");
+        this.tiledMap = new TmxMapLoader().load(TESTING_MAP.getName());
     }
 
     public TiledMapTileLayer getLayer(MapLayer mapLayer) {
@@ -28,9 +29,7 @@ public abstract class LayeredBoard {
     }
 
     /**
-     *
-     *
-     * @return Hashtable containing TileId's with a position vector as key
+     * @return Hashtable containing ITile objects with a position vector as key
      */
     protected Map<Vector2, ITile> mapCollidables() {
          return mapPositionToTile(COLLIDABLE_LAYER);
@@ -40,6 +39,12 @@ public abstract class LayeredBoard {
         return mapPositionToTile(SPAWN_LAYER);
     }
 
+    /**
+     * Scans through a mapLayer and converts every TiledMapTile into its ITile object representation, then it creates a
+     * hashTable that maps every ITile object to its Vector2 position on the TiledMap.
+     * @param layerToBeScanned MapLayer. Every layer on our tiledMaps should be present in the MapLayer enum
+     * @return hashTable
+     * */
     private Map<Vector2, ITile> mapPositionToTile(MapLayer layerToBeScanned) {
         Map<Vector2, ITile> table = new Hashtable<>();
         TiledMapTileLayer layer = getLayer(layerToBeScanned);
