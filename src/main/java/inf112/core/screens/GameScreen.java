@@ -11,6 +11,9 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import inf112.core.board.GameBoard;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
+import inf112.core.programcards.MovementCard;
+import inf112.core.programcards.ProgramCard;
+import inf112.core.programcards.RotationCard;
 
 
 public class GameScreen implements Screen {
@@ -49,6 +52,14 @@ public class GameScreen implements Screen {
         texture = new Texture("img/player.png");
         textureRegions = TextureRegion.split(texture, tilePixelWidth, tilePixelHeight)[0];
         player1 = new Player("Player1", textureRegions[0]);
+
+        player1.setDeck(new ProgramCard[]{new MovementCard(100, 2, true, "Move 2"),
+                new RotationCard(120, true, 1, "Rotate clockwise once"),
+                new MovementCard(130, 1, false, "Move 1 backwards"),
+                new RotationCard(150, true, 1, "Rotate clockwise twice"),
+                new MovementCard(160, 3, true, "Forward thrice")});
+
+
         player2 = new Player("Player2", textureRegions[1]);
         player3 = new Player("Player3", textureRegions[2]);
         movementHandler = new MovementHandler(board);

@@ -7,6 +7,11 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
+import inf112.core.programcards.CardType;
+import inf112.core.programcards.MovementCard;
+import inf112.core.programcards.ProgramCard;
+import inf112.core.programcards.RotationCard;
+
 import java.util.ArrayList;
 import java.util.List;
 import static inf112.core.board.MapLayer.*;
@@ -18,6 +23,7 @@ import static inf112.core.board.MapLayer.*;
  * @author eskil
  */
 public class MovementHandler extends InputAdapter {
+    private int phase = 0;
     private GameBoard board;
     private List<Player> players;
     private Player activePlayer;                 // movement will affect this player. Should be changed actively
@@ -83,6 +89,11 @@ public class MovementHandler extends InputAdapter {
                 break;
             case Input.Keys.SPACE:
                 moveToBackup(activePlayer);
+                break;
+            case Input.Keys.M:
+                cardMovement(phase);
+                phase++;
+                phase = phase % 5;
                 break;
             default:
                 return false;
@@ -183,5 +194,33 @@ public class MovementHandler extends InputAdapter {
         // move all players to backup/spawn
         for (Player player : players)
             moveToBackup(player);
+    }
+
+    public void cardMovement(int cardNumber){
+        ProgramCard currentCard = activePlayer.getDeck()[cardNumber];
+        if (currentCard instanceof MovementCard){
+            if (((MovementCard) currentCard).isForward()){
+                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++){
+                    attemptToMoveForward(activePlayer);
+                }
+            }
+            else{
+                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++){
+                    attemptToMoveBackward(activePlayer);
+                }
+            }
+        }
+        else if (currentCard instanceof RotationCard){
+            if (((RotationCard) currentCard).getClockwise()){
+                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++){
+                    activePlayer.rotateRight();
+                }
+            }
+            else {
+                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++){
+                    activePlayer.rotateLeft();
+                }
+            }
+        }
     }
 }
