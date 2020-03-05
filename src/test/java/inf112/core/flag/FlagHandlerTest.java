@@ -2,7 +2,6 @@ package inf112.core.flag;
 
 import inf112.core.board.GameBoard;
 import inf112.core.movement.FlagHandler;
-import inf112.core.movement.SpawnHandler;
 import inf112.core.player.Player;
 import inf112.core.testingUtils.GdxTestRunner;
 import org.junit.Before;
@@ -26,25 +25,57 @@ public class FlagHandlerTest {
 
     private GameBoard gameBoard;
     private FlagHandler flagHandler;
-    private SpawnHandler spawnHandler;    // temporary
-    private Player player;
+    private Player playerNotOnFlag, playerOnFlag1, playerOnFlag2;
 
     @Before
     public void init() {
         this.gameBoard = new GameBoard();
-        this.flagHandler = new FlagHandler(gameBoard);
-        this.spawnHandler = new SpawnHandler(gameBoard);
+        this.flagHandler = new FlagHandler(gameBoard, 3);
+        this.playerNotOnFlag = new Player(5, 5);
+        this.playerOnFlag1 = new Player(3, 9);
+        this.playerOnFlag2 = new Player(5, 9);
     }
 
     @Test
     public void playerNotOnAFlagShouldYieldFalseTest() {
-        this.player = new Player(5, 5);    // should not be a flag position
-        assertFalse(flagHandler.isOnFlag(player));
+        assertFalse(flagHandler.isOnCorrectFlag(playerNotOnFlag));
     }
 
     @Test
-    public void playerOnAFlagShouldYieldTrueTest() {
-        this.player = new Player(3, 9);    // should be a flag position
-        assertTrue(flagHandler.isOnFlag(player));
+    public void playerVisitingFlag1AsFirstFlagShouldYieldTrueTest() {
+        assertTrue(flagHandler.isOnCorrectFlag(playerOnFlag1));
+    }
+
+    @Test
+    public void playerVisitingFlag1ASecondTimeShouldYieldFalseTest() {
+        flagHandler.incrementFlagsVisited(playerOnFlag1);    // simulating the player visiting flag 1
+        assertFalse(flagHandler.isOnCorrectFlag(playerOnFlag1));
+    }
+
+    @Test
+    public void playerVisitingFlag2AsFirstFlagShouldYieldFalseTest() {
+        assertFalse(flagHandler.isOnCorrectFlag(playerOnFlag2));
+    }
+
+    @Test
+    public void playerVisitingFlag2AsSecondFlagShouldYieldTrueTest() {
+        flagHandler.incrementFlagsVisited(playerOnFlag2);    // simulating that player has visited flag 1 already
+        assertTrue(flagHandler.isOnCorrectFlag(playerOnFlag2));
+    }
+
+    @Test
+    public void playerThatHasVisitedLessThan3FlagsShouldYieldFalse() {
+        // simulating the visitations of two flags
+        flagHandler.incrementFlagsVisited(playerNotOnFlag);
+        flagHandler.incrementFlagsVisited(playerNotOnFlag);
+        assertFalse(flagHandler.hasVisitedAllFlags(playerNotOnFlag));
+    }
+
+    @Test
+    public void playerThatHasVisited3FlagsExactlyShouldYieldTrue() {
+        flagHandler.incrementFlagsVisited(playerNotOnFlag);
+        flagHandler.incrementFlagsVisited(playerNotOnFlag);
+        flagHandler.incrementFlagsVisited(playerNotOnFlag);
+        assertTrue(flagHandler.hasVisitedAllFlags(playerNotOnFlag));
     }
 }

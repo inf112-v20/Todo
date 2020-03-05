@@ -14,16 +14,19 @@ import java.util.Objects;
  * @author eskil
  */
 public class Player {
-    private static int playerCount = 0;
+
     private String name;
     private int id;
+    private int flagsVisited = 0;
     private Vector2 position;
     private Cell cell;
     private Direction direction;
     private PlayerBackup backup;
 
+    private static int playerCount = 0;
+
     public Player() {
-        this("Player");
+        this("Player " + (playerCount + 1));
     }
 
     public Player(String name) {
@@ -35,12 +38,16 @@ public class Player {
     }
 
     public Player(int xPos, int yPos) {
-        this("Player", new TextureRegion(), xPos, yPos);
+        this("Player " + (playerCount + 1), new TextureRegion(), xPos, yPos);
+    }
+
+    public Player(TextureRegion region) {
+        this("Player " + (playerCount + 1), region, 0, 0);
     }
 
     public Player(String name, TextureRegion region, int xPos, int yPos) {
-        this.name = name;
         this.id = ++playerCount;
+        this.name = name;
         this.cell = new Cell();
         this.cell.setTile(new StaticTiledMapTile(region));
         this.position = new Vector2(xPos,yPos);
@@ -71,6 +78,14 @@ public class Player {
     public void setBackup(int xPos, int yPos) { this.backup = new PlayerBackup(xPos, yPos); }
 
     public void setBackupHere() { setBackup((int) position.x, (int) position.y);}
+
+    public int getFlagsVisited() {
+        return flagsVisited;
+    }
+
+    public void setFlagsVisited(int numOfFlags) {
+        this.flagsVisited = numOfFlags;
+    }
 
     /**
      * Moves the logical representation of the player one unit in the given direction.
