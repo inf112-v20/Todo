@@ -36,5 +36,4 @@ public interface ITile {
      * @return TileId of tile
      */
     TileId getTileId();
-
 }

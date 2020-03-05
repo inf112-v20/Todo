@@ -34,6 +34,10 @@ public class Player {
         this(name, region, 0, 0);
     }
 
+    public Player(int xPos, int yPos) {
+        this("Player", new TextureRegion(), xPos, yPos);
+    }
+
     public Player(String name, TextureRegion region, int xPos, int yPos) {
         this.name = name;
         this.id = ++playerCount;

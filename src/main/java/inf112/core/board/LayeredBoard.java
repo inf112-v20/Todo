@@ -32,12 +32,17 @@ public abstract class LayeredBoard {
      * @return Hashtable containing ITile objects with a position vector as key
      */
     protected Map<Vector2, ITile> mapCollidables() {
-         return mapPositionToTile(COLLIDABLE_LAYER);
+         return mapPositionToTile(MapLayer.COLLIDABLE_LAYER);
     }
 
     protected Map<Vector2, ITile> mapSpawns() {
-        return mapPositionToTile(SPAWN_LAYER);
+        return mapPositionToTile(MapLayer.SPAWN_LAYER);
     }
+
+    protected Map<Vector2, ITile> mapFlags() {
+        return mapPositionToTile(FLAG_LAYER);
+    }
+
 
     /**
      * Scans through a mapLayer and converts every TiledMapTile into its ITile object representation, then it creates a

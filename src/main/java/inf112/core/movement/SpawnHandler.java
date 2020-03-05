@@ -16,6 +16,7 @@ import java.util.Map;
  * @author eskil
  */
 public class SpawnHandler {
+
     private Map<Vector2, ITile> spawnPosToTileMapping;
 
     public SpawnHandler(GameBoard gameBoard) {
