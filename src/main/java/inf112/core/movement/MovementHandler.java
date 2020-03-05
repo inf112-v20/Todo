@@ -33,6 +33,10 @@ public class MovementHandler extends InputAdapter {
         this.spawnHandler = new SpawnHandler(board);
     }
 
+    public Player getActivePlayer() {
+        return activePlayer;
+    }
+
     public boolean add(Player player) {
         if (contains(player))
             return false;
