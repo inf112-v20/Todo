@@ -4,45 +4,52 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
-import inf112.core.tile.CollidableTile;
 import inf112.core.tile.ITile;
 import inf112.core.tile.TileId;
 
-import java.lang.reflect.Constructor;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Vector;
 
 import static inf112.core.board.MapLayer.*;
+import static inf112.core.board.MapNames.*;
 
 public abstract class LayeredBoard {
-    protected TiledMap tiledmap;
+    protected TiledMap tiledMap;
 
     public void makeBoard(){
-        this.tiledmap = new TmxMapLoader().load("maps/testingMap.tmx");
+        this.tiledMap = new TmxMapLoader().load(TESTING_MAP.getName());
     }
 
     public TiledMapTileLayer getLayer(MapLayer mapLayer) {
-        return (TiledMapTileLayer) tiledmap.getLayers().get(mapLayer.getName());
+        return (TiledMapTileLayer) tiledMap.getLayers().get(mapLayer.getName());
     }
 
-    public TiledMap getTiledmap(){
-        return tiledmap;
+    public TiledMap getTiledMap(){
+        return tiledMap;
     }
 
     /**
-     *
-     *
-     * @return Hashtable containing TileId's with a position vector as key
+     * @return Hashtable containing ITile objects with a position vector as key
      */
     protected Map<Vector2, ITile> mapCollidables() {
-         return mapPositionToTile(COLLIDABLE_LAYER);
+         return mapPositionToTile(MapLayer.COLLIDABLE_LAYER);
     }
 
     protected Map<Vector2, ITile> mapSpawns() {
-        return mapPositionToTile(SPAWN_LAYER);
+        return mapPositionToTile(MapLayer.SPAWN_LAYER);
     }
 
+    protected Map<Vector2, ITile> mapFlags() {
+        return mapPositionToTile(FLAG_LAYER);
+    }
+
+
+    /**
+     * Scans through a mapLayer and converts every TiledMapTile into its ITile object representation, then it creates a
+     * hashTable that maps every ITile object to its Vector2 position on the TiledMap.
+     * @param layerToBeScanned MapLayer. Every layer on our tiledMaps should be present in the MapLayer enum
+     * @return hashTable
+     * */
     private Map<Vector2, ITile> mapPositionToTile(MapLayer layerToBeScanned) {
         Map<Vector2, ITile> table = new Hashtable<>();
         TiledMapTileLayer layer = getLayer(layerToBeScanned);
@@ -61,6 +68,6 @@ public abstract class LayeredBoard {
     }
 
     public void dispose(){
-        tiledmap.dispose();
+        tiledMap.dispose();
     }
 }

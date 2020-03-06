@@ -11,9 +11,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import inf112.core.board.GameBoard;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
-import inf112.core.programcards.MovementCard;
-import inf112.core.programcards.ProgramCard;
-import inf112.core.programcards.RotationCard;
 
 
 public class GameScreen implements Screen {
@@ -32,7 +29,7 @@ public class GameScreen implements Screen {
     public void show() {
         // load the map and get dimension
         board = new GameBoard();
-        MapProperties properties = board.getTiledmap().getProperties();
+        MapProperties properties = board.getTiledMap().getProperties();
         mapWidth = properties.get("width", Integer.class);
         mapHeight = properties.get("height", Integer.class);
         tilePixelWidth = properties.get("tilewidth", Integer.class);
@@ -40,7 +37,7 @@ public class GameScreen implements Screen {
 
         // set unit scale, how many pixels per world unit (1 unit == tilePixelHeight pixels)
         float unitScale = (float) 1/tilePixelHeight;
-        mapRenderer = new OrthogonalTiledMapRenderer(board.getTiledmap(), unitScale);
+        mapRenderer = new OrthogonalTiledMapRenderer(board.getTiledMap(), unitScale);
 
         // camera setup
         camera = new OrthographicCamera();
@@ -51,17 +48,9 @@ public class GameScreen implements Screen {
         // player setup
         texture = new Texture("img/player.png");
         textureRegions = TextureRegion.split(texture, tilePixelWidth, tilePixelHeight)[0];
-        player1 = new Player("Player1", textureRegions[0]);
-
-        player1.setDeck(new ProgramCard[]{new MovementCard(100, 2, true, "Move 2"),
-                new RotationCard(120, true, 1, "Rotate clockwise once"),
-                new MovementCard(130, 1, false, "Move 1 backwards"),
-                new RotationCard(150, true, 1, "Rotate clockwise twice"),
-                new MovementCard(160, 3, true, "Forward thrice")});
-
-
-        player2 = new Player("Player2", textureRegions[1]);
-        player3 = new Player("Player3", textureRegions[2]);
+        player1 = new Player(textureRegions[0]);
+        player2 = new Player(textureRegions[1]);
+        player3 = new Player(textureRegions[2]);
         movementHandler = new MovementHandler(board);
         movementHandler.add(player1, player2, player3);
         movementHandler.setActive(player1);

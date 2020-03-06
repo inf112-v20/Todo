@@ -30,7 +30,7 @@ public class Deck {
 
     // Returns list of cards for player to choose from
     // Should throw exception if amount is greater than (activecards + discardcards)
-    public List<ProgramCard> getSelection(int amount){
+    public List<ProgramCard> getSelection(int amount) {
         List<ProgramCard> selection = null;
         if (amount >= activeDeck.size()) {
             selection.addAll(activeDeck);
@@ -39,7 +39,7 @@ public class Deck {
             shuffleActive();
             discardDeck.clear();
         }
-        for (int i = 0; i < amount - selection.size(); i++){
+        for (int i = 0; i < amount - selection.size(); i++) {
             selection.add(activeDeck.get(i));
         }
         return selection;
