@@ -45,7 +45,7 @@ public class Deck {
         return selection;
     }
 
-    // select card
+    // select card (Dette blir antageligvis feil)
     public void selectCard(ProgramCard card){
         discardDeck.add(activeDeck.remove(activeDeck.indexOf(card)));
     }
