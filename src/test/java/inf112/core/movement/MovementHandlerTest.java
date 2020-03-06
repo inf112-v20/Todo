@@ -11,12 +11,6 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
-
-/**
- * NB!
- * Denne testklassen vil ikke kjøre, da Board ikke kan instansieres (får NullPointerExceptions)
- * Plz ignore
- */
 @RunWith(GdxTestRunner.class)
 public class MovementHandlerTest {
 
