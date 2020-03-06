@@ -35,7 +35,7 @@ public class MainMenuScreen implements Screen {
 
         Sprite button = new Sprite(new Texture("img/playButton.png"));
         playButton = new ImageButton(new SpriteDrawable(button));
-        playButton.setPosition(1280/2 - 30/2, 720/2);
+        playButton.setPosition(1280/2 - 120/2, 720/2);
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
@@ -46,7 +46,7 @@ public class MainMenuScreen implements Screen {
 
         button = new Sprite((new Texture("img/exitButton.png")));
         exitButton = new ImageButton(new SpriteDrawable(button));
-        exitButton.setPosition(1280/2-30/2, 720/6);
+        exitButton.setPosition(1280/2-120/2, 720/6);
         exitButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
