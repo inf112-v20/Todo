@@ -17,7 +17,7 @@ public class GameScreen implements Screen {
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
     private Texture texture;
-    private TextureRegion[] textureRegions;
+    private TextureRegion[][] textureRegions;
     private Player player1, player2, player3;
     private MovementHandler movementHandler;
     private int mapWidth, mapHeight;                   // #tiles in each direction
@@ -46,11 +46,11 @@ public class GameScreen implements Screen {
         camera.update();
 
         // player setup
-        texture = new Texture("img/player.png");
-        textureRegions = TextureRegion.split(texture, tilePixelWidth, tilePixelHeight)[0];
-        player1 = new Player(textureRegions[0]);
-        player2 = new Player(textureRegions[1]);
-        player3 = new Player(textureRegions[2]);
+        texture = new Texture("img/Player_Spritesheet.png");
+        textureRegions = TextureRegion.split(texture, tilePixelWidth, tilePixelHeight);
+        player1 = new Player(textureRegions[0][0]);
+        player2 = new Player(textureRegions[1][0]);
+        player3 = new Player(textureRegions[2][0]);
         movementHandler = new MovementHandler(board);
         movementHandler.add(player1, player2, player3);
         movementHandler.setActive(player1);
