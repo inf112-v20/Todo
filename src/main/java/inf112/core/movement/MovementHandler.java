@@ -156,6 +156,7 @@ public class MovementHandler extends InputAdapter {
         playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), playerToBeMoved.getCell());   // draw player  (graphically)
     }
 
+
     /**
      * Moves the Player to his/hers backup position, both logically and graphically.
      *
@@ -165,6 +166,7 @@ public class MovementHandler extends InputAdapter {
         playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), null);
         playerToBeMoved.resetPosition();
         playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), playerToBeMoved.getCell());
+
     }
 
     /**
