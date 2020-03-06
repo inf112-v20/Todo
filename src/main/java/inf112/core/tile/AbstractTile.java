@@ -8,6 +8,11 @@ public abstract class AbstractTile implements ITile{
     private Vector2 pos;
     private TileId tileId;
 
+    /**
+     * A base for all Tiles that implements the base necessities for a fully functioning Tile-object
+     * @param coordinates Position on TileMap
+     * @param tileId TileId representing Tile
+     */
     public AbstractTile(Vector2 coordinates, TileId tileId) {
         this.xVal = coordinates.x;
         this.yVal = coordinates.y;

@@ -8,6 +8,7 @@ import inf112.core.board.GameBoard;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import static inf112.core.board.MapLayer.*;
 
@@ -18,12 +19,14 @@ import static inf112.core.board.MapLayer.*;
  * @author eskil
  */
 public class MovementHandler extends InputAdapter {
+
     private GameBoard board;
     private List<Player> players;
     private Player activePlayer;                 // movement will affect this player. Should be changed actively
     private TiledMapTileLayer playerLayer;       // layer in which all player cells are placed (for graphics)
     private CollisionHandler collisionHandler;
     private SpawnHandler spawnHandler;
+    private FlagHandler flagHandler;
 
     public MovementHandler(GameBoard board) {
         this.board = board;
@@ -31,6 +34,11 @@ public class MovementHandler extends InputAdapter {
         this.players = new ArrayList<>();
         this.collisionHandler = new CollisionHandler(board, players);
         this.spawnHandler = new SpawnHandler(board);
+        this.flagHandler = new FlagHandler(board, 4);    // should probably not be in movementHandler
+    }
+
+    public Player getActivePlayer() {
+        return activePlayer;
     }
 
     public boolean add(Player player) {
@@ -40,11 +48,7 @@ public class MovementHandler extends InputAdapter {
     }
 
     public boolean add(Player... playersToBeAdded) {
-        boolean allAdded = true;
-        for (Player player : playersToBeAdded)
-            if (!add(player))
-                allAdded = false;
-        return allAdded;
+        return players.addAll(Arrays.asList(playersToBeAdded));
     }
 
     public boolean contains(Player player) {
@@ -129,6 +133,7 @@ public class MovementHandler extends InputAdapter {
             for (Player affectedPlayer : affectedPlayers) {
                 moveUnchecked(affectedPlayer, direction);
                 handleOutOfBounds(affectedPlayer);
+                handleFlagVisitation(affectedPlayer);
             }
     }
 
@@ -160,11 +165,23 @@ public class MovementHandler extends InputAdapter {
      * Checks if the player is outside the board dimensions, and if so, resets the players
      * position and rotation both logically and graphically.
      *
-     * @param playerToBeMoved
+     * @param recentlyMovedPlayer
      */
-    private void handleOutOfBounds(Player playerToBeMoved) {
-        if (!board.onBoard(playerToBeMoved)) {
-            moveToBackup(playerToBeMoved);
+    private void handleOutOfBounds(Player recentlyMovedPlayer) {
+        if (!board.onBoard(recentlyMovedPlayer)) {
+            moveToBackup(recentlyMovedPlayer);
+        }
+    }
+
+    /**
+     * Checks if the player is on the correct flag, and if so, increases his/hers flag count
+     *
+     * @param recentlyMovedPlayer
+     */
+    private void handleFlagVisitation(Player recentlyMovedPlayer) {
+        if (flagHandler.isOnCorrectFlag(recentlyMovedPlayer)) {
+            flagHandler.incrementFlagsVisited(recentlyMovedPlayer);
+            System.out.println(recentlyMovedPlayer.getName() + " just visited flag " + recentlyMovedPlayer.getFlagsVisited());
         }
     }
 
@@ -174,14 +191,11 @@ public class MovementHandler extends InputAdapter {
      * Should be called exactly once; when the game initiates.
      */
     public void moveAllToSpawn() {
-        // set all player's backup position to their associated spawn point
         for (Player player : players) {
+            // first set all player's backup position to their associated spawn point
             Vector2 spawnPosition = spawnHandler.getSpawnPosition(player);
-            if (spawnPosition != null)
-                player.setBackup((int) spawnPosition.x, (int) spawnPosition.y);
-        }
-        // move all players to backup/spawn
-        for (Player player : players)
+            player.setBackup((int) spawnPosition.x, (int) spawnPosition.y);
             moveToBackup(player);
+        }
     }
 }
