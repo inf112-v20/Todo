@@ -87,7 +87,6 @@ public enum TileId {
     HOLE_WARNING_SOUTH_WEST_EAST(109, HoleTile.class, VOID),
     HOLE_WARNING_NORTH_WEST_EAST(117, HoleTile.class, VOID),
 
-
     /**
      * Spawn-tiles. SpawnTiles are assigned to corresponding player and designate their original spawn-point
      */
@@ -99,6 +98,14 @@ public enum TileId {
     SPAWN_PLAYER6(129, SpawnTile.class),
     SPAWN_PLAYER7(130, SpawnTile.class),
     SPAWN_PLAYER8(131, SpawnTile.class),
+
+    /**
+     * Flag-tiles. When a Player ends his/hers move on a Flag-tile, it should be registered.
+     */
+    FLAG_1(54, FlagTile.class),
+    FLAG_2(62, FlagTile.class),
+    FLAG_3(70, FlagTile.class),
+    FLAG_4(78, FlagTile.class)
     ;
 
     private int id;

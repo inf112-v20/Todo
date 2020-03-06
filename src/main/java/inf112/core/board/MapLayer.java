@@ -16,6 +16,7 @@ public enum MapLayer {
     LASER_LAYER("Laser"),
     BACKUP_LAYER("Backup"),
     SPAWN_LAYER("Spawn"),
+    FLAG_LAYER("Flag")
     ;
 
     private String name;

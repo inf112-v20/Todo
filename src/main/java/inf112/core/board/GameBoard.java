@@ -10,15 +10,17 @@ import static inf112.core.board.MapLayer.*;
 
 public class GameBoard extends LayeredBoard {
 
-    Map<Vector2, ITile> collidablesMap, spawnsMap;
+    Map<Vector2, ITile> collidablesMap, spawnsMap, flagsMap, voidMap;
 
     public GameBoard(){
         makeBoard();
         collidablesMap = super.mapCollidables();
         spawnsMap = super.mapSpawns();
+        flagsMap = super.mapFlags();
+        voidMap = super.mapVoid();
     }
 
-    public Boolean onBoard(Player player){
+    public boolean onBoard(Player player){
         TiledMapTileLayer players = super.getLayer(PLAYER_LAYER);
         int playerX = player.getX();
         int playerY = player.getY();
@@ -29,4 +31,7 @@ public class GameBoard extends LayeredBoard {
     public Map<Vector2, ITile> getCollidables() { return collidablesMap; }
 
     public Map<Vector2, ITile> getSpawns() { return spawnsMap; }
+
+    public Map<Vector2, ITile> getFlags() { return flagsMap; }
+    public Map<Vector2, ITile> getVoids() { return voidMap; }
 }
