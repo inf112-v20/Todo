@@ -33,6 +33,8 @@ public class MainMenuScreen implements Screen {
     public void show() {
         stage = new Stage();
 
+
+
         Sprite button = new Sprite(new Texture("img/playButton.png"));
         playButton = new ImageButton(new SpriteDrawable(button));
         playButton.setPosition(1280/2 - 120/2, 720/2);
@@ -67,7 +69,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void resize(int i, int i1) {
-
+        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
 
     @Override
