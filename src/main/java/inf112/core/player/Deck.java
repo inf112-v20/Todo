@@ -32,7 +32,7 @@ public class Deck {
     // Should throw exception if amount is greater than (activecards + discardcards)
     public List<ProgramCard> getSelection(int amount){
         List<ProgramCard> selection = null;
-        if (amount > activeDeck.size()) {
+        if (amount >= activeDeck.size()) {
             selection.addAll(activeDeck);
             activeDeck.clear();
             activeDeck.addAll(discardDeck);
@@ -46,11 +46,7 @@ public class Deck {
     }
 
     // select card
-    public ProgramCard selectCard(ProgramCard card){
-
-        return null;
+    public void selectCard(ProgramCard card){
+        discardDeck.add(activeDeck.remove(activeDeck.indexOf(card)));
     }
-    //
-
-
 }
