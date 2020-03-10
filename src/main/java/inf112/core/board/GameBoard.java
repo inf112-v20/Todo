@@ -12,8 +12,12 @@ public class GameBoard extends LayeredBoard {
 
     Map<Vector2, ITile> collidablesMap, spawnsMap, flagsMap, voidMap;
 
-    public GameBoard(){
-        makeBoard();
+    public GameBoard() {
+        this(MapNames.TESTING_MAP);
+    }
+
+    public GameBoard(MapNames mapName) {
+        makeBoard(mapName);
         collidablesMap = super.mapCollidables();
         spawnsMap = super.mapSpawns();
         flagsMap = super.mapFlags();

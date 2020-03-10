@@ -9,15 +9,14 @@ import inf112.core.tile.ITile;
 import java.util.Map;
 
 public class VoidHandler {
+
     private Map<Vector2, ITile> voidPosToTileMapping;
 
     public VoidHandler(GameBoard gameBoard) {
         this.voidPosToTileMapping = gameBoard.getVoids();
     }
+
     public boolean isOnVoid(Player player) {
-        HoleTile voidTile = (HoleTile) voidPosToTileMapping.get(player.getPositionCopy());
-        if (voidTile == null)    // player not on void
-            return false;
-        else return true;
+        return voidPosToTileMapping.get(player.getPositionCopy()) != null;
     }
 }

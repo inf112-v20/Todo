@@ -14,6 +14,8 @@ import inf112.core.player.Player;
 
 
 public class GameScreen implements Screen {
+
+    private IGameStateSwitcher gameStateSwitcher;
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
     private Texture texture;
@@ -24,6 +26,10 @@ public class GameScreen implements Screen {
     private int tilePixelWidth, tilePixelHeight;
     private GameBoard board;
 
+
+    public GameScreen(RoboRally gameStateSwitcher) {
+        this.gameStateSwitcher = gameStateSwitcher;
+    }
 
     @Override
     public void show() {
@@ -69,7 +75,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void hide() {
-        dispose();    // hva er forskjellen på hide() og dispose() ??
+        dispose();         // temporary solution
     }
 
     @Override
@@ -78,6 +84,9 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         mapRenderer.setView(camera);
         mapRenderer.render();
+        if (movementHandler.hasWon()) {
+            gameStateSwitcher.initGameOver();
+        }
     }
 
     @Override

@@ -16,8 +16,8 @@ import static inf112.core.board.MapNames.*;
 public abstract class LayeredBoard {
     protected TiledMap tiledMap;
 
-    public void makeBoard(){
-        this.tiledMap = new TmxMapLoader().load(TESTING_MAP.getName());
+    public void makeBoard(MapNames mapName) {
+        this.tiledMap = new TmxMapLoader().load(mapName.getName());
     }
 
     public TiledMapTileLayer getLayer(MapLayer mapLayer) {

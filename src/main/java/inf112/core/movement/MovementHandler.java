@@ -23,6 +23,7 @@ public class MovementHandler extends InputAdapter {
     private GameBoard board;
     private List<Player> players;
     private Player activePlayer;                 // movement will affect this player. Should be changed actively
+    private Player winner;
     private TiledMapTileLayer playerLayer;       // layer in which all player cells are placed (for graphics)
     private CollisionHandler collisionHandler;
     private SpawnHandler spawnHandler;
@@ -137,6 +138,8 @@ public class MovementHandler extends InputAdapter {
                 handleOutOfBounds(affectedPlayer);
                 handleFlagVisitation(affectedPlayer);
                 handleVoid(affectedPlayer);
+                if (flagHandler.hasVisitedAllFlags(affectedPlayer))
+                    this.winner = affectedPlayer;
             }
     }
 
@@ -205,5 +208,13 @@ public class MovementHandler extends InputAdapter {
             player.setBackup((int) spawnPosition.x, (int) spawnPosition.y);
             moveToBackup(player);
         }
+    }
+
+    public boolean hasWon() {
+        return winner != null;
+    }
+
+    public Player getWinner() {
+        return winner;
     }
 }
