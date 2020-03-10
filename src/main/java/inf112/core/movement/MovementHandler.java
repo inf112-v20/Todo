@@ -19,7 +19,7 @@ import static inf112.core.board.MapLayer.*;
  * @author eskil
  */
 public class MovementHandler extends InputAdapter {
-
+    private int phase = 0;
     private GameBoard board;
     private List<Player> players;
     private Player activePlayer;                 // movement will affect this player. Should be changed actively
@@ -27,6 +27,7 @@ public class MovementHandler extends InputAdapter {
     private CollisionHandler collisionHandler;
     private SpawnHandler spawnHandler;
     private FlagHandler flagHandler;
+    private VoidHandler voidHandler;
 
     public MovementHandler(GameBoard board) {
         this.board = board;
@@ -35,6 +36,7 @@ public class MovementHandler extends InputAdapter {
         this.collisionHandler = new CollisionHandler(board, players);
         this.spawnHandler = new SpawnHandler(board);
         this.flagHandler = new FlagHandler(board, 4);    // should probably not be in movementHandler
+        this.voidHandler = new VoidHandler(board);
     }
 
     public Player getActivePlayer() {
@@ -88,10 +90,21 @@ public class MovementHandler extends InputAdapter {
             case Input.Keys.SPACE:
                 moveToBackup(activePlayer);
                 break;
+            case Input.Keys.M:
+                cardMovement(activePlayer);
+                phase++;
+                break;
             default:
                 return false;
         }
         return true;
+    }
+
+    /**
+     *
+     */
+    public void cardMovement(Player player){
+
     }
 
     /**
@@ -134,6 +147,7 @@ public class MovementHandler extends InputAdapter {
                 moveUnchecked(affectedPlayer, direction);
                 handleOutOfBounds(affectedPlayer);
                 handleFlagVisitation(affectedPlayer);
+                handleVoid(affectedPlayer);
             }
     }
 
@@ -172,7 +186,11 @@ public class MovementHandler extends InputAdapter {
             moveToBackup(recentlyMovedPlayer);
         }
     }
-
+    private void handleVoid(Player recentlyMovedPlayer){
+        if (voidHandler.isOnVoid(recentlyMovedPlayer)){
+            moveToBackup(recentlyMovedPlayer);
+        }
+    }
     /**
      * Checks if the player is on the correct flag, and if so, increases his/hers flag count
      *
@@ -181,6 +199,7 @@ public class MovementHandler extends InputAdapter {
     private void handleFlagVisitation(Player recentlyMovedPlayer) {
         if (flagHandler.isOnCorrectFlag(recentlyMovedPlayer)) {
             flagHandler.incrementFlagsVisited(recentlyMovedPlayer);
+            recentlyMovedPlayer.setBackupHere();
             System.out.println(recentlyMovedPlayer.getName() + " just visited flag " + recentlyMovedPlayer.getFlagsVisited());
         }
     }

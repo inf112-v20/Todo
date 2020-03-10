@@ -25,9 +25,10 @@ public class Player {
     private Cell cell;
     private Direction direction;
     private PlayerBackup backup;
-    public ProgramCard[] deck = new ProgramCard[5];
+    public Deck deck;
 
     private static int playerCount = 0;
+
 
     public Player() {
         this("Player " + (playerCount + 1));
@@ -75,9 +76,9 @@ public class Player {
 
     public Direction getDirection() {   return direction;   }
 
-    public ProgramCard[] getDeck() { return deck; }
+    public Deck getDeck() { return deck; }
 
-    public void setDeck(ProgramCard[] deck){
+    public void setDeck(Deck deck){
         this.deck = deck;
     }
 

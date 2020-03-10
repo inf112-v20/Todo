@@ -8,10 +8,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private List<ProgramCard> discardDeck = new ArrayList<>();
-    private List<ProgramCard> activeDeck = new ArrayList<>();
+    private List<ProgramCard> discardDeck;
+    private List<ProgramCard> activeDeck;
 
     public Deck(){
+        discardDeck = new ArrayList<>();
+        activeDeck = new ArrayList<>();
     }
 
     public void addCard(ProgramCard card) {

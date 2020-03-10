@@ -3,11 +3,12 @@ package inf112.core.roborally;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import inf112.core.screens.GameScreen;
+import inf112.core.screens.MainMenuScreen;
 
 public class RoboRally extends Game implements ApplicationListener {
     @Override
     public void create() {
-        setScreen(new GameScreen());
+        setScreen(new MainMenuScreen(this));
     }
 
     @Override

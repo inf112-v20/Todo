@@ -57,14 +57,6 @@
           <version>19.0.0</version>
           <scope>compile</scope>
       </dependency>
-<<<<<<< HEAD
-      <dependency>
-          <groupId>org.jetbrains</groupId>
-          <artifactId>annotations-java5</artifactId>
-          <version>19.0.0</version>
-          <scope>compile</scope>
-      </dependency>
-=======
     <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
     <dependency>
       <groupId>org.mockito</groupId>
@@ -85,7 +77,6 @@
       <scope>compile</scope>
     </dependency>
 
->>>>>>> master
 
   </dependencies>
 
