@@ -1,4 +1,4 @@
-package inf112.core.movement;
+package inf112.core.movement.util;
 
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;

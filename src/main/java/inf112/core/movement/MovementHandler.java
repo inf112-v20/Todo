@@ -5,6 +5,10 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
+import inf112.core.movement.util.CollisionHandler;
+import inf112.core.movement.util.FlagHandler;
+import inf112.core.movement.util.SpawnHandler;
+import inf112.core.movement.util.VoidHandler;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
 import java.util.ArrayList;
@@ -30,14 +34,18 @@ public class MovementHandler extends InputAdapter {
     private FlagHandler flagHandler;
     private VoidHandler voidHandler;
 
-    public MovementHandler(GameBoard board) {
+    public MovementHandler(GameBoard board, List<Player> players) {
         this.board = board;
         this.playerLayer = board.getLayer(PLAYER_LAYER);
-        this.players = new ArrayList<>();
+        this.players = players;
         this.collisionHandler = new CollisionHandler(board, players);
         this.spawnHandler = new SpawnHandler(board);
         this.flagHandler = new FlagHandler(board, 4);    // should probably not be in movementHandler
         this.voidHandler = new VoidHandler(board);
+    }
+
+    public MovementHandler(GameBoard board) {
+        this(board, new ArrayList<>());
     }
 
     public Player getActivePlayer() {

@@ -42,6 +42,7 @@ public abstract class LayeredBoard {
     protected Map<Vector2, ITile> mapFlags() {
         return mapPositionToTile(FLAG_LAYER);
     }
+
     protected Map<Vector2, ITile> mapVoid() {
         return mapPositionToTile(VOID_LAYER);
     }
