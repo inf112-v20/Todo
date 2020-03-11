@@ -3,7 +3,6 @@ package inf112.core.game;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapProperties;
 import inf112.core.board.GameBoard;
 import inf112.core.board.MapNames;
 import inf112.core.movement.MovementHandler;

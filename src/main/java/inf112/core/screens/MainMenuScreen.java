@@ -14,22 +14,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 public class MainMenuScreen implements Screen {
 
     private IGameStateSwitcher gameStateSwitcher;
-    private float width;
-    private float height;
-
-    private ImageButton playButton;
-    private ImageButton exitButton;
+    private ImageButton playButton, exitButton;
     private Stage stage;
 
     public MainMenuScreen(IGameStateSwitcher gameStateSwitcher){
         this.gameStateSwitcher = gameStateSwitcher;
-        this.width = Gdx.graphics.getWidth();
-        this.height = Gdx.graphics.getHeight();
     }
 
     @Override
     public void show() {
         stage = new Stage();
+
+        float width = Gdx.graphics.getWidth();
+        float height = Gdx.graphics.getHeight();
 
         Sprite button = new Sprite(new Texture("img/playButton.png"));
         playButton = new ImageButton(new SpriteDrawable(button));
