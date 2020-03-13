@@ -24,6 +24,7 @@ public class Player {
     private Vector2 position;
     private Cell cell;
     private Direction direction;
+    private Direction lastDir;
     private PlayerBackup backup;
     private Deck deck;
     private List<ProgramCard> selected = new ArrayList<>();
@@ -111,6 +112,7 @@ public class Player {
      */
     public void move(Direction dir) {
         VectorMovement.go(position, dir);
+        lastDir = dir;
     }
 
 
@@ -161,4 +163,11 @@ public class Player {
         return Objects.hash(name, id);
     }
 
+    public Direction getLastDir() {
+        return lastDir;
+    }
+
+    public void setLastDir(Direction lastDir) {
+        this.lastDir = lastDir;
+    }
 }

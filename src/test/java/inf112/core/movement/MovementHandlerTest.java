@@ -2,6 +2,7 @@ package inf112.core.movement;
 
 import com.badlogic.gdx.Input;
 import inf112.core.board.GameBoard;
+import inf112.core.game.MainGame;
 import inf112.core.player.Player;
 import inf112.core.player.Direction;
 import inf112.core.testingUtils.GdxTestRunner;
@@ -19,7 +20,7 @@ public class MovementHandlerTest {
 
     @Before
     public void init() {
-        movementHandler = new MovementHandler(new GameBoard());
+        movementHandler = new MovementHandler(new MainGame());
         player1 = new Player("TestSpiller");
     }
 

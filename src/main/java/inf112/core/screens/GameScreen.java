@@ -30,7 +30,7 @@ public class GameScreen implements Screen {
         game.createPlayers(2);
         game.setActivePlayerById(1);
 
-        Gdx.input.setInputProcessor(game.getInputProcessor());
+        Gdx.input.setInputProcessor(game.getMovementHandler());
     }
 
     @Override

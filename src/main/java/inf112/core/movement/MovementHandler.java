@@ -5,6 +5,8 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
+import inf112.core.game.MainGame;
+import inf112.core.game.RoundHandler;
 import inf112.core.movement.util.CollisionHandler;
 import inf112.core.movement.util.FlagHandler;
 import inf112.core.movement.util.SpawnHandler;
@@ -37,9 +39,11 @@ public class MovementHandler extends InputAdapter {
     private SpawnHandler spawnHandler;
     private FlagHandler flagHandler;
     private VoidHandler voidHandler;
+    private RoundHandler roundHandler;
 
-    public MovementHandler(GameBoard board, List<Player> players) {
-        this.board = board;
+    public MovementHandler(MainGame game, List<Player> players) {
+        this.board = game.getBoard();
+        this.roundHandler = game.getRoundHandler();
         this.playerLayer = board.getLayer(PLAYER_LAYER);
         this.players = players;
         this.collisionHandler = new CollisionHandler(board, players);
@@ -48,13 +52,15 @@ public class MovementHandler extends InputAdapter {
         this.voidHandler = new VoidHandler(board);
     }
 
-    public MovementHandler(GameBoard board) {
-        this(board, new ArrayList<>());
+    public MovementHandler(MainGame game) {
+        this(game, new ArrayList<>());
     }
 
     public Player getActivePlayer() {
         return activePlayer;
     }
+
+    public List<Player> getPlayers() { return players; }
 
     public boolean add(Player player) {
         if (contains(player))
@@ -108,6 +114,10 @@ public class MovementHandler extends InputAdapter {
                 phase++;
                 phase = phase % 5;
                 break;
+            case Input.Keys.T:
+                roundHandler.conveyorMove();
+                break;
+
             default:
                 return false;
         }
@@ -183,6 +193,7 @@ public class MovementHandler extends InputAdapter {
         if(collisionHandler.canGo(last.getPositionCopy(), direction))
             for (Player affectedPlayer : affectedPlayers) {
                 moveUnchecked(affectedPlayer, direction);
+                affectedPlayer.setLastDir(direction);
                 handleOutOfBounds(affectedPlayer);
                 handleFlagVisitation(affectedPlayer);
                 handleVoid(affectedPlayer);
@@ -201,6 +212,7 @@ public class MovementHandler extends InputAdapter {
     private void moveUnchecked(Player playerToBeMoved, Direction direction) {
         playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), null);                   // erase player (graphically)
         playerToBeMoved.move(direction);                                                                  // move player  (logically)
+        playerToBeMoved.setLastDir(direction);
         playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), playerToBeMoved.getCell());   // draw player  (graphically)
     }
 
