@@ -76,12 +76,6 @@ public class MovementHandler extends InputAdapter {
         this.activePlayer = player;
     }
 
-    public void drawPlayers() {
-        for (Player player : players)
-            playerLayer.setCell(player.getX(), player.getY(), player.getCell());
-    }
-
-
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {

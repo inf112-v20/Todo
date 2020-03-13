@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
@@ -14,7 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 public class GameOverScreen implements Screen {
 
     private IGameStateSwitcher gameStateSwitcher;
+    private Image gameOver;
     private ImageButton playAgainButton, closeButton;
+    private Sprite text, button;
     private Stage stage;
 
     public GameOverScreen(RoboRally gameStateSwitcher) {
@@ -23,25 +26,33 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void show() {
-        stage = new Stage();
+        this.stage = new Stage();
 
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
 
-        Sprite button = new Sprite(new Texture("img/playButton.png"));
-        playAgainButton = new ImageButton(new SpriteDrawable(button));
-        playAgainButton.setPosition(width/2 - button.getWidth()/2, height/2);
+        // game over text
+        this.text = new Sprite(new Texture("img/gameOver.png"));
+        this.gameOver = new Image(text);
+        gameOver.setPosition(width/2 - text.getWidth()/2, height*0.7f);
+        stage.addActor(gameOver);
+
+        // play again button
+        this.button = new Sprite(new Texture("img/playAgainButton.png"));
+        this.playAgainButton = new ImageButton(new SpriteDrawable(button));
+        playAgainButton.setPosition(width/2 - button.getWidth()/2, height*0.35f);
         playAgainButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gameStateSwitcher.closeApplication();
+                gameStateSwitcher.initMainMenu();
             }
         });
         stage.addActor(playAgainButton);
 
-        button = new Sprite((new Texture("img/exitButton.png")));
-        closeButton = new ImageButton(new SpriteDrawable(button));
-        closeButton.setPosition(width/2-button.getWidth()/2, height/6);
+        // exit button
+        this.button = new Sprite((new Texture("img/exitButton.png")));
+        this.closeButton = new ImageButton(new SpriteDrawable(button));
+        closeButton.setPosition(width/2-button.getWidth()/2, height*0.20f);
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -77,11 +88,11 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }

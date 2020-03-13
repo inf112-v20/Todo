@@ -4,6 +4,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.core.board.GameBoard;
+import inf112.core.board.MapLayer;
 import inf112.core.board.MapNames;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
@@ -43,6 +44,11 @@ public class MainGame {
         return movementHandler;    // this should of course change
     }
 
+    public void drawPlayers() {
+        for (Player player : players)
+            board.getLayer(MapLayer.PLAYER_LAYER).setCell(player.getX(), player.getY(), player.getCell());
+    }
+
     public boolean createPlayer() {
         if (Player.getPlayerCount() >= playerSpriteSheetGrid.length)
             throw new IllegalStateException(
@@ -63,7 +69,7 @@ public class MainGame {
                 allAdded = false;
 
         movementHandler.moveAllToSpawn();
-        movementHandler.drawPlayers();
+        drawPlayers();
 
         givePlayersCards();         // Temp solution for testing cards
 
