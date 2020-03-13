@@ -62,6 +62,10 @@ public class Player {
         this.deck = new Deck();
     }
 
+    public static void resetPlayerCount() {
+        playerCount = 0;
+    }
+
     public static int getPlayerCount() {
         return playerCount;
     }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import inf112.core.game.MainGame;
+import inf112.core.player.Player;
 
 
 public class GameScreen implements Screen {
@@ -51,6 +52,7 @@ public class GameScreen implements Screen {
         mapRenderer.setView(camera);
         mapRenderer.render();
         if (game.hasWon()) {
+            Player.resetPlayerCount();
             gameStateSwitcher.initGameOver();
         }
     }
