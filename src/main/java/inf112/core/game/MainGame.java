@@ -19,11 +19,13 @@ public class MainGame {
     private List<Player> players;
     private Texture playerSpriteSheet;
     private TextureRegion[][] playerSpriteSheetGrid;
+    private RoundHandler roundHandler;
 
     public MainGame(MapNames mapNames) {
         this.players = new ArrayList<>();
         this.board = new GameBoard(mapNames);
-        this.movementHandler = new MovementHandler(board, players);
+        this.roundHandler = new RoundHandler(this, players);
+        this.movementHandler = new MovementHandler(this, players);
         playerSpriteSheet = new Texture("img/Player_Spritesheet.png");
         playerSpriteSheetGrid = TextureRegion.split(
                 playerSpriteSheet,
@@ -40,7 +42,9 @@ public class MainGame {
         return board;
     }
 
-    public InputAdapter getInputProcessor() {
+    public RoundHandler getRoundHandler() {return roundHandler;}
+
+    public MovementHandler getMovementHandler() {
         return movementHandler;    // this should of course change
     }
 
