@@ -65,6 +65,8 @@ public class MainGame {
         movementHandler.moveAllToSpawn();
         movementHandler.drawPlayers();
 
+        givePlayersCards();         // Temp solution for testing cards
+
         return allAdded;
     }
 
@@ -84,6 +86,12 @@ public class MainGame {
     public void dispose() {
         board.dispose();
         playerSpriteSheet.dispose();
+    }
+
+    public void givePlayersCards() {    // Gives all players random cards
+        for (Player player : players){
+            player.selectFiveCards();
+        }
     }
 
 }
