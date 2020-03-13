@@ -21,16 +21,6 @@ public abstract class AbstractTile implements ITile{
     }
 
     @Override
-    public float getX() {
-        return xVal;
-    }
-
-    @Override
-    public float getY() {
-        return yVal;
-    }
-
-    @Override
     public Vector2 getPos() {
         return pos;
     }

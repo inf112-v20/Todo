@@ -19,7 +19,7 @@ import static inf112.core.tile.Attributes.*;
 public enum TileId {
 
     /**
-     * Wall-tiles. Walls have a list of directions, walls that cover multiple sides of a tile
+     * WallTiles. Walls have a list of directions, walls that cover multiple sides of a tile
      * will have multiple directions.
      */
     WALL_SOUTH(28, WallTile.class, COLLIDABLE, SOUTH),
@@ -33,7 +33,7 @@ public enum TileId {
     WALL_SOUTH_WEST(31, WallTile.class, COLLIDABLE, SOUTH, WEST),
 
     /**
-     * Pusher-wall-tiles. They are wall-tiles but with a pusher facing the opposite direction of the wall.
+     * Pusher_wallTiles. They are wall-tiles but with a pusher facing the opposite direction of the wall.
      * Odd pushers will push the player in their direction on rounds 1, 3, and 5.
      */
     PUSHER_WALL_ODD_NORTH(8, WallTile.class, COLLIDABLE, NORTH),
@@ -42,7 +42,7 @@ public enum TileId {
     PUSHER_WALL_ODD_WEST(11, WallTile.class, COLLIDABLE, WEST),
 
     /**
-     * Pusher-wall-tiles. They are wall-tiles but with a pusher facing the opposite direction of the wall.
+     * Pusher_wallTiles. They are wallTiles but with a pusher facing the opposite direction of the wall.
      * Even pushers will push the player in their direction on rounds 1, 3, and 5.
      */
     PUSHER_WALL_EVEN_NORTH(0, WallTile.class, COLLIDABLE, NORTH),
@@ -51,7 +51,7 @@ public enum TileId {
     PUSHER_WALL_EVEN_WEST(3, WallTile.class, COLLIDABLE, WEST),
 
     /**
-     * Laser-wall-tiles. They are wall-tiles but with a laser-shooter facing the opposite direction of the wall.
+     * Laser_wallTiles. They are wallTiles but with a laser-shooter facing the opposite direction of the wall.
      * Laser-shooters will shoot a laser in its direction during the laser-phase of every round.
      */
     LASER_WALL_NORTH(44, WallTile.class, COLLIDABLE, SHOOTS_LASER, NORTH),
@@ -60,7 +60,7 @@ public enum TileId {
     LASER_WALL_EAST(45, WallTile.class, COLLIDABLE, SHOOTS_LASER, EAST),
 
     /**
-     * Double-Laser-wall-tiles. They are wall-tiles but with a double laser-shooter facing the opposite direction of the wall.
+     * double_laser_wallTiles. They are wallTiles but with a double laser-shooter facing the opposite direction of the wall.
      * Laser-shooters will shoot a laser in its direction during the laser-phase of every round.
      */
     LASER_WALL_DOUBLE_NORTH(93, WallTile.class, COLLIDABLE, SHOOTS_LASER, NORTH),
@@ -69,7 +69,7 @@ public enum TileId {
     LASER_WALL_DOUBLE_EAST(94, WallTile.class, COLLIDABLE, SHOOTS_LASER, EAST),
 
     /**
-     * Hole-tiles. A player that steps on a hole-tile will fall to their death.
+     * HoleTiles. A player that steps on a holeTile will fall to their death.
      */
     HOLE_WARNING_ROUND(5, HoleTile.class, VOID),
     HOLE_WARNING_ROUND_2(90, HoleTile.class, VOID),
@@ -88,7 +88,20 @@ public enum TileId {
     HOLE_WARNING_NORTH_WEST_EAST(117, HoleTile.class, VOID),
 
     /**
-     * Spawn-tiles. SpawnTiles are assigned to corresponding player and designate their original spawn-point
+     * ConveyorTiles. ConveyorTiles will move a player towards their output during the conveyor phase of every round
+     */
+    CONVEYOR_SOUTH_TO_NORTH(48, ConveyorTile.class, NORTH, SOUTH),
+    CONVEYOR_NORTH_TO_SOUTH(49, ConveyorTile.class, SOUTH, NORTH),
+    CONVEYOR_EAST_TO_WEST(50, ConveyorTile.class, WEST, EAST),
+    CONVEYOR_WEST_TO_EAST(51, ConveyorTile.class, EAST, WEST),
+
+    CONVEYOR_FAST_SOUTH_TO_NORTH(12, ConveyorTile.class, FAST, NORTH, SOUTH),
+    CONVEYOR_FAST_NORTH_TO_SOUTH(20, ConveyorTile.class, FAST, SOUTH, NORTH),
+    CONVEYOR_FAST_EAST_TO_WEST(21, ConveyorTile.class, FAST, WEST, EAST),
+    CONVEYOR_FAST_WEST_TO_EAST(13, ConveyorTile.class, FAST, EAST, WEST),
+
+    /**
+     * SpawnTiles. SpawnTiles are assigned to corresponding player and designate their original spawn-point
      */
     SPAWN_PLAYER1(120, SpawnTile.class),
     SPAWN_PLAYER2(121, SpawnTile.class),
@@ -100,7 +113,7 @@ public enum TileId {
     SPAWN_PLAYER8(131, SpawnTile.class),
 
     /**
-     * Flag-tiles. When a Player ends his/hers move on a Flag-tile, it should be registered.
+     * FlagTiles. When a Player ends his/hers move on a FlagTile, it should be registered.
      */
     FLAG_1(54, FlagTile.class),
     FLAG_2(62, FlagTile.class),

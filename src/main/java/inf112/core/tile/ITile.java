@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * Interface for a basic tile object
+ * @author Alvar
  */
 public interface ITile {
 
@@ -11,13 +12,17 @@ public interface ITile {
      *
      * @return x-coordinate of tile on map
      */
-    float getX();
+    default float getX() {
+        return getPos().x;
+    };
 
     /**
      *
      * @return y-coordinate of tile on map
      */
-    float getY();
+    default float getY() {
+        return getPos().y;
+    };
 
     /**
      *

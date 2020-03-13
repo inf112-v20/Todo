@@ -27,7 +27,11 @@ public enum Attributes {
     /**
      * Tiles with VOID attribute will cause a player-robot to fall if stepped on
      */
-    VOID
+    VOID,
+    /**
+     * ConveyorTiles with Fast attribute will move a player two tiles every phase.
+     */
+    FAST
 
     ;
 
