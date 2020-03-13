@@ -18,6 +18,7 @@ public class MainGame {
     private List<Player> players;
     private Texture playerSpriteSheet;
     private TextureRegion[][] playerSpriteSheetGrid;
+    private RoundHandler roundHandler;
 
     public MainGame(MapNames mapNames) {
         this.players = new ArrayList<>();
@@ -29,6 +30,7 @@ public class MainGame {
                 board.getTileWidthInPixels(),
                 board.getTileHeightInPixels()
         );
+        this.roundHandler = new RoundHandler(this, players);
     }
 
     public MainGame() {

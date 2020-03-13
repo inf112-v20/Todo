@@ -13,7 +13,7 @@ import static inf112.core.board.MapLayer.*;
 
 public class GameBoard extends LayeredBoard {
 
-    Map<Vector2, ITile> collidablesMap, spawnsMap, flagsMap, voidMap;
+    Map<Vector2, ITile> collidablesMap, spawnsMap, flagsMap, voidMap, conveyorMap;
     MapProperties properties;
 
     public GameBoard() {
@@ -26,6 +26,8 @@ public class GameBoard extends LayeredBoard {
         this.spawnsMap = super.mapSpawns();
         this.flagsMap = super.mapFlags();
         this.voidMap = super.mapVoid();
+        this.conveyorMap = super.mapConveyors();
+
         this.properties = super.tiledMap.getProperties();
     }
 
@@ -44,6 +46,8 @@ public class GameBoard extends LayeredBoard {
     public Map<Vector2, ITile> getFlags() { return flagsMap; }
 
     public Map<Vector2, ITile> getVoids() { return voidMap; }
+
+    public Map<Vector2, ITile> getConveyors() { return conveyorMap; }
 
     public int getMapWidth() {
         return properties.get("width", Integer.class);
@@ -75,6 +79,5 @@ public class GameBoard extends LayeredBoard {
         camera.update();
         return camera;
     }
-
 
 }
