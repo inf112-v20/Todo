@@ -4,78 +4,44 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import inf112.core.board.GameBoard;
-import inf112.core.movement.MovementHandler;
-import inf112.core.player.Deck;
-import inf112.core.player.Player;
-import inf112.core.programcards.MovementCard;
-import inf112.core.programcards.RotationCard;
+import inf112.core.game.MainGame;
 
 
 public class GameScreen implements Screen {
+
+    MainGame game;
+    private IGameStateSwitcher gameStateSwitcher;
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
-    private Texture texture;
-    private TextureRegion[][] textureRegions;
-    private Player player1, player2, player3;
-    private MovementHandler movementHandler;
-    private int mapWidth, mapHeight;                   // #tiles in each direction
-    private int tilePixelWidth, tilePixelHeight;
-    private GameBoard board;
 
+    public GameScreen(RoboRally gameStateSwitcher) {
+        this.gameStateSwitcher = gameStateSwitcher;
+    }
 
     @Override
     public void show() {
-        // load the map and get dimension
-        board = new GameBoard();
-        MapProperties properties = board.getTiledMap().getProperties();
-        mapWidth = properties.get("width", Integer.class);
-        mapHeight = properties.get("height", Integer.class);
-        tilePixelWidth = properties.get("tilewidth", Integer.class);
-        tilePixelHeight = properties.get("tileheight", Integer.class);
 
-        // set unit scale, how many pixels per world unit (1 unit == tilePixelHeight pixels)
-        float unitScale = (float) 1/tilePixelHeight;
-        mapRenderer = new OrthogonalTiledMapRenderer(board.getTiledMap(), unitScale);
+        game = new MainGame();
 
-        // camera setup
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, mapWidth, mapHeight);                           // show this many units of the world
-        camera.position.set((float) mapWidth / 2, (float) mapHeight / 2,0);    // centers the camera
-        camera.update();
+        mapRenderer = game.getBoard().instantiateMapRenderer();
+        camera = game.getBoard().instantiateCamera();
 
-        // player setup
-        texture = new Texture("img/Player_Spritesheet.png");
-        textureRegions = TextureRegion.split(texture, tilePixelWidth, tilePixelHeight);
-        player1 = new Player(textureRegions[0][0]);
-        player2 = new Player(textureRegions[1][0]);
-        player3 = new Player(textureRegions[2][0]);
-        movementHandler = new MovementHandler(board);
-        movementHandler.add(player1, player2, player3);
-        player1.selectFiveCards();
-        movementHandler.setActive(player1);
-        movementHandler.moveAllToSpawn();
-        movementHandler.drawPlayers();
+        game.createPlayers(2);
+        game.setActivePlayerById(1);
 
-
-
-        Gdx.input.setInputProcessor(movementHandler);
+        Gdx.input.setInputProcessor(game.getInputProcessor());
     }
 
     @Override
     public void dispose() {
-        texture.dispose();
         mapRenderer.dispose();
-        board.dispose();
+        game.dispose();
     }
 
     @Override
     public void hide() {
-        dispose();    // hva er forskjellen på hide() og dispose() ??
+        dispose();         // temporary solution
     }
 
     @Override
@@ -84,6 +50,9 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         mapRenderer.setView(camera);
         mapRenderer.render();
+        if (game.hasWon()) {
+            gameStateSwitcher.initGameOver();
+        }
     }
 
     @Override

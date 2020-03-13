@@ -62,6 +62,10 @@ public class Player {
         this.deck = new Deck();
     }
 
+    public static int getPlayerCount() {
+        return playerCount;
+    }
+
     public String getName() {   return name;   }
 
     public int getId() {   return id;   }

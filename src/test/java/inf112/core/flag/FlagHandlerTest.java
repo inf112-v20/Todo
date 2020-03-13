@@ -1,7 +1,7 @@
 package inf112.core.flag;
 
 import inf112.core.board.GameBoard;
-import inf112.core.movement.FlagHandler;
+import inf112.core.movement.util.FlagHandler;
 import inf112.core.player.Player;
 import inf112.core.testingUtils.GdxTestRunner;
 import org.junit.Before;
