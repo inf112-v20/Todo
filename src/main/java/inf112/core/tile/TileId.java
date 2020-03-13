@@ -89,6 +89,8 @@ public enum TileId {
 
     /**
      * ConveyorTiles. ConveyorTiles will move a player towards their output during the conveyor phase of every round
+     * ConveyorTiles should only have the optional FAST attribute, followed by the single output directionalAttribute,
+     * then lastly op to two input directionalAttributes. 
      */
     CONVEYOR_SOUTH_TO_NORTH(48, ConveyorTile.class, NORTH, SOUTH),
     CONVEYOR_NORTH_TO_SOUTH(49, ConveyorTile.class, SOUTH, NORTH),

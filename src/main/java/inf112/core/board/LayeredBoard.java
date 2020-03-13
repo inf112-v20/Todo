@@ -4,10 +4,13 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
+import inf112.core.tile.ConveyorTile;
 import inf112.core.tile.ITile;
+import inf112.core.tile.MoverTile;
 import inf112.core.tile.TileId;
 
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 import static inf112.core.board.MapLayer.*;
@@ -47,6 +50,8 @@ public abstract class LayeredBoard {
         return mapPositionToTile(VOID_LAYER);
     }
 
+    protected Map<Vector2, ITile> mapConveyors() { return mapPositionToTile(CONVEYOR_LAYER); }
+
     /**
      * Scans through a mapLayer and converts every TiledMapTile into its ITile object representation, then it creates a
      * hashTable that maps every ITile object to its Vector2 position on the TiledMap.
@@ -72,5 +77,14 @@ public abstract class LayeredBoard {
 
     public void dispose(){
         tiledMap.dispose();
+    }
+
+    /**
+     * moves all conveyors
+     */
+    public void conveyorMove(){
+        for(ITile conveyor : mapConveyors().values()) {
+
+        }
     }
 }
