@@ -2,7 +2,7 @@ package inf112.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import inf112.core.roborally.RoboRally;
+import inf112.core.screens.RoboRally;
 
 public class Main {
     public static void main(String[] Args) {

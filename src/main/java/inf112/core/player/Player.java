@@ -55,6 +55,10 @@ public class Player {
         this.backup = new PlayerBackup(xPos, yPos);
     }
 
+    public static int getPlayerCount() {
+        return playerCount;
+    }
+
     public String getName() {   return name;   }
 
     public int getId() {   return id;   }

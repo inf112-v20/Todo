@@ -11,13 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
-public class MainMenuScreen implements Screen {
+public class GameOverScreen implements Screen {
 
     private IGameStateSwitcher gameStateSwitcher;
-    private ImageButton playButton, exitButton;
+    private ImageButton playAgainButton, closeButton;
     private Stage stage;
 
-    public MainMenuScreen(IGameStateSwitcher gameStateSwitcher){
+    public GameOverScreen(RoboRally gameStateSwitcher) {
         this.gameStateSwitcher = gameStateSwitcher;
     }
 
@@ -29,26 +29,26 @@ public class MainMenuScreen implements Screen {
         float height = Gdx.graphics.getHeight();
 
         Sprite button = new Sprite(new Texture("img/playButton.png"));
-        playButton = new ImageButton(new SpriteDrawable(button));
-        playButton.setPosition(width/2 - button.getWidth()/2, height/2);
-        playButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                gameStateSwitcher.initMainGame();
-            }
-        });
-        stage.addActor(playButton);
-
-        button = new Sprite((new Texture("img/exitButton.png")));
-        exitButton = new ImageButton(new SpriteDrawable(button));
-        exitButton.setPosition(width/2-button.getWidth()/2, height/6);
-        exitButton.addListener(new ClickListener() {
+        playAgainButton = new ImageButton(new SpriteDrawable(button));
+        playAgainButton.setPosition(width/2 - button.getWidth()/2, height/2);
+        playAgainButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 gameStateSwitcher.closeApplication();
             }
         });
-        stage.addActor(exitButton);
+        stage.addActor(playAgainButton);
+
+        button = new Sprite((new Texture("img/exitButton.png")));
+        closeButton = new ImageButton(new SpriteDrawable(button));
+        closeButton.setPosition(width/2-button.getWidth()/2, height/6);
+        closeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                gameStateSwitcher.closeApplication();
+            }
+        });
+        stage.addActor(closeButton);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -82,6 +82,6 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+
     }
 }
