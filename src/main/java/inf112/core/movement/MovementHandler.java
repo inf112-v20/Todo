@@ -44,7 +44,7 @@ public class MovementHandler extends InputAdapter {
         this.players = players;
         this.collisionHandler = new CollisionHandler(board, players);
         this.spawnHandler = new SpawnHandler(board);
-        this.flagHandler = new FlagHandler(board, 4);    // should probably not be in movementHandler
+        this.flagHandler = new FlagHandler(board);    // should probably not be in movementHandler
         this.voidHandler = new VoidHandler(board);
     }
 
