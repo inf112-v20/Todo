@@ -25,7 +25,8 @@ public class Player {
     private Cell cell;
     private Direction direction;
     private PlayerBackup backup;
-    public Deck deck;
+    private Deck deck;
+    private List<ProgramCard> selected = new ArrayList<>();
 
     private static int playerCount = 0;
 
@@ -58,6 +59,7 @@ public class Player {
         this.position = new Vector2(xPos,yPos);
         this.direction = Direction.NORTH;
         this.backup = new PlayerBackup(xPos, yPos);
+        this.deck = new Deck();
     }
 
     public String getName() {   return name;   }
@@ -76,12 +78,6 @@ public class Player {
 
     public Direction getDirection() {   return direction;   }
 
-    public Deck getDeck() { return deck; }
-
-    public void setDeck(Deck deck){
-        this.deck = deck;
-    }
-
     public void setDirection(Direction direction) {   this.direction = direction;   }
 
     public void resetPosition() {   this.position.set(backup.getX(), backup.getY());   }
@@ -96,6 +92,12 @@ public class Player {
 
     public void setFlagsVisited(int numOfFlags) {
         this.flagsVisited = numOfFlags;
+    }
+
+    public void selectFiveCards() { selected.addAll(deck.getFiveCards()); }
+
+    public List<ProgramCard> getSelected(){
+        return this.selected;
     }
 
     /**
@@ -132,6 +134,12 @@ public class Player {
             newCellRotation +=4;
         this.direction = Direction.getDirection(newCellRotation);
         this.cell.setRotation(direction.getCellRotation());
+    }
+
+    public Deck getDeck() { return deck; }
+
+    public void addToDeck(ProgramCard card) {
+        this.getDeck().addCard(card);
     }
 
 

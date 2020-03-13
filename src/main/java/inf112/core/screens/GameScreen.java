@@ -10,7 +10,10 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import inf112.core.board.GameBoard;
 import inf112.core.movement.MovementHandler;
+import inf112.core.player.Deck;
 import inf112.core.player.Player;
+import inf112.core.programcards.MovementCard;
+import inf112.core.programcards.RotationCard;
 
 
 public class GameScreen implements Screen {
@@ -53,9 +56,12 @@ public class GameScreen implements Screen {
         player3 = new Player(textureRegions[2][0]);
         movementHandler = new MovementHandler(board);
         movementHandler.add(player1, player2, player3);
+        player1.selectFiveCards();
         movementHandler.setActive(player1);
         movementHandler.moveAllToSpawn();
         movementHandler.drawPlayers();
+
+
 
         Gdx.input.setInputProcessor(movementHandler);
     }

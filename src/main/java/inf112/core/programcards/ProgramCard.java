@@ -2,7 +2,7 @@ package inf112.core.programcards;
 
 
 public abstract class ProgramCard extends Card implements Comparable<ProgramCard>{
-    private CardType type;   // Må gjøre det mulig å skille mellom programkort og optionkort
+    private CardType type;
     private int priority;
     private String name;
 

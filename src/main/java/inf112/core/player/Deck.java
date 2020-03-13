@@ -1,7 +1,8 @@
 package inf112.core.player;
 
-import inf112.core.programcards.Card;
+import inf112.core.programcards.MovementCard;
 import inf112.core.programcards.ProgramCard;
+import inf112.core.programcards.RotationCard;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +15,11 @@ public class Deck {
     public Deck(){
         discardDeck = new ArrayList<>();
         activeDeck = new ArrayList<>();
+        addCard(new MovementCard(100, 2, true, "Move forward 2"));
+        addCard(new RotationCard(120, true, 2, "Rotate right 2"));
+        addCard(new MovementCard(110, 1, false, "Move backwards 1"));
+        addCard(new RotationCard(150, false, 1, "Rotate left 1"));
+        addCard(new MovementCard(200, 3, true, "Move forward 3"));
     }
 
     public void addCard(ProgramCard card) {
@@ -26,28 +32,29 @@ public class Deck {
         }
     }
 
+    public ProgramCard getRandomCard(){
+        if (activeDeck.size() <= 0) {
+            activeDeck.addAll(discardDeck);
+            discardDeck.clear();
+            Collections.shuffle(activeDeck);
+        }
+        ProgramCard card = activeDeck.remove(0);
+        discardDeck.add(card);
+        return card;
+    }
+
     public void shuffleActive(){
         Collections.shuffle(activeDeck);
     }
 
-    // Returns list of cards for player to choose from
-    // Should throw exception if amount is greater than (activecards + discardcards)
-    public List<ProgramCard> getSelection(int amount) {
-        List<ProgramCard> selection = null;
-        if (amount >= activeDeck.size()) {
-            selection.addAll(activeDeck);
-            activeDeck.clear();
-            activeDeck.addAll(discardDeck);
-            shuffleActive();
-            discardDeck.clear();
+    public List<ProgramCard> getFiveCards(){
+        List<ProgramCard> cards = new ArrayList<>();
+        for(int i = 0; i < 5; i++){
+            cards.add(getRandomCard());
         }
-        for (int i = 0; i < amount - selection.size(); i++) {
-            selection.add(activeDeck.get(i));
-        }
-        return selection;
+        return cards;
     }
 
-    // select card (Dette blir antageligvis feil)
     public void selectCard(ProgramCard card){
         discardDeck.add(activeDeck.remove(activeDeck.indexOf(card)));
     }
