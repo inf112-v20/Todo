@@ -4,8 +4,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
+import inf112.core.programcards.ProgramCard;
 import inf112.core.util.VectorMovement;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -22,8 +25,11 @@ public class Player {
     private Cell cell;
     private Direction direction;
     private PlayerBackup backup;
+    private Deck deck;
+    private List<ProgramCard> selected = new ArrayList<>();
 
     private static int playerCount = 0;
+
 
     public Player() {
         this("Player " + (playerCount + 1));
@@ -53,6 +59,7 @@ public class Player {
         this.position = new Vector2(xPos,yPos);
         this.direction = Direction.NORTH;
         this.backup = new PlayerBackup(xPos, yPos);
+        this.deck = new Deck();
     }
 
     public static int getPlayerCount() {
@@ -91,6 +98,12 @@ public class Player {
         this.flagsVisited = numOfFlags;
     }
 
+    public void selectFiveCards() { selected.addAll(deck.getFiveCards()); }
+
+    public List<ProgramCard> getSelected(){
+        return this.selected;
+    }
+
     /**
      * Moves the logical representation of the player one unit in the given direction.
      *
@@ -125,6 +138,12 @@ public class Player {
             newCellRotation +=4;
         this.direction = Direction.getDirection(newCellRotation);
         this.cell.setRotation(direction.getCellRotation());
+    }
+
+    public Deck getDeck() { return deck; }
+
+    public void addToDeck(ProgramCard card) {
+        this.getDeck().addCard(card);
     }
 
 

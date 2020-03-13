@@ -1,6 +1,7 @@
 package inf112.core.flag;
 
 import inf112.core.board.GameBoard;
+import inf112.core.board.MapNames;
 import inf112.core.movement.util.FlagHandler;
 import inf112.core.player.Player;
 import inf112.core.testingUtils.GdxTestRunner;
@@ -29,8 +30,8 @@ public class FlagHandlerTest {
 
     @Before
     public void init() {
-        this.gameBoard = new GameBoard();
-        this.flagHandler = new FlagHandler(gameBoard, 3);
+        this.gameBoard = new GameBoard(MapNames.TESTING_MAP);    // has 4 flags
+        this.flagHandler = new FlagHandler(gameBoard);
         this.playerNotOnFlag = new Player(5, 5);
         this.playerOnFlag1 = new Player(3, 9);
         this.playerOnFlag2 = new Player(5, 9);
@@ -73,9 +74,8 @@ public class FlagHandlerTest {
 
     @Test
     public void playerThatHasVisited3FlagsExactlyShouldYieldTrue() {
-        flagHandler.incrementFlagsVisited(playerNotOnFlag);
-        flagHandler.incrementFlagsVisited(playerNotOnFlag);
-        flagHandler.incrementFlagsVisited(playerNotOnFlag);
+        for (int i = 0; i < 4; i++)
+            flagHandler.incrementFlagsVisited(playerNotOnFlag);
         assertTrue(flagHandler.hasVisitedAllFlags(playerNotOnFlag));
     }
 }

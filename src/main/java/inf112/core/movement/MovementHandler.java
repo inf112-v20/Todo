@@ -11,6 +11,10 @@ import inf112.core.movement.util.SpawnHandler;
 import inf112.core.movement.util.VoidHandler;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
+import inf112.core.programcards.MovementCard;
+import inf112.core.programcards.ProgramCard;
+import inf112.core.programcards.RotationCard;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +27,7 @@ import static inf112.core.board.MapLayer.*;
  * @author eskil
  */
 public class MovementHandler extends InputAdapter {
-
+    private int phase = 0;
     private GameBoard board;
     private List<Player> players;
     private Player activePlayer;                 // movement will affect this player. Should be changed actively
@@ -40,7 +44,7 @@ public class MovementHandler extends InputAdapter {
         this.players = players;
         this.collisionHandler = new CollisionHandler(board, players);
         this.spawnHandler = new SpawnHandler(board);
-        this.flagHandler = new FlagHandler(board, 4);    // should probably not be in movementHandler
+        this.flagHandler = new FlagHandler(board);    // should probably not be in movementHandler
         this.voidHandler = new VoidHandler(board);
     }
 
@@ -99,10 +103,46 @@ public class MovementHandler extends InputAdapter {
             case Input.Keys.SPACE:
                 moveToBackup(activePlayer);
                 break;
+            case Input.Keys.M:
+                cardMovement(activePlayer);
+                phase++;
+                phase = phase % 5;
+                break;
             default:
                 return false;
         }
         return true;
+    }
+
+    /**
+     *
+     */
+    public void cardMovement(Player player){
+        ProgramCard currentCard = player.getSelected().get(phase);
+        if (currentCard instanceof MovementCard){
+            if (((MovementCard) currentCard).isForward()){
+                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++){
+                    attemptToMoveForward(activePlayer);
+                }
+            }
+            else{
+                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++){
+                    attemptToMoveBackward(activePlayer);
+                }
+            }
+        }
+        else if (currentCard instanceof RotationCard){
+            if (((RotationCard) currentCard).getClockwise()){
+                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++){
+                    activePlayer.rotateRight();
+                }
+            }
+            else {
+                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++){
+                    activePlayer.rotateLeft();
+                }
+            }
+        }
     }
 
     /**

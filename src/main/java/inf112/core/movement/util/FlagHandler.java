@@ -20,13 +20,9 @@ public class FlagHandler {
 
     private final int numOfFlagsOnBoard;
 
-    public FlagHandler(GameBoard gameBoard, int numberOfFlags) {
-        this.flagPosToTileMapping = gameBoard.getFlags();
-        this.numOfFlagsOnBoard = numberOfFlags;
-    }
-
     public FlagHandler(GameBoard gameBoard) {
-        this(gameBoard, 3);
+        this.flagPosToTileMapping = gameBoard.getFlags();
+        this.numOfFlagsOnBoard = flagPosToTileMapping.size();
     }
 
     /**

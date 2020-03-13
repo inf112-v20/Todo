@@ -7,7 +7,7 @@ import inf112.core.screens.RoboRally;
 public class Main {
     public static void main(String[] Args) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "Test2";
+        cfg.title = "TODO's RoboRally";
         cfg.width = 1280;
         cfg.height = 720;
         new LwjglApplication(new RoboRally(), cfg);
