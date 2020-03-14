@@ -5,16 +5,21 @@ import inf112.core.player.Direction;
 
 public class VectorMovement {
 
+    //TODO: Her er det noe jævlig rart som skjer:
+    //For at Vector posisjonene skal stemme over med de faktiske posisjonene på kartet så må North være x+1 South være x-1 osv.
+    //Selv om det er det helt motsatte av hva vi ser på TiledMap programmet.
+
+
     public static Vector2 generateNew(Vector2 vector, Direction direction) {
         switch (direction) {
             case NORTH:
-                return new Vector2(vector.x, vector.y + 1);
+                return vector.cpy().add(Vector2.Y);
             case EAST:
-                return new Vector2(vector.x + 1, vector.y);
+                return vector.cpy().add(Vector2.X);
             case SOUTH:
-                return new Vector2(vector.x, vector.y - 1);
+                return vector.cpy().sub(Vector2.Y);
             case WEST:
-                return new Vector2(vector.x - 1, vector.y);
+                return vector.cpy().sub(Vector2.X);
             default:
                 throw new IllegalArgumentException("Illegal direction given.");
         }

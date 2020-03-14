@@ -211,6 +211,19 @@ public class MovementHandler extends InputAdapter {
     }
 
     /**
+     * Moves the given player to the given vector position
+     * with no regard to the players surroundings. To be used with testing.
+     *
+     * @param playerToBeMoved
+     * @param position
+     */
+    public void moveToPos(Player playerToBeMoved, Vector2 position) {
+        playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), null);
+        playerToBeMoved.move(position);
+        playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), playerToBeMoved.getCell());
+    }
+
+    /**
      * Moves the Player to his/hers backup position, both logically and graphically.
      *
      * @param playerToBeMoved

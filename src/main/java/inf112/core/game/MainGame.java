@@ -35,7 +35,7 @@ public class MainGame {
     }
 
     public MainGame() {
-        this(MapNames.TESTING_MAP);
+        this(MapNames.CONVEYOR_TESTING_MAP);
     }
 
     public GameBoard getBoard() {

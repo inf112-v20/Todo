@@ -119,6 +119,14 @@ public class Player {
         lastDir = dir;
     }
 
+    /**
+     * Moves the logical representation of the player to the given vector position.
+     * @param pos
+     */
+    public void move(Vector2 pos) {
+        this.position = pos.cpy();
+    }
+
 
     /**
      * Rotates both the logical and the graphical representation of the player 90 degrees to the left
