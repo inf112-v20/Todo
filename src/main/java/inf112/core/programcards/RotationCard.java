@@ -11,7 +11,7 @@ public class RotationCard extends ProgramCard {
         this.rotations = rotations;
     }
 
-    public boolean getClockwise(){
+    public boolean isClockwise(){
         return clockwise;
     }
 

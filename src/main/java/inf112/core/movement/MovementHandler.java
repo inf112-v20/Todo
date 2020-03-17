@@ -48,7 +48,7 @@ public class MovementHandler extends InputAdapter {
         this.players = players;
         this.collisionHandler = new CollisionHandler(board, players);
         this.spawnHandler = new SpawnHandler(board);
-        this.flagHandler = new FlagHandler(board);    // should probably not be in movementHandler
+        this.flagHandler = new FlagHandler(board);
         this.voidHandler = new VoidHandler(board);
     }
 
@@ -122,28 +122,31 @@ public class MovementHandler extends InputAdapter {
      *
      */
     public void cardMovement(Player player){
+        if (!contains(player))
+            throw new IllegalArgumentException("Unknown player");
+
         ProgramCard currentCard = player.getSelected().get(phase);
         if (currentCard instanceof MovementCard){
             if (((MovementCard) currentCard).isForward()){
                 for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++){
-                    attemptToMoveForward(activePlayer);
+                    attemptToMoveForward(player);
                 }
             }
             else{
                 for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++){
-                    attemptToMoveBackward(activePlayer);
+                    attemptToMoveBackward(player);
                 }
             }
         }
         else if (currentCard instanceof RotationCard){
-            if (((RotationCard) currentCard).getClockwise()){
+            if (((RotationCard) currentCard).isClockwise()){
                 for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++){
-                    activePlayer.rotateRight();
+                    player.rotateRight();
                 }
             }
-            else {
+            else {    // counter clockwise
                 for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++){
-                    activePlayer.rotateLeft();
+                    player.rotateLeft();
                 }
             }
         }
@@ -187,10 +190,10 @@ public class MovementHandler extends InputAdapter {
         if(collisionHandler.canGo(last.getPositionCopy(), direction))
             for (Player affectedPlayer : affectedPlayers) {
                 moveUnchecked(affectedPlayer, direction);
-                affectedPlayer.setLastDir(direction);
-                handleOutOfBounds(affectedPlayer);
+                affectedPlayer.setPrevDir(direction);
+                handleOutOfBounds(affectedPlayer);           // players outside map is moved to spawn
                 handleFlagVisitation(affectedPlayer);
-                handleVoid(affectedPlayer);
+                handleVoid(affectedPlayer);                  // players on a hole is moved to spawn
                 if (flagHandler.hasVisitedAllFlags(affectedPlayer))
                     this.winner = affectedPlayer;
             }
@@ -206,7 +209,7 @@ public class MovementHandler extends InputAdapter {
     private void moveUnchecked(Player playerToBeMoved, Direction direction) {
         playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), null);                   // erase player (graphically)
         playerToBeMoved.move(direction);                                                                  // move player  (logically)
-        playerToBeMoved.setLastDir(direction);
+        playerToBeMoved.setPrevDir(direction);
         playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), playerToBeMoved.getCell());   // draw player  (graphically)
     }
 
