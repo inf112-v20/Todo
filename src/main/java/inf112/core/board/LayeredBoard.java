@@ -43,8 +43,8 @@ public abstract class LayeredBoard {
      * @return hashTable
      * */
     private Map<Vector2, ITile> mapPositionToTile(MapLayer layerToBeScanned) {
-        Map<Vector2, ITile> table = new Hashtable<>();
         TiledMapTileLayer layer = getLayer(layerToBeScanned);
+        Map<Vector2, ITile> table = new Hashtable<>();
 
         for (int x = 0; x < layer.getWidth(); x++)
             for (int y = 0; y < layer.getHeight(); y++) {

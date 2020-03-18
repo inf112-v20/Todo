@@ -16,6 +16,7 @@ import inf112.core.player.Player;
 import inf112.core.programcards.MovementCard;
 import inf112.core.programcards.ProgramCard;
 import inf112.core.programcards.RotationCard;
+import inf112.core.util.LayerOperation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -207,10 +208,10 @@ public class MovementHandler extends InputAdapter {
      * @param direction
      */
     private void moveUnchecked(Player playerToBeMoved, Direction direction) {
-        playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), null);                   // erase player (graphically)
-        playerToBeMoved.move(direction);                                                                  // move player  (logically)
+        LayerOperation.removePlayer(playerLayer, playerToBeMoved);     // erase player (graphically)
+        playerToBeMoved.move(direction);                               // move player  (logically)
         playerToBeMoved.setPrevDir(direction);
-        playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), playerToBeMoved.getCell());   // draw player  (graphically)
+        LayerOperation.drawPlayer(playerLayer, playerToBeMoved);       // draw player  (graphically)
     }
 
     /**
@@ -221,9 +222,9 @@ public class MovementHandler extends InputAdapter {
      * @param position
      */
     public void moveToPos(Player playerToBeMoved, Vector2 position) {
-        playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), null);
+        LayerOperation.removePlayer(playerLayer, playerToBeMoved);
         playerToBeMoved.move(position);
-        playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), playerToBeMoved.getCell());
+        LayerOperation.drawPlayer(playerLayer, playerToBeMoved);
     }
 
     /**
@@ -232,9 +233,9 @@ public class MovementHandler extends InputAdapter {
      * @param playerToBeMoved
      */
     private void moveToBackup(Player playerToBeMoved) {
-        playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), null);
+        LayerOperation.removePlayer(playerLayer, playerToBeMoved);
         playerToBeMoved.resetPosition();
-        playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), playerToBeMoved.getCell());
+        LayerOperation.drawPlayer(playerLayer, playerToBeMoved);
     }
 
     /**

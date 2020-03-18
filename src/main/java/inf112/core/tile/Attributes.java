@@ -16,6 +16,11 @@ public enum Attributes {
     EAST,
     WEST,
     /**
+     * Orientation
+     */
+    VERTICAL,
+    HORIZONTAL,
+    /**
      * Tiles with SHOOTS_LASER attribute will shoot a laser towards their facing direction
      * during the shooting phase of a round
      */
@@ -42,7 +47,7 @@ public enum Attributes {
      * @param attribute
      * @return direction
      */
-    public static Direction translateDir(Attributes attribute) {
+    public static Direction translateToDir(Attributes attribute) {
         switch (attribute) {
             case NORTH:
                 return Direction.NORTH;
