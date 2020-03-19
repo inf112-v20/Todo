@@ -86,12 +86,12 @@ public class GameBoard extends LayeredBoard {
     }
 
     public boolean onBoard(Player player){
-        TiledMapTileLayer players = super.getLayer(PLAYER_LAYER);
-        int playerX = player.getX();
-        int playerY = player.getY();
-        if (playerY < 0 || playerY >= players.getHeight()) { return false; }
-        else if (playerX < 0 || playerX >= players.getWidth()) { return false; }
-        else return true;
+        return player.getX() >= 0 && player.getY() >= 0 &&
+               player.getX() < getMapWidth() && player.getY() < getMapHeight();
+    }
+
+    public boolean onBoard(Vector2 pos) {
+        return pos.x >= 0 && pos.y >= 0 && pos.x < getMapWidth() && pos.y < getMapHeight();
     }
 
     public OrthogonalTiledMapRenderer instantiateMapRenderer() {

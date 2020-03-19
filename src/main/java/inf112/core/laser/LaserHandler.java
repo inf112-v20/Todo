@@ -7,9 +7,7 @@ import inf112.core.board.MapLayer;
 import inf112.core.movement.util.CollisionHandler;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
-import inf112.core.tile.ITile;
 import inf112.core.tile.LaserCannonTile;
-import inf112.core.util.LayerOperation;
 import inf112.core.util.VectorMovement;
 
 import java.util.*;
@@ -17,87 +15,119 @@ import java.util.*;
 public class LaserHandler {
 
     private GameBoard board;
-    private TiledMapTileLayer laserLayer;   // refactor
-    private Map<Vector2, ITile> laserCannonMap, collidablesMap;
-    private Map<Vector2, Direction> cannonDirectionMap;
+    private TiledMapTileLayer laserLayer;                    // refactor
+    private Map<Vector2, Direction> cannonDirectionMap;     // map all cannon positions to their associated direction
     private List<Player> players;
-    private Map<Player, Integer> hitPlayers;    // hit players goes here, val indicates number of beam hits
+    private Map<Player, Integer> hitPlayers;                // hit players goes here, val indicates number of beam hits
     private Set<Vector2> affectedVerticals, affectedHorizonals, affectedCrosses;
 
     public LaserHandler(GameBoard board, List<Player> players) {
         this.board = board;
         this.laserLayer = board.getLayer(MapLayer.LASER_LAYER);    // refactor
-        this.laserCannonMap = board.getLaserCannons();
-        this.collidablesMap = board.getCollidables();
         this.players = players;
 
         this.affectedVerticals = new HashSet<>();
         this.affectedHorizonals = new HashSet<>();
         this.affectedCrosses = new HashSet<>();
 
-        this.cannonDirectionMap = new HashMap<>();
-        this.mapStartPositionsToBeamDirections(cannonDirectionMap);
+        this.cannonDirectionMap = mapStartPositionsToBeamDirections();
     }
 
-    public void fireLasersVisually() {    // refactor
-        return;
-    }
+// refactor
+//    public void fireLasersVisually() {    // refactor
+//        return;
+//    }
+//
+//    public void dealDamageToAffectedPlayers() {    // refactor
+//        return;
+//    }
+//
+//    public void disableLasersVisually() {    // refactor
+//        LayerOperation.clear(laserLayer);
+//    }
 
-    public void dealDamageToAffectedPlayers() {    // refactor
-        return;
-    }
-
-    public void disableLasersVisually() {    // refactor
-        LayerOperation.clear(laserLayer);
-    }
-
-    public Set<Vector2> gatherAllVerticalLaserPositions() {
+    private void clearAllLaserPositions() {
+        affectedHorizonals.clear();
         affectedVerticals.clear();
-        // TODO
+        affectedCrosses.clear();
+    }
+
+    public void gatherAllLaserPositions() {
+        // gather from wall laser cannons
+        for (Vector2 initPos : cannonDirectionMap.keySet()) {
+            assembleAffectedPositions(initPos, Direction.invert(cannonDirectionMap.get(initPos)));
+        }
+        // gather from player laser cannons
+        //TODO
+
+        // positions both in vertical and horizontal sets must be removes therefrom and added to the crossed set
+        handleCrossedLasers();
+    }
+
+    public Set<Vector2> getAllVerticalLaserPositions() {
         return affectedVerticals;
     }
 
-    public Set<Vector2> gatherAllHorizontalLaserPositions() {
-        affectedHorizonals.clear();
-        // TODO
+    public Set<Vector2> getAllHorizontalLaserPositions() {
         return affectedHorizonals;
     }
 
-    public Set<Vector2> gatherAllCrossedLaserPositions() {
-        affectedCrosses.clear();
-        // TODO
+    public Set<Vector2> getAllCrossedLaserPositions() {
         return affectedCrosses;
     }
 
+    public Map<Player, Integer> getHitPlayers() {
+        return hitPlayers;
+    }
 
-    /**
-     * Maps all positions where a beam should start (from laser cannons only for now) to the direction
-     * of that beam.
-     *
-     * Positions is where the beams starts
-     * Direction is the direction of the beam
-     * @return
-     */
-    private void mapStartPositionsToBeamDirections(Map<Vector2, Direction> mapping) {
-        for (Vector2 pos : laserCannonMap.keySet()) {
-            LaserCannonTile tile = (LaserCannonTile) laserCannonMap.get(pos);
-            Direction dir = tile.getDirections().get(0);    // laser cannons should only have one direction
-            if (dir == null)
-                throw new IllegalStateException(
-                        "Laser cannon does not have a direction. Something is seriously messed up."
-                );
+    private void handleCrossedLasers() {
+        // make affectedCrosses the intersection between the horizontal and vertical set
+        this.affectedCrosses.addAll(affectedHorizonals);
+        affectedCrosses.retainAll(affectedVerticals);
 
-            mapping.put(pos, dir);
+        // remove the intersection position from horizontal and vertical
+        for (Vector2 pos : affectedCrosses) {
+            affectedHorizonals.remove(pos);
+            affectedVerticals.remove(pos);
         }
     }
 
+
     /**
-     * Recursively accumulates the positions a wall laser beam sweeps over.
-     * Stops once a collidable tile or a Player is hit.
+     * Recursively assembles the positions a laser beam sweeps over.
+     * Stops once something is hit. Includes the hit player's position.
+     * Hit players are registered.
      *
      * WARNING: Position state will be changed
+     *
+     * @param playerPos
+     * @param playerDir
      */
-    private void accumulatePositionsFromWallCannon(Vector2 pos, Direction dir) {
+    private void assembleAffectedPositionsFromPlayer(Vector2 playerPos, Direction playerDir) {
+        if (CollisionHandler.canGo(playerPos, playerDir, board))
+            assembleAffectedPositions(VectorMovement.go(playerPos, playerDir), playerDir);
+    }
+
+    /**
+     * Recursively assembles the positions a laser beam sweeps over.
+     * Stops once something is hit. Includes the hit player's position.
+     * Hit players are registered.
+     *
+     * WARNING:
+     * (1) On the initial call this assumes that the step TO the given position is not blocked by a wall.
+     * (2) Position state will be changed
+     *
+     * @param pos initial position of accumulation
+     * @param dir direction of the
+     */
+    private void assembleAffectedPositions(Vector2 pos, Direction dir) {
+        // first add this position to the appropriate set
+        if (dir == Direction.NORTH || dir == Direction.SOUTH)
+            affectedVerticals.add(pos.cpy());
+        else
+            // Horizontal direction
+            affectedHorizonals.add(pos.cpy());
+
         // case: a player located on this position
         for (Player hitCandidate : players) {
             if (hitCandidate.getPositionCopy().equals(pos)) {
@@ -106,16 +136,11 @@ public class LaserHandler {
             }
         }
 
-        // this position is clear. Add to the appropriate set
-        if (dir == Direction.NORTH || dir == Direction.SOUTH)
-            affectedVerticals.add(pos);
-        else
-            affectedHorizonals.add(pos);
-
         // case: no wall between this position and the next
         if (CollisionHandler.canGo(pos, dir, board)) {
             VectorMovement.go(pos, dir);
-            accumulatePositionsFromWallCannon(pos, dir);
+            if (board.onBoard(pos))
+                assembleAffectedPositions(pos, dir);
         }
 
     }
@@ -127,6 +152,30 @@ public class LaserHandler {
             hitPlayers.put(hitPlayer, hitPlayers.get(hitPlayer) + 1);
     }
 
+    /**
+     * Maps all positions where a beam should start (from laser cannons only for now) to the direction
+     * of that beam.
+     *
+     * Should be called in constructor
+     *
+     * Positions is where the beams starts
+     * Direction is the direction of the beam
+     * @return
+     */
+    private Map<Vector2, Direction> mapStartPositionsToBeamDirections() {
+        Map<Vector2, Direction> mapping = new HashMap<>();
 
+        for (Vector2 pos : board.getLaserCannons().keySet()) {
+            LaserCannonTile tile = (LaserCannonTile) board.getLaserCannons().get(pos);
+            Direction dir = tile.getDirections().get(0);    // laser cannons should only have one direction
+            if (dir == null)
+                throw new IllegalStateException(
+                        "Laser cannon does not have a direction. Something is seriously messed up."
+                );
+
+            mapping.put(pos, dir);
+        }
+        return mapping;
+    }
 
 }
