@@ -133,11 +133,7 @@ public class Player {
      * of current direction.
      */
     public void rotateLeft() {
-        // cell rotation is a number in {0,1,2,3}
-        // a rotation to the left means increasing that number by 1
-        // this is following the logic given in TiledMapTileLayer.Cell
-        int newCellRotation = (direction.getCellRotation() + 1) % 4;
-        this.direction = Direction.getDirection(newCellRotation);
+        this.direction = direction.rotateLeft();
         this.cell.setRotation(direction.getCellRotation());
     }
 
@@ -147,10 +143,7 @@ public class Player {
      * of current direction.
      */
     public void rotateRight() {
-        int newCellRotation = direction.getCellRotation() - 1;
-        if (newCellRotation < 0)
-            newCellRotation +=4;
-        this.direction = Direction.getDirection(newCellRotation);
+        this.direction = direction.rotateRight();
         this.cell.setRotation(direction.getCellRotation());
     }
 

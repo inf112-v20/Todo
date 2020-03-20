@@ -24,15 +24,25 @@ public class ConveyorTileTest {
     RoundHandler roundHandler;
     Player testPlayer;
 
-    static final Vector2 WEST_CONVEYOR_TEST_POS = new Vector2(6, 5);
-    static final Vector2 EAST_CONVEYOR_TEST_POS = new Vector2(5, 4);
-    static final Vector2 NORTH_CONVEYOR_TEST_POS = new Vector2(5, 5);
-    static final Vector2 SOUTH_CONVEYOR_TEST_POS = new Vector2(6, 4);
+    static final Vector2 WEST_CONVEYOR_TEST_POS = new Vector2(6, 4);
+    static final Vector2 EAST_CONVEYOR_TEST_POS = new Vector2(5, 5);
+    static final Vector2 NORTH_CONVEYOR_TEST_POS = new Vector2(5, 4);
+    static final Vector2 SOUTH_CONVEYOR_TEST_POS = new Vector2(6, 5);
 
-    static final Vector2 WEST_FAST_CONVEYOR_TEST_POS = new Vector2(3, 6);
-    static final Vector2 EAST_FAST_CONVEYOR_TEST_POS = new Vector2(2, 5);
-    static final Vector2 NORTH_FAST_CONVEYOR_TEST_POS = new Vector2(2, 6);
-    static final Vector2 SOUTH_FAST_CONVEYOR_TEST_POS = new Vector2(3, 5);
+    static final Vector2 WEST_FAST_CONVEYOR_TEST_POS = new Vector2(3, 3);
+    static final Vector2 EAST_FAST_CONVEYOR_TEST_POS = new Vector2(2, 4);
+    static final Vector2 NORTH_FAST_CONVEYOR_TEST_POS = new Vector2(2, 3);
+    static final Vector2 SOUTH_FAST_CONVEYOR_TEST_POS = new Vector2(3, 4);
+
+    static final Vector2 NORTH_TO_EAST_TEST_POS = new Vector2(4, 8);
+    static final Vector2 EAST_TO_SOUTH_TEST_POS = new Vector2(5, 8);
+    static final Vector2 SOUTH_TO_WEST_TEST_POS = new Vector2(5, 7);
+    static final Vector2 WEST_TO_NORTH_TEST_POS = new Vector2(4, 7);
+
+    static final Vector2 NORTH_TO_WEST_TEST_POS = new Vector2(7, 8);
+    static final Vector2 WEST_TO_SOUTH_TEST_POS = new Vector2(6, 8);
+    static final Vector2 SOUTH_TO_EAST_TEST_POS = new Vector2(6, 7);
+    static final Vector2 EAST_TO_NORTH_TEST_POS = new Vector2(7, 7);
 
     @Before
     public void setup() {

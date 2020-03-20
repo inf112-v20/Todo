@@ -7,7 +7,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.player.Player;
 import inf112.core.tile.ITile;
-import inf112.core.tile.MoverTile;
 
 import java.util.Map;
 
