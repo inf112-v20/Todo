@@ -30,7 +30,6 @@ public class RoundHandler {
         //only conveyors with players on them need to move
         for(Player player : players) {
             if(isOnConveyor(player)) {
-                MoverTile conveyor = (MoverTile) board.getConveyors().get(player.getPositionCopy());
                 MovementHandler movementHandler = game.getMovementHandler();
                 MoverTile conveyor = (MoverTile) board.getConveyors().get(player.getPositionCopy());
                 conveyor.moveConveyor(player, movementHandler);

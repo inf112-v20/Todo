@@ -37,9 +37,9 @@ public class ConveyorTile extends AbstractTile implements MoverTile{
                     break;
                 default:
                     if(output == null)
-                        output = Attributes.translateDir(att);
+                        output = Attributes.translateToDir(att);
                     else
-                        inputs.add(Attributes.translateDir(att));
+                        inputs.add(Attributes.translateToDir(att));
             }
         }
         if(rotation == null)

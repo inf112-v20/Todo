@@ -31,10 +31,10 @@ public class ConveyorJunctionTile extends AbstractTile implements JunctionTile {
                 continue;
             }
             if(output == null){
-                output = Attributes.translateDir(att);
+                output = translateToDir(att);
                 continue;
             }
-            inputs.add(Attributes.translateDir(att));
+            inputs.add(translateToDir(att));
         }
     }
 
@@ -70,10 +70,10 @@ public class ConveyorJunctionTile extends AbstractTile implements JunctionTile {
 
     @Override
     public void rotate(Player player) {
-        System.out.println(player.getLastDir());
-        if(player.getLastDir() == Direction.invert(primary.getInputDirs().get(0)))
+        System.out.println(player.getPrevDir());
+        if(player.getPrevDir() == Direction.invert(primary.getInputDirs().get(0)))
             player.rotate(primary.getRotation());
-        else if(player.getLastDir() == Direction.invert(secondary.getInputDirs().get(0)))
+        else if(player.getPrevDir() == Direction.invert(secondary.getInputDirs().get(0)))
             player.rotate(secondary.getRotation());
         else
             player.rotate(getRotation());
