@@ -55,6 +55,8 @@ public class FlagHandler {
      * @return true if player has visited 3 flags, otherwise false
      */
     public boolean hasVisitedAllFlags(Player player) {
+        if(numOfFlagsOnBoard == 0)
+            return false;
         return player.getFlagsVisited() == numOfFlagsOnBoard;
     }
 }
