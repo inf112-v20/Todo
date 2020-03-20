@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
 import inf112.core.game.MainGame;
 import inf112.core.game.RoundHandler;
+import inf112.core.laser.LaserHandler;
 import inf112.core.movement.util.CollisionHandler;
 import inf112.core.movement.util.FlagHandler;
 import inf112.core.movement.util.SpawnHandler;
@@ -41,6 +42,7 @@ public class MovementHandler extends InputAdapter {
     private FlagHandler flagHandler;
     private VoidHandler voidHandler;
     private RoundHandler roundHandler;
+    private LaserHandler laserHandler;
 
     public MovementHandler(MainGame game, List<Player> players) {
         this.board = game.getBoard();
@@ -51,6 +53,7 @@ public class MovementHandler extends InputAdapter {
         this.spawnHandler = new SpawnHandler(board);
         this.flagHandler = new FlagHandler(board);
         this.voidHandler = new VoidHandler(board);
+        this.laserHandler = new LaserHandler(board, players);
     }
 
     public MovementHandler(MainGame game) {
@@ -112,7 +115,20 @@ public class MovementHandler extends InputAdapter {
             case Input.Keys.T:
                 roundHandler.conveyorMove();
                 break;
+            case Input.Keys.L:
+                laserHandler.fireLasersVisually();
+            default:
+                return false;
+        }
+        return true;
+    }
 
+    @Override
+    public boolean keyUp(int keycode) {
+        switch (keycode) {
+            case Input.Keys.L:
+                laserHandler.disableLasersVisually();
+                break;
             default:
                 return false;
         }
