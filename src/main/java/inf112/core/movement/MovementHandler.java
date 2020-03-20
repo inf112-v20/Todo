@@ -110,6 +110,7 @@ public class MovementHandler extends InputAdapter {
                 break;
             case Input.Keys.T:
                 roundHandler.conveyorMove();
+                roundHandler.gearRotate();
                 break;
 
             default:
@@ -250,6 +251,7 @@ public class MovementHandler extends InputAdapter {
             moveToBackup(recentlyMovedPlayer);
         }
     }
+
     /**
      * Checks if the player is on the correct flag, and if so, increases his/hers flag count
      *

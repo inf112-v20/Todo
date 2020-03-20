@@ -51,6 +51,19 @@ public class RoundHandler {
         }
     }
 
+    public void gearRotate() {
+        for (Player player : players) {
+            if (gearOnTile(player)) {
+                player.rotateLeft();
+            }
+        }
+    }
+
+    private boolean gearOnTile(Player player) {
+        if (board.getGears().get(player.getPositionCopy()) != null) return true;
+        return false;
+    }
+
     private boolean conveyorOnTile(Player player) {
         if(board.getConveyors().get(player.getPositionCopy()) != null)
             return true;

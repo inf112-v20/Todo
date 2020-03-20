@@ -120,8 +120,16 @@ public enum TileId {
     FLAG_1(54, FlagTile.class),
     FLAG_2(62, FlagTile.class),
     FLAG_3(70, FlagTile.class),
-    FLAG_4(78, FlagTile.class)
+    FLAG_4(78, FlagTile.class),
+
+    /**
+     * GearTiles
+     */
+    GEAR_LEFT(78, GearTile.class),
+    GEAR_RIGHT(52, GearTile.class)
     ;
+
+
 
     private int id;
     private Class<? extends ITile> implementationClass;
