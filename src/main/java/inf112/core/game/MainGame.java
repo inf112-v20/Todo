@@ -11,6 +11,7 @@ import inf112.core.player.Player;
 import inf112.core.programcards.Card;
 import inf112.core.programcards.CardFactory;
 import inf112.core.programcards.Deck;
+import inf112.core.programcards.ProgramCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +81,8 @@ public class MainGame {
         movementHandler.moveAllToSpawn();
         drawPlayers();
 
+        for (Player player : players){ givePlayerCards(player); }
+
         return allAdded;
     }
 
@@ -99,5 +102,12 @@ public class MainGame {
     public void dispose() {
         board.dispose();
         playerSpriteSheet.dispose();
+    }
+
+    public void givePlayerCards(Player player){
+        List<ProgramCard> fiveRandomCards = deck.getCards(5);
+        for (ProgramCard card : fiveRandomCards){
+            player.addToRegister(card);
+        }
     }
 }

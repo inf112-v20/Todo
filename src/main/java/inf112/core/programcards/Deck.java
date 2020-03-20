@@ -10,10 +10,17 @@ public class Deck {
     private List<ProgramCard> inUse;
 
     public Deck(List<ProgramCard> cards){
+        this.inUse = new ArrayList<>();
+        this.discardDeck = new ArrayList<>();
+        this.activeDeck = new ArrayList<>();
         this.activeDeck.addAll(cards);
     }
 
     public ProgramCard getCard(){
+        if(activeDeck.size() <= 0) {
+            reshuffleDeck();
+            System.out.println("Reshuffled deck");
+        }
         ProgramCard card = activeDeck.remove(0);
         inUse.add(card);
         return card;
@@ -45,5 +52,7 @@ public class Deck {
         Collections.shuffle(activeDeck);
     }
 
-
+    public void discardInUse(){
+        discardCards(inUse);
+    }
 }

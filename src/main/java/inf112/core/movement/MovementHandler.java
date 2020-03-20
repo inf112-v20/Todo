@@ -118,32 +118,26 @@ public class MovementHandler extends InputAdapter {
         return true;
     }
 
-    /**
-     *
-     */
-    public void cardMovement(Player player){
-        ProgramCard currentCard = player.getSelected().get(phase);
+    public void cardMovement(Player player) {
+        ProgramCard currentCard = player.getRegisters().get(phase);
         System.out.println(currentCard.getName());
-        if (currentCard instanceof MovementCard){
-            if (((MovementCard) currentCard).isForward()){
-                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++){
+        if (currentCard instanceof MovementCard) {
+            if (((MovementCard) currentCard).isForward()) {
+                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++) {
                     attemptToMoveForward(activePlayer);
                 }
-            }
-            else{
-                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++){
+            } else {
+                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++) {
                     attemptToMoveBackward(activePlayer);
                 }
             }
-        }
-        else if (currentCard instanceof RotationCard){
-            if (((RotationCard) currentCard).getClockwise()){
-                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++){
+        } else if (currentCard instanceof RotationCard) {
+            if (((RotationCard) currentCard).getClockwise()) {
+                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++) {
                     activePlayer.rotateRight();
                 }
-            }
-            else {
-                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++){
+            } else {
+                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++) {
                     activePlayer.rotateLeft();
                 }
             }
