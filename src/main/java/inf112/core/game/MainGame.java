@@ -8,6 +8,9 @@ import inf112.core.board.MapLayer;
 import inf112.core.board.MapNames;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
+import inf112.core.programcards.Card;
+import inf112.core.programcards.CardFactory;
+import inf112.core.programcards.Deck;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +23,14 @@ public class MainGame {
     private Texture playerSpriteSheet;
     private TextureRegion[][] playerSpriteSheetGrid;
     private RoundHandler roundHandler;
+    private Deck deck;
 
     public MainGame(MapNames mapNames) {
         this.players = new ArrayList<>();
         this.board = new GameBoard(mapNames);
         this.roundHandler = new RoundHandler(this, players);
         this.movementHandler = new MovementHandler(this, players);
+        this.deck = new Deck(CardFactory.createDefaultDeck());
         playerSpriteSheet = new Texture("img/Player_Spritesheet.png");
         playerSpriteSheetGrid = TextureRegion.split(
                 playerSpriteSheet,
@@ -75,8 +80,6 @@ public class MainGame {
         movementHandler.moveAllToSpawn();
         drawPlayers();
 
-        givePlayersCards();         // Temp solution for testing cards
-
         return allAdded;
     }
 
@@ -98,10 +101,7 @@ public class MainGame {
         playerSpriteSheet.dispose();
     }
 
-    public void givePlayersCards() {    // Gives all players random cards
-        for (Player player : players){
-            player.selectFiveCards();
-        }
-    }
+
+
 
 }

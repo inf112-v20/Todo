@@ -26,8 +26,7 @@ public class Player {
     private Direction direction;
     private Direction lastDir;
     private PlayerBackup backup;
-    private Deck deck;
-    private List<ProgramCard> selected = new ArrayList<>();
+    private List<ProgramCard> selected;
 
     private static int playerCount = 0;
 
@@ -60,7 +59,7 @@ public class Player {
         this.position = new Vector2(xPos,yPos);
         this.direction = Direction.NORTH;
         this.backup = new PlayerBackup(xPos, yPos);
-        this.deck = new Deck();
+        this.selected = new ArrayList<>();
     }
 
     public static void resetPlayerCount() {
@@ -102,8 +101,6 @@ public class Player {
     public void setFlagsVisited(int numOfFlags) {
         this.flagsVisited = numOfFlags;
     }
-
-    public void selectFiveCards() { selected.addAll(deck.getFiveCards()); }
 
     public List<ProgramCard> getSelected(){
         return this.selected;
@@ -153,13 +150,6 @@ public class Player {
         this.direction = Direction.getDirection(newCellRotation);
         this.cell.setRotation(direction.getCellRotation());
     }
-
-    public Deck getDeck() { return deck; }
-
-    public void addToDeck(ProgramCard card) {
-        this.getDeck().addCard(card);
-    }
-
 
     @Override
     public boolean equals(Object o) {

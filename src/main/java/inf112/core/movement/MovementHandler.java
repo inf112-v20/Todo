@@ -123,6 +123,7 @@ public class MovementHandler extends InputAdapter {
      */
     public void cardMovement(Player player){
         ProgramCard currentCard = player.getSelected().get(phase);
+        System.out.println(currentCard.getName());
         if (currentCard instanceof MovementCard){
             if (((MovementCard) currentCard).isForward()){
                 for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++){
