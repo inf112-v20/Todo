@@ -13,6 +13,7 @@ public class ConveyorTile extends AbstractTile implements MoverTile{
     private Attributes output;
     private List<Attributes> inputs;
     private int speed = 1;
+    private int rotation;
 
 
     public ConveyorTile(Vector2 coordinates, TileId tileId) {
@@ -47,6 +48,11 @@ public class ConveyorTile extends AbstractTile implements MoverTile{
     @Override
     public int getSpeed() {
         return speed;
+    }
+
+    @Override
+    public int getRotation() {
+        return rotation;
     }
 
     @Override

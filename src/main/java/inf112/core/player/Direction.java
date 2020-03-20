@@ -57,7 +57,9 @@ public enum Direction {
 
     public Direction rotateRight() {
         // a rotation to the right means decreasing that number by 1
-        int newCellRotation = (getCellRotation() - 1) % 4;
+        int newCellRotation = (getCellRotation() - 1);
+        if(newCellRotation < 0)
+            newCellRotation = 3;
         return(getDirection(newCellRotation));
     }
 }

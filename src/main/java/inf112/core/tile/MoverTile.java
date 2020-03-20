@@ -35,7 +35,7 @@ public interface MoverTile extends ITile{
      *
      * @return Rotation of mover-tile, can be left, right or none
      */
-    public int Rotation();
+    public int getRotation();
 
     /**
      * Function that moves a player standing on a conveyorTile

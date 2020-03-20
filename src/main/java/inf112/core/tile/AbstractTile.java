@@ -7,6 +7,7 @@ public abstract class AbstractTile implements ITile{
     private float xVal, yVal;
     private Vector2 pos;
     private TileId tileId;
+    private Rotation rotation;
 
     /**
      * A base for all Tiles that implements the base necessities for a fully functioning Tile-object
