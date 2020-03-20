@@ -6,6 +6,7 @@ import inf112.core.player.Direction;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static inf112.core.tile.Attributes.*;
 
@@ -90,7 +91,8 @@ public enum TileId {
     /**
      * ConveyorTiles. ConveyorTiles will move a player towards their output during the conveyor phase of every round
      * ConveyorTiles should only have the optional FAST attribute, followed by the single output directionalAttribute,
-     * then lastly op to two input directionalAttributes. 
+     * then lastly op to two input directionalAttributes.
+     * All conveyorTiles must be structured like this: CONVEYOR((fast), (rotation), outputdirection, inputdirections ... )
      */
     CONVEYOR_SOUTH_TO_NORTH(48, ConveyorTile.class, NORTH, SOUTH),
     CONVEYOR_NORTH_TO_SOUTH(49, ConveyorTile.class, SOUTH, NORTH),
@@ -101,6 +103,37 @@ public enum TileId {
     CONVEYOR_FAST_NORTH_TO_SOUTH(20, ConveyorTile.class, FAST, SOUTH, NORTH),
     CONVEYOR_FAST_EAST_TO_WEST(21, ConveyorTile.class, FAST, WEST, EAST),
     CONVEYOR_FAST_WEST_TO_EAST(13, ConveyorTile.class, FAST, EAST, WEST),
+
+    /**
+     * ConveyorTiles with rotation
+     */
+    CONVEYOR_EAST_TO_SOUTH(32, ConveyorTile.class, ROTATION_LEFT, SOUTH, EAST),
+    CONVEYOR_NORTH_TO_EAST(40, ConveyorTile.class, ROTATION_LEFT, EAST, NORTH),
+    CONVEYOR_WEST_TO_NORTH(41, ConveyorTile.class, ROTATION_LEFT, NORTH, WEST),
+    CONVEYOR_SOUTH_TO_WEST(33, ConveyorTile.class, ROTATION_LEFT, WEST, SOUTH),
+
+    CONVEYOR_SOUTH_TO_EAST(34, ConveyorTile.class, ROTATION_RIGHT, EAST, SOUTH),
+    CONVEYOR_WEST_TO_SOUTH(35, ConveyorTile.class, ROTATION_RIGHT, SOUTH, WEST),
+    CONVEYOR_NORTH_TO_WEST(43, ConveyorTile.class, ROTATION_RIGHT, WEST, NORTH),
+    CONVEYOR_EAST_TO_NORTH(42, ConveyorTile.class, ROTATION_RIGHT, NORTH, EAST),
+
+    CONVEYOR_FAST_EAST_TO_SOUTH(16, ConveyorTile.class, FAST, ROTATION_LEFT, SOUTH, EAST),
+    CONVEYOR_FAST_NORTH_TO_EAST(24, ConveyorTile.class, FAST, ROTATION_LEFT, EAST, NORTH),
+    CONVEYOR_FAST_WEST_TO_NORTH(25, ConveyorTile.class, FAST, ROTATION_LEFT, NORTH, WEST),
+    CONVEYOR_FAST_SOUTH_TO_WEST(17, ConveyorTile.class, FAST, ROTATION_LEFT, WEST, SOUTH),
+
+    CONVEYOR_FAST_SOUTH_TO_EAST(18, ConveyorTile.class, FAST, ROTATION_RIGHT, EAST, SOUTH),
+    CONVEYOR_FAST_WEST_TO_SOUTH(19, ConveyorTile.class, FAST, ROTATION_RIGHT, SOUTH, WEST),
+    CONVEYOR_FAST_NORTH_TO_WEST(27, ConveyorTile.class, FAST, ROTATION_RIGHT, WEST, NORTH),
+    CONVEYOR_FAST_EAST_TO_NORTH(26, ConveyorTile.class, FAST, ROTATION_RIGHT, NORTH, EAST),
+
+    /**
+     * ConveyorJunctions
+     */
+    CONVEYOR_JUNCTION_SOUTH_AND_EAST_TO_NORTH(56, ConveyorJunctionTile.class, NORTH, SOUTH, WEST),
+    CONVEYOR_JUNCTION_NORTH_AND_WEST_TO_EAST(57, ConveyorJunctionTile.class, EAST, NORTH, WEST),
+    CONVEYOR_JUNCTION_NORTH_AND_EAST_TO_SOUTH(58, ConveyorJunctionTile.class, SOUTH, NORTH, EAST),
+    CONVEYOR_JUNCTION_SOUTH_AND_EAST_TO_WEST(59, ConveyorJunctionTile.class, WEST, SOUTH, EAST),
 
     /**
      * SpawnTiles. SpawnTiles are assigned to corresponding player and designate their original spawn-point
@@ -174,6 +207,30 @@ public enum TileId {
                 facingDirections.add(Attributes.translateDir(a));
         }
         return facingDirections;
+    }
+
+    /**
+     *
+     * @return List of Conveyors
+     */
+    private static List<TileId> getConveyors() {
+        return Arrays.stream(TileId.values()).filter(s -> s.getImplementationClass() == ConveyorTile.class).collect(Collectors.toList());
+    }
+
+    /**
+     * Returns the TileId of Conveyor that matches given input and output directions
+     * @param outputDir
+     * @param inputDir
+     * @return TileId of Conveyor
+     */
+    public static TileId getConveyor(Direction outputDir, Direction inputDir) {
+        //litt treig, noen måte å optimalisere?
+        for(TileId id : getConveyors()) {
+            List<Direction> directions = id.getFacingDirections();
+            if(directions.get(0) == outputDir && directions.get(1) == inputDir)
+                return id;
+        }
+        throw new IllegalArgumentException("No such Conveyor");
     }
 
     /**

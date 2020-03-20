@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.programcards.ProgramCard;
+import inf112.core.tile.Rotation;
 import inf112.core.util.VectorMovement;
 
 import java.util.ArrayList;
@@ -144,6 +145,11 @@ public class Player {
      */
     public void rotateRight() {
         this.direction = direction.rotateRight();
+        this.cell.setRotation(direction.getCellRotation());
+    }
+
+    public void rotate(Rotation rotation) {
+        this.direction = rotation.rotate(direction);
         this.cell.setRotation(direction.getCellRotation());
     }
 
