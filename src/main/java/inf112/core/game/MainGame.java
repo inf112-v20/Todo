@@ -100,8 +100,4 @@ public class MainGame {
         board.dispose();
         playerSpriteSheet.dispose();
     }
-
-
-
-
 }
