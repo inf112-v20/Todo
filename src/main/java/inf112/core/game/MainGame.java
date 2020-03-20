@@ -8,6 +8,7 @@ import inf112.core.board.MapLayer;
 import inf112.core.board.MapNames;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
+import inf112.core.util.LayerOperation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class MainGame {
     }
 
     public MainGame() {
-        this(MapNames.CONVEYOR_TESTING_MAP);
+        this(MapNames.TESTING_MAP);
     }
 
     public GameBoard getBoard() {
@@ -50,10 +51,10 @@ public class MainGame {
 
     public void drawPlayers() {
         for (Player player : players)
-            board.getLayer(MapLayer.PLAYER_LAYER).setCell(player.getX(), player.getY(), player.getCell());
+            LayerOperation.drawPlayer(board.getLayer(MapLayer.PLAYER_LAYER), player);
     }
 
-    public boolean createPlayer() {
+    private boolean createPlayer() {
         if (Player.getPlayerCount() >= playerSpriteSheetGrid.length)
             throw new IllegalStateException(
                     "Cannot create more players than the number of available textures"

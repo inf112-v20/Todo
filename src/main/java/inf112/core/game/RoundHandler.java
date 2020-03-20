@@ -29,7 +29,8 @@ public class RoundHandler {
     public void conveyorMove(){
         //only conveyors with players on them need to move
         for(Player player : players) {
-            if(conveyorOnTile(player)) {
+            if(isOnConveyor(player)) {
+                MoverTile conveyor = (MoverTile) board.getConveyors().get(player.getPositionCopy());
                 MovementHandler movementHandler = game.getMovementHandler();
                 MoverTile conveyor = (MoverTile) board.getConveyors().get(player.getPositionCopy());
                 conveyor.moveConveyor(player, movementHandler);
@@ -40,7 +41,7 @@ public class RoundHandler {
         }
     }
 
-    private boolean conveyorOnTile(Player player) {
+    private boolean isOnConveyor(Player player) {
         return board.getConveyors().get(player.getPositionCopy()) != null;
     }
 
