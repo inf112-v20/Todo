@@ -17,11 +17,11 @@ import java.util.List;
  * @author eskil, alvar
  */
 public class CollisionHandler {
-    private GameBoard gameBoard;
+    private GameBoard board;
     private List<Player> players;
 
     public CollisionHandler(GameBoard gameBoard, List<Player> players) {
-        this.gameBoard = gameBoard;
+        this.board = gameBoard;
         this.players = players;
     }
 
@@ -50,7 +50,7 @@ public class CollisionHandler {
      * @param direction of the suggested movement
      * @return false if the suggested movement meets a collidable tile, and true otherwise
      */
-    public boolean canGo(Vector2 startPosition, Direction direction) {
+    public static boolean canGo(Vector2 startPosition, Direction direction, GameBoard gameBoard) {
         Vector2 endPosition = VectorMovement.generateNew(startPosition, direction);
         CollidableTile startTile = (CollidableTile) gameBoard.getCollidables().get(startPosition);
         CollidableTile endTile = (CollidableTile) gameBoard.getCollidables().get(endPosition);
@@ -62,5 +62,9 @@ public class CollisionHandler {
                 return false;
 
         return true;
+    }
+
+    public boolean canGo(Vector2 startPosition, Direction direction) {
+        return CollisionHandler.canGo(startPosition,direction, this.board);
     }
 }

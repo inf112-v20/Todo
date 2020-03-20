@@ -43,7 +43,7 @@ public enum TileId {
 
     /**
      * Pusher_wallTiles. They are wallTiles but with a pusher facing the opposite direction of the wall.
-     * Even pushers will push the player in their direction on rounds 1, 3, and 5.
+     * Even pushers will push the player in their direction on rounds 2 and 4.
      */
     PUSHER_WALL_EVEN_NORTH(0, WallTile.class, COLLIDABLE, NORTH),
     PUSHER_WALL_EVEN_SOUTH(10, WallTile.class, COLLIDABLE, SOUTH),
@@ -54,19 +54,19 @@ public enum TileId {
      * Laser_wallTiles. They are wallTiles but with a laser-shooter facing the opposite direction of the wall.
      * Laser-shooters will shoot a laser in its direction during the laser-phase of every round.
      */
-    LASER_WALL_NORTH(44, WallTile.class, COLLIDABLE, SHOOTS_LASER, NORTH),
-    LASER_WALL_SOUTH(36, WallTile.class, COLLIDABLE, SHOOTS_LASER, SOUTH),
-    LASER_WALL_WEST(37, WallTile.class, COLLIDABLE, SHOOTS_LASER, WEST),
-    LASER_WALL_EAST(45, WallTile.class, COLLIDABLE, SHOOTS_LASER, EAST),
+    LASER_WALL_NORTH(44, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, NORTH),
+    LASER_WALL_SOUTH(36, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, SOUTH),
+    LASER_WALL_WEST(37, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, WEST),
+    LASER_WALL_EAST(45, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, EAST),
 
     /**
      * double_laser_wallTiles. They are wallTiles but with a double laser-shooter facing the opposite direction of the wall.
      * Laser-shooters will shoot a laser in its direction during the laser-phase of every round.
      */
-    LASER_WALL_DOUBLE_NORTH(93, WallTile.class, COLLIDABLE, SHOOTS_LASER, NORTH),
-    LASER_WALL_DOUBLE_SOUTH(86, WallTile.class, COLLIDABLE, SHOOTS_LASER, SOUTH),
-    LASER_WALL_DOUBLE_WEST(92, WallTile.class, COLLIDABLE, SHOOTS_LASER, WEST),
-    LASER_WALL_DOUBLE_EAST(94, WallTile.class, COLLIDABLE, SHOOTS_LASER, EAST),
+    LASER_WALL_DOUBLE_NORTH(93, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, NORTH),
+    LASER_WALL_DOUBLE_SOUTH(86, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, SOUTH),
+    LASER_WALL_DOUBLE_WEST(92, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, WEST),
+    LASER_WALL_DOUBLE_EAST(94, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, EAST),
 
     /**
      * HoleTiles. A player that steps on a holeTile will fall to their death.
@@ -120,7 +120,14 @@ public enum TileId {
     FLAG_1(54, FlagTile.class),
     FLAG_2(62, FlagTile.class),
     FLAG_3(70, FlagTile.class),
-    FLAG_4(78, FlagTile.class)
+    FLAG_4(78, FlagTile.class),
+
+    /**
+     * LaserTiles
+     */
+    SINGLE_LASER_VERTICAL(46, LaserTile.class, VERTICAL),
+    SINGLE_LASER_HORIZONTAL(38, LaserTile.class, HORIZONTAL),
+    SINGLE_LASER_CROSS(39, LaserTile.class, VERTICAL, HORIZONTAL)
     ;
 
     private int id;
@@ -171,7 +178,7 @@ public enum TileId {
         List<Direction> facingDirections = new ArrayList<>();
         for(Attributes a : attributes){
             if(a.equals(NORTH) || a.equals(SOUTH) || a.equals(WEST) || a.equals(EAST))
-                facingDirections.add(Attributes.translateDir(a));
+                facingDirections.add(Attributes.translateToDir(a));
         }
         return facingDirections;
     }
@@ -195,6 +202,10 @@ public enum TileId {
         return null;
     }
     public List<Attributes> getAttributes() { return attributes; }
+
+    public boolean hasAttribute(Attributes atr) {
+        return this.attributes.contains(atr);
+    }
 
     public int getId() { return this.id; }
 }

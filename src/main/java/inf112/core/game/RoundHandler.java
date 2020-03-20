@@ -28,7 +28,7 @@ public class RoundHandler {
     public void conveyorMove(){
         //only conveyors with players on them need to move
         for(Player player : players) {
-            if(conveyorOnTile(player)) {
+            if(isOnConveyor(player)) {
                 MoverTile conveyor = (MoverTile) board.getConveyors().get(player.getPositionCopy());
                 MovementHandler movementHandler = game.getMovementHandler();
                 switch(conveyor.getSpeed()){
@@ -40,7 +40,7 @@ public class RoundHandler {
                         MoverTile next = (MoverTile) board.getConveyors().get(player.getPositionCopy());
                         if(next == null) {
                             //there is no new conveyorTile on next position, player wil carry forward in the same direction as the last move
-                            movementHandler.attemptToMove(player, player.getLastDir());
+                            movementHandler.attemptToMove(player, player.getPrevDir());
                         } else {
                             //there is a new conveyor on the next position, player will be moved by next conveyor
                             next.moveConveyor(player, movementHandler);
@@ -51,10 +51,8 @@ public class RoundHandler {
         }
     }
 
-    private boolean conveyorOnTile(Player player) {
-        if(board.getConveyors().get(player.getPositionCopy()) != null)
-            return true;
-        return false;
+    private boolean isOnConveyor(Player player) {
+        return board.getConveyors().get(player.getPositionCopy()) != null;
     }
 
 }

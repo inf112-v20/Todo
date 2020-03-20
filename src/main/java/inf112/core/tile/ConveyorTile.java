@@ -2,7 +2,6 @@ package inf112.core.tile;
 
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.movement.MovementHandler;
-import inf112.core.player.Direction;
 import inf112.core.player.Player;
 
 import java.util.ArrayList;
@@ -57,6 +56,6 @@ public class ConveyorTile extends AbstractTile implements MoverTile{
 
     @Override
     public void moveConveyor(Player player, MovementHandler movementHandler) {
-        movementHandler.attemptToMove(player, Attributes.translateDir(getOutputDir()));
+        movementHandler.attemptToMove(player, Attributes.translateToDir(getOutputDir()));
     }
 }
