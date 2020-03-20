@@ -33,7 +33,11 @@ public enum Attributes {
      */
     FAST,
 
-    GEARS
+    LEFT,
+
+    RIGHT,
+
+    GEAR
 
     ;
 

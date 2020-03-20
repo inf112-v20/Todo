@@ -125,8 +125,8 @@ public enum TileId {
     /**
      * GearTiles
      */
-    GEAR_LEFT(78, GearTile.class),
-    GEAR_RIGHT(52, GearTile.class)
+    GEAR_LEFT(52, GearTile.class, GEAR, LEFT),
+    GEAR_RIGHT(53, GearTile.class, GEAR, RIGHT)
     ;
 
 
