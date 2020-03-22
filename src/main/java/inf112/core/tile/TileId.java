@@ -128,12 +128,39 @@ public enum TileId {
     CONVEYOR_FAST_EAST_TO_NORTH(26, ConveyorTile.class, FAST, ROTATION_RIGHT, NORTH, EAST),
 
     /**
-     * ConveyorJunctions
+     * ConveyorJunctions, a combination of two different conveyorTiles
      */
-    CONVEYOR_JUNCTION_SOUTH_AND_EAST_TO_NORTH(56, ConveyorJunctionTile.class, NORTH, SOUTH, WEST),
+    CONVEYOR_JUNCTION_SOUTH_AND_WEST_TO_NORTH(56, ConveyorJunctionTile.class, NORTH, SOUTH, WEST),
     CONVEYOR_JUNCTION_NORTH_AND_WEST_TO_EAST(57, ConveyorJunctionTile.class, EAST, NORTH, WEST),
     CONVEYOR_JUNCTION_NORTH_AND_EAST_TO_SOUTH(58, ConveyorJunctionTile.class, SOUTH, NORTH, EAST),
     CONVEYOR_JUNCTION_SOUTH_AND_EAST_TO_WEST(59, ConveyorJunctionTile.class, WEST, SOUTH, EAST),
+
+    CONVEYOR_JUNCTION_NORTH_AND_SOUTH_TO_EAST(60, ConveyorJunctionTile.class, EAST, NORTH, SOUTH),
+    CONVEYOR_JUNCTION_WEST_AND_EAST_TO_SOUTH(61, ConveyorJunctionTile.class, SOUTH, WEST, EAST),
+    CONVEYOR_JUNCTION_WEST_AND_EAST_TO_NORTH(68, ConveyorJunctionTile.class, NORTH, WEST, EAST),
+    CONVEYOR_JUNCTION_NORTH_AND_SOUTH_TO_WEST(69, ConveyorJunctionTile.class, WEST, NORTH, SOUTH),
+
+    CONVEYOR_JUNCTION_SOUTH_AND_EAST_TO_NORTH(64, ConveyorJunctionTile.class, NORTH, SOUTH, EAST),
+    CONVEYOR_JUNCTION_SOUTH_AND_WEST_TO_EAST(65, ConveyorJunctionTile.class, EAST, SOUTH, WEST),
+    CONVEYOR_JUNCTION_NORTH_AND_WEST_TO_SOUTH(66, ConveyorJunctionTile.class, SOUTH, NORTH, WEST),
+    CONVEYOR_JUNCTION_NORTH_AND_EAST_TO_WEST(67, ConveyorJunctionTile.class, WEST, NORTH, EAST),
+
+    CONVEYOR_JUNCTION_FAST_SOUTH_AND_WEST_TO_NORTH(72, ConveyorJunctionTile.class, FAST, NORTH, SOUTH, WEST),
+    CONVEYOR_JUNCTION_FAST_NORTH_AND_WEST_TO_EAST(73, ConveyorJunctionTile.class, FAST, EAST, NORTH, WEST),
+    CONVEYOR_JUNCTION_FAST_NORTH_AND_EAST_TO_SOUTH(74, ConveyorJunctionTile.class, FAST, SOUTH, NORTH, EAST),
+    CONVEYOR_JUNCTION_FAST_SOUTH_AND_EAST_TO_WEST(75, ConveyorJunctionTile.class, FAST, WEST, SOUTH, EAST),
+
+    CONVEYOR_JUNCTION_FAST_NORTH_AND_SOUTH_TO_EAST(80, ConveyorJunctionTile.class, FAST, EAST, NORTH, SOUTH),
+    CONVEYOR_JUNCTION_FAST_WEST_AND_EAST_TO_SOUTH(81, ConveyorJunctionTile.class, FAST, SOUTH, WEST, EAST),
+    CONVEYOR_JUNCTION_FAST_WEST_AND_EAST_TO_NORTH(83, ConveyorJunctionTile.class, FAST, NORTH, WEST, EAST),
+    CONVEYOR_JUNCTION_FAST_NORTH_AND_SOUTH_TO_WEST(82, ConveyorJunctionTile.class, FAST, WEST, NORTH, SOUTH),
+
+    CONVEYOR_JUNCTION_FAST_SOUTH_AND_EAST_TO_NORTH(76, ConveyorJunctionTile.class, FAST, NORTH, SOUTH, EAST),
+    CONVEYOR_JUNCTION_FAST_SOUTH_AND_WEST_TO_EAST(77, ConveyorJunctionTile.class, FAST, EAST, SOUTH, WEST),
+    CONVEYOR_JUNCTION_FAST_NORTH_AND_WEST_TO_SOUTH(85, ConveyorJunctionTile.class, FAST, SOUTH, NORTH, WEST),
+    CONVEYOR_JUNCTION_FAST_NORTH_AND_EAST_TO_WEST(84, ConveyorJunctionTile.class, FAST, WEST, NORTH, EAST),
+
+
 
     /**
      * SpawnTiles. SpawnTiles are assigned to corresponding player and designate their original spawn-point
