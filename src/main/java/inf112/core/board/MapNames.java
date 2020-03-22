@@ -5,7 +5,9 @@ public enum MapNames {
      * Enum for easily adding and changing TileMaps
      */
     TESTING_MAP("maps/testingMap.tmx"),
-    CONVEYOR_TESTING_MAP("maps/conveyorTestingMap.tmx")
+    CONVEYOR_TESTING_MAP("maps/conveyorTestingMap.tmx"),
+    LASER_TESTING_MAP("maps/laserTestingMap.tmx"),
+    LASER_TESTING_MAP2("maps/laserTestingMap2.tmx")
     ;
 
     private String name;

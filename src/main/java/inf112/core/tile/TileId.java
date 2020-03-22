@@ -6,6 +6,7 @@ import inf112.core.player.Direction;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static inf112.core.tile.Attributes.*;
 
@@ -43,7 +44,7 @@ public enum TileId {
 
     /**
      * Pusher_wallTiles. They are wallTiles but with a pusher facing the opposite direction of the wall.
-     * Even pushers will push the player in their direction on rounds 1, 3, and 5.
+     * Even pushers will push the player in their direction on rounds 2 and 4.
      */
     PUSHER_WALL_EVEN_NORTH(0, WallTile.class, COLLIDABLE, NORTH),
     PUSHER_WALL_EVEN_SOUTH(10, WallTile.class, COLLIDABLE, SOUTH),
@@ -54,19 +55,19 @@ public enum TileId {
      * Laser_wallTiles. They are wallTiles but with a laser-shooter facing the opposite direction of the wall.
      * Laser-shooters will shoot a laser in its direction during the laser-phase of every round.
      */
-    LASER_WALL_NORTH(44, WallTile.class, COLLIDABLE, SHOOTS_LASER, NORTH),
-    LASER_WALL_SOUTH(36, WallTile.class, COLLIDABLE, SHOOTS_LASER, SOUTH),
-    LASER_WALL_WEST(37, WallTile.class, COLLIDABLE, SHOOTS_LASER, WEST),
-    LASER_WALL_EAST(45, WallTile.class, COLLIDABLE, SHOOTS_LASER, EAST),
+    LASER_WALL_NORTH(44, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, NORTH),
+    LASER_WALL_SOUTH(36, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, SOUTH),
+    LASER_WALL_WEST(37, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, WEST),
+    LASER_WALL_EAST(45, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, EAST),
 
     /**
      * double_laser_wallTiles. They are wallTiles but with a double laser-shooter facing the opposite direction of the wall.
      * Laser-shooters will shoot a laser in its direction during the laser-phase of every round.
      */
-    LASER_WALL_DOUBLE_NORTH(93, WallTile.class, COLLIDABLE, SHOOTS_LASER, NORTH),
-    LASER_WALL_DOUBLE_SOUTH(86, WallTile.class, COLLIDABLE, SHOOTS_LASER, SOUTH),
-    LASER_WALL_DOUBLE_WEST(92, WallTile.class, COLLIDABLE, SHOOTS_LASER, WEST),
-    LASER_WALL_DOUBLE_EAST(94, WallTile.class, COLLIDABLE, SHOOTS_LASER, EAST),
+    LASER_WALL_DOUBLE_NORTH(93, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, NORTH),
+    LASER_WALL_DOUBLE_SOUTH(86, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, SOUTH),
+    LASER_WALL_DOUBLE_WEST(92, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, WEST),
+    LASER_WALL_DOUBLE_EAST(94, LaserCannonTile.class, COLLIDABLE, SHOOTS_LASER, EAST),
 
     /**
      * HoleTiles. A player that steps on a holeTile will fall to their death.
@@ -90,7 +91,8 @@ public enum TileId {
     /**
      * ConveyorTiles. ConveyorTiles will move a player towards their output during the conveyor phase of every round
      * ConveyorTiles should only have the optional FAST attribute, followed by the single output directionalAttribute,
-     * then lastly op to two input directionalAttributes. 
+     * then lastly op to two input directionalAttributes.
+     * All conveyorTiles must be structured like this: CONVEYOR((fast), (rotation), outputdirection, inputdirections ... )
      */
     CONVEYOR_SOUTH_TO_NORTH(48, ConveyorTile.class, NORTH, SOUTH),
     CONVEYOR_NORTH_TO_SOUTH(49, ConveyorTile.class, SOUTH, NORTH),
@@ -101,6 +103,64 @@ public enum TileId {
     CONVEYOR_FAST_NORTH_TO_SOUTH(20, ConveyorTile.class, FAST, SOUTH, NORTH),
     CONVEYOR_FAST_EAST_TO_WEST(21, ConveyorTile.class, FAST, WEST, EAST),
     CONVEYOR_FAST_WEST_TO_EAST(13, ConveyorTile.class, FAST, EAST, WEST),
+
+    /**
+     * ConveyorTiles with rotation
+     */
+    CONVEYOR_EAST_TO_SOUTH(32, ConveyorTile.class, ROTATION_LEFT, SOUTH, EAST),
+    CONVEYOR_NORTH_TO_EAST(40, ConveyorTile.class, ROTATION_LEFT, EAST, NORTH),
+    CONVEYOR_WEST_TO_NORTH(41, ConveyorTile.class, ROTATION_LEFT, NORTH, WEST),
+    CONVEYOR_SOUTH_TO_WEST(33, ConveyorTile.class, ROTATION_LEFT, WEST, SOUTH),
+
+    CONVEYOR_SOUTH_TO_EAST(34, ConveyorTile.class, ROTATION_RIGHT, EAST, SOUTH),
+    CONVEYOR_WEST_TO_SOUTH(35, ConveyorTile.class, ROTATION_RIGHT, SOUTH, WEST),
+    CONVEYOR_NORTH_TO_WEST(43, ConveyorTile.class, ROTATION_RIGHT, WEST, NORTH),
+    CONVEYOR_EAST_TO_NORTH(42, ConveyorTile.class, ROTATION_RIGHT, NORTH, EAST),
+
+    CONVEYOR_FAST_EAST_TO_SOUTH(16, ConveyorTile.class, FAST, ROTATION_LEFT, SOUTH, EAST),
+    CONVEYOR_FAST_NORTH_TO_EAST(24, ConveyorTile.class, FAST, ROTATION_LEFT, EAST, NORTH),
+    CONVEYOR_FAST_WEST_TO_NORTH(25, ConveyorTile.class, FAST, ROTATION_LEFT, NORTH, WEST),
+    CONVEYOR_FAST_SOUTH_TO_WEST(17, ConveyorTile.class, FAST, ROTATION_LEFT, WEST, SOUTH),
+
+    CONVEYOR_FAST_SOUTH_TO_EAST(18, ConveyorTile.class, FAST, ROTATION_RIGHT, EAST, SOUTH),
+    CONVEYOR_FAST_WEST_TO_SOUTH(19, ConveyorTile.class, FAST, ROTATION_RIGHT, SOUTH, WEST),
+    CONVEYOR_FAST_NORTH_TO_WEST(27, ConveyorTile.class, FAST, ROTATION_RIGHT, WEST, NORTH),
+    CONVEYOR_FAST_EAST_TO_NORTH(26, ConveyorTile.class, FAST, ROTATION_RIGHT, NORTH, EAST),
+
+    /**
+     * ConveyorJunctions, a combination of two different conveyorTiles
+     */
+    CONVEYOR_JUNCTION_SOUTH_AND_WEST_TO_NORTH(56, ConveyorJunctionTile.class, NORTH, SOUTH, WEST),
+    CONVEYOR_JUNCTION_NORTH_AND_WEST_TO_EAST(57, ConveyorJunctionTile.class, EAST, NORTH, WEST),
+    CONVEYOR_JUNCTION_NORTH_AND_EAST_TO_SOUTH(58, ConveyorJunctionTile.class, SOUTH, NORTH, EAST),
+    CONVEYOR_JUNCTION_SOUTH_AND_EAST_TO_WEST(59, ConveyorJunctionTile.class, WEST, SOUTH, EAST),
+
+    CONVEYOR_JUNCTION_NORTH_AND_SOUTH_TO_EAST(60, ConveyorJunctionTile.class, EAST, NORTH, SOUTH),
+    CONVEYOR_JUNCTION_WEST_AND_EAST_TO_SOUTH(61, ConveyorJunctionTile.class, SOUTH, WEST, EAST),
+    CONVEYOR_JUNCTION_WEST_AND_EAST_TO_NORTH(68, ConveyorJunctionTile.class, NORTH, WEST, EAST),
+    CONVEYOR_JUNCTION_NORTH_AND_SOUTH_TO_WEST(69, ConveyorJunctionTile.class, WEST, NORTH, SOUTH),
+
+    CONVEYOR_JUNCTION_SOUTH_AND_EAST_TO_NORTH(64, ConveyorJunctionTile.class, NORTH, SOUTH, EAST),
+    CONVEYOR_JUNCTION_SOUTH_AND_WEST_TO_EAST(65, ConveyorJunctionTile.class, EAST, SOUTH, WEST),
+    CONVEYOR_JUNCTION_NORTH_AND_WEST_TO_SOUTH(66, ConveyorJunctionTile.class, SOUTH, NORTH, WEST),
+    CONVEYOR_JUNCTION_NORTH_AND_EAST_TO_WEST(67, ConveyorJunctionTile.class, WEST, NORTH, EAST),
+
+    CONVEYOR_JUNCTION_FAST_SOUTH_AND_WEST_TO_NORTH(72, ConveyorJunctionTile.class, FAST, NORTH, SOUTH, WEST),
+    CONVEYOR_JUNCTION_FAST_NORTH_AND_WEST_TO_EAST(73, ConveyorJunctionTile.class, FAST, EAST, NORTH, WEST),
+    CONVEYOR_JUNCTION_FAST_NORTH_AND_EAST_TO_SOUTH(74, ConveyorJunctionTile.class, FAST, SOUTH, NORTH, EAST),
+    CONVEYOR_JUNCTION_FAST_SOUTH_AND_EAST_TO_WEST(75, ConveyorJunctionTile.class, FAST, WEST, SOUTH, EAST),
+
+    CONVEYOR_JUNCTION_FAST_NORTH_AND_SOUTH_TO_EAST(80, ConveyorJunctionTile.class, FAST, EAST, NORTH, SOUTH),
+    CONVEYOR_JUNCTION_FAST_WEST_AND_EAST_TO_SOUTH(81, ConveyorJunctionTile.class, FAST, SOUTH, WEST, EAST),
+    CONVEYOR_JUNCTION_FAST_WEST_AND_EAST_TO_NORTH(83, ConveyorJunctionTile.class, FAST, NORTH, WEST, EAST),
+    CONVEYOR_JUNCTION_FAST_NORTH_AND_SOUTH_TO_WEST(82, ConveyorJunctionTile.class, FAST, WEST, NORTH, SOUTH),
+
+    CONVEYOR_JUNCTION_FAST_SOUTH_AND_EAST_TO_NORTH(76, ConveyorJunctionTile.class, FAST, NORTH, SOUTH, EAST),
+    CONVEYOR_JUNCTION_FAST_SOUTH_AND_WEST_TO_EAST(77, ConveyorJunctionTile.class, FAST, EAST, SOUTH, WEST),
+    CONVEYOR_JUNCTION_FAST_NORTH_AND_WEST_TO_SOUTH(85, ConveyorJunctionTile.class, FAST, SOUTH, NORTH, WEST),
+    CONVEYOR_JUNCTION_FAST_NORTH_AND_EAST_TO_WEST(84, ConveyorJunctionTile.class, FAST, WEST, NORTH, EAST),
+
+
 
     /**
      * SpawnTiles. SpawnTiles are assigned to corresponding player and designate their original spawn-point
@@ -123,13 +183,12 @@ public enum TileId {
     FLAG_4(78, FlagTile.class),
 
     /**
-     * GearTiles
+     * LaserTiles
      */
-    GEAR_LEFT(52, GearTile.class, GEAR, LEFT),
-    GEAR_RIGHT(53, GearTile.class, GEAR, RIGHT)
+    SINGLE_LASER_VERTICAL(46, LaserTile.class, VERTICAL),
+    SINGLE_LASER_HORIZONTAL(38, LaserTile.class, HORIZONTAL),
+    SINGLE_LASER_CROSS(39, LaserTile.class, VERTICAL, HORIZONTAL)
     ;
-
-
 
     private int id;
     private Class<? extends ITile> implementationClass;
@@ -179,9 +238,33 @@ public enum TileId {
         List<Direction> facingDirections = new ArrayList<>();
         for(Attributes a : attributes){
             if(a.equals(NORTH) || a.equals(SOUTH) || a.equals(WEST) || a.equals(EAST))
-                facingDirections.add(Attributes.translateDir(a));
+                facingDirections.add(Attributes.translateToDir(a));
         }
         return facingDirections;
+    }
+
+    /**
+     *
+     * @return List of Conveyors
+     */
+    private static List<TileId> getConveyors() {
+        return Arrays.stream(TileId.values()).filter(s -> s.getImplementationClass() == ConveyorTile.class).collect(Collectors.toList());
+    }
+
+    /**
+     * Returns the TileId of Conveyor that matches given input and output directions
+     * @param outputDir
+     * @param inputDir
+     * @return TileId of Conveyor
+     */
+    public static TileId getConveyor(Direction outputDir, Direction inputDir) {
+        //litt treig, noen måte å optimalisere?
+        for(TileId id : getConveyors()) {
+            List<Direction> directions = id.getFacingDirections();
+            if(directions.get(0) == outputDir && directions.get(1) == inputDir)
+                return id;
+        }
+        throw new IllegalArgumentException("No such Conveyor");
     }
 
     /**
@@ -203,6 +286,10 @@ public enum TileId {
         return null;
     }
     public List<Attributes> getAttributes() { return attributes; }
+
+    public boolean hasAttribute(Attributes atr) {
+        return this.attributes.contains(atr);
+    }
 
     public int getId() { return this.id; }
 }

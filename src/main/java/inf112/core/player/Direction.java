@@ -46,4 +46,20 @@ public enum Direction {
         }
         return direction;
     }
+
+    public Direction rotateLeft(){
+        // cell rotation is a number in {0,1,2,3}
+        // a rotation to the left means increasing that number by 1
+        // this is following the logic given in TiledMapTileLayer.Cell
+        int newCellRotation = (getCellRotation() + 1) % 4;
+        return(getDirection(newCellRotation));
+    }
+
+    public Direction rotateRight() {
+        // a rotation to the right means decreasing that number by 1
+        int newCellRotation = (getCellRotation() - 1);
+        if(newCellRotation < 0)
+            newCellRotation = 3;
+        return(getDirection(newCellRotation));
+    }
 }

@@ -15,6 +15,7 @@ public class RoundHandler {
     /**
      * Class that handles a gameRound. Every round has several phases, and every phase has different actions.
      * @param game
+     * @author Alvar
      */
     public RoundHandler(MainGame game, List<Player> players) {
         this.game = game;
@@ -28,46 +29,19 @@ public class RoundHandler {
     public void conveyorMove(){
         //only conveyors with players on them need to move
         for(Player player : players) {
-            if(conveyorOnTile(player)) {
-                MoverTile conveyor = (MoverTile) board.getConveyors().get(player.getPositionCopy());
+            if(isOnConveyor(player)) {
                 MovementHandler movementHandler = game.getMovementHandler();
-                switch(conveyor.getSpeed()){
-                    case 1:
-                        conveyor.moveConveyor(player, movementHandler);
-                        break;
-                    case 2:
-                        conveyor.moveConveyor(player, movementHandler);
-                        MoverTile next = (MoverTile) board.getConveyors().get(player.getPositionCopy());
-                        if(next == null) {
-                            //there is no new conveyorTile on next position, player wil carry forward in the same direction as the last move
-                            movementHandler.attemptToMove(player, player.getLastDir());
-                        } else {
-                            //there is a new conveyor on the next position, player will be moved by next conveyor
-                            next.moveConveyor(player, movementHandler);
-                        }
-                        break;
-                }
+                MoverTile conveyor = (MoverTile) board.getConveyors().get(player.getPositionCopy());
+                conveyor.moveConveyor(player, movementHandler);
+                MoverTile next = (MoverTile) board.getConveyors().get(player.getPositionCopy());
+                if(next != null)
+                    next.rotate(player);
             }
         }
     }
 
-    public void gearRotate() {
-        for (Player player : players) {
-            if (gearOnTile(player)) {
-                player.rotateLeft();
-            }
-        }
-    }
-
-    private boolean gearOnTile(Player player) {
-        if (board.getGears().get(player.getPositionCopy()) != null) return true;
-        return false;
-    }
-
-    private boolean conveyorOnTile(Player player) {
-        if(board.getConveyors().get(player.getPositionCopy()) != null)
-            return true;
-        return false;
+    private boolean isOnConveyor(Player player) {
+        return board.getConveyors().get(player.getPositionCopy()) != null;
     }
 
 }

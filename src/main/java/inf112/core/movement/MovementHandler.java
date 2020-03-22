@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
 import inf112.core.game.MainGame;
 import inf112.core.game.RoundHandler;
+import inf112.core.laser.LaserHandler;
 import inf112.core.movement.util.CollisionHandler;
 import inf112.core.movement.util.FlagHandler;
 import inf112.core.movement.util.SpawnHandler;
@@ -16,6 +17,7 @@ import inf112.core.player.Player;
 import inf112.core.programcards.MovementCard;
 import inf112.core.programcards.ProgramCard;
 import inf112.core.programcards.RotationCard;
+import inf112.core.util.LayerOperation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +42,7 @@ public class MovementHandler extends InputAdapter {
     private FlagHandler flagHandler;
     private VoidHandler voidHandler;
     private RoundHandler roundHandler;
+    private LaserHandler laserHandler;
 
     public MovementHandler(MainGame game, List<Player> players) {
         this.board = game.getBoard();
@@ -48,8 +51,9 @@ public class MovementHandler extends InputAdapter {
         this.players = players;
         this.collisionHandler = new CollisionHandler(board, players);
         this.spawnHandler = new SpawnHandler(board);
-        this.flagHandler = new FlagHandler(board);    // should probably not be in movementHandler
+        this.flagHandler = new FlagHandler(board);
         this.voidHandler = new VoidHandler(board);
+        this.laserHandler = new LaserHandler(board, players);
     }
 
     public MovementHandler(MainGame game) {
@@ -110,9 +114,21 @@ public class MovementHandler extends InputAdapter {
                 break;
             case Input.Keys.T:
                 roundHandler.conveyorMove();
-                roundHandler.gearRotate();
                 break;
+            case Input.Keys.L:
+                laserHandler.fireLasersVisually();
+            default:
+                return false;
+        }
+        return true;
+    }
 
+    @Override
+    public boolean keyUp(int keycode) {
+        switch (keycode) {
+            case Input.Keys.L:
+                laserHandler.disableLasersVisually();
+                break;
             default:
                 return false;
         }
@@ -133,7 +149,7 @@ public class MovementHandler extends InputAdapter {
                 }
             }
         } else if (currentCard instanceof RotationCard) {
-            if (((RotationCard) currentCard).getClockwise()) {
+            if (((RotationCard) currentCard).isClockwise()) {
                 for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++) {
                     activePlayer.rotateRight();
                 }
@@ -183,10 +199,10 @@ public class MovementHandler extends InputAdapter {
         if(collisionHandler.canGo(last.getPositionCopy(), direction))
             for (Player affectedPlayer : affectedPlayers) {
                 moveUnchecked(affectedPlayer, direction);
-                affectedPlayer.setLastDir(direction);
-                handleOutOfBounds(affectedPlayer);
+                affectedPlayer.setPrevDir(direction);
+                handleOutOfBounds(affectedPlayer);           // players outside map is moved to spawn
                 handleFlagVisitation(affectedPlayer);
-                handleVoid(affectedPlayer);
+                handleVoid(affectedPlayer);                  // players on a hole is moved to spawn
                 if (flagHandler.hasVisitedAllFlags(affectedPlayer))
                     this.winner = affectedPlayer;
             }
@@ -200,10 +216,10 @@ public class MovementHandler extends InputAdapter {
      * @param direction
      */
     private void moveUnchecked(Player playerToBeMoved, Direction direction) {
-        playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), null);                   // erase player (graphically)
-        playerToBeMoved.move(direction);                                                                  // move player  (logically)
-        playerToBeMoved.setLastDir(direction);
-        playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), playerToBeMoved.getCell());   // draw player  (graphically)
+        LayerOperation.removePlayer(playerLayer, playerToBeMoved);     // erase player (graphically)
+        playerToBeMoved.move(direction);                               // move player  (logically)
+        playerToBeMoved.setPrevDir(direction);
+        LayerOperation.drawPlayer(playerLayer, playerToBeMoved);       // draw player  (graphically)
     }
 
     /**
@@ -214,9 +230,9 @@ public class MovementHandler extends InputAdapter {
      * @param position
      */
     public void moveToPos(Player playerToBeMoved, Vector2 position) {
-        playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), null);
+        LayerOperation.removePlayer(playerLayer, playerToBeMoved);
         playerToBeMoved.move(position);
-        playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), playerToBeMoved.getCell());
+        LayerOperation.drawPlayer(playerLayer, playerToBeMoved);
     }
 
     /**
@@ -225,9 +241,9 @@ public class MovementHandler extends InputAdapter {
      * @param playerToBeMoved
      */
     private void moveToBackup(Player playerToBeMoved) {
-        playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), null);
+        LayerOperation.removePlayer(playerLayer, playerToBeMoved);
         playerToBeMoved.resetPosition();
-        playerLayer.setCell(playerToBeMoved.getX(), playerToBeMoved.getY(), playerToBeMoved.getCell());
+        LayerOperation.drawPlayer(playerLayer, playerToBeMoved);
     }
 
     /**
@@ -246,7 +262,6 @@ public class MovementHandler extends InputAdapter {
             moveToBackup(recentlyMovedPlayer);
         }
     }
-
     /**
      * Checks if the player is on the correct flag, and if so, increases his/hers flag count
      *

@@ -25,7 +25,7 @@ public class VectorMovement {
         }
     }
 
-    public static void go(Vector2 vector, Direction direction) {
+    public static Vector2 go(Vector2 vector, Direction direction) {
         switch (direction) {
             case NORTH:
                 vector.add(Vector2.Y);
@@ -42,5 +42,6 @@ public class VectorMovement {
             default:
                 throw new IllegalArgumentException("Illegal direction given.");
         }
+        return vector;
     }
 }

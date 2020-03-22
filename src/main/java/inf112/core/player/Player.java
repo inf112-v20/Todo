@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.programcards.ProgramCard;
+import inf112.core.tile.Rotation;
 import inf112.core.util.VectorMovement;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class Player {
     private Vector2 position;
     private Cell cell;
     private Direction direction;
-    private Direction lastDir;
+    private Direction prevDir;
     private PlayerBackup backup;
     private List<ProgramCard> registers;
 
@@ -113,7 +114,7 @@ public class Player {
      */
     public void move(Direction dir) {
         VectorMovement.go(position, dir);
-        lastDir = dir;
+        prevDir = dir;
     }
 
     /**
@@ -130,11 +131,7 @@ public class Player {
      * of current direction.
      */
     public void rotateLeft() {
-        // cell rotation is a number in {0,1,2,3}
-        // a rotation to the left means increasing that number by 1
-        // this is following the logic given in TiledMapTileLayer.Cell
-        int newCellRotation = (direction.getCellRotation() + 1) % 4;
-        this.direction = Direction.getDirection(newCellRotation);
+        this.direction = direction.rotateLeft();
         this.cell.setRotation(direction.getCellRotation());
     }
 
@@ -144,10 +141,12 @@ public class Player {
      * of current direction.
      */
     public void rotateRight() {
-        int newCellRotation = direction.getCellRotation() - 1;
-        if (newCellRotation < 0)
-            newCellRotation +=4;
-        this.direction = Direction.getDirection(newCellRotation);
+        this.direction = direction.rotateRight();
+        this.cell.setRotation(direction.getCellRotation());
+    }
+
+    public void rotate(Rotation rotation) {
+            this.direction = rotation.rotate(direction);
         this.cell.setRotation(direction.getCellRotation());
     }
 
@@ -170,11 +169,11 @@ public class Player {
         return Objects.hash(name, id);
     }
 
-    public Direction getLastDir() {
-        return lastDir;
+    public Direction getPrevDir() {
+        return prevDir;
     }
 
-    public void setLastDir(Direction lastDir) {
-        this.lastDir = lastDir;
+    public void setPrevDir(Direction prevDir) {
+        this.prevDir = prevDir;
     }
 }

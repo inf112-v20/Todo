@@ -4,9 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class AbstractTile implements ITile{
 
-    private float xVal, yVal;
+    //private float xVal, yVal;
     private Vector2 pos;
     private TileId tileId;
+    private Rotation rotation;
 
     /**
      * A base for all Tiles that implements the base necessities for a fully functioning Tile-object
@@ -14,8 +15,8 @@ public abstract class AbstractTile implements ITile{
      * @param tileId TileId representing Tile
      */
     public AbstractTile(Vector2 coordinates, TileId tileId) {
-        this.xVal = coordinates.x;
-        this.yVal = coordinates.y;
+        //this.xVal = coordinates.x;
+        //this.yVal = coordinates.y;
         pos = coordinates.cpy();
         this.tileId = tileId;
     }

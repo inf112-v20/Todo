@@ -45,6 +45,8 @@ public abstract class LayeredBoard {
      * @return hashTable
      * */
     private Map<Vector2, ITile> mapPositionToTile(MapLayer layerToBeScanned) {
+        if(tiledMap.getLayers().get(layerToBeScanned.getName()) == null)
+            return new Hashtable<>();
         Map<Vector2, ITile> table = new Hashtable<>();
         TiledMapTileLayer layer = getLayer(layerToBeScanned);
 
