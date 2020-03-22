@@ -31,7 +31,13 @@ public enum Attributes {
     /**
      * ConveyorTiles with Fast attribute will move a player two tiles every phase.
      */
-    FAST
+    FAST,
+
+    LEFT,
+
+    RIGHT,
+
+    GEAR
 
     ;
 
