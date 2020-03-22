@@ -41,7 +41,11 @@ public enum Attributes {
      * ConveyorTiles with rotation will rotate a player given certain criteria.
      */
     ROTATION_LEFT,
-    ROTATION_RIGHT
+    ROTATION_RIGHT,
+
+    GEAR,
+    LEFT,
+    RIGHT
 
     ;
 

@@ -114,6 +114,7 @@ public class MovementHandler extends InputAdapter {
                 break;
             case Input.Keys.T:
                 roundHandler.conveyorMove();
+                roundHandler.gearsRotate();
                 break;
             case Input.Keys.L:
                 laserHandler.fireLasersVisually();
