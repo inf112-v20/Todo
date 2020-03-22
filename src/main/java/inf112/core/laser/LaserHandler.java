@@ -9,6 +9,7 @@ import inf112.core.board.MapLayer;
 import inf112.core.player.Player;
 import inf112.core.tile.TileId;
 import inf112.core.util.LayerOperation;
+import inf112.core.player.PlayerBackup;
 
 import java.util.List;
 
@@ -51,6 +52,14 @@ public class LaserHandler {
 
     public void dealDamageToAffectedPlayers() {
         // TODO gi Player-klassen en representasjon av HP, og bruk laserPositions.getHitPlayers()
+        for (Player player: laserPositions.getHitPlayers().keySet()){
+            player.addDamageToken(player.getDamageTokens(), laserPositions.getHitPlayers().get(player));
+            System.out.println(player.getName() + " " + player.getDamageTokens());
+            if(player.getDamageTokens()==10){
+                player.resetDamageTokens(player.getDamageTokens());
+            }
+        }
+        laserPositions.getHitPlayers().clear();
     }
 
     public void disableLasersVisually() {

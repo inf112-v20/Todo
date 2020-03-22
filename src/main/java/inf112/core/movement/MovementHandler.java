@@ -117,6 +117,7 @@ public class MovementHandler extends InputAdapter {
                 break;
             case Input.Keys.L:
                 laserHandler.fireLasersVisually();
+                laserHandler.dealDamageToAffectedPlayers();
             default:
                 return false;
         }
@@ -262,12 +263,25 @@ public class MovementHandler extends InputAdapter {
      */
     private void handleOutOfBounds(Player recentlyMovedPlayer) {
         if (!board.onBoard(recentlyMovedPlayer)) {
-            moveToBackup(recentlyMovedPlayer);
+            if (recentlyMovedPlayer.getLifeTokens()==1){
+                players.remove(recentlyMovedPlayer);
+            }
+            else {
+                moveToBackup(recentlyMovedPlayer);
+                recentlyMovedPlayer.reduceLifeTokens(recentlyMovedPlayer.getLifeTokens());
+                System.out.println(recentlyMovedPlayer.getLifeTokens());
+            }
         }
     }
     private void handleVoid(Player recentlyMovedPlayer){
         if (voidHandler.isOnVoid(recentlyMovedPlayer)){
-            moveToBackup(recentlyMovedPlayer);
+            if (recentlyMovedPlayer.getLifeTokens()==1){players.remove(recentlyMovedPlayer);
+            }
+            else {
+                moveToBackup(recentlyMovedPlayer);
+                recentlyMovedPlayer.reduceLifeTokens(recentlyMovedPlayer.getLifeTokens());
+                System.out.println(recentlyMovedPlayer.getLifeTokens());
+            }
         }
     }
     /**
