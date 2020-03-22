@@ -187,7 +187,14 @@ public enum TileId {
      */
     SINGLE_LASER_VERTICAL(46, LaserTile.class, VERTICAL),
     SINGLE_LASER_HORIZONTAL(38, LaserTile.class, HORIZONTAL),
-    SINGLE_LASER_CROSS(39, LaserTile.class, VERTICAL, HORIZONTAL)
+    SINGLE_LASER_CROSS(39, LaserTile.class, VERTICAL, HORIZONTAL),
+
+    /**
+     * GearTiles
+     */
+
+    GEAR_LEFT(52, GearTile.class, LEFT),
+    GEAR_RIGHT(53, GearTile.class, RIGHT)
     ;
 
     private int id;
