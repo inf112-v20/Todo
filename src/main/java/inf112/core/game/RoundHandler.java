@@ -3,7 +3,9 @@ package inf112.core.game;
 import inf112.core.board.GameBoard;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
+import inf112.core.tile.GearTile;
 import inf112.core.tile.MoverTile;
+import inf112.core.tile.Rotation;
 
 import java.util.List;
 
@@ -43,5 +45,18 @@ public class RoundHandler {
     private boolean isOnConveyor(Player player) {
         return board.getConveyors().get(player.getPositionCopy()) != null;
     }
+
+    public void gearsRotate(){
+        for (Player player : players){
+            if (onGear(player)){
+                GearTile gear = (GearTile) board.getGears().get(player.getPositionCopy());
+                Rotation rotation = gear.getRotation();
+                if (rotation == Rotation.LEFT) player.rotateLeft();
+                else player.rotateRight();
+            }
+        }
+    }
+
+    private boolean onGear(Player player) { return board.getGears().get(player.getPositionCopy()) != null; }
 
 }

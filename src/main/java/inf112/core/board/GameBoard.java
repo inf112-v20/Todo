@@ -19,7 +19,7 @@ import static inf112.core.board.MapLayer.*;
 
 public class GameBoard extends LayeredBoard {
 
-    Map<Vector2, ITile> collidablesMap, spawnsMap, flagsMap, voidMap, conveyorMap, laserCannonMap;
+    Map<Vector2, ITile> collidablesMap, spawnsMap, flagsMap, voidMap, conveyorMap, laserCannonMap, gearMap;
     MapProperties properties;
 
     public GameBoard() {
@@ -33,6 +33,7 @@ public class GameBoard extends LayeredBoard {
         this.flagsMap = super.mapFlags();
         this.voidMap = super.mapVoid();
         this.conveyorMap = super.mapConveyors();
+        this.gearMap = super.mapGear();
 
         this.laserCannonMap = this.filterOnAttribute(collidablesMap, Attributes.SHOOTS_LASER);
 
@@ -64,6 +65,8 @@ public class GameBoard extends LayeredBoard {
     public Map<Vector2, ITile> getVoids() { return voidMap; }
 
     public Map<Vector2, ITile> getConveyors() { return conveyorMap; }
+
+    public Map<Vector2, ITile> getGears() { return gearMap; }
 
     public TiledMapTile getTile(TileId tileId) {
         return super.tiledMap.getTileSets().getTile(tileId.getId());

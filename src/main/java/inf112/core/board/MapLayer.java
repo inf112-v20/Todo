@@ -18,7 +18,7 @@ public enum MapLayer {
     SPAWN_LAYER("Spawn"),
     FLAG_LAYER("Flag"),
     CONVEYOR_LAYER("Conveyor"),
-    GEAR_LAYER("Gear")
+    GEAR_LAYER("Gears")
     ;
 
     private String name;

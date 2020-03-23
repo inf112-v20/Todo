@@ -12,7 +12,5 @@ public class GearHandler {
 
     private Map<Vector2, ITile> gearPosToTileMapping;
 
-   // public GearHandler(GameBoard gameBoard) { this.gearPosToTileMapping = gameBoard.getGears(); }
-
-    public boolean onGear(Player player) { return gearPosToTileMapping.get(player.getPositionCopy()) != null; }
+    public GearHandler(GameBoard gameBoard) { this.gearPosToTileMapping = gameBoard.getGears(); }
 }

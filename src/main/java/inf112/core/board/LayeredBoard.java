@@ -36,7 +36,7 @@ public abstract class LayeredBoard {
 
     protected Map<Vector2, ITile> mapConveyors() { return mapPositionToTile(CONVEYOR_LAYER); }
 
-    protected Map<Vector2, ITile> mapGears() { return mapPositionToTile(GEAR_LAYER); }
+    protected Map<Vector2, ITile> mapGear() { return mapPositionToTile(GEAR_LAYER); }
 
     /**
      * Scans through a mapLayer and converts every TiledMapTile into its ITile object representation, then it creates a
