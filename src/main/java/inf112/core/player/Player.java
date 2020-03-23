@@ -29,8 +29,9 @@ public class Player {
     private PlayerBackup backup;
     private Deck deck;
     private List<ProgramCard> selected = new ArrayList<>();
-
     private static int playerCount = 0;
+    private int lifeTokens;
+    private int damageTokens;
 
 
     public Player() {
@@ -62,8 +63,14 @@ public class Player {
         this.direction = Direction.NORTH;
         this.backup = new PlayerBackup(xPos, yPos);
         this.deck = new Deck();
+        this.lifeTokens = 3;
+        this.damageTokens = 0;
     }
-
+    public void reduceLifeTokens(){this.lifeTokens--;}
+    public int getLifeTokens(){return lifeTokens;}
+    public void addDamageToken(int damageTokens, int damage){this.damageTokens = damageTokens+damage;}
+    public void resetDamageTokens(){this.damageTokens = 0;}
+    public int getDamageTokens(){return damageTokens;}
     public static void resetPlayerCount() {
         playerCount = 0;
     }
