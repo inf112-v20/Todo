@@ -66,10 +66,10 @@ public class Player {
         this.lifeTokens = 3;
         this.damageTokens = 0;
     }
-    public void reduceLifeTokens(int lifeTokens){this.lifeTokens = lifeTokens-1;}
+    public void reduceLifeTokens(){this.lifeTokens--;}
     public int getLifeTokens(){return lifeTokens;}
     public void addDamageToken(int damageTokens, int damage){this.damageTokens = damageTokens+damage;}
-    public void resetDamageTokens(int damageTokens){this.damageTokens = 0;}
+    public void resetDamageTokens(){this.damageTokens = 0;}
     public int getDamageTokens(){return damageTokens;}
     public static void resetPlayerCount() {
         playerCount = 0;

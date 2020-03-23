@@ -55,9 +55,6 @@ public class LaserHandler {
         for (Player player: laserPositions.getHitPlayers().keySet()){
             player.addDamageToken(player.getDamageTokens(), laserPositions.getHitPlayers().get(player));
             System.out.println(player.getName() + " " + player.getDamageTokens());
-            if(player.getDamageTokens()==10){
-                player.resetDamageTokens(player.getDamageTokens());
-            }
         }
         laserPositions.getHitPlayers().clear();
     }
