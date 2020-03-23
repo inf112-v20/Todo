@@ -21,6 +21,7 @@ import inf112.core.util.LayerOperation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import static inf112.core.board.MapLayer.*;
 
@@ -118,9 +119,15 @@ public class MovementHandler extends InputAdapter {
             case Input.Keys.L:
                 laserHandler.fireLasersVisually();
                 laserHandler.dealDamageToAffectedPlayers();
-                for (Player player: players){
+                Iterator<Player> affectedPlayersByLaser = players.iterator();
+            while (affectedPlayersByLaser.hasNext()){
+                Player player = affectedPlayersByLaser.next();
                     if (player.getDamageTokens()==10){
-                        if(player.getLifeTokens()==1){removePlayerFromMap(player);}
+                        if(player.getLifeTokens()==1){
+                            System.out.println("Player " + player.getName() + " was removed from the game");
+                            affectedPlayersByLaser.remove();
+                            LayerOperation.removePlayer(playerLayer, player);
+                        }
                         else {
                             moveToBackup(player);
                             player.reduceLifeTokens();
