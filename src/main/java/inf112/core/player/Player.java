@@ -80,7 +80,15 @@ public class Player {
 
     public int getLifeTokens() { return lifeTokens; }
 
-    public void addDamageTokens(int amount) { this.damageTokens += amount; }
+    public void addDamageTokens(int amount) {
+        if (damageTokens >= 10) return;
+        else damageTokens += amount;
+    }
+
+    public void removeDamageTokens(int amount) {
+        if (damageTokens <= 0) return;
+        else damageTokens -= amount;
+    }
 
     public void destroy() { this.damageTokens = MainGame.MAX_DAMAGE_TOKENS_LIMIT; }
 

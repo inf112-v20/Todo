@@ -38,6 +38,8 @@ public abstract class LayeredBoard {
 
     protected Map<Vector2, ITile> mapGear() { return mapPositionToTile(GEAR_LAYER); }
 
+    protected Map<Vector2, ITile> mapWrench() { return mapPositionToTile(WRENCH_LAYER); }
+
     /**
      * Scans through a mapLayer and converts every TiledMapTile into its ITile object representation, then it creates a
      * hashTable that maps every ITile object to its Vector2 position on the TiledMap.
