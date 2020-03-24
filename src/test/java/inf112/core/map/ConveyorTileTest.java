@@ -87,4 +87,13 @@ public class ConveyorTileTest {
         assertEquals(testPlayer.getPositionCopy(), VectorMovement.generateNew(NORTH_TO_EAST_TEST_POS, EAST));
         assertEquals(testPlayer.getDirection(), prevRotation.rotateLeft());
     }
+
+    @Test
+    public void EastToSouthConveyorShouldMovePlayerOneTile() {
+        movementHandler.moveToPos(testPlayer, EAST_TO_SOUTH_TEST_POS);
+        Direction prevRotation = testPlayer.getDirection();
+        roundHandler.conveyorMove();
+        assertEquals(testPlayer.getPositionCopy(), VectorMovement.generateNew(EAST_TO_SOUTH_TEST_POS, SOUTH));
+        assertEquals(testPlayer.getDirection(), prevRotation.rotateLeft());
+    }
 }
