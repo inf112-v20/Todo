@@ -1,6 +1,5 @@
 package inf112.core.game;
 
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.core.board.GameBoard;
@@ -23,6 +22,7 @@ public class MainGame {
     private Texture playerSpriteSheet;
     private TextureRegion[][] playerSpriteSheetGrid;
     private RoundHandler roundHandler;
+    private Player winner;
 
     public MainGame(MapNames mapNames) {
         this.players = new ArrayList<>();
@@ -92,10 +92,6 @@ public class MainGame {
         throw new IllegalArgumentException("No player with the given id exists");
     }
 
-    public boolean hasWon() {
-        return movementHandler.hasWon();
-    }
-
     public void dispose() {
         board.dispose();
         playerSpriteSheet.dispose();
@@ -115,4 +111,20 @@ public class MainGame {
         players.removeIf(player -> hasLost(player));
     }
 
+    // should be called between each movement
+    public void attemptToAppointWinner() {
+        if (players.size() == 1 && Player.getPlayerCount() > 1) {    // all other players has lost
+            this.winner = players.get(0);
+            return;
+        }
+        for (Player player : players)
+            if (movementHandler.getFlagWinnerChecker().hasVisitedAllFlags(player)) {
+                this.winner = player;
+                return;
+            }
+    }
+
+    public boolean hasWon() {
+        return this.winner != null;
+    }
 }

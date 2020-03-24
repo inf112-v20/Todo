@@ -8,10 +8,7 @@ import inf112.core.board.GameBoard;
 import inf112.core.game.MainGame;
 import inf112.core.game.RoundHandler;
 import inf112.core.laser.LaserHandler;
-import inf112.core.movement.util.CollisionHandler;
-import inf112.core.movement.util.FlagHandler;
-import inf112.core.movement.util.SpawnHandler;
-import inf112.core.movement.util.VoidHandler;
+import inf112.core.movement.util.*;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
 import inf112.core.programcards.MovementCard;
@@ -36,7 +33,6 @@ public class MovementHandler extends InputAdapter {
     private GameBoard board;
     private List<Player> players;
     private Player activePlayer;                 // movement will affect this player. Should be changed actively
-    private Player winner;
     private TiledMapTileLayer playerLayer;       // layer in which all player cells are placed (for graphics)
     private CollisionHandler collisionHandler;
     private SpawnHandler spawnHandler;
@@ -130,7 +126,8 @@ public class MovementHandler extends InputAdapter {
             default:
                 return false;
         }
-        game.removeLosers();    // should not really be called upon every move
+        game.removeLosers();    // unnecessary to call this upon every move
+        game.attemptToAppointWinner();
         return true;
     }
 
@@ -240,11 +237,9 @@ public class MovementHandler extends InputAdapter {
             for (Player affectedPlayer : affectedPlayers) {
                 moveUnchecked(affectedPlayer, direction);
                 affectedPlayer.setPrevDir(direction);
-                handleOutOfBounds(affectedPlayer);           // players outside map is moved to spawn
-                handleVoidVisitation(affectedPlayer);                  // players on a hole is moved to spawn
+                handleOutOfBounds(affectedPlayer);                  // players outside map is moved to spawn
+                handleVoidVisitation(affectedPlayer);               // players on a hole is moved to spawn
                 handleFlagVisitation(affectedPlayer);
-                if (flagHandler.hasVisitedAllFlags(affectedPlayer))
-                    this.winner = affectedPlayer;
             }
         handlePossibleDeaths(affectedPlayers);
     }
@@ -330,11 +325,7 @@ public class MovementHandler extends InputAdapter {
         }
     }
 
-    public boolean hasWon() {
-        return winner != null;
-    }
-
-    public Player getWinner() {
-        return winner;
+    public IFlagWinner getFlagWinnerChecker() {
+        return flagHandler;
     }
 }

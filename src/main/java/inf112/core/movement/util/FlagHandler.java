@@ -14,7 +14,7 @@ import java.util.Map;
  *
  * @author eskil
  */
-public class FlagHandler {
+public class FlagHandler implements IFlagWinner {
 
     private Map<Vector2, ITile> flagPosToTileMapping;
 
@@ -48,12 +48,8 @@ public class FlagHandler {
         player.setFlagsVisited(player.getFlagsVisited() + 1);
     }
 
-    /**
-     * Should be used to test if Player has won
-     *
-     * @param player
-     * @return true if player has visited 3 flags, otherwise false
-     */
+
+    @Override
     public boolean hasVisitedAllFlags(Player player) {
         if(numOfFlagsOnBoard == 0)
             return false;
