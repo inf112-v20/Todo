@@ -1,7 +1,10 @@
-language: java
-sudo: false
 os:
   - linux
   - osx
   - windows
+
+language: java
+
+sudo: false
+
 script: mvn clean verify
