@@ -3,4 +3,5 @@ sudo: false
 os:
   - linux
   - osx
+  - windows
 script: mvn clean verify
