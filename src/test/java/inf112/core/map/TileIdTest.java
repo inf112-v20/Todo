@@ -13,10 +13,8 @@ public class TileIdTest {
 
     @Test
     public void getTileIdReturnsCorrectTileId() {
-        assertEquals(TileId.WALL_SOUTH, TileId.getTileId(29));
-        assertEquals(TileId.WALL_NORTH_EAST, TileId.getTileId(16));
         for(TileId id : TileId.values()) {
-
+            assertEquals(id, TileId.getTileId(id.getId()));
         }
     }
 
