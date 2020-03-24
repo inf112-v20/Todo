@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
+import inf112.core.game.MainGame;
 import inf112.core.programcards.ProgramCard;
 import inf112.core.tile.Rotation;
 import inf112.core.util.VectorMovement;
@@ -19,6 +20,8 @@ import java.util.Objects;
  */
 public class Player {
 
+    private static int playerCount = 0;
+
     private String name;
     private int id;
     private int flagsVisited = 0;
@@ -29,9 +32,7 @@ public class Player {
     private PlayerBackup backup;
     private Deck deck;
     private List<ProgramCard> selected = new ArrayList<>();
-    private static int playerCount = 0;
-    private int lifeTokens;
-    private int damageTokens;
+    private int lifeTokens, damageTokens;
 
 
     public Player() {
@@ -63,14 +64,10 @@ public class Player {
         this.direction = Direction.NORTH;
         this.backup = new PlayerBackup(xPos, yPos);
         this.deck = new Deck();
-        this.lifeTokens = 3;
-        this.damageTokens = 0;
+        this.lifeTokens = 3;        // A robot can die 3 times before the player has lost
+        this.damageTokens = 0;      // Starts off with 0 damage taken
     }
-    public void reduceLifeTokens(){this.lifeTokens--;}
-    public int getLifeTokens(){return lifeTokens;}
-    public void addDamageToken(int damageTokens, int damage){this.damageTokens = damageTokens+damage;}
-    public void resetDamageTokens(){this.damageTokens = 0;}
-    public int getDamageTokens(){return damageTokens;}
+
     public static void resetPlayerCount() {
         playerCount = 0;
     }
@@ -79,43 +76,51 @@ public class Player {
         return playerCount;
     }
 
-    public String getName() {   return name;   }
+    public void reduceLifeTokens() { this.lifeTokens--; }
 
-    public int getId() {   return id;   }
+    public int getLifeTokens() { return lifeTokens; }
 
-    public Cell getCell() {   return cell;   }
+    public void addDamageTokens(int amount) { this.damageTokens += amount; }
 
-    public int getX() {   return (int) position.x;   }
+    public void destroy() { this.damageTokens = MainGame.MAX_DAMAGE_TOKENS_LIMIT; }
 
-    public int getY() {   return (int) position.y;   }
+    public void resetDamageTokens() { this.damageTokens = 0; }
 
-    public Vector2 getPositionCopy() {
-        return position.cpy();
-    }
+    public int getDamageTokens(){ return damageTokens; }
 
-    public Direction getDirection() {   return direction;   }
+    public String getName() { return name; }
 
-    public void setDirection(Direction direction) {   this.direction = direction;   }
+    public int getId() { return id; }
 
-    public void resetPosition() {   this.position.set(backup.getX(), backup.getY());   }
+    public Cell getCell() { return cell; }
+
+    public int getX() { return (int) position.x; }
+
+    public int getY() { return (int) position.y; }
+
+    public Vector2 getPositionCopy() { return position.cpy(); }
+
+    public Direction getDirection() { return direction; }
+
+    public void setDirection(Direction direction) { this.direction = direction; }
+
+    public void resetPosition() { this.position.set(backup.getX(), backup.getY()); }
 
     public void setBackup(int xPos, int yPos) { this.backup = new PlayerBackup(xPos, yPos); }
 
     public void setBackupHere() { setBackup((int) position.x, (int) position.y);}
 
-    public int getFlagsVisited() {
-        return flagsVisited;
-    }
+    public int getFlagsVisited() { return flagsVisited; }
 
-    public void setFlagsVisited(int numOfFlags) {
-        this.flagsVisited = numOfFlags;
-    }
+    public void setFlagsVisited(int numOfFlags) { this.flagsVisited = numOfFlags; }
 
     public void selectFiveCards() { selected.addAll(deck.getFiveCards()); }
 
-    public List<ProgramCard> getSelected(){
-        return this.selected;
-    }
+    public List<ProgramCard> getSelected(){ return this.selected; }
+
+    public boolean isDead() { return damageTokens >= MainGame.MAX_DAMAGE_TOKENS_LIMIT; }
+
+    public boolean isOutOfLifeTokes() { return lifeTokens <= 0; }
 
     /**
      * Moves the logical representation of the player one unit in the given direction.
