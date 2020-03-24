@@ -34,7 +34,7 @@ public class ConveyorTileTest {
     static final Vector2 SOUTH_TO_WEST_TEST_POS = new Vector2(7, 8);
     static final Vector2 WEST_TO_NORTH_TEST_POS = new Vector2(7, 7);
 
-    static final Vector2 NORTH_TO_WEST_TEST_POS = new Vector2(5, 9);
+    static final Vector2 NORTH_TO_WEST_TEST_POS = new Vector2(5, 7);
     static final Vector2 WEST_TO_SOUTH_TEST_POS = new Vector2(5, 8);
     static final Vector2 SOUTH_TO_EAST_TEST_POS = new Vector2(4, 8);
     static final Vector2 EAST_TO_NORTH_TEST_POS = new Vector2(4, 7);
@@ -49,6 +49,9 @@ public class ConveyorTileTest {
         movementHandler.setActive(testPlayer);
     }
 
+    /**
+     * Regular one-directional conveyors
+     */
     @Test
     public void NorthConveyorShouldMovePlayerOneTileNorth() {
         movementHandler.moveToPos(testPlayer, NORTH_CONVEYOR_TEST_POS);
@@ -79,8 +82,12 @@ public class ConveyorTileTest {
         assertEquals(testPlayer.getPositionCopy(), expectedPos);
     }
 
+    /**
+     * Turning ConveyorTiles, with left rotation
+     */
+
     @Test
-    public void NorthToEastConveyorShouldMovePlayerOneTile() {
+    public void NorthToEastConveyorShouldMovePlayerOneTileEastAndRotateLeft() {
         movementHandler.moveToPos(testPlayer, NORTH_TO_EAST_TEST_POS);
         Direction prevRotation = testPlayer.getDirection();
         roundHandler.conveyorMove();
@@ -89,11 +96,69 @@ public class ConveyorTileTest {
     }
 
     @Test
-    public void EastToSouthConveyorShouldMovePlayerOneTile() {
+    public void EastToSouthConveyorShouldMovePlayerOneTileSouthAndRotateLeft() {
         movementHandler.moveToPos(testPlayer, EAST_TO_SOUTH_TEST_POS);
         Direction prevRotation = testPlayer.getDirection();
         roundHandler.conveyorMove();
         assertEquals(testPlayer.getPositionCopy(), VectorMovement.generateNew(EAST_TO_SOUTH_TEST_POS, SOUTH));
         assertEquals(testPlayer.getDirection(), prevRotation.rotateLeft());
+    }
+
+    @Test
+    public void SouthToWestConveyorShouldMovePlayerOneTileWestAndRotateLeft() {
+        movementHandler.moveToPos(testPlayer, SOUTH_TO_WEST_TEST_POS);
+        Direction prevRotation = testPlayer.getDirection();
+        roundHandler.conveyorMove();
+        assertEquals(testPlayer.getPositionCopy(), VectorMovement.generateNew(SOUTH_TO_WEST_TEST_POS, WEST));
+        assertEquals(testPlayer.getDirection(), prevRotation.rotateLeft());
+    }
+
+    @Test
+    public void WestToNorthConveyorShouldMovePlayerOneTileAndRotateLeft() {
+        movementHandler.moveToPos(testPlayer, WEST_TO_NORTH_TEST_POS);
+        Direction prevRotation = testPlayer.getDirection();
+        roundHandler.conveyorMove();
+        assertEquals(testPlayer.getPositionCopy(), VectorMovement.generateNew(WEST_TO_NORTH_TEST_POS, NORTH));
+        assertEquals(testPlayer.getDirection(), prevRotation.rotateLeft());
+    }
+
+    /**
+     * Turning conveyorTiles with right rotation
+     */
+
+    @Test
+    public void NorthToWestConveyorShouldMovePlayerOneTileWestAndRotateRight() {
+        movementHandler.moveToPos(testPlayer, NORTH_TO_WEST_TEST_POS);
+        Direction prevRotation = testPlayer.getDirection();
+        roundHandler.conveyorMove();
+        assertEquals(testPlayer.getPositionCopy(), VectorMovement.generateNew(NORTH_TO_WEST_TEST_POS, WEST));
+        assertEquals(testPlayer.getDirection(), prevRotation.rotateRight());
+    }
+
+    @Test
+    public void WestToSouthConveyorShouldMovePlayerOneTileSouthAndRotateRight() {
+        movementHandler.moveToPos(testPlayer, WEST_TO_SOUTH_TEST_POS);
+        Direction prevRotation = testPlayer.getDirection();
+        roundHandler.conveyorMove();
+        assertEquals(testPlayer.getPositionCopy(), VectorMovement.generateNew(WEST_TO_SOUTH_TEST_POS, SOUTH));
+        assertEquals(testPlayer.getDirection(), prevRotation.rotateRight());
+    }
+
+    @Test
+    public void SouthToEastConveyorShouldMovePlayerOneTileEastAndRotateRight() {
+        movementHandler.moveToPos(testPlayer, SOUTH_TO_EAST_TEST_POS);
+        Direction prevRotation = testPlayer.getDirection();
+        roundHandler.conveyorMove();
+        assertEquals(testPlayer.getPositionCopy(), VectorMovement.generateNew(SOUTH_TO_EAST_TEST_POS, EAST));
+        assertEquals(testPlayer.getDirection(), prevRotation.rotateRight());
+    }
+
+    @Test
+    public void EastToNorthConveyorShouldMovePlayerOneTileNorthAndRotateRight() {
+        movementHandler.moveToPos(testPlayer, EAST_TO_NORTH_TEST_POS);
+        Direction prevRotation = testPlayer.getDirection();
+        roundHandler.conveyorMove();
+        assertEquals(testPlayer.getPositionCopy(), VectorMovement.generateNew(EAST_TO_NORTH_TEST_POS, NORTH));
+        assertEquals(testPlayer.getDirection(), prevRotation.rotateRight());
     }
 }
