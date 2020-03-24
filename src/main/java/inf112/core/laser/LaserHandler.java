@@ -53,11 +53,19 @@ public class LaserHandler {
      * Should perhaps be refactored to another class
      */
     public void dealDamageToAffectedPlayers() {
-        for (Player player: laserPositions.getHitPlayers().keySet()){
-            player.addDamageTokens(laserPositions.getHitPlayers().get(player));
+        for (Player player: laserPositions.getHitPlayersMap().keySet()) {
+            player.addDamageTokens(laserPositions.getHitPlayersMap().get(player));
             System.out.println(player.getName() + " has damage tokens equal to: " + player.getDamageTokens());
         }
-        laserPositions.resetHitPlayers();    // prepare for next round of dealing damage
+    }
+
+    // prepare for next round of dealing damage
+    public void resetHitPlayers() {
+        laserPositions.resetHitPlayers();
+    }
+
+    public Iterable<Player> getHitPlayers() {
+        return laserPositions.getHitPlayersMap().keySet();
     }
 
     public void disableLasersVisually() {

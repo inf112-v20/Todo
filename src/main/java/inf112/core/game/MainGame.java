@@ -111,10 +111,8 @@ public class MainGame {
         return player.isDead() && player.isOutOfLifeTokes();
     }
 
-    public void removePlayer(Player toBeRemoved) {
-        players.remove(toBeRemoved);                                                        // remove logically
-        LayerOperation.removePlayer(board.getLayer(MapLayer.PLAYER_LAYER), toBeRemoved);    // remove graphically
-        System.out.println(toBeRemoved.getName() + " lost and was removed from the game.");
+    public void removeLosers() {
+        players.removeIf(player -> hasLost(player));
     }
 
 }

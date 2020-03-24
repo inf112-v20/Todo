@@ -123,10 +123,14 @@ public class MovementHandler extends InputAdapter {
                 laserHandler.fireLasersVisually();
                 laserHandler.dealDamageToAffectedPlayers();
 
-                handleAllPossibleDeaths();
+                handlePossibleDeaths(laserHandler.getHitPlayers());
+
+                laserHandler.resetHitPlayers();
+                break;
             default:
                 return false;
         }
+        game.removeLosers();    // should not really be called upon every move
         return true;
     }
 
@@ -142,23 +146,25 @@ public class MovementHandler extends InputAdapter {
         return true;
     }
 
-    private void handleAllPossibleDeaths() {
-        for (Player player : players)
-            if (player.isDead()) {
-                player.reduceLifeTokens();
+    private void handlePossibleDeath(Player player) {
+        if (player.isDead()) {
+            player.reduceLifeTokens();
 
-                if (game.hasLost(player)) {
-                    // remove loser physically
-                    LayerOperation.removePlayer(playerLayer, player);
-                }
-                else {    // respawn
-                    player.resetDamageTokens();
-                    moveToBackup(player);
-                }
+            if (game.hasLost(player)) {
+                // remove loser physically
+                System.out.println(player.getName() + " has lost");
+                LayerOperation.removePlayer(playerLayer, player);
             }
+            else {    // respawn
+                player.resetDamageTokens();
+                moveToBackup(player);
+            }
+        }
+    }
 
-        // remove loser logically
-        players.removeIf(player -> game.hasLost(player));
+    private void handlePossibleDeaths(Iterable<Player> possibleDeadPlayers) {
+        for (Player player : possibleDeadPlayers)
+                handlePossibleDeath(player);
     }
 
     /**
@@ -240,7 +246,7 @@ public class MovementHandler extends InputAdapter {
                 if (flagHandler.hasVisitedAllFlags(affectedPlayer))
                     this.winner = affectedPlayer;
             }
-        handleAllPossibleDeaths();
+        handlePossibleDeaths(affectedPlayers);
     }
 
     /**
@@ -280,11 +286,6 @@ public class MovementHandler extends InputAdapter {
         playerToBeMoved.resetPosition();
         LayerOperation.drawPlayer(playerLayer, playerToBeMoved);
     }
-//    private void removePlayerFromMap(Player playerToBeRemoved){
-//        LayerOperation.removePlayer(playerLayer, playerToBeRemoved);
-//        players.remove(playerToBeRemoved);
-//        System.out.println("Player " + playerToBeRemoved.getName() + " was removed from the game");
-//    }
 
     /**
      * Checks if the player is outside the board dimensions, and if so, resets the players

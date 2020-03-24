@@ -115,19 +115,19 @@ public class LaserPositionsTest {
 
     @Test
     public void numberOfHitPlayersIsCorrect() {
-        assertEquals(hitPlayers.size(), laserPositions.getHitPlayers().size());
+        assertEquals(hitPlayers.size(), laserPositions.getHitPlayersMap().size());
     }
 
     @Test
     public void hitPlayersIsTheCorrectPlayers() {
         for (Player player : hitPlayers.keySet())
-            assertTrue(laserPositions.getHitPlayers().containsKey(player));
+            assertTrue(laserPositions.getHitPlayersMap().containsKey(player));
     }
 
     @Test
     public void hitPlayersHasRegisteredTheCorrectAmountOfDamage() {
         for (Player player : hitPlayers.keySet())
-            assertEquals(hitPlayers.get(player), laserPositions.getHitPlayers().get(player));
+            assertEquals(hitPlayers.get(player), laserPositions.getHitPlayersMap().get(player));
     }
 
 }
