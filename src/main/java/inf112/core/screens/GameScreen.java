@@ -21,7 +21,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(RoboRally gameStateSwitcher) {
         this.gameStateSwitcher = gameStateSwitcher;
-        this.hudScreen = new HUDScreen();
+        this.hudScreen = new HUDScreen(this);
     }
 
     @Override

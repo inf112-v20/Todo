@@ -13,22 +13,35 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 public class HUDScreen {
 
     private Stage stage;
-//    private GameScreen gameScreen;
+    private GameScreen gameScreen;
 //    private int width;
 
-    public HUDScreen(){
-//       this.gameScreen = gamescreen;
+    public HUDScreen(GameScreen gameScreen){
+        this.gameScreen = gameScreen;
         this.stage = new Stage();
 //        this.width = 500;
-        Texture texture = new Texture(Gdx.files.internal("img/playAgainButton.png"));
-        createButton(texture,1,500,400);
+        Texture forward = new Texture(Gdx.files.internal("img/forward.png"));
+        createButton(forward,150,0);
+
+        Texture forward2 = new Texture(Gdx.files.internal("img/forward2.png"));
+        createButton(forward2,310,0);
+
+        Texture forward3 = new Texture(Gdx.files.internal("img/forward3.png"));
+        createButton(forward3,470,0);
+
+        Texture turnRight = new Texture(Gdx.files.internal("img/right.png"));
+        createButton(turnRight,630,0);
+
+        Texture turnLeft = new Texture(Gdx.files.internal("img/left.png"));
+        createButton(turnLeft,790,0);
+
     }
 
     public Stage getStage() {
         return stage;
     }
 
-    public ImageButton createButton(Texture texture, float scale, float posX, float posY) {
+    public ImageButton createButton(Texture texture, float posX, float posY) {
         TextureRegion myTextureRegion = new TextureRegion(texture);
         TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
         ImageButton button = new ImageButton(myTexRegionDrawable);
