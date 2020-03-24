@@ -108,7 +108,7 @@ public class MovementHandler extends InputAdapter {
                 moveToBackup(activePlayer);
                 break;
             case Input.Keys.M:
-                cardMovement(activePlayer);
+            //    cardMovement(activePlayer);
                 phase++;
                 phase = phase % 5;
                 break;
@@ -136,8 +136,8 @@ public class MovementHandler extends InputAdapter {
         return true;
     }
 
-    public void cardMovement(Player player) {
-        ProgramCard currentCard = player.getRegisters().get(phase);
+    public void cardMovement(Player player, int index) {
+        ProgramCard currentCard = player.getRegisters().get(index);
         System.out.println(currentCard.getName());
         if (currentCard instanceof MovementCard) {
             if (((MovementCard) currentCard).isForward()) {

@@ -5,35 +5,46 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import inf112.core.movement.MovementHandler;
+import inf112.core.player.Player;
+import inf112.core.programcards.ProgramCard;
+
+import java.util.List;
 
 public class HUDScreen {
 
     private Stage stage;
     private GameScreen gameScreen;
+    private MovementHandler movementHandler;
 //    private int width;
 
     public HUDScreen(GameScreen gameScreen){
         this.gameScreen = gameScreen;
         this.stage = new Stage();
 //        this.width = 500;
-        Texture forward = new Texture(Gdx.files.internal("img/forward.png"));
-        createButton(forward,150,0);
+    }
 
-        Texture forward2 = new Texture(Gdx.files.internal("img/forward2.png"));
-        createButton(forward2,310,0);
+    protected void setMovementHandler(MovementHandler movementHandler){
+        this.movementHandler = movementHandler;
+    }
 
-        Texture forward3 = new Texture(Gdx.files.internal("img/forward3.png"));
-        createButton(forward3,470,0);
-
-        Texture turnRight = new Texture(Gdx.files.internal("img/right.png"));
-        createButton(turnRight,630,0);
-
-        Texture turnLeft = new Texture(Gdx.files.internal("img/left.png"));
-        createButton(turnLeft,790,0);
+    public void createButtons(){
+        int x = 0;
+        int y = 0;
+        int index = 0;
+        List<ProgramCard> cards = movementHandler.getActivePlayer().getRegisters();
+        for (ProgramCard card : cards){
+            createButton(card.getTexture(), x,y, index);
+            x += 160;
+            index+=1;
+        }
+        Gdx.input.setInputProcessor(stage);
 
     }
 
@@ -41,11 +52,18 @@ public class HUDScreen {
         return stage;
     }
 
-    public ImageButton createButton(Texture texture, float posX, float posY) {
+    public ImageButton createButton(Texture texture, float posX, float posY, int index) {
         TextureRegion myTextureRegion = new TextureRegion(texture);
         TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
         ImageButton button = new ImageButton(myTexRegionDrawable);
         button.setPosition(posX, posY);
+
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                movementHandler.cardMovement(movementHandler.getActivePlayer(), index);
+            }
+        });
         stage.addActor(button);
         return button;
     }

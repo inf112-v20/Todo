@@ -27,7 +27,6 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         game = new MainGame();
-
         mapRenderer = game.getBoard().instantiateMapRenderer();
         camera = game.getBoard().instantiateCamera();
 
@@ -37,6 +36,8 @@ public class GameScreen implements Screen {
 
         Gdx.input.setInputProcessor(game.getMovementHandler());
 
+        hudScreen.setMovementHandler(game.getMovementHandler());
+        hudScreen.createButtons();
         stage = hudScreen.getStage();       // HUD
 
     }

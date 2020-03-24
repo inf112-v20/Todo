@@ -111,4 +111,8 @@ public class MainGame {
             player.addToRegister(card);
         }
     }
+
+    public Deck getDeck() {
+        return deck;
+    }
 }

@@ -176,4 +176,6 @@ public class Player {
     public void setPrevDir(Direction prevDir) {
         this.prevDir = prevDir;
     }
+
+
 }
