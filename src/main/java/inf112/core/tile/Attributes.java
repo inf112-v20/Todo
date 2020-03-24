@@ -43,9 +43,15 @@ public enum Attributes {
     ROTATION_LEFT,
     ROTATION_RIGHT,
 
-    GEAR,
     LEFT,
-    RIGHT
+    RIGHT,
+
+    /**
+     * WrenchTiles, either double or single will repair the robot
+     */
+    DOUBLE,
+    SINGLE
+
 
     ;
 

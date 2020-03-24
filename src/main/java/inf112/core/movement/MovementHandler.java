@@ -117,6 +117,7 @@ public class MovementHandler extends InputAdapter {
             case Input.Keys.T:
                 roundHandler.conveyorMove();
                 roundHandler.gearsRotate();
+                roundHandler.wrenchesRepair();
                 break;
             case Input.Keys.L:
                 laserHandler.updateLaserPositions();

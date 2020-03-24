@@ -194,7 +194,14 @@ public enum TileId {
      */
 
     GEAR_LEFT(52, GearTile.class, LEFT),
-    GEAR_RIGHT(53, GearTile.class, RIGHT)
+    GEAR_RIGHT(53, GearTile.class, RIGHT),
+
+    /**
+     *WrenchTiles
+     */
+
+    WRENCH_SINGLE(14, WrenchTile.class, SINGLE),
+    WRENCH_DOUBLE(6, WrenchTile.class, DOUBLE)
     ;
 
     private int id;

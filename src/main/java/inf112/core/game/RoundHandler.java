@@ -3,9 +3,7 @@ package inf112.core.game;
 import inf112.core.board.GameBoard;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
-import inf112.core.tile.GearTile;
-import inf112.core.tile.MoverTile;
-import inf112.core.tile.Rotation;
+import inf112.core.tile.*;
 
 import java.util.List;
 
@@ -58,5 +56,25 @@ public class RoundHandler {
     }
 
     private boolean onGear(Player player) { return board.getGears().get(player.getPositionCopy()) != null; }
+
+    private boolean onWrench(Player player) { return board.getWrenches().get(player.getPositionCopy()) != null; }
+
+    public void wrenchesRepair(){
+        for (Player player : players){
+            if (onWrench(player)){
+                WrenchTile wrench = (WrenchTile) board.getWrenches().get(player.getPositionCopy());
+                boolean single = wrench.getType();
+                //Double should also give the player a optioncard, but optioncars aren't implemented
+                if (!single) {
+                    player.removeDamageTokens(1);
+                    System.out.println(player.getName() +  " damage: " + player.getDamageTokens());
+                }
+                else {
+                    player.removeDamageTokens(1);
+                    System.out.println(player.getName() + " damage: " + player.getDamageTokens());
+                }
+            }
+        }
+    }
 
 }
