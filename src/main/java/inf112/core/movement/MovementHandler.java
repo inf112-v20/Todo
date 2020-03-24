@@ -21,7 +21,6 @@ import inf112.core.util.LayerOperation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import static inf112.core.board.MapLayer.*;
 
@@ -32,7 +31,8 @@ import static inf112.core.board.MapLayer.*;
  * @author eskil
  */
 public class MovementHandler extends InputAdapter {
-    private int phase = 0;
+    private int phase = 0;   // TODO refaktorerer inn i MainGame
+    private MainGame game;
     private GameBoard board;
     private List<Player> players;
     private Player activePlayer;                 // movement will affect this player. Should be changed actively
@@ -46,6 +46,7 @@ public class MovementHandler extends InputAdapter {
     private LaserHandler laserHandler;
 
     public MovementHandler(MainGame game, List<Player> players) {
+        this.game = game;
         this.board = game.getBoard();
         this.roundHandler = game.getRoundHandler();
         this.playerLayer = board.getLayer(PLAYER_LAYER);
@@ -118,24 +119,11 @@ public class MovementHandler extends InputAdapter {
                 roundHandler.gearsRotate();
                 break;
             case Input.Keys.L:
+                laserHandler.updateLaserPositions();
                 laserHandler.fireLasersVisually();
                 laserHandler.dealDamageToAffectedPlayers();
-                Iterator<Player> affectedPlayersByLaser = players.iterator();
-            while (affectedPlayersByLaser.hasNext()){
-                Player player = affectedPlayersByLaser.next();
-                    if (player.getDamageTokens()==10){
-                        if(player.getLifeTokens()==1){
-                            System.out.println("Player " + player.getName() + " was removed from the game");
-                            affectedPlayersByLaser.remove();
-                            LayerOperation.removePlayer(playerLayer, player);
-                        }
-                        else {
-                            moveToBackup(player);
-                            player.reduceLifeTokens();
-                            player.resetDamageTokens();
-                        }
-                    }
-                }
+
+                handleAllPossibleDeaths();
             default:
                 return false;
         }
@@ -152,6 +140,25 @@ public class MovementHandler extends InputAdapter {
                 return false;
         }
         return true;
+    }
+
+    private void handleAllPossibleDeaths() {
+        for (Player player : players)
+            if (player.isDead()) {
+                player.reduceLifeTokens();
+
+                if (game.hasLost(player)) {
+                    // remove loser physically
+                    LayerOperation.removePlayer(playerLayer, player);
+                }
+                else {    // respawn
+                    player.resetDamageTokens();
+                    moveToBackup(player);
+                }
+            }
+
+        // remove loser logically
+        players.removeIf(player -> game.hasLost(player));
     }
 
     /**
@@ -228,11 +235,12 @@ public class MovementHandler extends InputAdapter {
                 moveUnchecked(affectedPlayer, direction);
                 affectedPlayer.setPrevDir(direction);
                 handleOutOfBounds(affectedPlayer);           // players outside map is moved to spawn
+                handleVoidVisitation(affectedPlayer);                  // players on a hole is moved to spawn
                 handleFlagVisitation(affectedPlayer);
-                handleVoid(affectedPlayer);                  // players on a hole is moved to spawn
                 if (flagHandler.hasVisitedAllFlags(affectedPlayer))
                     this.winner = affectedPlayer;
             }
+        handleAllPossibleDeaths();
     }
 
     /**
@@ -272,11 +280,11 @@ public class MovementHandler extends InputAdapter {
         playerToBeMoved.resetPosition();
         LayerOperation.drawPlayer(playerLayer, playerToBeMoved);
     }
-    private void removePlayerFromMap(Player playerToBeRemoved){
-        LayerOperation.removePlayer(playerLayer, playerToBeRemoved);
-        players.remove(playerToBeRemoved);
-        System.out.println("Player " + playerToBeRemoved.getName() + " was removed from the game");
-    }
+//    private void removePlayerFromMap(Player playerToBeRemoved){
+//        LayerOperation.removePlayer(playerLayer, playerToBeRemoved);
+//        players.remove(playerToBeRemoved);
+//        System.out.println("Player " + playerToBeRemoved.getName() + " was removed from the game");
+//    }
 
     /**
      * Checks if the player is outside the board dimensions, and if so, resets the players
@@ -286,22 +294,12 @@ public class MovementHandler extends InputAdapter {
      */
     private void handleOutOfBounds(Player recentlyMovedPlayer) {
         if (!board.onBoard(recentlyMovedPlayer)) {
-            if (recentlyMovedPlayer.getLifeTokens()==1){removePlayerFromMap(recentlyMovedPlayer);}
-            else {
-                moveToBackup(recentlyMovedPlayer);
-                recentlyMovedPlayer.reduceLifeTokens();
-                System.out.println(recentlyMovedPlayer.getLifeTokens());
-            }
+            recentlyMovedPlayer.destroy();
         }
     }
-    private void handleVoid(Player recentlyMovedPlayer){
+    private void handleVoidVisitation(Player recentlyMovedPlayer){
         if (voidHandler.isOnVoid(recentlyMovedPlayer)){
-            if (recentlyMovedPlayer.getLifeTokens()==1){ removePlayerFromMap(recentlyMovedPlayer);}
-            else {
-                moveToBackup(recentlyMovedPlayer);
-                recentlyMovedPlayer.reduceLifeTokens();
-                System.out.println(recentlyMovedPlayer.getLifeTokens());
-            }
+            recentlyMovedPlayer.destroy();
         }
     }
     /**

@@ -15,6 +15,8 @@ import java.util.List;
 
 public class MainGame {
 
+    public static final int MAX_DAMAGE_TOKENS_LIMIT = 10;    // a player should not be able to receive more damage tokens
+
     private GameBoard board;
     private MovementHandler movementHandler;
     private List<Player> players;
@@ -103,6 +105,16 @@ public class MainGame {
         for (Player player : players){
             player.selectFiveCards();
         }
+    }
+
+    public boolean hasLost(Player player) {
+        return player.isDead() && player.isOutOfLifeTokes();
+    }
+
+    public void removePlayer(Player toBeRemoved) {
+        players.remove(toBeRemoved);                                                        // remove logically
+        LayerOperation.removePlayer(board.getLayer(MapLayer.PLAYER_LAYER), toBeRemoved);    // remove graphically
+        System.out.println(toBeRemoved.getName() + " lost and was removed from the game.");
     }
 
 }

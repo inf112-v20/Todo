@@ -49,6 +49,10 @@ public class LaserPositions {
         handleCrossedLasers();
     }
 
+    public void resetHitPlayers() {
+        this.hitPlayers.clear();
+    }
+
     public Set<Vector2> getAllVerticalLaserPositions() {
         return affectedVerticals;
     }
