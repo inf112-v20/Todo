@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="10" height="10" tilewidth="300" tileheight="300" infinite="0" nextlayerid="10" nextobjectid="1">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="300" tileheight="300" nextobjectid="1">
  <tileset firstgid="1" source="../tiles/testmaptiles.tsx"/>
- <layer id="1" name="Base" width="10" height="10">
+ <layer name="Base" width="10" height="10">
   <data encoding="csv">
 5,5,5,5,5,5,5,5,5,5,
 5,5,5,5,5,5,5,5,5,5,
@@ -15,7 +15,7 @@
 5,5,5,5,5,5,5,5,5,5
 </data>
  </layer>
- <layer id="2" name="Conveyor" width="10" height="10">
+ <layer name="Conveyor" width="10" height="10">
   <data encoding="csv">
 0,50,0,0,0,0,0,0,49,0,
 0,59,60,51,35,36,33,34,0,13,
@@ -29,7 +29,7 @@
 0,0,13,0,0,13,0,0,27,28
 </data>
  </layer>
- <layer id="3" name="Spawn" width="10" height="10">
+ <layer name="Spawn" width="10" height="10">
   <data encoding="csv">
 0,0,0,0,121,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,
@@ -43,7 +43,7 @@
 0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="4" name="Collidable" width="10" height="10">
+ <layer name="Collidable" width="10" height="10">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,
@@ -57,7 +57,7 @@
 0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="9" name="Player" width="10" height="10">
+ <layer name="Player" width="10" height="10">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,
@@ -71,7 +71,7 @@
 0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="5" name="Activatable" width="10" height="10">
+ <layer name="Activatable" width="10" height="10">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,
@@ -85,7 +85,7 @@
 0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="6" name="Void" width="10" height="10">
+ <layer name="Void" width="10" height="10">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,
@@ -99,7 +99,7 @@
 0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="7" name="Backup" width="10" height="10">
+ <layer name="Backup" width="10" height="10">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,
