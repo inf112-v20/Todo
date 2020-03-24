@@ -115,7 +115,7 @@ public class MovementHandler extends InputAdapter {
                 phase = phase % 5;
                 break;
             case Input.Keys.T:
-                roundHandler.conveyorMove();
+                roundHandler.runConveyors();
                 roundHandler.gearsRotate();
                 roundHandler.wrenchesRepair();
                 break;
