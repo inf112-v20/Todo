@@ -48,7 +48,7 @@ public class MovementHandler extends InputAdapter {
         this.playerLayer = board.getLayer(PLAYER_LAYER);
         this.players = players;
         this.collisionHandler = new CollisionHandler(board, players);
-        this.spawnHandler = new SpawnHandler(board);
+        this.spawnHandler = new SpawnHandler(board, null);
         this.flagHandler = new FlagHandler(board);
         this.voidHandler = new VoidHandler(board);
         this.laserHandler = new LaserHandler(board, players);

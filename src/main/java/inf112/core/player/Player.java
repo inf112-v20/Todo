@@ -100,6 +100,8 @@ public class Player {
 
     public Vector2 getPositionCopy() { return position.cpy(); }
 
+    public boolean hasPosition(Vector2 position) { return this.position.equals(position); }
+
     public Direction getDirection() { return direction; }
 
     public void setDirection(Direction direction) { this.direction = direction; }
@@ -109,6 +111,8 @@ public class Player {
     public void setBackup(int xPos, int yPos) { this.backup = new PlayerBackup(xPos, yPos); }
 
     public void setBackupHere() { setBackup((int) position.x, (int) position.y);}
+
+    public Vector2 getBackupCopy() { return backup.getPositionCopy(); }
 
     public int getFlagsVisited() { return flagsVisited; }
 

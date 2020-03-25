@@ -92,6 +92,14 @@ public class MainGame {
         throw new IllegalArgumentException("No player with the given id exists");
     }
 
+    public Player getPlayerById(int id) {
+        for (Player player : players)
+            if (player.getId() == id) {
+                return player;
+            }
+        throw new IllegalArgumentException("No player with the given id exists");
+    }
+
     public void dispose() {
         board.dispose();
         playerSpriteSheet.dispose();
