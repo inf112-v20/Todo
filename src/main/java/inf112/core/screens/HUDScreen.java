@@ -27,8 +27,8 @@ public class HUDScreen {
     public HUDScreen(GameScreen gameScreen){
         this.gameScreen = gameScreen;
         this.stage = new Stage();
-//        this.width = 500;
     }
+
 
     protected void setMovementHandler(MovementHandler movementHandler){
         this.movementHandler = movementHandler;
