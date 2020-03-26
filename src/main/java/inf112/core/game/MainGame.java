@@ -26,7 +26,7 @@ public class MainGame {
 
     public MainGame(MapNames mapNames) {
         this.players = new ArrayList<>();
-        this.board = new GameBoard(mapNames);
+        this.board = new GameBoard(mapNames, players);
         this.roundHandler = new RoundHandler(this, players);
         this.movementHandler = new MovementHandler(this, players);
         playerSpriteSheet = new Texture("img/Player_Spritesheet.png");

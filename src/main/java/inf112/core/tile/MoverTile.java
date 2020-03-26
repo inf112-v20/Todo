@@ -44,6 +44,12 @@ public interface MoverTile extends ITile{
     public void rotate(Player player);
 
     /**
+     * Returns the Vector2 position a player would be moved to by moveConveyor
+     * @return next Vector2 position
+     */
+    public Vector2 nextPosition();
+
+    /**
      * Function that moves a player standing on a conveyorTile
      * @param player
      * @param movementHandler

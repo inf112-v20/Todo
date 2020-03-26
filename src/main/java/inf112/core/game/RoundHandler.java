@@ -1,5 +1,6 @@
 package inf112.core.game;
 
+import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Direction;
@@ -7,6 +8,8 @@ import inf112.core.player.Player;
 import inf112.core.tile.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Hashtable;
 import java.util.List;
 
 public class RoundHandler {
@@ -30,27 +33,48 @@ public class RoundHandler {
      */
     public void runConveyors(){
         //only conveyors with players on them need to move
-        List<Player> playersOnJunction = new ArrayList<>();
-        List<Player> playersOnConveyor = new ArrayList<>();
+        Hashtable<Vector2, Player> queuedMoves = new Hashtable<>();
         for(Player player : players) {
-            if(isOnJunction(player))
-                playersOnJunction.add(player);
-            else if(isOnConveyor(player))
-                playersOnConveyor.add(player);
+            if(isOnConveyor(player)){
+                queueMove(queuedMoves, player);
+            }
         }
-        //JunctionTiles should move first
-        conveyorMove(playersOnJunction);
-        conveyorMove(playersOnConveyor);
+        conveyorMove(Collections.list(queuedMoves.elements()));
+    }
+
+    //This is to ensure that no two players are pushed the same tile
+    private void queueMove(Hashtable<Vector2, Player> queuedMoves, Player player) {
+        MoverTile conveyor = (MoverTile) board.getConveyors().get(player.getPositionCopy());
+        Vector2 nextPos =  conveyor.nextPosition();
+        for(Vector2 move : queuedMoves.keySet()) {
+            if(move.equals(nextPos)) {
+                queuedMoves.remove(move);
+                return;
+            }
+        }
+        queuedMoves.put(nextPos, player);
     }
 
     private void conveyorMove(List<Player> players) {
-        for(Player player : players) {
-            MovementHandler movementHandler = game.getMovementHandler();
-            MoverTile conveyor = (MoverTile) board.getConveyors().get(player.getPositionCopy());
-            conveyor.moveConveyor(player, movementHandler);
-            MoverTile next = (MoverTile) board.getConveyors().get(player.getPositionCopy());
-            if (next != null)
-                next.rotate(player);
+        int count = 0;
+        //Limits the while loop to 8 repetitions.
+        //This is a very crude fix for certain edge cases
+        //And should be fixed.
+        while(!players.isEmpty() && count < 8) {
+            List<Player> moved = new ArrayList<>();
+            for (Player player : players) {
+                MovementHandler movementHandler = game.getMovementHandler();
+                MoverTile conveyor = (MoverTile) board.getConveyors().get(player.getPositionCopy());
+                if(board.playerOnLoc(conveyor.nextPosition()))
+                    continue;
+                conveyor.moveConveyor(player, movementHandler);
+                MoverTile next = (MoverTile) board.getConveyors().get(player.getPositionCopy());
+                if (next != null)
+                    next.rotate(player);
+                moved.add(player);
+            }
+            players.removeAll(moved);
+            count++;
         }
     }
 
@@ -66,10 +90,6 @@ public class RoundHandler {
 
     private boolean isOnConveyor(Player player) {
         return board.getConveyors().get(player.getPositionCopy()) != null;
-    }
-    private boolean isOnJunction(Player player) {
-        MoverTile tile = (MoverTile) board.getConveyors().get(player.getPositionCopy());
-        return tile != null && tile instanceof JunctionTile;
     }
 
     public void gearsRotate(){

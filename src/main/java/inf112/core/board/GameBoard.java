@@ -11,23 +11,30 @@ import inf112.core.player.Player;
 import inf112.core.tile.Attributes;
 import inf112.core.tile.ITile;
 import inf112.core.tile.TileId;
+import inf112.core.util.VectorMovement;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static inf112.core.board.MapLayer.*;
 
 public class GameBoard extends LayeredBoard {
 
-    Map<Vector2, ITile> collidablesMap, spawnsMap, flagsMap, voidMap, conveyorMap, laserCannonMap, gearMap, wrenchMap, pusherMap;
+    Map<Vector2, ITile> collidablesMap, spawnsMap, flagsMap, voidMap, conveyorMap, laserCannonMap, gearMap, wrenchMap, pusherMap, playerMap;
     MapProperties properties;
+    List<Player> players;
 
     public GameBoard() {
-        this(MapNames.TESTING_MAP);
+        this(MapNames.TESTING_MAP, new ArrayList<>());
     }
 
-    public GameBoard(MapNames mapName) {
+    public GameBoard(List<Player> players) {this(MapNames.TESTING_MAP, players);}
+
+    public GameBoard(MapNames mapName, List<Player> players) {
         makeBoard(mapName);
+        this.players = players;
         this.collidablesMap = super.mapCollidables();
         this.spawnsMap = super.mapSpawns();
         this.flagsMap = super.mapFlags();
@@ -35,6 +42,7 @@ public class GameBoard extends LayeredBoard {
         this.conveyorMap = super.mapConveyors();
         this.gearMap = super.mapGear();
         this.wrenchMap = super.mapWrench();
+        this.playerMap = super.mapPlayers();
 
         this.laserCannonMap = this.filterOnAttribute(collidablesMap, Attributes.SHOOTS_LASER);
 
@@ -93,6 +101,14 @@ public class GameBoard extends LayeredBoard {
 
     public int getTileHeightInPixels() {
         return properties.get("tileheight", Integer.class);
+    }
+
+    public Boolean playerOnLoc(Vector2 position) {
+        for(Player player : players) {
+            if (player.getPositionCopy().equals(position))
+                return true;
+        }
+        return false;
     }
 
     public boolean onBoard(Player player){
