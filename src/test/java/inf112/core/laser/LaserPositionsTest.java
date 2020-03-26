@@ -32,8 +32,8 @@ public class LaserPositionsTest {
         shootingPlayer = new Player(6, 0);
         hitPlayer = new Player(6, 4);
 
-        shootingPlayer.setDirection(Direction.NORTH);
-        hitPlayer.setDirection(Direction.WEST);
+        shootingPlayer.rotateTo(Direction.NORTH);
+        hitPlayer.rotateTo(Direction.WEST);
 
         players = new ArrayList<>();
         players.add(shootingPlayer);

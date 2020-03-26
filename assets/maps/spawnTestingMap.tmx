@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="5" height="5" tilewidth="300" tileheight="300" infinite="0" nextlayerid="9" nextobjectid="1">
+ <tileset firstgid="1" source="../tiles/testmaptiles.tsx"/>
+ <layer id="1" name="Base" width="5" height="5">
+  <data encoding="csv">
+5,5,5,5,5,
+5,5,5,5,5,
+5,5,5,5,5,
+5,5,5,5,5,
+5,5,5,5,5
+</data>
+ </layer>
+ <layer id="3" name="Conveyor" width="5" height="5">
+  <data encoding="csv">
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0
+</data>
+ </layer>
+ <layer id="4" name="Spawn" width="5" height="5">
+  <data encoding="csv">
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+121,0,0,0,122
+</data>
+ </layer>
+ <layer id="7" name="Void" width="5" height="5">
+  <data encoding="csv">
+0,0,0,0,0,
+0,91,0,0,0,
+0,0,0,118,0,
+0,0,0,110,0,
+0,0,0,0,0
+</data>
+ </layer>
+ <layer id="5" name="Flag" width="5" height="5">
+  <data encoding="csv">
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,55,0,0,
+0,0,0,0,0,
+0,0,0,0,0
+</data>
+ </layer>
+ <layer id="6" name="Collidable" width="5" height="5">
+  <data encoding="csv">
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0
+</data>
+ </layer>
+ <layer id="2" name="Player" width="5" height="5">
+  <data encoding="csv">
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0
+</data>
+ </layer>
+</map>

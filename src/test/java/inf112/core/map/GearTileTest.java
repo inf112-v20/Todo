@@ -37,7 +37,7 @@ public class GearTileTest {
     @Test
     public void RightGearShouldRotateplayerRight(){
         movementHandler.moveToPos(testPlayer, RIGHT_GEAR);
-        testPlayer.setDirection(Direction.NORTH);
+        testPlayer.rotateTo(Direction.NORTH);
         roundHandler.gearsRotate();
         assertEquals(Direction.EAST, testPlayer.getDirection());
     }
@@ -45,7 +45,7 @@ public class GearTileTest {
     @Test
     public void  LeftGearShouldRotateplayerRight(){
         movementHandler.moveToPos(testPlayer, LEFT_GEAR);
-        testPlayer.setDirection(Direction.NORTH);
+        testPlayer.rotateTo(Direction.NORTH);
         roundHandler.gearsRotate();
         assertEquals(Direction.WEST, testPlayer.getDirection());
     }

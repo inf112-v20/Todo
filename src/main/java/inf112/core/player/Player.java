@@ -8,6 +8,7 @@ import inf112.core.game.MainGame;
 import inf112.core.programcards.ProgramCard;
 import inf112.core.tile.Rotation;
 import inf112.core.util.VectorMovement;
+import inf112.desktop.Main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,8 +81,8 @@ public class Player {
     public int getLifeTokens() { return lifeTokens; }
 
     public void addDamageTokens(int amount) {
-        if (damageTokens >= 10) return;
-        else damageTokens += amount;
+        this.damageTokens += amount;
+        this.damageTokens = Math.min(damageTokens, MainGame.MAX_DAMAGE_TOKENS_LIMIT);
     }
 
     public void removeDamageTokens(int amount) {
@@ -107,15 +108,17 @@ public class Player {
 
     public Vector2 getPositionCopy() { return position.cpy(); }
 
-    public Direction getDirection() { return direction; }
+    public boolean hasPosition(Vector2 position) { return this.position.equals(position); }
 
-    public void setDirection(Direction direction) { this.direction = direction; }
+    public Direction getDirection() { return direction; }
 
     public void resetPosition() { this.position.set(backup.getX(), backup.getY()); }
 
     public void setBackup(int xPos, int yPos) { this.backup = new PlayerBackup(xPos, yPos); }
 
     public void setBackupHere() { setBackup((int) position.x, (int) position.y);}
+
+    public Vector2 getBackupCopy() { return backup.getPositionCopy(); }
 
     public int getFlagsVisited() { return flagsVisited; }
 
@@ -153,8 +156,7 @@ public class Player {
      * of current direction.
      */
     public void rotateLeft() {
-        this.direction = direction.rotateLeft();
-        this.cell.setRotation(direction.getCellRotation());
+        rotateTo(direction.rotateLeft());
     }
 
 
@@ -163,13 +165,18 @@ public class Player {
      * of current direction.
      */
     public void rotateRight() {
-        this.direction = direction.rotateRight();
+        rotateTo(direction.rotateRight());
+    }
+
+    public void rotateTo(Direction direction) {
+        this.direction = direction;
         this.cell.setRotation(direction.getCellRotation());
     }
 
     public void rotate(Rotation rotation) {
-            this.direction = rotation.rotate(direction);
-        this.cell.setRotation(direction.getCellRotation());
+//        this.direction = rotation.rotate(direction);
+//        this.cell.setRotation(direction.getCellRotation());
+        rotateTo(rotation.rotate(direction));
     }
 
     public void addToRegister(ProgramCard card){

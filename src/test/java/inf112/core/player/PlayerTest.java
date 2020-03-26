@@ -16,56 +16,56 @@ public class PlayerTest {
 
     @Test
     public void rotateLeftFromNorthShouldReturnWest() {
-        testPlayer.setDirection(NORTH);
+        testPlayer.rotateTo(NORTH);
         testPlayer.rotateLeft();
         assertEquals(testPlayer.getDirection(), WEST);
     }
 
     @Test
     public void rotateLeftFromWestShouldReturnSouth() {
-        testPlayer.setDirection(WEST);
+        testPlayer.rotateTo(WEST);
         testPlayer.rotateLeft();
         assertEquals(testPlayer.getDirection(), SOUTH);
     }
 
     @Test
     public void rotateLeftFromSouthShouldReturnEast() {
-        testPlayer.setDirection(SOUTH);
+        testPlayer.rotateTo(SOUTH);
         testPlayer.rotateLeft();
         assertEquals(testPlayer.getDirection(), EAST);
     }
 
     @Test
     public void rotateLeftFromEastShouldReturnNorth() {
-        testPlayer.setDirection(EAST);
+        testPlayer.rotateTo(EAST);
         testPlayer.rotateLeft();
         assertEquals(testPlayer.getDirection(), NORTH);
     }
 
     @Test
     public void rotateRightFromNorthShouldReturnEast() {
-        testPlayer.setDirection(NORTH);
+        testPlayer.rotateTo(NORTH);
         testPlayer.rotateRight();
         assertEquals(testPlayer.getDirection(), EAST);
     }
 
     @Test
     public void rotateRightFromEastShouldReturnSouth() {
-        testPlayer.setDirection(EAST);
+        testPlayer.rotateTo(EAST);
         testPlayer.rotateRight();
         assertEquals(testPlayer.getDirection(), SOUTH);
     }
 
     @Test
     public void rotateRightFromSouthShouldReturnWest() {
-        testPlayer.setDirection(SOUTH);
+        testPlayer.rotateTo(SOUTH);
         testPlayer.rotateRight();
         assertEquals(testPlayer.getDirection(), WEST);
     }
 
     @Test
     public void rotateRightFromWestShouldReturnNorth() {
-        testPlayer.setDirection(WEST);
+        testPlayer.rotateTo(WEST);
         testPlayer.rotateRight();
         assertEquals(testPlayer.getDirection(), NORTH);
     }
