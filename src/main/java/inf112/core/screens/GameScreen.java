@@ -38,7 +38,7 @@ public class GameScreen implements Screen {
 
         //HUDoverlay screen
         hudScreen.setMovementHandler(game.getMovementHandler());
-        //hudScreen.createButtons();
+        //hudScreen.createButtons();    For manual testing purposes only atm
         stage = hudScreen.getStage();
 
     }
