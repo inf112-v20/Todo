@@ -108,8 +108,6 @@ public class Player {
 
     public Direction getDirection() { return direction; }
 
-    public void setDirection(Direction direction) { this.direction = direction; }
-
     public void resetPosition() { this.position.set(backup.getX(), backup.getY()); }
 
     public void setBackup(int xPos, int yPos) { this.backup = new PlayerBackup(xPos, yPos); }
@@ -154,8 +152,7 @@ public class Player {
      * of current direction.
      */
     public void rotateLeft() {
-        this.direction = direction.rotateLeft();
-        this.cell.setRotation(direction.getCellRotation());
+        rotateTo(direction.rotateLeft());
     }
 
 
@@ -164,13 +161,18 @@ public class Player {
      * of current direction.
      */
     public void rotateRight() {
-        this.direction = direction.rotateRight();
+        rotateTo(direction.rotateRight());
+    }
+
+    public void rotateTo(Direction direction) {
+        this.direction = direction;
         this.cell.setRotation(direction.getCellRotation());
     }
 
     public void rotate(Rotation rotation) {
-        this.direction = rotation.rotate(direction);
-        this.cell.setRotation(direction.getCellRotation());
+//        this.direction = rotation.rotate(direction);
+//        this.cell.setRotation(direction.getCellRotation());
+        rotateTo(rotation.rotate(direction));
     }
 
     public Deck getDeck() { return deck; }

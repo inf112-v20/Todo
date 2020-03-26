@@ -71,7 +71,7 @@ public class SpawnHandlerTest {
         players.add(player1);
         players.add(player2);
 
-        spawnHandler = new SpawnHandler(game.getBoard());
+        spawnHandler = new SpawnHandler(game);
     }
 
     @Test

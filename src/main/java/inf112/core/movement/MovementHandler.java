@@ -41,14 +41,14 @@ public class MovementHandler extends InputAdapter {
     private RoundHandler roundHandler;
     private LaserHandler laserHandler;
 
-    public MovementHandler(MainGame game) {
-        this.game = game;
-        this.board = game.getBoard();
-        this.roundHandler = game.getRoundHandler();
+    public MovementHandler(MainGame mainGame) {
+        this.game = mainGame;
+        this.board = mainGame.getBoard();
+        this.roundHandler = mainGame.getRoundHandler();
         this.playerLayer = board.getLayer(PLAYER_LAYER);
-        this.players = game.getPlayers();
+        this.players = mainGame.getPlayers();
         this.collisionHandler = new CollisionHandler(board, players);
-        this.spawnHandler = new SpawnHandler(board);
+        this.spawnHandler = new SpawnHandler(game);
         this.flagHandler = new FlagHandler(board);
         this.voidHandler = new VoidHandler(board);
         this.laserHandler = new LaserHandler(board, players);
@@ -256,7 +256,7 @@ public class MovementHandler extends InputAdapter {
 
     /**
      * Moves the given player to the given vector position
-     * with no regard to the players surroundings. To be used with testing.
+     * with no regard to the players surroundings. Use with great care.
      *
      * @param playerToBeMoved
      * @param position
@@ -273,9 +273,7 @@ public class MovementHandler extends InputAdapter {
      * @param playerToBeMoved
      */
     private void moveToBackup(Player playerToBeMoved) {
-        LayerOperation.removePlayer(playerLayer, playerToBeMoved);
-        playerToBeMoved.resetPosition();
-        LayerOperation.drawPlayer(playerLayer, playerToBeMoved);
+        spawnHandler.initSpawning(playerToBeMoved);
     }
 
     /**
@@ -319,9 +317,12 @@ public class MovementHandler extends InputAdapter {
     public void moveAllToSpawn() {
         for (Player player : players) {
             // first set all player's backup position to their associated spawn point
-            Vector2 spawnPosition = spawnHandler.getSpawnPosition(player);
+            Vector2 spawnPosition = spawnHandler.getInitialSpawnPosition(player);
             player.setBackup((int) spawnPosition.x, (int) spawnPosition.y);
-            moveToBackup(player);
+
+            LayerOperation.removePlayer(playerLayer, player);
+            player.resetPosition();
+            LayerOperation.drawPlayer(playerLayer, player);
         }
     }
 
