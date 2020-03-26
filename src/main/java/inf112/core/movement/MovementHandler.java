@@ -31,7 +31,6 @@ import static inf112.core.board.MapLayer.*;
  * @author eskil
  */
 public class MovementHandler extends InputAdapter {
-    private int phase = 0;
     private GameBoard board;
     private List<Player> players;
     private Player activePlayer;                 // movement will affect this player. Should be changed actively
@@ -106,11 +105,6 @@ public class MovementHandler extends InputAdapter {
                 break;
             case Input.Keys.SPACE:
                 moveToBackup(activePlayer);
-                break;
-            case Input.Keys.M:
-            //    cardMovement(activePlayer);
-                phase++;
-                phase = phase % 5;
                 break;
             case Input.Keys.T:
                 roundHandler.conveyorMove();

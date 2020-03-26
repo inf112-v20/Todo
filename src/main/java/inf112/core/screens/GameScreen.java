@@ -33,12 +33,12 @@ public class GameScreen implements Screen {
         game.createPlayers(3);
         game.setActivePlayerById(1);
 
-
-        Gdx.input.setInputProcessor(game.getMovementHandler());
-
         hudScreen.setMovementHandler(game.getMovementHandler());
         hudScreen.createButtons();
-        stage = hudScreen.getStage();       // HUD
+        Gdx.input.setInputProcessor(game.getMovementHandler());
+
+        //HUDoverlay screen
+        stage = hudScreen.getStage();
 
     }
 

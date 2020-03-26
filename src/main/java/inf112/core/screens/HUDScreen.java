@@ -34,7 +34,7 @@ public class HUDScreen {
         this.movementHandler = movementHandler;
     }
 
-    public void createButtons(){
+    public void createButtons(){   // Temp solution -- Proof of concept
         int x = 0;
         int y = 0;
         int index = 0;
@@ -44,8 +44,7 @@ public class HUDScreen {
             x += 160;
             index+=1;
         }
-        Gdx.input.setInputProcessor(stage);
-
+        Gdx.input.setInputProcessor(stage);    // Overrides the inputprocessor that is set elsewhere
     }
 
     public Stage getStage() {
