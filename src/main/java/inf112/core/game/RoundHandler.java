@@ -2,6 +2,7 @@ package inf112.core.game;
 
 import inf112.core.board.GameBoard;
 import inf112.core.movement.MovementHandler;
+import inf112.core.player.Direction;
 import inf112.core.player.Player;
 import inf112.core.tile.*;
 
@@ -103,5 +104,29 @@ public class RoundHandler {
             }
         }
     }
+    public void pushPlayerInDirection() {
+        for (Player player : players) {
+            MovementHandler movementHandler = game.getMovementHandler();
+            if (isOnEvenPusher(player)) { // TODO lagre hvilket register vi er på, så spillere bare blir pushet på register 2 og 4
+                PusherTile pusherTile = (PusherTile) board.getPushers().get(player.getPositionCopy());
+                Direction direction = pusherTile.getDirection();
+                movementHandler.attemptToMove(player, direction);
+            } else if (isOnOddPusher(player)) {
+                PusherTile pusherTile = (PusherTile) board.getPushers().get(player.getPositionCopy());
+                Direction direction = pusherTile.getDirection();
+                movementHandler.attemptToMove(player, direction);
+            }
+        }
+    }
+        public boolean isOnEvenPusher (Player player){
+            return (board.getPushers().get(player.getPositionCopy()) != null &&
+                    board.getPushers().get(player.getPositionCopy()).getTileId().hasAttribute(Attributes.EVEN));
+        }
+
+        public boolean isOnOddPusher (Player player){
+            return (board.getPushers().get(player.getPositionCopy()) != null &&
+                    board.getPushers().get(player.getPositionCopy()).getTileId().hasAttribute(Attributes.ODD));
+        }
+
 
 }

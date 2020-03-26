@@ -8,10 +8,7 @@ import inf112.core.board.GameBoard;
 import inf112.core.game.MainGame;
 import inf112.core.game.RoundHandler;
 import inf112.core.laser.LaserHandler;
-import inf112.core.movement.util.CollisionHandler;
-import inf112.core.movement.util.FlagHandler;
-import inf112.core.movement.util.SpawnHandler;
-import inf112.core.movement.util.VoidHandler;
+import inf112.core.movement.util.*;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
 import inf112.core.programcards.MovementCard;
@@ -39,6 +36,7 @@ public class MovementHandler extends InputAdapter {
     private Player winner;
     private TiledMapTileLayer playerLayer;       // layer in which all player cells are placed (for graphics)
     private CollisionHandler collisionHandler;
+    private PusherHandler pusherHandler;
     private SpawnHandler spawnHandler;
     private FlagHandler flagHandler;
     private VoidHandler voidHandler;
@@ -52,6 +50,7 @@ public class MovementHandler extends InputAdapter {
         this.playerLayer = board.getLayer(PLAYER_LAYER);
         this.players = players;
         this.collisionHandler = new CollisionHandler(board, players);
+        this.pusherHandler = new PusherHandler(board);
         this.spawnHandler = new SpawnHandler(board);
         this.flagHandler = new FlagHandler(board);
         this.voidHandler = new VoidHandler(board);
@@ -118,6 +117,7 @@ public class MovementHandler extends InputAdapter {
                 roundHandler.runConveyors();
                 roundHandler.gearsRotate();
                 roundHandler.wrenchesRepair();
+                roundHandler.pushPlayerInDirection();
                 break;
             case Input.Keys.L:
                 laserHandler.updateLaserPositions();
@@ -132,6 +132,10 @@ public class MovementHandler extends InputAdapter {
                 return false;
         }
         game.removeLosers();    // should not really be called upon every move
+        /*if (phase % 2 == 0 && pusherHandler.isOnEvenPusher(activePlayer)){
+            attemptToMove(activePlayer, Direction.WEST);
+        }
+        else if(phase % 2 != 0 && pusherHandler.isOnOddPusher(activePlayer)){}*/
         return true;
     }
 
@@ -302,6 +306,14 @@ public class MovementHandler extends InputAdapter {
     private void handleVoidVisitation(Player recentlyMovedPlayer){
         if (voidHandler.isOnVoid(recentlyMovedPlayer)){
             recentlyMovedPlayer.destroy();
+        }
+    }
+    private void handlePusher(Player recentlyMovesPlayer){
+        if (pusherHandler.isOnEvenPusher(recentlyMovesPlayer)){
+            attemptToMove(recentlyMovesPlayer, Direction.EAST);
+        }
+        if (pusherHandler.isOnOddPusher(recentlyMovesPlayer)){
+            attemptToMove(recentlyMovesPlayer, Direction.EAST);
         }
     }
     /**

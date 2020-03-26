@@ -30,6 +30,12 @@ public enum Attributes {
      */
     COLLIDABLE,
     /**
+     * Tiles with pusher will push the player
+     */
+    PUSHER,
+    ODD,
+    EVEN,
+    /**
      * Tiles with VOID attribute will cause a player-robot to fall if stepped on
      */
     VOID,

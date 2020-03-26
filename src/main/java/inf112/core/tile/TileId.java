@@ -5,6 +5,7 @@ import inf112.core.player.Direction;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.security.PublicKey;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,21 +36,21 @@ public enum TileId {
 
     /**
      * Pusher_wallTiles. They are wall-tiles but with a pusher facing the opposite direction of the wall.
-     * Odd pushers will push the player in their direction on rounds 1, 3, and 5.
+     * Odd pushers will push the player in their direction on registers 1, 3, and 5.
      */
-    PUSHER_WALL_ODD_NORTH(8, WallTile.class, COLLIDABLE, NORTH),
-    PUSHER_WALL_ODD_SOUTH(2, WallTile.class, COLLIDABLE, SOUTH),
-    PUSHER_WALL_ODD_EAST(9, WallTile.class, COLLIDABLE, EAST),
-    PUSHER_WALL_ODD_WEST(11, WallTile.class, COLLIDABLE, WEST),
+    PUSHER_WALL_ODD_NORTH(8, PusherTile.class, COLLIDABLE, PUSHER, ODD, NORTH),
+    PUSHER_WALL_ODD_SOUTH(2, PusherTile.class, COLLIDABLE, PUSHER, ODD, SOUTH),
+    PUSHER_WALL_ODD_EAST(9, PusherTile.class, COLLIDABLE, PUSHER, ODD, EAST),
+    PUSHER_WALL_ODD_WEST(11, PusherTile.class, COLLIDABLE, PUSHER, ODD, WEST),
 
     /**
      * Pusher_wallTiles. They are wallTiles but with a pusher facing the opposite direction of the wall.
-     * Even pushers will push the player in their direction on rounds 2 and 4.
+     * Even pushers will push the player in their direction on registers 2 and 4.
      */
-    PUSHER_WALL_EVEN_NORTH(0, WallTile.class, COLLIDABLE, NORTH),
-    PUSHER_WALL_EVEN_SOUTH(10, WallTile.class, COLLIDABLE, SOUTH),
-    PUSHER_WALL_EVEN_EAST(1, WallTile.class, COLLIDABLE, EAST),
-    PUSHER_WALL_EVEN_WEST(3, WallTile.class, COLLIDABLE, WEST),
+    PUSHER_WALL_EVEN_NORTH(0, PusherTile.class, COLLIDABLE, PUSHER, EVEN, NORTH),
+    PUSHER_WALL_EVEN_SOUTH(10, PusherTile.class, COLLIDABLE, PUSHER, EVEN, SOUTH),
+    PUSHER_WALL_EVEN_EAST(1, PusherTile.class, COLLIDABLE, PUSHER, EVEN, EAST),
+    PUSHER_WALL_EVEN_WEST(3, PusherTile.class, COLLIDABLE, PUSHER, EVEN, WEST),
 
     /**
      * Laser_wallTiles. They are wallTiles but with a laser-shooter facing the opposite direction of the wall.
