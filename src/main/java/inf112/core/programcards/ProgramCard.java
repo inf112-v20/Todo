@@ -1,13 +1,15 @@
 package inf112.core.programcards;
 
 
+import com.badlogic.gdx.graphics.Texture;
+
 public abstract class ProgramCard extends Card implements Comparable<ProgramCard>{
     private CardType type;
     private int priority;
     private String name;
 
-    public ProgramCard(CardType type, int priority, String name){
-        super(type, name);
+    public ProgramCard(CardType type, int priority, String name, Texture texture){
+        super(type, name, texture);
         this.priority = priority;
     }
 
@@ -19,13 +21,6 @@ public abstract class ProgramCard extends Card implements Comparable<ProgramCard
     @Override
     public int compareTo(ProgramCard other){
         return priority - other.getPriority();
-//        if (this.getPriority() > other.getPriority()){
-//            return 1;
-//        }
-//        else if (this.getPriority() == other.getPriority()){
-//            return 0;
-//        }
-//        return -1;
     }
 
 }

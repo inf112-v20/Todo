@@ -33,7 +33,6 @@ public class MovementHandler extends InputAdapter {
     private GameBoard board;
     private List<Player> players;
     private Player activePlayer;                 // movement will affect this player. Should be changed actively
-    private Player winner;
     private TiledMapTileLayer playerLayer;       // layer in which all player cells are placed (for graphics)
     private CollisionHandler collisionHandler;
     private PusherHandler pusherHandler;
@@ -43,22 +42,18 @@ public class MovementHandler extends InputAdapter {
     private RoundHandler roundHandler;
     private LaserHandler laserHandler;
 
-    public MovementHandler(MainGame game, List<Player> players) {
-        this.game = game;
-        this.board = game.getBoard();
-        this.roundHandler = game.getRoundHandler();
+    public MovementHandler(MainGame mainGame) {
+        this.game = mainGame;
+        this.board = mainGame.getBoard();
+        this.roundHandler = mainGame.getRoundHandler();
         this.playerLayer = board.getLayer(PLAYER_LAYER);
-        this.players = players;
+        this.players = mainGame.getPlayers();
         this.collisionHandler = new CollisionHandler(board, players);
         this.pusherHandler = new PusherHandler(board);
-        this.spawnHandler = new SpawnHandler(board);
+        this.spawnHandler = new SpawnHandler(game);
         this.flagHandler = new FlagHandler(board);
         this.voidHandler = new VoidHandler(board);
         this.laserHandler = new LaserHandler(board, players);
-    }
-
-    public MovementHandler(MainGame game) {
-        this(game, new ArrayList<>());
     }
 
     public Player getActivePlayer() {
@@ -108,11 +103,6 @@ public class MovementHandler extends InputAdapter {
             case Input.Keys.SPACE:
                 moveToBackup(activePlayer);
                 break;
-            case Input.Keys.M:
-                cardMovement(activePlayer);
-                phase++;
-                phase = phase % 5;
-                break;
             case Input.Keys.T:
                 roundHandler.runConveyors();
                 roundHandler.gearsRotate();
@@ -131,11 +121,8 @@ public class MovementHandler extends InputAdapter {
             default:
                 return false;
         }
-        game.removeLosers();    // should not really be called upon every move
-        /*if (phase % 2 == 0 && pusherHandler.isOnEvenPusher(activePlayer)){
-            attemptToMove(activePlayer, Direction.WEST);
-        }
-        else if(phase % 2 != 0 && pusherHandler.isOnOddPusher(activePlayer)){}*/
+        game.removeLosers();    // unnecessary to call this upon every move
+        game.attemptToAppointWinner();
         return true;
     }
 
@@ -175,32 +162,31 @@ public class MovementHandler extends InputAdapter {
     /**
      *
      */
-    public void cardMovement(Player player){
+
+    public void cardMovement(Player player, int index) {
         if (!contains(player))
             throw new IllegalArgumentException("Unknown player");
 
-        ProgramCard currentCard = player.getSelected().get(phase);
-        if (currentCard instanceof MovementCard){
-            if (((MovementCard) currentCard).isForward()){
-                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++){
-                    attemptToMoveForward(player);
+        ProgramCard currentCard = player.getRegisters().get(index);
+        System.out.println(currentCard.getName());
+        if (currentCard instanceof MovementCard) {
+            if (((MovementCard) currentCard).isForward()) {
+                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++) {
+                    attemptToMoveForward(activePlayer);
+                }
+            } else {
+                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++) {
+                    attemptToMoveBackward(activePlayer);
                 }
             }
-            else{
-                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++){
-                    attemptToMoveBackward(player);
+        } else if (currentCard instanceof RotationCard) {
+            if (((RotationCard) currentCard).isClockwise()) {
+                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++) {
+                    activePlayer.rotateRight();
                 }
-            }
-        }
-        else if (currentCard instanceof RotationCard){
-            if (((RotationCard) currentCard).isClockwise()){
-                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++){
-                    player.rotateRight();
-                }
-            }
-            else {    // counter clockwise
-                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++){
-                    player.rotateLeft();
+            } else {
+                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++) {
+                    activePlayer.rotateLeft();
                 }
             }
         }
@@ -245,11 +231,9 @@ public class MovementHandler extends InputAdapter {
             for (Player affectedPlayer : affectedPlayers) {
                 moveUnchecked(affectedPlayer, direction);
                 affectedPlayer.setPrevDir(direction);
-                handleOutOfBounds(affectedPlayer);           // players outside map is moved to spawn
-                handleVoidVisitation(affectedPlayer);                  // players on a hole is moved to spawn
+                handleOutOfBounds(affectedPlayer);                  // players outside map is moved to spawn
+                handleVoidVisitation(affectedPlayer);               // players on a hole is moved to spawn
                 handleFlagVisitation(affectedPlayer);
-                if (flagHandler.hasVisitedAllFlags(affectedPlayer))
-                    this.winner = affectedPlayer;
             }
         handlePossibleDeaths(affectedPlayers);
     }
@@ -270,7 +254,7 @@ public class MovementHandler extends InputAdapter {
 
     /**
      * Moves the given player to the given vector position
-     * with no regard to the players surroundings. To be used with testing.
+     * with no regard to the players surroundings. Use with great care.
      *
      * @param playerToBeMoved
      * @param position
@@ -287,14 +271,14 @@ public class MovementHandler extends InputAdapter {
      * @param playerToBeMoved
      */
     private void moveToBackup(Player playerToBeMoved) {
-        LayerOperation.removePlayer(playerLayer, playerToBeMoved);
-        playerToBeMoved.resetPosition();
-        LayerOperation.drawPlayer(playerLayer, playerToBeMoved);
+        spawnHandler.initSpawning(playerToBeMoved);
     }
 
     /**
      * Checks if the player is outside the board dimensions, and if so, resets the players
      * position and rotation both logically and graphically.
+     *
+     * //TODO update javadoc
      *
      * @param recentlyMovedPlayer
      */
@@ -303,11 +287,13 @@ public class MovementHandler extends InputAdapter {
             recentlyMovedPlayer.destroy();
         }
     }
+
     private void handleVoidVisitation(Player recentlyMovedPlayer){
         if (voidHandler.isOnVoid(recentlyMovedPlayer)){
             recentlyMovedPlayer.destroy();
         }
     }
+
     private void handlePusher(Player recentlyMovesPlayer){
         if (pusherHandler.isOnEvenPusher(recentlyMovesPlayer)){
             attemptToMove(recentlyMovesPlayer, Direction.EAST);
@@ -337,17 +323,16 @@ public class MovementHandler extends InputAdapter {
     public void moveAllToSpawn() {
         for (Player player : players) {
             // first set all player's backup position to their associated spawn point
-            Vector2 spawnPosition = spawnHandler.getSpawnPosition(player);
+            Vector2 spawnPosition = spawnHandler.getInitialSpawnPosition(player);
             player.setBackup((int) spawnPosition.x, (int) spawnPosition.y);
-            moveToBackup(player);
+
+            LayerOperation.removePlayer(playerLayer, player);
+            player.resetPosition();
+            LayerOperation.drawPlayer(playerLayer, player);
         }
     }
 
-    public boolean hasWon() {
-        return winner != null;
-    }
-
-    public Player getWinner() {
-        return winner;
+    public IFlagWinner getFlagWinnerChecker() {
+        return flagHandler;
     }
 }

@@ -5,33 +5,40 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.core.game.MainGame;
 import inf112.core.player.Player;
 
 
 public class GameScreen implements Screen {
 
-    MainGame game;
+    private MainGame game;
     private IGameStateSwitcher gameStateSwitcher;
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
+    private HUDScreen hudScreen;
+    private Stage stage;
 
     public GameScreen(RoboRally gameStateSwitcher) {
         this.gameStateSwitcher = gameStateSwitcher;
+        this.hudScreen = new HUDScreen(this);
     }
 
     @Override
     public void show() {
-
         game = new MainGame();
-
         mapRenderer = game.getBoard().instantiateMapRenderer();
         camera = game.getBoard().instantiateCamera();
 
-        game.createPlayers(2);
+        game.createPlayers(3);
         game.setActivePlayerById(1);
 
-        Gdx.input.setInputProcessor(game.getMovementHandler());
+        Gdx.input.setInputProcessor(game.getDefaultInputProcessor());
+
+        //HUDoverlay screen
+        hudScreen.setMovementHandler(game.getMovementHandler());
+        //hudScreen.createButtons();    For manual testing purposes only atm
+        stage = hudScreen.getStage();
     }
 
     @Override
@@ -42,7 +49,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void hide() {
-        dispose();         // temporary solution
+        dispose();
     }
 
     @Override
@@ -55,6 +62,7 @@ public class GameScreen implements Screen {
             Player.resetPlayerCount();
             gameStateSwitcher.initGameOver();
         }
+        stage.draw();       // HUD
     }
 
     @Override

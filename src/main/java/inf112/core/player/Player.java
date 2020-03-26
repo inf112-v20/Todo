@@ -8,6 +8,7 @@ import inf112.core.game.MainGame;
 import inf112.core.programcards.ProgramCard;
 import inf112.core.tile.Rotation;
 import inf112.core.util.VectorMovement;
+import inf112.desktop.Main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,7 @@ public class Player {
     private Direction direction;
     private Direction prevDir;
     private PlayerBackup backup;
-    private Deck deck;
-    private List<ProgramCard> selected = new ArrayList<>();
+    private List<ProgramCard> registers;
     private int lifeTokens, damageTokens;
 
 
@@ -63,7 +63,7 @@ public class Player {
         this.position = new Vector2(xPos,yPos);
         this.direction = Direction.NORTH;
         this.backup = new PlayerBackup(xPos, yPos);
-        this.deck = new Deck();
+        this.registers = new ArrayList<>();
         this.lifeTokens = 3;        // A robot can die 3 times before the player has lost
         this.damageTokens = 0;      // Starts off with 0 damage taken
     }
@@ -81,8 +81,8 @@ public class Player {
     public int getLifeTokens() { return lifeTokens; }
 
     public void addDamageTokens(int amount) {
-        if (damageTokens >= 10) return;
-        else damageTokens += amount;
+        this.damageTokens += amount;
+        this.damageTokens = Math.min(damageTokens, MainGame.MAX_DAMAGE_TOKENS_LIMIT);
     }
 
     public void removeDamageTokens(int amount) {
@@ -108,9 +108,9 @@ public class Player {
 
     public Vector2 getPositionCopy() { return position.cpy(); }
 
-    public Direction getDirection() { return direction; }
+    public boolean hasPosition(Vector2 position) { return this.position.equals(position); }
 
-    public void setDirection(Direction direction) { this.direction = direction; }
+    public Direction getDirection() { return direction; }
 
     public void resetPosition() { this.position.set(backup.getX(), backup.getY()); }
 
@@ -118,17 +118,19 @@ public class Player {
 
     public void setBackupHere() { setBackup((int) position.x, (int) position.y);}
 
+    public Vector2 getBackupCopy() { return backup.getPositionCopy(); }
+
     public int getFlagsVisited() { return flagsVisited; }
 
     public void setFlagsVisited(int numOfFlags) { this.flagsVisited = numOfFlags; }
 
-    public void selectFiveCards() { selected.addAll(deck.getFiveCards()); }
-
-    public List<ProgramCard> getSelected(){ return this.selected; }
 
     public boolean isDead() { return damageTokens >= MainGame.MAX_DAMAGE_TOKENS_LIMIT; }
 
     public boolean isOutOfLifeTokes() { return lifeTokens <= 0; }
+    public List<ProgramCard> getRegisters(){
+        return this.registers;
+    }
 
     /**
      * Moves the logical representation of the player one unit in the given direction.
@@ -154,8 +156,7 @@ public class Player {
      * of current direction.
      */
     public void rotateLeft() {
-        this.direction = direction.rotateLeft();
-        this.cell.setRotation(direction.getCellRotation());
+        rotateTo(direction.rotateLeft());
     }
 
 
@@ -164,19 +165,22 @@ public class Player {
      * of current direction.
      */
     public void rotateRight() {
-        this.direction = direction.rotateRight();
+        rotateTo(direction.rotateRight());
+    }
+
+    public void rotateTo(Direction direction) {
+        this.direction = direction;
         this.cell.setRotation(direction.getCellRotation());
     }
 
     public void rotate(Rotation rotation) {
-        this.direction = rotation.rotate(direction);
-        this.cell.setRotation(direction.getCellRotation());
+//        this.direction = rotation.rotate(direction);
+//        this.cell.setRotation(direction.getCellRotation());
+        rotateTo(rotation.rotate(direction));
     }
 
-    public Deck getDeck() { return deck; }
-
-    public void addToDeck(ProgramCard card) {
-        this.getDeck().addCard(card);
+    public void addToRegister(ProgramCard card){
+        this.registers.add(card);
     }
 
 
@@ -201,4 +205,6 @@ public class Player {
     public void setPrevDir(Direction prevDir) {
         this.prevDir = prevDir;
     }
+
+
 }
