@@ -8,6 +8,7 @@ import inf112.core.game.MainGame;
 import inf112.core.programcards.ProgramCard;
 import inf112.core.tile.Rotation;
 import inf112.core.util.VectorMovement;
+import inf112.desktop.Main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +81,10 @@ public class Player {
 
     public int getLifeTokens() { return lifeTokens; }
 
-    public void addDamageTokens(int amount) { this.damageTokens += amount; }
+    public void addDamageTokens(int amount) {
+        this.damageTokens += amount;
+        this.damageTokens = Math.min(damageTokens, MainGame.MAX_DAMAGE_TOKENS_LIMIT);
+    }
 
     public void destroy() { this.damageTokens = MainGame.MAX_DAMAGE_TOKENS_LIMIT; }
 

@@ -1,5 +1,6 @@
 package inf112.core.game;
 
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.core.board.GameBoard;
@@ -28,7 +29,7 @@ public class MainGame {
         this.players = new ArrayList<>();
         this.board = new GameBoard(mapNames);
         this.roundHandler = new RoundHandler(this, players);
-        this.movementHandler = new MovementHandler(this, players);
+        this.movementHandler = new MovementHandler(this);
         playerSpriteSheet = new Texture("img/Player_Spritesheet.png");
         playerSpriteSheetGrid = TextureRegion.split(
                 playerSpriteSheet,
@@ -45,11 +46,15 @@ public class MainGame {
         return board;
     }
 
-    public RoundHandler getRoundHandler() {return roundHandler;}
+    public List<Player> getPlayers() { return players; }
+
+    public RoundHandler getRoundHandler() { return roundHandler; }
 
     public MovementHandler getMovementHandler() {
         return movementHandler;    // this should of course change
     }
+
+    public InputProcessor getDefaultInputProcessor() { return movementHandler; }
 
     public void drawPlayers() {
         for (Player player : players)

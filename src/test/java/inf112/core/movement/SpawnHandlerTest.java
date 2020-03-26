@@ -13,8 +13,7 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class SpawnHandlerTest {
@@ -22,8 +21,8 @@ public class SpawnHandlerTest {
     private MainGame game;
     private Player player1, player2;
     private List<Player> players;
-    private Vector2 flagPos;
-    private List<Vector2> availableAdjPositions;
+    private Vector2 flagPos, cornerPos;
+    private List<Vector2> availableAdjPosFromCentre, availableAdjPosFromCorner;
 
     private SpawnHandler spawnHandler;
 
@@ -34,7 +33,10 @@ public class SpawnHandlerTest {
          * Initial situation is like this:
          *
          * player 1 has already visited the flag and moved away from both the flag and the adjacent positions
+         * pos (0,0)
+         *
          * player 2 has just visited the flag
+         * (pos(2,2)
          *
          * i.e. both has their spawn on the flag
          */
@@ -43,12 +45,17 @@ public class SpawnHandlerTest {
         game = new MainGame(MapNames.SPAWN_TESTING);
         game.createPlayers(2);
         flagPos = new Vector2(2,2);
-        availableAdjPositions = new ArrayList<>();
-        availableAdjPositions.add(new Vector2(1,1));
-        availableAdjPositions.add(new Vector2(1,2));
-        availableAdjPositions.add(new Vector2(2,1));
-        availableAdjPositions.add(new Vector2(2,3));
-        availableAdjPositions.add(new Vector2(3,3));
+        availableAdjPosFromCentre = new ArrayList<>();
+        availableAdjPosFromCentre.add(new Vector2(1,1));
+        availableAdjPosFromCentre.add(new Vector2(1,2));
+        availableAdjPosFromCentre.add(new Vector2(2,1));
+        availableAdjPosFromCentre.add(new Vector2(2,3));
+        availableAdjPosFromCentre.add(new Vector2(3,3));
+
+        cornerPos = new Vector2(0, 4);
+        availableAdjPosFromCorner = new ArrayList<>();
+        availableAdjPosFromCorner.add(new Vector2(0, 3));
+        availableAdjPosFromCorner.add(new Vector2(1, 4));
 
 
         // simulate player 1 has previously visited flag and moved away
@@ -64,7 +71,7 @@ public class SpawnHandlerTest {
         players.add(player1);
         players.add(player2);
 
-        spawnHandler = new SpawnHandler(game.getBoard(), players);
+        spawnHandler = new SpawnHandler(game.getBoard());
     }
 
     @Test
@@ -74,15 +81,37 @@ public class SpawnHandlerTest {
 
     @Test
     public void isBackupAvailableReturnsTrueWhenBackupIsAvailable() {
-        player2.move(availableAdjPositions.get(0));
+        player2.move(availableAdjPosFromCentre.get(0));
         assertTrue(spawnHandler.isBackupAvailable(player1));
     }
 
     @Test
     public void getAvailablePositionsReturnsTheCorrectPositionsWhenNoPlayerIsInTheSurroundingArea() {
         List<Vector2> adjPosFromSpawnHandler = spawnHandler.getAvailableAdjPositions(flagPos);
-        for (Vector2 pos : availableAdjPositions)
+        for (Vector2 pos : availableAdjPosFromCentre)
             assertTrue(adjPosFromSpawnHandler.contains(pos));
+        for (Vector2 pos : adjPosFromSpawnHandler)
+            assertTrue(availableAdjPosFromCentre.contains(pos));
+    }
+
+    @Test
+    public void getAvailablePositionsReturnsTheCorrectPositionsWhenOnePlayerIsInTheSurroundingArea() {
+        player2.move(availableAdjPosFromCentre.get(0));
+        availableAdjPosFromCentre.remove(0);
+        List<Vector2> adjPosFromSpawnHandler = spawnHandler.getAvailableAdjPositions(flagPos);
+        for (Vector2 pos : availableAdjPosFromCentre)
+            assertTrue(adjPosFromSpawnHandler.contains(pos));
+        for (Vector2 pos : adjPosFromSpawnHandler)
+            assertTrue(availableAdjPosFromCentre.contains(pos));
+    }
+
+    @Test
+    public void getAvailablePositionsReturnsTheCorrectPositionsWhenBackupIsAtCornerAndNoPlayerIsInTheSurroundings() {
+        List<Vector2> adjPosFromSpawnHandler = spawnHandler.getAvailableAdjPositions(cornerPos);
+        for (Vector2 pos : availableAdjPosFromCorner)
+            assertTrue(adjPosFromSpawnHandler.contains(pos));
+        for (Vector2 pos : adjPosFromSpawnHandler)
+            assertTrue(availableAdjPosFromCorner.contains(pos));
     }
 
 }

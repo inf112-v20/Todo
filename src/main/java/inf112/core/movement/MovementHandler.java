@@ -41,21 +41,17 @@ public class MovementHandler extends InputAdapter {
     private RoundHandler roundHandler;
     private LaserHandler laserHandler;
 
-    public MovementHandler(MainGame game, List<Player> players) {
+    public MovementHandler(MainGame game) {
         this.game = game;
         this.board = game.getBoard();
         this.roundHandler = game.getRoundHandler();
         this.playerLayer = board.getLayer(PLAYER_LAYER);
-        this.players = players;
+        this.players = game.getPlayers();
         this.collisionHandler = new CollisionHandler(board, players);
-        this.spawnHandler = new SpawnHandler(board, null);
+        this.spawnHandler = new SpawnHandler(board);
         this.flagHandler = new FlagHandler(board);
         this.voidHandler = new VoidHandler(board);
         this.laserHandler = new LaserHandler(board, players);
-    }
-
-    public MovementHandler(MainGame game) {
-        this(game, new ArrayList<>());
     }
 
     public Player getActivePlayer() {
@@ -286,6 +282,8 @@ public class MovementHandler extends InputAdapter {
      * Checks if the player is outside the board dimensions, and if so, resets the players
      * position and rotation both logically and graphically.
      *
+     * //TODO update javadoc
+     *
      * @param recentlyMovedPlayer
      */
     private void handleOutOfBounds(Player recentlyMovedPlayer) {
@@ -293,11 +291,13 @@ public class MovementHandler extends InputAdapter {
             recentlyMovedPlayer.destroy();
         }
     }
+
     private void handleVoidVisitation(Player recentlyMovedPlayer){
         if (voidHandler.isOnVoid(recentlyMovedPlayer)){
             recentlyMovedPlayer.destroy();
         }
     }
+
     /**
      * Checks if the player is on the correct flag, and if so, increases his/hers flag count
      *
