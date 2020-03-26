@@ -8,7 +8,8 @@ public enum MapNames {
     CONVEYOR_TESTING_MAP("maps/conveyorTestingMap.tmx"),
     LASER_TESTING_MAP("maps/laserTestingMap.tmx"),
     LASER_TESTING_MAP2("maps/laserTestingMap2.tmx"),
-    WRENCH_AND_GEARS_TESTING_MAP("maps/wrenchAndGearsTestingMap.tmx")
+    WRENCH_AND_GEARS_TESTING_MAP("maps/wrenchAndGearsTestingMap.tmx"),
+    GEAR_TEST_MAP("maps/gearTestMap.tmx")
     ;
 
     private String name;

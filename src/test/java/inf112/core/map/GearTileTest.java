@@ -21,12 +21,12 @@ public class GearTileTest {
     RoundHandler roundHandler;
     Player testPlayer;
 
-    static final Vector2 RIGHT_GEAR = new Vector2(3,4);
-    static final Vector2 LEFT_GEAR = new Vector2(4,4);
+    static final Vector2 RIGHT_GEAR = new Vector2(4,4);
+    static final Vector2 LEFT_GEAR = new Vector2(3,4);
 
     @Before
     public void setup() {
-        game = new MainGame(MapNames.WRENCH_AND_GEARS_TESTING_MAP);
+        game = new MainGame(MapNames.GEAR_TEST_MAP);
         movementHandler = game.getMovementHandler();
         roundHandler = game.getRoundHandler();
         testPlayer = new Player("testPlayer");
@@ -39,7 +39,7 @@ public class GearTileTest {
         movementHandler.moveToPos(testPlayer, RIGHT_GEAR);
         testPlayer.setDirection(Direction.NORTH);
         roundHandler.gearsRotate();
-        assertEquals(Direction.WEST, testPlayer.getDirection());
+        assertEquals(Direction.EAST, testPlayer.getDirection());
     }
 
     @Test
@@ -47,6 +47,6 @@ public class GearTileTest {
         movementHandler.moveToPos(testPlayer, LEFT_GEAR);
         testPlayer.setDirection(Direction.NORTH);
         roundHandler.gearsRotate();
-        assertEquals(Direction.EAST, testPlayer.getDirection());
+        assertEquals(Direction.WEST, testPlayer.getDirection());
     }
 }
