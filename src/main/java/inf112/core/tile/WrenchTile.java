@@ -1,11 +1,11 @@
-
 package inf112.core.tile;
 
 import com.badlogic.gdx.math.Vector2;
+import org.w3c.dom.Attr;
 
 import java.util.List;
 
-public class GearTile extends AbstractTile{
+public class WrenchTile extends AbstractTile {
     /**
      * A base for all Tiles that implements the base necessities for a fully functioning Tile-object
      *
@@ -13,9 +13,9 @@ public class GearTile extends AbstractTile{
      * @param tileId      TileId representing Tile
      */
 
-    private Rotation rotation;
+    private boolean single;
 
-    public GearTile(Vector2 coordinates, TileId tileId) {
+    public WrenchTile(Vector2 coordinates, TileId tileId) {
         super(coordinates, tileId);
         readAttributes(super.getTileId().getAttributes());
     }
@@ -23,16 +23,15 @@ public class GearTile extends AbstractTile{
     private void readAttributes(List<Attributes> attributes){
         for (Attributes att : attributes){
             switch (att) {
-                case RIGHT:
-                    rotation = Rotation.RIGHT;
+                case SINGLE:
+                    single = true;
                     break;
-                case LEFT:
-                    rotation = Rotation.LEFT;
+                case DOUBLE:
+                    single = false;
                     break;
             }
-
         }
     }
 
-    public Rotation getRotation() { return rotation; }
+    public boolean getType() { return single; }
 }

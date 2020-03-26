@@ -1,6 +1,5 @@
 package inf112.core.laser;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
@@ -32,10 +31,11 @@ public class LaserHandler {
         crossed.setTile(board.getTile(TileId.SINGLE_LASER_CROSS));
     }
 
-    public void fireLasersVisually() {
-        // update laser positions positions
+    public void updateLaserPositions() {
         laserPositions.gatherAllLaserPositions();
+    }
 
+    public void fireLasersVisually() {
         // draw all vertical lasers
         for (Vector2 pos : laserPositions.getAllVerticalLaserPositions())
             LayerOperation.draw(laserLayer, (int) pos.x, (int) pos.y, vertical);
@@ -49,8 +49,23 @@ public class LaserHandler {
             LayerOperation.draw(laserLayer, (int) pos.x, (int) pos.y, crossed);
     }
 
+    /**
+     * Should perhaps be refactored to another class
+     */
     public void dealDamageToAffectedPlayers() {
-        // TODO gi Player-klassen en representasjon av HP, og bruk laserPositions.getHitPlayers()
+        for (Player player: laserPositions.getHitPlayersMap().keySet()) {
+            player.addDamageTokens(laserPositions.getHitPlayersMap().get(player));
+            System.out.println(player.getName() + " has damage tokens equal to: " + player.getDamageTokens());
+        }
+    }
+
+    // prepare for next round of dealing damage
+    public void resetHitPlayers() {
+        laserPositions.resetHitPlayers();
+    }
+
+    public Iterable<Player> getHitPlayers() {
+        return laserPositions.getHitPlayersMap().keySet();
     }
 
     public void disableLasersVisually() {

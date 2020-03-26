@@ -8,10 +8,7 @@ import inf112.core.board.GameBoard;
 import inf112.core.game.MainGame;
 import inf112.core.game.RoundHandler;
 import inf112.core.laser.LaserHandler;
-import inf112.core.movement.util.CollisionHandler;
-import inf112.core.movement.util.FlagHandler;
-import inf112.core.movement.util.SpawnHandler;
-import inf112.core.movement.util.VoidHandler;
+import inf112.core.movement.util.*;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
 import inf112.core.programcards.MovementCard;
@@ -31,12 +28,15 @@ import static inf112.core.board.MapLayer.*;
  * @author eskil
  */
 public class MovementHandler extends InputAdapter {
+    private int phase = 0;   // TODO refaktorerer inn i MainGame
+    private MainGame game;
     private GameBoard board;
     private List<Player> players;
     private Player activePlayer;                 // movement will affect this player. Should be changed actively
     private Player winner;
     private TiledMapTileLayer playerLayer;       // layer in which all player cells are placed (for graphics)
     private CollisionHandler collisionHandler;
+    private PusherHandler pusherHandler;
     private SpawnHandler spawnHandler;
     private FlagHandler flagHandler;
     private VoidHandler voidHandler;
@@ -44,11 +44,13 @@ public class MovementHandler extends InputAdapter {
     private LaserHandler laserHandler;
 
     public MovementHandler(MainGame game, List<Player> players) {
+        this.game = game;
         this.board = game.getBoard();
         this.roundHandler = game.getRoundHandler();
         this.playerLayer = board.getLayer(PLAYER_LAYER);
         this.players = players;
         this.collisionHandler = new CollisionHandler(board, players);
+        this.pusherHandler = new PusherHandler(board);
         this.spawnHandler = new SpawnHandler(board);
         this.flagHandler = new FlagHandler(board);
         this.voidHandler = new VoidHandler(board);
@@ -107,14 +109,28 @@ public class MovementHandler extends InputAdapter {
                 moveToBackup(activePlayer);
                 break;
             case Input.Keys.T:
-                roundHandler.conveyorMove();
+                roundHandler.runConveyors();
                 roundHandler.gearsRotate();
+                roundHandler.wrenchesRepair();
+                roundHandler.pushPlayerInDirection();
                 break;
             case Input.Keys.L:
+                laserHandler.updateLaserPositions();
                 laserHandler.fireLasersVisually();
+                laserHandler.dealDamageToAffectedPlayers();
+
+                handlePossibleDeaths(laserHandler.getHitPlayers());
+
+                laserHandler.resetHitPlayers();
+                break;
             default:
                 return false;
         }
+        game.removeLosers();    // should not really be called upon every move
+        /*if (phase % 2 == 0 && pusherHandler.isOnEvenPusher(activePlayer)){
+            attemptToMove(activePlayer, Direction.WEST);
+        }
+        else if(phase % 2 != 0 && pusherHandler.isOnOddPusher(activePlayer)){}*/
         return true;
     }
 
@@ -130,7 +146,35 @@ public class MovementHandler extends InputAdapter {
         return true;
     }
 
+    private void handlePossibleDeath(Player player) {
+        if (player.isDead()) {
+            player.reduceLifeTokens();
+
+            if (game.hasLost(player)) {
+                // remove loser physically
+                System.out.println(player.getName() + " has lost");
+                LayerOperation.removePlayer(playerLayer, player);
+            }
+            else {    // respawn
+                player.resetDamageTokens();
+                moveToBackup(player);
+            }
+        }
+    }
+
+    private void handlePossibleDeaths(Iterable<Player> possibleDeadPlayers) {
+        for (Player player : possibleDeadPlayers)
+                handlePossibleDeath(player);
+    }
+
+    /**
+     *
+     */
+
     public void cardMovement(Player player, int index) {
+        if (!contains(player))
+            throw new IllegalArgumentException("Unknown player");
+
         ProgramCard currentCard = player.getRegisters().get(index);
         System.out.println(currentCard.getName());
         if (currentCard instanceof MovementCard) {
@@ -196,11 +240,12 @@ public class MovementHandler extends InputAdapter {
                 moveUnchecked(affectedPlayer, direction);
                 affectedPlayer.setPrevDir(direction);
                 handleOutOfBounds(affectedPlayer);           // players outside map is moved to spawn
+                handleVoidVisitation(affectedPlayer);                  // players on a hole is moved to spawn
                 handleFlagVisitation(affectedPlayer);
-                handleVoid(affectedPlayer);                  // players on a hole is moved to spawn
                 if (flagHandler.hasVisitedAllFlags(affectedPlayer))
                     this.winner = affectedPlayer;
             }
+        handlePossibleDeaths(affectedPlayers);
     }
 
     /**
@@ -249,12 +294,20 @@ public class MovementHandler extends InputAdapter {
      */
     private void handleOutOfBounds(Player recentlyMovedPlayer) {
         if (!board.onBoard(recentlyMovedPlayer)) {
-            moveToBackup(recentlyMovedPlayer);
+            recentlyMovedPlayer.destroy();
         }
     }
-    private void handleVoid(Player recentlyMovedPlayer){
+    private void handleVoidVisitation(Player recentlyMovedPlayer){
         if (voidHandler.isOnVoid(recentlyMovedPlayer)){
-            moveToBackup(recentlyMovedPlayer);
+            recentlyMovedPlayer.destroy();
+        }
+    }
+    private void handlePusher(Player recentlyMovesPlayer){
+        if (pusherHandler.isOnEvenPusher(recentlyMovesPlayer)){
+            attemptToMove(recentlyMovesPlayer, Direction.EAST);
+        }
+        if (pusherHandler.isOnOddPusher(recentlyMovesPlayer)){
+            attemptToMove(recentlyMovesPlayer, Direction.EAST);
         }
     }
     /**

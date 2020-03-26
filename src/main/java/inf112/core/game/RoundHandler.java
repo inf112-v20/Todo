@@ -2,11 +2,11 @@ package inf112.core.game;
 
 import inf112.core.board.GameBoard;
 import inf112.core.movement.MovementHandler;
+import inf112.core.player.Direction;
 import inf112.core.player.Player;
-import inf112.core.tile.GearTile;
-import inf112.core.tile.MoverTile;
-import inf112.core.tile.Rotation;
+import inf112.core.tile.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoundHandler {
@@ -28,22 +28,48 @@ public class RoundHandler {
     /**
      * Checks if a player is standing on a conveyorTile, and moves said player
      */
-    public void conveyorMove(){
+    public void runConveyors(){
         //only conveyors with players on them need to move
+        List<Player> playersOnJunction = new ArrayList<>();
+        List<Player> playersOnConveyor = new ArrayList<>();
+        for(Player player : players) {
+            if(isOnJunction(player))
+                playersOnJunction.add(player);
+            else if(isOnConveyor(player))
+                playersOnConveyor.add(player);
+        }
+        //JunctionTiles should move first
+        conveyorMove(playersOnJunction);
+        conveyorMove(playersOnConveyor);
+    }
+
+    private void conveyorMove(List<Player> players) {
+        for(Player player : players) {
+            MovementHandler movementHandler = game.getMovementHandler();
+            MoverTile conveyor = (MoverTile) board.getConveyors().get(player.getPositionCopy());
+            conveyor.moveConveyor(player, movementHandler);
+            MoverTile next = (MoverTile) board.getConveyors().get(player.getPositionCopy());
+            if (next != null)
+                next.rotate(player);
+        }
+    }
+
+    private List<MoverTile> findConveyors() {
+        List<MoverTile> conveyors = new ArrayList<>();
         for(Player player : players) {
             if(isOnConveyor(player)) {
-                MovementHandler movementHandler = game.getMovementHandler();
-                MoverTile conveyor = (MoverTile) board.getConveyors().get(player.getPositionCopy());
-                conveyor.moveConveyor(player, movementHandler);
-                MoverTile next = (MoverTile) board.getConveyors().get(player.getPositionCopy());
-                if(next != null)
-                    next.rotate(player);
+               conveyors.add((MoverTile) board.getConveyors().get(player.getPositionCopy()));
             }
         }
+        return conveyors;
     }
 
     private boolean isOnConveyor(Player player) {
         return board.getConveyors().get(player.getPositionCopy()) != null;
+    }
+    private boolean isOnJunction(Player player) {
+        MoverTile tile = (MoverTile) board.getConveyors().get(player.getPositionCopy());
+        return tile != null && tile instanceof JunctionTile;
     }
 
     public void gearsRotate(){
@@ -58,5 +84,49 @@ public class RoundHandler {
     }
 
     private boolean onGear(Player player) { return board.getGears().get(player.getPositionCopy()) != null; }
+
+    private boolean onWrench(Player player) { return board.getWrenches().get(player.getPositionCopy()) != null; }
+
+    public void wrenchesRepair(){
+        for (Player player : players){
+            if (onWrench(player)){
+                WrenchTile wrench = (WrenchTile) board.getWrenches().get(player.getPositionCopy());
+                boolean single = wrench.getType();
+                //Double should also give the player a optioncard, but optioncars aren't implemented
+                if (!single) {
+                    player.removeDamageTokens(1);
+                    System.out.println(player.getName() +  " damage: " + player.getDamageTokens());
+                }
+                else {
+                    player.removeDamageTokens(1);
+                    System.out.println(player.getName() + " damage: " + player.getDamageTokens());
+                }
+            }
+        }
+    }
+    public void pushPlayerInDirection() {
+        for (Player player : players) {
+            MovementHandler movementHandler = game.getMovementHandler();
+            if (isOnEvenPusher(player)) { // TODO lagre hvilket register vi er på, så spillere bare blir pushet på register 2 og 4
+                PusherTile pusherTile = (PusherTile) board.getPushers().get(player.getPositionCopy());
+                Direction direction = pusherTile.getDirection();
+                movementHandler.attemptToMove(player, direction);
+            } else if (isOnOddPusher(player)) {
+                PusherTile pusherTile = (PusherTile) board.getPushers().get(player.getPositionCopy());
+                Direction direction = pusherTile.getDirection();
+                movementHandler.attemptToMove(player, direction);
+            }
+        }
+    }
+        public boolean isOnEvenPusher (Player player){
+            return (board.getPushers().get(player.getPositionCopy()) != null &&
+                    board.getPushers().get(player.getPositionCopy()).getTileId().hasAttribute(Attributes.EVEN));
+        }
+
+        public boolean isOnOddPusher (Player player){
+            return (board.getPushers().get(player.getPositionCopy()) != null &&
+                    board.getPushers().get(player.getPositionCopy()).getTileId().hasAttribute(Attributes.ODD));
+        }
+
 
 }

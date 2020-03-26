@@ -15,14 +15,14 @@ public class LaserPositions {
     private GameBoard board;
     private Map<Vector2, Direction> cannonDirectionMap;     // map all cannon positions to their associated direction
     private List<Player> players;
-    private Map<Player, Integer> hitPlayers;                // hit players goes here, val indicates number of beam hits
+    private Map<Player, Integer> hitPlayersMap;                // hit players goes here, val indicates number of beam hits
     private Set<Vector2> affectedVerticals, affectedHorizonals, affectedCrosses;
 
     public LaserPositions(GameBoard board, List<Player> players) {
         this.board = board;
         this.players = players;
 
-        hitPlayers = new HashMap<>();
+        hitPlayersMap = new HashMap<>();
 
         this.affectedVerticals = new HashSet<>();
         this.affectedHorizonals = new HashSet<>();
@@ -49,6 +49,10 @@ public class LaserPositions {
         handleCrossedLasers();
     }
 
+    public void resetHitPlayers() {
+        this.hitPlayersMap.clear();
+    }
+
     public Set<Vector2> getAllVerticalLaserPositions() {
         return affectedVerticals;
     }
@@ -61,8 +65,8 @@ public class LaserPositions {
         return affectedCrosses;
     }
 
-    public Map<Player, Integer> getHitPlayers() {
-        return hitPlayers;
+    public Map<Player, Integer> getHitPlayersMap() {
+        return hitPlayersMap;
     }
 
     private void handleCrossedLasers() {
@@ -130,10 +134,10 @@ public class LaserPositions {
     }
 
     private void registerPlayerHit(Player hitPlayer) {
-        if (!hitPlayers.containsKey(hitPlayer))
-            hitPlayers.put(hitPlayer, 1);
+        if (!hitPlayersMap.containsKey(hitPlayer))
+            hitPlayersMap.put(hitPlayer, 1);
         else
-            hitPlayers.put(hitPlayer, hitPlayers.get(hitPlayer) + 1);
+            hitPlayersMap.put(hitPlayer, hitPlayersMap.get(hitPlayer) + 1);
     }
 
     /**
