@@ -19,6 +19,7 @@ import java.util.List;
 public class MainGame {
 
     public static final int MAX_DAMAGE_TOKENS_LIMIT = 10;    // a player should not be able to receive more damage tokens
+    public static final int MAX_PLAYER_LIMIT = 8;
 
     private GameBoard board;
     private MovementHandler movementHandler;
