@@ -1,7 +1,6 @@
 package inf112.core.tile;
 
 import com.badlogic.gdx.math.Vector2;
-import org.w3c.dom.Attr;
 
 import java.util.List;
 

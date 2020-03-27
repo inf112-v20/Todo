@@ -1,6 +1,5 @@
 package inf112.core.game;
 
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.core.board.GameBoard;
@@ -8,7 +7,6 @@ import inf112.core.board.MapLayer;
 import inf112.core.board.MapNames;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
-import inf112.core.programcards.Card;
 import inf112.core.programcards.CardFactory;
 import inf112.core.programcards.Deck;
 import inf112.core.programcards.ProgramCard;

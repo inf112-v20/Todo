@@ -4,11 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
-import org.w3c.dom.Attr;
 
 import java.util.ArrayList;
 import java.util.List;
-import static inf112.core.tile.Attributes.*;
 
 public class ConveyorTile extends AbstractTile implements MoverTile{
     private Direction output;

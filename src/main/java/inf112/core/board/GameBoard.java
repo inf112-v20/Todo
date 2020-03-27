@@ -1,10 +1,8 @@
 package inf112.core.board;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.player.Player;
@@ -15,7 +13,6 @@ import inf112.core.tile.TileId;
 import java.util.HashMap;
 import java.util.Map;
 
-import static inf112.core.board.MapLayer.*;
 
 public class GameBoard extends LayeredBoard {
 

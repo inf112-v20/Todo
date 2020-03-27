@@ -1,6 +1,5 @@
 package inf112.core.tile;
 
-import com.badlogic.gdx.math.Vector2;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
