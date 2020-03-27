@@ -1,5 +1,6 @@
 package inf112.core.movement;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -121,7 +122,7 @@ public class MovementHandler extends InputAdapter {
             default:
                 return false;
         }
-        game.removeLosers();    // unnecessary to call this upon every move
+        game.removeLosers();    // strictly speaking unnecessary to call this upon every move
         game.attemptToAppointWinner();
         return true;
     }
@@ -275,10 +276,9 @@ public class MovementHandler extends InputAdapter {
     }
 
     /**
-     * Checks if the player is outside the board dimensions, and if so, resets the players
-     * position and rotation both logically and graphically.
+     * Checks if the player is outside the board dimensions, and if so, kills the player.
      *
-     * //TODO update javadoc
+     * WARNING: the process of moving dead players do not happen here
      *
      * @param recentlyMovedPlayer
      */
@@ -288,6 +288,13 @@ public class MovementHandler extends InputAdapter {
         }
     }
 
+    /**
+     * Checks if the player is on a void (hole) on the board, and if so, kills the player.
+     *
+     * WARNING: the process of moving dead players do not happen here
+     *
+     * @param recentlyMovedPlayer
+     */
     private void handleVoidVisitation(Player recentlyMovedPlayer){
         if (voidHandler.isOnVoid(recentlyMovedPlayer)){
             recentlyMovedPlayer.destroy();

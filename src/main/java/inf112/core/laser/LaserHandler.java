@@ -59,7 +59,9 @@ public class LaserHandler {
         }
     }
 
-    // prepare for next round of dealing damage
+    /**
+     *
+     */
     public void resetHitPlayers() {
         laserPositions.resetHitPlayers();
     }
