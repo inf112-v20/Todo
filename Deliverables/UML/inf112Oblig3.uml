@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>inf112.core</OriginalElement>
+  <nodes>
+    <node x="994.5" y="2385.5">inf112.core.movement.MovementHandler</node>
+    <node x="525.5" y="1417.5">inf112.core.player.Player</node>
+    <node x="888.0" y="827.5">inf112.core.screens.GameScreen</node>
+    <node x="-11.0" y="738.5">inf112.core.board.GameBoard</node>
+    <node x="1502.5" y="277.5">inf112.core.game.MainGame</node>
+    <node x="1840.0" y="-23.5">inf112.core.programcards.Deck</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="inf112.core.movement.MovementHandler" target="inf112.core.board.GameBoard">
+      <point x="0.0" y="334.5" />
+      <point x="1160.0" y="3120.0" />
+      <point x="200.0" y="3120.0" />
+      <point x="0.0" y="301.5" />
+    </edge>
+    <edge source="inf112.core.game.MainGame" target="inf112.core.movement.MovementHandler">
+      <point x="0.0" y="202.5" />
+      <point x="1640.0" y="2680.0" />
+      <point x="165.5" y="-40.0" />
+    </edge>
+    <edge source="inf112.core.player.Player" target="inf112.core.game.MainGame">
+      <point x="114.5" y="-0.0" />
+      <point x="1160.0" y="1840.0" />
+      <point x="1160.0" y="600.0" />
+      <point x="-137.5" y="120.0" />
+    </edge>
+    <edge source="inf112.core.game.MainGame" target="inf112.core.board.GameBoard">
+      <point x="-137.5" y="26.666666666666515" />
+      <point x="520.0" y="506.6666666666665" />
+      <point x="520.0" y="1040.0" />
+      <point x="211.0" y="-0.0" />
+    </edge>
+    <edge source="inf112.core.movement.MovementHandler" target="inf112.core.player.Player">
+      <point x="-165.5" y="-0.0" />
+      <point x="640.0" y="2720.0" />
+      <point x="0.0" y="422.5" />
+    </edge>
+    <edge source="inf112.core.movement.MovementHandler" target="inf112.core.game.MainGame">
+      <point x="165.5" y="-120.0" />
+      <point x="1400.0" y="2600.0" />
+      <point x="1400.0" y="626.6666666666665" />
+      <point x="-137.5" y="146.66666666666652" />
+    </edge>
+    <edge source="inf112.core.screens.GameScreen" target="inf112.core.game.MainGame">
+      <point x="0.0" y="-92.5" />
+      <point x="960.0" y="560.0" />
+      <point x="-137.5" y="80.0" />
+    </edge>
+    <edge source="inf112.core.screens.GameScreen" target="inf112.core.player.Player">
+      <point x="0.0" y="92.5" />
+      <point x="960.0" y="1760.0" />
+      <point x="114.5" y="-80.0" />
+    </edge>
+    <edge source="inf112.core.board.GameBoard" target="inf112.core.player.Player">
+      <point x="40.0" y="301.5" />
+      <point x="240.0" y="1840.0" />
+      <point x="-114.5" y="-0.0" />
+    </edge>
+    <edge source="inf112.core.game.MainGame" target="inf112.core.programcards.Deck">
+      <point x="0.0" y="-202.5" />
+      <point x="1640.0" y="80.0" />
+      <point x="-160.0" y="-0.0" />
+    </edge>
+    <edge source="inf112.core.game.MainGame" target="inf112.core.player.Player">
+      <point x="-137.5" y="106.66666666666652" />
+      <point x="1120.0" y="586.6666666666665" />
+      <point x="1120.0" y="1800.0" />
+      <point x="114.5" y="-40.0" />
+    </edge>
+  </edges>
+  <settings layout="Directed Orthogonal" zoom="0.413762344695763" x="809.1971432566177" y="1354.2933342654405" />
+  <SelectedNodes>
+    <node>inf112.core.game.MainGame</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
