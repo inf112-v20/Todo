@@ -53,11 +53,12 @@ public class SpawnHandler extends InputAdapter {
         this.activePlayerBackupPos = playerToBeSpawned.getBackupCopy();
         LayerOperation.removePlayer(playerLayer, playerToBeSpawned);
 
-        if (!isBackupAvailable())
-            initPositionSelection();
-        else {
+        if (isBackupAvailable()) {
             activePlayer.resetPosition();
             initRotationSelection();
+        }
+        else {
+            initPositionSelection();
         }
         Gdx.input.setInputProcessor(this);
     }
@@ -131,9 +132,13 @@ public class SpawnHandler extends InputAdapter {
     }
 
     public boolean isBackupAvailable(Player player) {
-        for (Player p : game.getPlayers())
-            if (player.getBackupCopy().equals(p.getPositionCopy()))
+        Vector2 backUp = player.getBackupCopy();
+        for (Player p : game.getPlayers()) {
+            if (p.equals(player))
+                continue;
+            if (p.hasPosition(backUp))
                 return false;
+        }
         return true;
     }
 
@@ -143,42 +148,50 @@ public class SpawnHandler extends InputAdapter {
             Vector2 proposedSpawnPos = activePlayerBackupPos.cpy();
             switch (keycode) {
                 case Input.Keys.NUMPAD_1:
+                case Input.Keys.NUM_1:
                     VectorMovement.go(proposedSpawnPos, Direction.SOUTH);
                     VectorMovement.go(proposedSpawnPos, Direction.WEST);
                     break;
                 case Input.Keys.NUMPAD_2:
+                case Input.Keys.NUM_2:
                     VectorMovement.go(proposedSpawnPos, Direction.SOUTH);
                     break;
                 case Input.Keys.NUMPAD_3:
+                case Input.Keys.NUM_3:
                     VectorMovement.go(proposedSpawnPos, Direction.SOUTH);
                     VectorMovement.go(proposedSpawnPos, Direction.EAST);
                     break;
                 case Input.Keys.NUMPAD_4:
+                case Input.Keys.NUM_4:
                     VectorMovement.go(proposedSpawnPos, Direction.WEST);
                     break;
                 case Input.Keys.NUMPAD_6:
+                case Input.Keys.NUM_6:
                     VectorMovement.go(proposedSpawnPos, Direction.EAST);
                     break;
                 case Input.Keys.NUMPAD_7:
+                case Input.Keys.NUM_7:
                     VectorMovement.go(proposedSpawnPos, Direction.NORTH);
                     VectorMovement.go(proposedSpawnPos, Direction.WEST);
                     break;
                 case Input.Keys.NUMPAD_8:
+                case Input.Keys.NUM_8:
                     VectorMovement.go(proposedSpawnPos, Direction.NORTH);
                     break;
                 case Input.Keys.NUMPAD_9:
+                case Input.Keys.NUM_9:
                     VectorMovement.go(proposedSpawnPos, Direction.NORTH);
                     VectorMovement.go(proposedSpawnPos, Direction.EAST);
                     break;
                 case Input.Keys.ENTER:
-                    initRotationSelection();
                     System.out.println("Position confirmed.");
+                    initRotationSelection();
                     return true;
                 default:
                     System.out.println("Unknown key");
                     return false;
             }
-            if (adjPositions.contains(proposedSpawnPos))
+            if (adjPositions.contains(proposedSpawnPos))    // i.e. proposed position is legal
                 game.getMovementHandler().moveToPos(activePlayer, proposedSpawnPos);
             else {
                 System.out.println("Cannot spawn player here.");
