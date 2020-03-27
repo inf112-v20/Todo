@@ -42,7 +42,7 @@ public class RoundHandler {
         conveyorMove(Collections.list(queuedMoves.elements()));
     }
 
-    //This is to ensure that no two players are pushed the same tile
+    //This is to ensure that no two players are pushed to the same tile
     private void queueMove(Hashtable<Vector2, Player> queuedMoves, Player player) {
         MoverTile conveyor = (MoverTile) board.getConveyors().get(player.getPositionCopy());
         Vector2 nextPos =  conveyor.nextPosition();
@@ -57,10 +57,9 @@ public class RoundHandler {
 
     private void conveyorMove(List<Player> players) {
         int count = 0;
-        //Limits the while loop to 8 repetitions.
-        //This is a very crude fix for certain edge cases
-        //And should be fixed.
-        while(!players.isEmpty() && count < 8) {
+        //Limits the while loop to the max amount of players repetitions.
+        //This is a very crude fix for certain edge cases and should be fixed.
+        while(!players.isEmpty() && count < game.MAX_PLAYER_LIMIT) {
             List<Player> moved = new ArrayList<>();
             for (Player player : players) {
                 MovementHandler movementHandler = game.getMovementHandler();

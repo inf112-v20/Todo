@@ -30,7 +30,7 @@ public class CardMovementTest {
         movementHandler = new MovementHandler(game);
         testPlayer = new Player("TestPlayer");
 
-        testPlayer.setDirection(Direction.NORTH);
+        testPlayer.rotateTo(Direction.NORTH);
         oldPlayerX = testPlayer.getX();
         oldPlayerY = testPlayer.getY();
         oldPlayerDir = testPlayer.getDirection();
@@ -70,7 +70,7 @@ public class CardMovementTest {
 
     @Test
     public void backwardsCardMovesPlayerBackward() {
-        testPlayer.setDirection(Direction.SOUTH); // Must be facing south as the player cannot move out of the board
+        testPlayer.rotateTo(Direction.SOUTH); // Must be facing south as the player cannot move out of the board
         testPlayer.addToRegister(new MovementCard(1,1,false,"",null));
         movementHandler.cardMovement(testPlayer,0);
 
