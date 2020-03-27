@@ -16,21 +16,21 @@
 ### With commandline: Linux, MacOs
 
 **Before you try to run the program, make sure Maven is installed**<br/>
-  ```mvn --version```   
+    mvn --version    
   Maven can downloaded for here: https://maven.apache.org/download.cgi
   
-**When you are sure Maven is installed correctly, you can clone the repository**
-    
-  ```git clone https://github.com/inf112-v20/Todo```
+**When you are sure Maven is installed correctly, you can clone the repository**  
+    git clone https://github.com/inf112-v20/Todo
 
-**Build the game with Maven**
-  ```cd Todo && mvn clean verify assembly:single```
+**Build the game with Maven**  
+    cd Todo && mvn clean verify assembly:single
     
 
-**You can now run the game** 
-  ```java -jar target/mvn-app-1.0-SNAPSHOT-jar-with-dependencies.jar```
+**You can now run the game**   
+    java -jar target/mvn-app-1.0-SNAPSHOT-jar-with-dependencies.jar
     
-    
+  
+  
 ## How to play
 (Many of the current features are temporary and used for debugging)
 -   Move forwards or backwards using up or down arrow keys
@@ -40,7 +40,8 @@
 -   Pressing "C" will set a new backup point for the active player, and pressing "SPACE" will retur a player to its
     previous backup point.
     
-    
+     
+     
 ## Known bugs
 Currently throws "WARNING: An illegal reflective access operation has occurred", 
 when the java version used is >8. This has no effect on function or performance, and is just a warning.
