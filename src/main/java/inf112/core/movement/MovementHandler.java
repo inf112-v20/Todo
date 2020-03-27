@@ -7,7 +7,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
 import inf112.core.game.MainGame;
-import inf112.core.game.RoundHandler;
 import inf112.core.laser.LaserHandler;
 import inf112.core.movement.util.*;
 import inf112.core.player.Direction;
@@ -15,11 +14,11 @@ import inf112.core.player.Player;
 import inf112.core.programcards.MovementCard;
 import inf112.core.programcards.ProgramCard;
 import inf112.core.programcards.RotationCard;
+import inf112.core.tile.*;
 import inf112.core.util.LayerOperation;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+
 import static inf112.core.board.MapLayer.*;
 
 /**
@@ -36,21 +35,17 @@ public class MovementHandler extends InputAdapter {
     private Player activePlayer;                 // movement will affect this player. Should be changed actively
     private TiledMapTileLayer playerLayer;       // layer in which all player cells are placed (for graphics)
     private CollisionHandler collisionHandler;
-    private PusherHandler pusherHandler;
     private SpawnHandler spawnHandler;
     private FlagHandler flagHandler;
     private VoidHandler voidHandler;
-    private RoundHandler roundHandler;
     private LaserHandler laserHandler;
 
     public MovementHandler(MainGame mainGame) {
         this.game = mainGame;
         this.board = mainGame.getBoard();
-        this.roundHandler = mainGame.getRoundHandler();
         this.playerLayer = board.getLayer(PLAYER_LAYER);
         this.players = mainGame.getPlayers();
         this.collisionHandler = new CollisionHandler(board, players);
-        this.pusherHandler = new PusherHandler(board);
         this.spawnHandler = new SpawnHandler(game);
         this.flagHandler = new FlagHandler(board);
         this.voidHandler = new VoidHandler(board);
@@ -105,10 +100,10 @@ public class MovementHandler extends InputAdapter {
                 moveToBackup(activePlayer);
                 break;
             case Input.Keys.T:
-                roundHandler.runConveyors();
-                roundHandler.gearsRotate();
-                roundHandler.wrenchesRepair();
-                roundHandler.pushPlayerInDirection();
+                runConveyors();
+                gearsRotate();
+                wrenchesRepair();
+                pushPlayerInDirection();
                 break;
             case Input.Keys.L:
                 laserHandler.updateLaserPositions();
@@ -302,13 +297,14 @@ public class MovementHandler extends InputAdapter {
     }
 
     private void handlePusher(Player recentlyMovesPlayer){
-        if (pusherHandler.isOnEvenPusher(recentlyMovesPlayer)){
+        if (board.isOnEvenPusher(recentlyMovesPlayer)){
             attemptToMove(recentlyMovesPlayer, Direction.EAST);
         }
-        if (pusherHandler.isOnOddPusher(recentlyMovesPlayer)){
+        if (board.isOnOddPusher(recentlyMovesPlayer)){
             attemptToMove(recentlyMovesPlayer, Direction.EAST);
         }
     }
+
     /**
      * Checks if the player is on the correct flag, and if so, increases his/hers flag count
      *
@@ -341,5 +337,98 @@ public class MovementHandler extends InputAdapter {
 
     public IFlagWinner getFlagWinnerChecker() {
         return flagHandler;
+    }
+
+    /**
+     * Checks if a player is standing on a conveyorTile, and moves said player
+     */
+    public void runConveyors(){
+        //only conveyors with players on them need to move
+        Hashtable<Vector2, Player> queuedMoves = new Hashtable<>();
+        for(Player player : players) {
+            if(board.onConveyor(player)){
+                queueMove(queuedMoves, player);
+            }
+        }
+        conveyorMove(Collections.list(queuedMoves.elements()));
+    }
+
+    //This is to ensure that no two players are pushed to the same tile
+    private void queueMove(Hashtable<Vector2, Player> queuedMoves, Player player) {
+        MoverTile conveyor = (MoverTile) board.getConveyors().get(player.getPositionCopy());
+        Vector2 nextPos =  conveyor.nextPosition();
+        for(Vector2 move : queuedMoves.keySet()) {
+            if(move.equals(nextPos)) {
+                queuedMoves.remove(move);
+                return;
+            }
+        }
+        queuedMoves.put(nextPos, player);
+    }
+
+    private void conveyorMove(List<Player> players) {
+        int count = 0;
+        //Limits the while loop to the max amount of players repetitions.
+        //This is a very crude fix for certain edge cases and should be fixed.
+        while(!players.isEmpty() && count < game.MAX_PLAYER_LIMIT) {
+            List<Player> moved = new ArrayList<>();
+            for (Player player : players) {
+                MovementHandler movementHandler = game.getMovementHandler();
+                MoverTile conveyor = (MoverTile) board.getConveyors().get(player.getPositionCopy());
+                if(board.playerOnLoc(conveyor.nextPosition()))
+                    continue;
+                conveyor.moveConveyor(player, movementHandler);
+                MoverTile next = (MoverTile) board.getConveyors().get(player.getPositionCopy());
+                if (next != null)
+                    next.rotate(player);
+                moved.add(player);
+            }
+            players.removeAll(moved);
+            count++;
+        }
+    }
+
+    public void gearsRotate(){
+        for (Player player : players){
+            if (board.onGear(player)){
+                GearTile gear = (GearTile) board.getGears().get(player.getPositionCopy());
+                Rotation rotation = gear.getRotation();
+                if (rotation == Rotation.LEFT) player.rotateLeft();
+                else player.rotateRight();
+            }
+        }
+    }
+
+    public void wrenchesRepair(){
+        for (Player player : players){
+            if (board.onWrench(player)){
+                WrenchTile wrench = (WrenchTile) board.getWrenches().get(player.getPositionCopy());
+                boolean single = wrench.getType();
+                //Double should also give the player a optioncard, but optioncars aren't implemented
+                if (!single) {
+                    player.removeDamageTokens(1);
+                    System.out.println(player.getName() +  " damage: " + player.getDamageTokens());
+                }
+                else {
+                    player.removeDamageTokens(1);
+                    System.out.println(player.getName() + " damage: " + player.getDamageTokens());
+                }
+            }
+        }
+    }
+
+    public void pushPlayerInDirection() {
+        for (Player player : players) {
+            MovementHandler movementHandler = game.getMovementHandler();
+            if (board.isOnEvenPusher(player)) { // TODO lagre hvilket register vi er på, så spillere bare blir pushet på register 2 og 4
+                PusherTile pusherTile = (PusherTile) board.getPushers().get(player.getPositionCopy());
+                Direction direction = pusherTile.getDirection();
+                movementHandler.attemptToMove(player, direction);
+            } else if (board.isOnOddPusher(player)) {
+                PusherTile pusherTile = (PusherTile) board.getPushers().get(player.getPositionCopy());
+                Direction direction = pusherTile.getDirection();
+                movementHandler.attemptToMove(player, direction);
+            }
+        }
     }
 }

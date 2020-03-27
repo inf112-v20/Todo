@@ -5,10 +5,10 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import inf112.core.movement.MovementHandler;
+import inf112.core.player.Direction;
 import inf112.core.player.Player;
-import inf112.core.tile.Attributes;
-import inf112.core.tile.ITile;
-import inf112.core.tile.TileId;
+import inf112.core.tile.*;
 import inf112.core.util.VectorMovement;
 
 import java.util.ArrayList;
@@ -129,6 +129,34 @@ public class GameBoard extends LayeredBoard {
         camera.position.set((float) getMapWidth() / 2, (float) getMapHeight() / 2,0);    // centers the camera
         camera.update();
         return camera;
+    }
+
+    public boolean onConveyor(Player player) {
+        return getConveyors().get(player.getPositionCopy()) != null;
+    }
+
+    private List<MoverTile> findConveyors(List<Player> players) {
+        List<MoverTile> conveyors = new ArrayList<>();
+        for(Player player : players) {
+            if(onConveyor(player)) {
+                conveyors.add((MoverTile) getConveyors().get(player.getPositionCopy()));
+            }
+        }
+        return conveyors;
+    }
+
+    public boolean onGear(Player player) { return getGears().get(player.getPositionCopy()) != null; }
+
+    public boolean onWrench(Player player) { return getWrenches().get(player.getPositionCopy()) != null; }
+
+    public boolean isOnEvenPusher (Player player){
+        return (getPushers().get(player.getPositionCopy()) != null &&
+                getPushers().get(player.getPositionCopy()).getTileId().hasAttribute(Attributes.EVEN));
+    }
+
+    public boolean isOnOddPusher (Player player){
+        return (getPushers().get(player.getPositionCopy()) != null &&
+                getPushers().get(player.getPositionCopy()).getTileId().hasAttribute(Attributes.ODD));
     }
 
 }
