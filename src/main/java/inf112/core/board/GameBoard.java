@@ -5,11 +5,8 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import inf112.core.movement.MovementHandler;
-import inf112.core.player.Direction;
 import inf112.core.player.Player;
 import inf112.core.tile.*;
-import inf112.core.util.VectorMovement;
 
 import java.util.ArrayList;
 import java.util.HashMap;

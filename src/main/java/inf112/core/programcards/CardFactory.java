@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author Pål
+ * A easily modifiable factory that creates the game decks (atm only movement).
+ */
 public enum CardFactory {
     FORWARD1,
     FORWARD2,

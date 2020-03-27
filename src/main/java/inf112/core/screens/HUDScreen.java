@@ -13,6 +13,11 @@ import inf112.core.programcards.ProgramCard;
 
 import java.util.List;
 
+/**
+ * A very simple screen overlay that makes it possible to manually test some basic card functionality
+ * @author Pål
+ */
+
 public class HUDScreen {
 
     private Stage stage;
@@ -25,12 +30,14 @@ public class HUDScreen {
         this.stage = new Stage();
     }
 
-
     protected void setMovementHandler(MovementHandler movementHandler){
         this.movementHandler = movementHandler;
     }
 
-    public void createButtons(){   // Temp solution -- Proof of concept
+    /**
+     *  Temp solution -- Proof of concept
+     */
+    public void createButtons(){
         int x = 0;
         int y = 0;
         int index = 0;
@@ -47,7 +54,15 @@ public class HUDScreen {
         return stage;
     }
 
-    public ImageButton createButton(Texture texture, float posX, float posY, int index) {
+    /**
+     *
+     * @param texture simple card texture. Should be changed to textureRegion for greater performance
+     * @param posX x position on the main screen
+     * @param posY y position on the main screen
+     * @param index which of the cards in the players register we create a button for atm.
+     * @return ImageButton
+     */
+     public ImageButton createButton(Texture texture, float posX, float posY, int index) {
         TextureRegion myTextureRegion = new TextureRegion(texture);
         TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
         ImageButton button = new ImageButton(myTexRegionDrawable);

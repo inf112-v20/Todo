@@ -3,6 +3,10 @@ package inf112.core.programcards;
 
 import com.badlogic.gdx.graphics.Texture;
 
+/**
+ * @author Pål
+ * Abstract class for creating cards (Option and movement)
+ */
 public abstract class Card {
     private CardType type;
     private String name;
@@ -12,10 +16,6 @@ public abstract class Card {
         this.type = type;
         this.name = name;
         this.texture = texture;
-    }
-
-    public CardType getType() {
-        return type;
     }
 
     public String getName(){
