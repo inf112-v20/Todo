@@ -8,7 +8,7 @@ Møtet gikk for det meste ut på å være sammen for å kode, og oppdatere hvera
 
 **Dette har vi gjort siden forrige møte (tirsdag 24.03.2020)**
 
-**Pål**
+**Pål** Arbeidet med refaktorering og tilpassing av egen kode til å passe med masterbranchen. 
 
 **Sigve** Implementert odd og even pushers, slik at de funker og kan bli deaktivert og aktivert når vi har implementert registre i fremtiden.
 
