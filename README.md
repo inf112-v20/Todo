@@ -12,7 +12,8 @@
   Specify pom.xml as the configuration file.<br/>
 
   To run the project you need to run the main class located at: inf112.desktop.Main.<br/>
-
+  
+  PS: you might need to set the working directory to the "assets" folder.
 
   
   
