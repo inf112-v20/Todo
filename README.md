@@ -39,7 +39,7 @@
 -   Rotate left or right using left or rigth arrow keys
 -   Activate all lasers by pressing "L"
 -   Pressing "T" will activate all conveyors, gears, wrenches and pushers
--   Pressing "C" will set a new backup point for the active player, and pressing "SPACE" will retur a player to its
+-   Pressing "C" will set a new backup point for the active player, and pressing "SPACE" will return a player to its
     previous backup point.
     
 <br/>
