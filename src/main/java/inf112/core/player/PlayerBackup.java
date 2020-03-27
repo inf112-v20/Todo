@@ -14,8 +14,8 @@ public class PlayerBackup {
         this.position = new Vector2(xPos,yPos);
     }
 
-    public Vector2 getPosition() {
-        return position;
+    public Vector2 getPositionCopy() {
+        return position.cpy();
     }
 
     public float getX(){

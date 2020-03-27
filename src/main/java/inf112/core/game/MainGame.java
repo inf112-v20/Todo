@@ -1,5 +1,6 @@
 package inf112.core.game;
 
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.core.board.GameBoard;
@@ -26,13 +27,14 @@ public class MainGame {
     private TextureRegion[][] playerSpriteSheetGrid;
     private RoundHandler roundHandler;
     private Deck deck;
+    private Player winner;
 
     public MainGame(MapNames mapNames) {
         this.players = new ArrayList<>();
-        this.board = new GameBoard(mapNames);
+        this.board = new GameBoard(mapNames, players);
         this.roundHandler = new RoundHandler(this, players);
-        this.movementHandler = new MovementHandler(this, players);
         this.deck = new Deck(CardFactory.createDefaultDeck());
+        this.movementHandler = new MovementHandler(this);
         playerSpriteSheet = new Texture("img/Player_Spritesheet.png");
         playerSpriteSheetGrid = TextureRegion.split(
                 playerSpriteSheet,
@@ -49,11 +51,15 @@ public class MainGame {
         return board;
     }
 
-    public RoundHandler getRoundHandler() {return roundHandler;}
+    public List<Player> getPlayers() { return players; }
+
+    public RoundHandler getRoundHandler() { return roundHandler; }
 
     public MovementHandler getMovementHandler() {
         return movementHandler;    // this should of course change
     }
+
+    public InputProcessor getDefaultInputProcessor() { return movementHandler; }
 
     public void drawPlayers() {
         for (Player player : players)
@@ -96,8 +102,12 @@ public class MainGame {
         throw new IllegalArgumentException("No player with the given id exists");
     }
 
-    public boolean hasWon() {
-        return movementHandler.hasWon();
+    public Player getPlayerById(int id) {
+        for (Player player : players)
+            if (player.getId() == id) {
+                return player;
+            }
+        throw new IllegalArgumentException("No player with the given id exists");
     }
 
     public void dispose() {
@@ -123,4 +133,20 @@ public class MainGame {
         players.removeIf(player -> hasLost(player));
     }
 
+    // should be called between each movement
+    public void attemptToAppointWinner() {
+        if (players.size() == 1 && Player.getPlayerCount() > 1) {    // all other players has lost
+            this.winner = players.get(0);
+            return;
+        }
+        for (Player player : players)
+            if (movementHandler.getFlagWinnerChecker().hasVisitedAllFlags(player)) {
+                this.winner = player;
+                return;
+            }
+    }
+
+    public boolean hasWon() {
+        return this.winner != null;
+    }
 }

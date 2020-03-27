@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
+import inf112.core.util.VectorMovement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +78,11 @@ public class ConveyorJunctionTile extends AbstractTile implements JunctionTile {
             player.rotate(secondary.getRotation());
         else
             player.rotate(getRotation());
+    }
+
+    @Override
+    public Vector2 nextPosition() {
+        return VectorMovement.generateNew(getPos(), getOutputDir());
     }
 
     @Override

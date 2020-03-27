@@ -9,13 +9,21 @@ import java.util.Map;
 
 public class VoidHandler {
 
-    private Map<Vector2, ITile> voidPosToTileMapping;
+    private GameBoard board;
 
     public VoidHandler(GameBoard gameBoard) {
-        this.voidPosToTileMapping = gameBoard.getVoids();
+        this.board = gameBoard;
+    }
+
+    public static boolean isOnVoid(Vector2 pos, GameBoard board) {
+        return board.getVoids().containsKey(pos);
+    }
+
+    public boolean isOnVoid(Vector2 pos) {
+        return isOnVoid(pos, this.board);
     }
 
     public boolean isOnVoid(Player player) {
-        return voidPosToTileMapping.get(player.getPositionCopy()) != null;
+        return isOnVoid(player.getPositionCopy());
     }
 }

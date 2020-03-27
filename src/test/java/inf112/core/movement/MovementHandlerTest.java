@@ -52,7 +52,7 @@ public class MovementHandlerTest {
 
     @Test
     public void keyPressMovesActivePlayerOneForwardTest() {
-        player1.setDirection(Direction.NORTH);
+        player1.rotateTo(Direction.NORTH);
         int oldPlayerX = player1.getX();
         int oldPlayerY = player1.getY();
         movementHandler.add(player1);

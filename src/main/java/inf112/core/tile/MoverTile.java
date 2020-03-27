@@ -1,5 +1,6 @@
 package inf112.core.tile;
 
+import com.badlogic.gdx.math.Vector2;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
@@ -41,6 +42,12 @@ public interface MoverTile extends ITile{
      * @return
      */
     public void rotate(Player player);
+
+    /**
+     * Returns the Vector2 position a player would be moved to by moveConveyor
+     * @return next Vector2 position
+     */
+    public Vector2 nextPosition();
 
     /**
      * Function that moves a player standing on a conveyorTile

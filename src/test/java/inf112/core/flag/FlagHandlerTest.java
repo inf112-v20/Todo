@@ -30,7 +30,7 @@ public class FlagHandlerTest {
 
     @Before
     public void init() {
-        this.gameBoard = new GameBoard(MapNames.TESTING_MAP);    // has 4 flags
+        this.gameBoard = new GameBoard();    // has 4 flags
         this.flagHandler = new FlagHandler(gameBoard);
         this.playerNotOnFlag = new Player(5, 5);
         this.playerOnFlag1 = new Player(3, 9);

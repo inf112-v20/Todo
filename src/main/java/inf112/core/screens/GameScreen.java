@@ -12,7 +12,7 @@ import inf112.core.player.Player;
 
 public class GameScreen implements Screen {
 
-    MainGame game;
+    private MainGame game;
     private IGameStateSwitcher gameStateSwitcher;
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
@@ -33,14 +33,12 @@ public class GameScreen implements Screen {
         game.createPlayers(3);
         game.setActivePlayerById(1);
 
-
-        Gdx.input.setInputProcessor(game.getMovementHandler());
+        Gdx.input.setInputProcessor(game.getDefaultInputProcessor());
 
         //HUDoverlay screen
         hudScreen.setMovementHandler(game.getMovementHandler());
         //hudScreen.createButtons();    For manual testing purposes only atm
         stage = hudScreen.getStage();
-
     }
 
     @Override
