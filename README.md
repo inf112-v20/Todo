@@ -4,19 +4,19 @@
 
 ### With IDE: Windows, Linux, MacOS
 
-  First you need to install a Java IDE, such as IntelliJ or Eclipse
+  First you need to install a Java IDE, such as IntelliJ or Eclipse.
 
   Then you need to import the project from version control, as a Maven project
   Specify pom.xml as the configuration file.
 
-  To run the project you need to run the main class located at: inf112.desktop.Main
+  To run the project you need to run the main class located at: inf112.desktop.Main.
 
 
 
 ### With commandline: Linux, MacOs
 
-**Before you try to run the program, make sure Maven is installed**
-  `mvn --version`
+**Before you try to run the program, make sure Maven is installed**<br/>
+  `mvn --version`<br/>
   Maven can downloaded for here: https://maven.apache.org/download.cgi
   
 **When you are sure Maven is installed correctly, you can clone the repository**
