@@ -37,7 +37,7 @@ public class WrenchTileTest {
     public void SingleWrenchShouldRemoveOneDamageToken(){
         movementHandler.moveToPos(testPlayer, SINLE_WRENCH);
         testPlayer.addDamageTokens(2);
-        roundHandler.wrenchesRepair();
+        movementHandler.wrenchesRepair();
         assertEquals(1, testPlayer.getDamageTokens());
     }
 
@@ -45,7 +45,7 @@ public class WrenchTileTest {
     public void DoubleWrenchShouldRemoveOneDamageToken(){
         movementHandler.moveToPos(testPlayer, DOUBLE_WRENCH);
         testPlayer.addDamageTokens(2);
-        roundHandler.wrenchesRepair();
+        movementHandler.wrenchesRepair();
         assertEquals(1, testPlayer.getDamageTokens());
     }
 }
