@@ -14,25 +14,6 @@
   To run the project you need to run the main class located at: inf112.desktop.Main.<br/>
 
 
-
-### With commandline: Linux, MacOs
-
-**Before you try to run the program, make sure Maven is installed**<br/>
-    ```mvn --version```    
-  Maven can downloaded for here: https://maven.apache.org/download.cgi
-  
-**When you are sure Maven is installed correctly, you can clone the repository**<br/>
-```git clone https://github.com/inf112-v20/Todo```
-<br/>
-
-**Build the game with Maven**<br/> 
-```cd Todo && mvn clean verify assembly:single```
-<br/>
-
-**You can now run the game**<br/>
-```java -jar target/mvn-app-1.0-SNAPSHOT-jar-with-dependencies.jar```
-<br/>
-<br/>
   
   
 ## How to play
