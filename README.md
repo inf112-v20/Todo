@@ -4,31 +4,33 @@
 
 ### With IDE: Windows, Linux, MacOS
 
-  First you need to install a Java IDE, such as IntelliJ or Eclipse.
+  First you need to install a Java IDE, such as IntelliJ or Eclipse.<br/>
 
   Then you need to import the project from version control, as a Maven project. <br/> 
-  Specify pom.xml as the configuration file.
+  Specify pom.xml as the configuration file.<br/>
 
-  To run the project you need to run the main class located at: inf112.desktop.Main.
+  To run the project you need to run the main class located at: inf112.desktop.Main.<br/>
 
 
 
 ### With commandline: Linux, MacOs
 
 **Before you try to run the program, make sure Maven is installed**<br/>
-    mvn --version    
+    ```mvn --version```    
   Maven can downloaded for here: https://maven.apache.org/download.cgi
   
-**When you are sure Maven is installed correctly, you can clone the repository**  
-    git clone https://github.com/inf112-v20/Todo
+**When you are sure Maven is installed correctly, you can clone the repository**<br/>
+```git clone https://github.com/inf112-v20/Todo```
+<br/>
 
-**Build the game with Maven**  
-    cd Todo && mvn clean verify assembly:single
-    
+**Build the game with Maven**<br/> 
+```cd Todo && mvn clean verify assembly:single```
+<br/>
 
-**You can now run the game**   
-    java -jar target/mvn-app-1.0-SNAPSHOT-jar-with-dependencies.jar
-    
+**You can now run the game**<br/>
+```java -jar target/mvn-app-1.0-SNAPSHOT-jar-with-dependencies.jar```
+<br/>
+<br/>
   
   
 ## How to play
@@ -40,7 +42,8 @@
 -   Pressing "C" will set a new backup point for the active player, and pressing "SPACE" will retur a player to its
     previous backup point.
     
-     
+<br/>
+<br/>
      
 ## Known bugs
 Currently throws "WARNING: An illegal reflective access operation has occurred", 
