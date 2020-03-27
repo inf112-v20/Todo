@@ -20,7 +20,12 @@ public class Deck {
         if(activeDeck.size() <= 0) {
             reshuffleDeck();
             System.out.println("Reshuffled deck");
+
+            if (activeDeck.size() <= 0) {   // returns null if no more cards are available
+                return null;
+            }
         }
+
         ProgramCard card = activeDeck.remove(0);
         inUse.add(card);
         return card;
@@ -34,7 +39,7 @@ public class Deck {
         return cards;
     }
 
-    public ProgramCard discardCard(ProgramCard card){
+    public ProgramCard discardCardFromInUse(ProgramCard card){
         inUse.remove(card);
         discardDeck.add(card);
         return card;
@@ -42,7 +47,7 @@ public class Deck {
 
     public void discardCards(List<ProgramCard> cards){
         for(ProgramCard card : cards) {
-            discardCard(card);
+            discardCardFromInUse(card);
         }
     }
 
@@ -52,7 +57,16 @@ public class Deck {
         Collections.shuffle(activeDeck);
     }
 
-    public void discardInUse(){
-        discardCards(inUse);
+    public List<ProgramCard> getActiveDeck() {
+        return activeDeck;
     }
+
+    public List<ProgramCard> getDiscardDeck() {
+        return discardDeck;
+    }
+
+    public List<ProgramCard> getInUse() {
+        return inUse;
+    }
+
 }
