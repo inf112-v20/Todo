@@ -23,6 +23,8 @@ public class Player {
 
     private static int playerCount = 0;
 
+    public boolean programReady = false;
+
     private String name;
     private int id;
     private int flagsVisited = 0;

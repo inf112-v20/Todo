@@ -33,7 +33,7 @@ public class MainGame {
     public MainGame(MapNames mapNames) {
         this.players = new ArrayList<>();
         this.board = new GameBoard(mapNames, players);
-        this.roundHandler = new RoundHandler(this, players);
+        this.roundHandler = new RoundHandler(this);
         this.deck = new Deck(CardFactory.createDefaultDeck());
         this.movementHandler = new MovementHandler(this);
         playerSpriteSheet = new Texture("img/Player_Spritesheet.png");
