@@ -106,13 +106,7 @@ public class MovementHandler extends InputAdapter {
                 pushPlayerInDirection();
                 break;
             case Input.Keys.L:
-                laserHandler.updateLaserPositions();
-                laserHandler.fireLasersVisually();
-                laserHandler.dealDamageToAffectedPlayers();
-
-                handlePossibleDeaths(laserHandler.getHitPlayers());
-
-                laserHandler.resetHitPlayers();
+                fireAllLasers();
                 break;
             default:
                 return false;
@@ -126,12 +120,24 @@ public class MovementHandler extends InputAdapter {
     public boolean keyUp(int keycode) {
         switch (keycode) {
             case Input.Keys.L:
-                laserHandler.disableLasersVisually();
+                removeLasers();
                 break;
             default:
                 return false;
         }
         return true;
+    }
+
+    public void fireAllLasers(){
+        laserHandler.updateLaserPositions();
+        laserHandler.fireLasersVisually();
+        laserHandler.dealDamageToAffectedPlayers();
+        handlePossibleDeaths(laserHandler.getHitPlayers());
+        laserHandler.resetHitPlayers();
+    }
+
+    public void removeLasers() {
+        laserHandler.disableLasersVisually();
     }
 
     private void handlePossibleDeath(Player player) {
