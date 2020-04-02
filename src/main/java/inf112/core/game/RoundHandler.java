@@ -7,7 +7,6 @@ import java.util.List;
 public class RoundHandler {
     MainGame game;
     List<Player> players;
-    MovementHandler movementHandler;
 
     /**
      * Class that handles a gameRound. Every round has several phases, and every phase has different actions.
@@ -17,13 +16,12 @@ public class RoundHandler {
     public RoundHandler(MainGame game) {
         this.game = game;
         this.players = game.getPlayers();
-        this.movementHandler = game.getMovementHandler();
     }
 
     /**
      * main function for starting a new round
      */
-    public void instantiateNewRound() {
+    public void instantiateNextRoundPhase() {
         //Deal out new cards for the players
         //TODO mangler kort funksjonalitet
         for(Player player : players) {
@@ -39,8 +37,8 @@ public class RoundHandler {
         //Handle powerdown
         //TODO powerdown funksjonalitet
 
-        for(int i = 0; i < 5; i++) {
-            runPhases();
+        for(int round = 1; round <= 5; round++) {
+            runPhases(round);
         }
 
         //Cleanup
@@ -58,7 +56,8 @@ public class RoundHandler {
     /**
      * Function for running the phases of a round.
      */
-    private void runPhases() {
+    private void runPhases(int round) {
+        MovementHandler movementHandler = game.getMovementHandler();
         /**
          * Phase1
          * Show next playerCard
@@ -74,7 +73,7 @@ public class RoundHandler {
          * Phase3
          * Move Pushers, Conveyors then Gears.
          */
-        movementHandler.pushPlayerInDirection();
+        movementHandler.pushPlayerInDirection(round);
         movementHandler.runConveyors();
         movementHandler.gearsRotate();
 
@@ -89,6 +88,10 @@ public class RoundHandler {
          * Phase5
          * Register checkpoints, repairs
          */
+        for(Player player : players) {
+            movementHandler.handleFlagVisitation(player);
+        }
+        movementHandler.wrenchesRepair();
     }
 
 }

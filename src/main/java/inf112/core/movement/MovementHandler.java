@@ -1,6 +1,5 @@
 package inf112.core.movement;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -103,8 +102,10 @@ public class MovementHandler extends InputAdapter {
                 runConveyors();
                 gearsRotate();
                 wrenchesRepair();
-                pushPlayerInDirection();
+                pushPlayerInDirection(1);
                 break;
+            case Input.Keys.R:
+                game.getRoundHandler().instantiateNextRoundPhase();
             case Input.Keys.L:
                 fireAllLasers();
                 break;
@@ -134,6 +135,7 @@ public class MovementHandler extends InputAdapter {
         laserHandler.dealDamageToAffectedPlayers();
         handlePossibleDeaths(laserHandler.getHitPlayers());
         laserHandler.resetHitPlayers();
+
     }
 
     public void removeLasers() {
@@ -316,7 +318,7 @@ public class MovementHandler extends InputAdapter {
      *
      * @param recentlyMovedPlayer
      */
-    private void handleFlagVisitation(Player recentlyMovedPlayer) {
+    public void handleFlagVisitation(Player recentlyMovedPlayer) {
         if (flagHandler.isOnCorrectFlag(recentlyMovedPlayer)) {
             flagHandler.incrementFlagsVisited(recentlyMovedPlayer);
             recentlyMovedPlayer.setBackupHere();
@@ -423,14 +425,14 @@ public class MovementHandler extends InputAdapter {
         }
     }
 
-    public void pushPlayerInDirection() {
+    public void pushPlayerInDirection(int round) {
         for (Player player : players) {
             MovementHandler movementHandler = game.getMovementHandler();
-            if (board.isOnEvenPusher(player)) { // TODO lagre hvilket register vi er på, så spillere bare blir pushet på register 2 og 4
+            if (board.isOnEvenPusher(player) && (round % 2 == 0)) {
                 PusherTile pusherTile = (PusherTile) board.getPushers().get(player.getPositionCopy());
                 Direction direction = pusherTile.getDirection();
                 movementHandler.attemptToMove(player, direction);
-            } else if (board.isOnOddPusher(player)) {
+            } else if (board.isOnOddPusher(player) && (round % 2 != 0)) {
                 PusherTile pusherTile = (PusherTile) board.getPushers().get(player.getPositionCopy());
                 Direction direction = pusherTile.getDirection();
                 movementHandler.attemptToMove(player, direction);
