@@ -1,5 +1,6 @@
 package inf112.core.movement;
 
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -135,7 +136,13 @@ public class MovementHandler extends InputAdapter {
         laserHandler.dealDamageToAffectedPlayers();
         handlePossibleDeaths(laserHandler.getHitPlayers());
         laserHandler.resetHitPlayers();
-
+        game.getGameScreen().render(0);
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                removeLasers();
+            }
+        }, 1);
     }
 
     public void removeLasers() {
@@ -231,7 +238,7 @@ public class MovementHandler extends InputAdapter {
         collisionHandler.gatherAffectedPlayers(playerToBeMoved.getPositionCopy(), direction, affectedPlayers);
 
         Player last = affectedPlayers.get(0);
-        if(collisionHandler.canGo(last.getPositionCopy(), direction))
+        if(collisionHandler.canGo(last.getPositionCopy(), direction)) {
             for (Player affectedPlayer : affectedPlayers) {
                 moveUnchecked(affectedPlayer, direction);
                 affectedPlayer.setPrevDir(direction);
@@ -239,7 +246,8 @@ public class MovementHandler extends InputAdapter {
                 handleVoidVisitation(affectedPlayer);               // players on a hole is moved to spawn
                 handleFlagVisitation(affectedPlayer);
             }
-        handlePossibleDeaths(affectedPlayers);
+            handlePossibleDeaths(affectedPlayers);
+        }
     }
 
     /**

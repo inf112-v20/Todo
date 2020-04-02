@@ -27,7 +27,8 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         game = new MainGame();
-        mapRenderer = game.getBoard().instantiateMapRenderer();
+        game.setGameScreen(this);
+        mapRenderer = game.getBoard().getTiledMapRenderer();
         camera = game.getBoard().instantiateCamera();
 
         game.createPlayers(3);

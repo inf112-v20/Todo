@@ -1,7 +1,9 @@
 package inf112.core.game;
 
+import com.badlogic.gdx.utils.Timer;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
+
 import java.util.List;
 
 public class RoundHandler {
@@ -38,7 +40,14 @@ public class RoundHandler {
         //TODO powerdown funksjonalitet
 
         for(int round = 1; round <= 5; round++) {
-            runPhases(round);
+            game.getGameScreen().render(0);
+            int finalRound = round;
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    runPhases(finalRound);
+                }
+            }, (float) 0.5);
         }
 
         //Cleanup
@@ -73,17 +82,34 @@ public class RoundHandler {
          * Phase3
          * Move Pushers, Conveyors then Gears.
          */
-        movementHandler.pushPlayerInDirection(round);
-        movementHandler.runConveyors();
-        movementHandler.gearsRotate();
+        game.getGameScreen().render(0);
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                movementHandler.pushPlayerInDirection(round);
+            }
+        }, (float) 0.4);
+        game.getGameScreen().render(0);
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                movementHandler.runConveyors();
+            }
+        }, (float) 0.4);
+        game.getGameScreen().render(0);
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                movementHandler.gearsRotate();
+            }
+        }, (float) 0.4);
+        game.getGameScreen().render(0);
 
         /**
          * Phase4
          * Fire all lasers
          */
         movementHandler.fireAllLasers();
-        movementHandler.removeLasers();
-
         /**
          * Phase5
          * Register checkpoints, repairs
