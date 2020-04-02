@@ -7,10 +7,10 @@ import com.badlogic.gdx.math.Vector2;
  *
  * @author pål
  */
-public class PlayerBackup {
+public class ArchiveMarker {
     private Vector2 position;
 
-    public PlayerBackup(int xPos, int yPos){
+    public ArchiveMarker(int xPos, int yPos){
         this.position = new Vector2(xPos,yPos);
     }
 

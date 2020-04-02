@@ -1,4 +1,4 @@
-package inf112.core.programcards;
+package inf112.core.cards;
 
 import java.util.ArrayList;
 import java.util.Collections;

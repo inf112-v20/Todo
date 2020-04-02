@@ -1,6 +1,5 @@
 package inf112.core.movement;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -11,9 +10,9 @@ import inf112.core.laser.LaserHandler;
 import inf112.core.movement.util.*;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
-import inf112.core.programcards.MovementCard;
-import inf112.core.programcards.ProgramCard;
-import inf112.core.programcards.RotationCard;
+import inf112.core.cards.MovementCard;
+import inf112.core.cards.ProgramCard;
+import inf112.core.cards.RotationCard;
 import inf112.core.tile.*;
 import inf112.core.util.LayerOperation;
 
@@ -94,7 +93,7 @@ public class MovementHandler extends InputAdapter {
                 activePlayer.rotateRight();
                 break;
             case Input.Keys.C:
-                activePlayer.setBackupHere();
+                activePlayer.setArchiveMarkerHere();
                 break;
             case Input.Keys.SPACE:
                 moveToBackup(activePlayer);
@@ -313,7 +312,7 @@ public class MovementHandler extends InputAdapter {
     private void handleFlagVisitation(Player recentlyMovedPlayer) {
         if (flagHandler.isOnCorrectFlag(recentlyMovedPlayer)) {
             flagHandler.incrementFlagsVisited(recentlyMovedPlayer);
-            recentlyMovedPlayer.setBackupHere();
+            recentlyMovedPlayer.setArchiveMarkerHere();
             System.out.println(recentlyMovedPlayer.getName() + " just visited flag " + recentlyMovedPlayer.getFlagsVisited());
         }
     }
@@ -327,7 +326,7 @@ public class MovementHandler extends InputAdapter {
         for (Player player : players) {
             // first set all player's backup position to their associated spawn point
             Vector2 spawnPosition = spawnHandler.getInitialSpawnPosition(player);
-            player.setBackup((int) spawnPosition.x, (int) spawnPosition.y);
+            player.setArchiveMarker((int) spawnPosition.x, (int) spawnPosition.y);
 
             LayerOperation.removePlayer(playerLayer, player);
             player.resetPosition();

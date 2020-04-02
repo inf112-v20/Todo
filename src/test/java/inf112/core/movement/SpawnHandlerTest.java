@@ -60,12 +60,12 @@ public class SpawnHandlerTest {
 
         // simulate player 1 has previously visited flag and moved away
         player1 = game.getPlayerById(1);
-        player1.setBackup((int) flagPos.x, (int) flagPos.y);
+        player1.setArchiveMarker((int) flagPos.x, (int) flagPos.y);
 
         // simulate player 2 visits flag
         player2 = game.getPlayerById(2);
         player2.move(flagPos);
-        player2.setBackupHere();
+        player2.setArchiveMarkerHere();
 
         players = new ArrayList<>();
         players.add(player1);

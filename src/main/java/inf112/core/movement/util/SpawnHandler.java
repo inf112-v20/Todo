@@ -50,7 +50,7 @@ public class SpawnHandler extends InputAdapter {
 
     public void initSpawning(Player playerToBeSpawned) {
         this.activePlayer = playerToBeSpawned;
-        this.activePlayerBackupPos = playerToBeSpawned.getBackupCopy();
+        this.activePlayerBackupPos = playerToBeSpawned.getArchiveMarkerCopy();
         LayerOperation.removePlayer(playerLayer, playerToBeSpawned);
 
         if (isBackupAvailable()) {
@@ -132,7 +132,7 @@ public class SpawnHandler extends InputAdapter {
     }
 
     public boolean isBackupAvailable(Player player) {
-        Vector2 backUp = player.getBackupCopy();
+        Vector2 backUp = player.getArchiveMarkerCopy();
         for (Player p : game.getPlayers()) {
             if (p.equals(player))
                 continue;
