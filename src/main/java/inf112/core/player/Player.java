@@ -5,10 +5,9 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.game.MainGame;
-import inf112.core.programcards.ProgramCard;
+import inf112.core.cards.ProgramCard;
 import inf112.core.tile.Rotation;
 import inf112.core.util.VectorMovement;
-import inf112.desktop.Main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ public class Player {
     private Cell cell;
     private Direction direction;
     private Direction prevDir;
-    private PlayerBackup backup;
+    private ArchiveMarker archiveMarker;
     private List<ProgramCard> registers;
     private int lifeTokens, damageTokens;
 
@@ -64,7 +63,7 @@ public class Player {
         this.cell.setTile(new StaticTiledMapTile(region));
         this.position = new Vector2(xPos,yPos);
         this.direction = Direction.NORTH;
-        this.backup = new PlayerBackup(xPos, yPos);
+        this.archiveMarker = new ArchiveMarker(xPos, yPos);
         this.registers = new ArrayList<>();
         this.lifeTokens = 3;        // A robot can die 3 times before the player has lost
         this.damageTokens = 0;      // Starts off with 0 damage taken
@@ -114,13 +113,13 @@ public class Player {
 
     public Direction getDirection() { return direction; }
 
-    public void resetPosition() { this.position.set(backup.getX(), backup.getY()); }
+    public void resetPosition() { this.position.set(archiveMarker.getX(), archiveMarker.getY()); }
 
-    public void setBackup(int xPos, int yPos) { this.backup = new PlayerBackup(xPos, yPos); }
+    public void setArchiveMarker(int xPos, int yPos) { this.archiveMarker = new ArchiveMarker(xPos, yPos); }
 
-    public void setBackupHere() { setBackup((int) position.x, (int) position.y);}
+    public void setArchiveMarkerHere() { setArchiveMarker((int) position.x, (int) position.y);}
 
-    public Vector2 getBackupCopy() { return backup.getPositionCopy(); }
+    public Vector2 getArchiveMarkerCopy() { return archiveMarker.getPositionCopy(); }
 
     public int getFlagsVisited() { return flagsVisited; }
 
@@ -130,6 +129,7 @@ public class Player {
     public boolean isDead() { return damageTokens >= MainGame.MAX_DAMAGE_TOKENS_LIMIT; }
 
     public boolean isOutOfLifeTokes() { return lifeTokens <= 0; }
+
     public List<ProgramCard> getRegisters(){
         return this.registers;
     }

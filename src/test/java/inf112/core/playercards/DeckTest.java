@@ -2,8 +2,8 @@ package inf112.core.playercards;
 
 import inf112.core.game.MainGame;
 import inf112.core.movement.MovementHandler;
-import inf112.core.programcards.Deck;
-import inf112.core.programcards.ProgramCard;
+import inf112.core.cards.Deck;
+import inf112.core.cards.ProgramCard;
 import inf112.core.testingUtils.GdxTestRunner;
 import org.junit.Before;
 import org.junit.Test;

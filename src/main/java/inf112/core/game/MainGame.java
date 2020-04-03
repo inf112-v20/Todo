@@ -8,9 +8,9 @@ import inf112.core.board.MapLayer;
 import inf112.core.board.MapNames;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
-import inf112.core.programcards.CardFactory;
-import inf112.core.programcards.Deck;
-import inf112.core.programcards.ProgramCard;
+import inf112.core.cards.CardFactory;
+import inf112.core.cards.Deck;
+import inf112.core.cards.ProgramCard;
 import inf112.core.util.LayerOperation;
 
 import java.util.ArrayList;
