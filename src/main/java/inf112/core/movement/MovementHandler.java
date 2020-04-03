@@ -142,7 +142,7 @@ public class MovementHandler extends InputAdapter {
             public void run() {
                 removeLasers();
             }
-        }, 1);
+        }, (float) 0.1);
     }
 
     public void removeLasers() {

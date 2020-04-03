@@ -40,14 +40,8 @@ public class RoundHandler {
         //TODO powerdown funksjonalitet
 
         for(int round = 1; round <= 5; round++) {
+            runPhases(round);
             game.getGameScreen().render(0);
-            int finalRound = round;
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    runPhases(finalRound);
-                }
-            }, (float) 0.5);
         }
 
         //Cleanup
@@ -88,28 +82,34 @@ public class RoundHandler {
             public void run() {
                 movementHandler.pushPlayerInDirection(round);
             }
-        }, (float) 0.4);
+        }, (float) (round - 0.9));
         game.getGameScreen().render(0);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 movementHandler.runConveyors();
             }
-        }, (float) 0.4);
+        }, (float)(round - 0.8));
         game.getGameScreen().render(0);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 movementHandler.gearsRotate();
             }
-        }, (float) 0.4);
+        }, (float) (round - 0.7));
         game.getGameScreen().render(0);
 
         /**
          * Phase4
          * Fire all lasers
          */
-        movementHandler.fireAllLasers();
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                movementHandler.fireAllLasers();
+            }
+        }, (float) (round - 0.6));
+        game.getGameScreen().render(0);
         /**
          * Phase5
          * Register checkpoints, repairs
