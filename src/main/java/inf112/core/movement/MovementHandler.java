@@ -107,6 +107,7 @@ public class MovementHandler extends InputAdapter {
                 break;
             case Input.Keys.R:
                 game.getRoundHandler().instantiateNextRoundPhase();
+                break;
             case Input.Keys.L:
                 fireAllLasers();
                 break;

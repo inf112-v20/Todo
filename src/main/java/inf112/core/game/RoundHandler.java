@@ -82,21 +82,21 @@ public class RoundHandler {
             public void run() {
                 movementHandler.pushPlayerInDirection(round);
             }
-        }, (float) (round - 0.9));
+        }, (float) (round - 0.8));
         game.getGameScreen().render(0);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 movementHandler.runConveyors();
             }
-        }, (float)(round - 0.8));
+        }, (float)(round - 0.7));
         game.getGameScreen().render(0);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 movementHandler.gearsRotate();
             }
-        }, (float) (round - 0.7));
+        }, (float) (round - 0.4));
         game.getGameScreen().render(0);
 
         /**
@@ -108,7 +108,7 @@ public class RoundHandler {
             public void run() {
                 movementHandler.fireAllLasers();
             }
-        }, (float) (round - 0.6));
+        }, (float) (round - 0.3));
         game.getGameScreen().render(0);
         /**
          * Phase5
