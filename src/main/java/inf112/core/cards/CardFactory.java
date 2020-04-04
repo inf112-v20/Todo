@@ -25,28 +25,28 @@ public enum CardFactory {
         switch (type) {
             case FORWARD1:
                 return new MovementCard(getNewPriority(),1,true,"Move forward 1 tile",
-                        new Texture("img/forward.png"));
+                        new Texture("cards/forward.png"));
             case FORWARD2:
                 return new MovementCard(getNewPriority(),2,true,"Move forward 2 tiles",
-                        new Texture("img/forward2.png"));
+                        new Texture("cards/forward2.png"));
             case FORWARD3:
                 return new MovementCard(getNewPriority(),3,true,"Move forward 3 tiles",
-                        new Texture("img/forward3.png"));
+                        new Texture("cards/forward3.png"));
             case BACKWARDS1:
                 return new MovementCard(getNewPriority(),1,false,"Move forward 1 tile",
-                        new Texture("img/backward.png"));
+                        new Texture("cards/backward.png"));
             case ROTATELEFT1:
                 return new RotationCard(getNewPriority(), false, 1, "Rotate left once",
-                        new Texture("img/left.png"));
+                        new Texture("cards/left.png"));
             case ROTATELEFT2:
                 return new RotationCard(getNewPriority(), false, 2, "U-Turn",
-                        new Texture("img/uturn.png"));
+                        new Texture("cards/uturn.png"));
             case ROTATERIGHT1:
                 return new RotationCard(getNewPriority(), true, 1, "Rotate right once",
-                        new Texture("img/right.png"));
+                        new Texture("cards/right.png"));
             default:
                 return new MovementCard(0,0,true, "No movement",
-                        new Texture("img/forward.png"));
+                        new Texture("cards/forward.png"));
         }
     }
 

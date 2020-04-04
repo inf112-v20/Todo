@@ -28,7 +28,7 @@ public class MainMenuScreen implements Screen {
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
 
-        Sprite button = new Sprite(new Texture("img/playButton.png"));
+        Sprite button = new Sprite(new Texture("buttons/playButton.png"));
         playButton = new ImageButton(new SpriteDrawable(button));
         playButton.setPosition(width/2 - button.getWidth()/2, height*0.5f);
         playButton.addListener(new ClickListener() {
@@ -39,7 +39,7 @@ public class MainMenuScreen implements Screen {
         });
         stage.addActor(playButton);
 
-        button = new Sprite((new Texture("img/exitButton.png")));
+        button = new Sprite((new Texture("buttons/exitButton.png")));
         exitButton = new ImageButton(new SpriteDrawable(button));
         exitButton.setPosition(width/2-button.getWidth()/2, height*0.25f);
         exitButton.addListener(new ClickListener() {

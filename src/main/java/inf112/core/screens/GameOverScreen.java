@@ -38,7 +38,7 @@ public class GameOverScreen implements Screen {
         stage.addActor(gameOver);
 
         // play again button
-        this.button = new Sprite(new Texture("img/playAgainButton.png"));
+        this.button = new Sprite(new Texture("buttons/playAgainButton.png"));
         this.playAgainButton = new ImageButton(new SpriteDrawable(button));
         playAgainButton.setPosition(width/2 - button.getWidth()/2, height*0.35f);
         playAgainButton.addListener(new ClickListener() {
@@ -50,7 +50,7 @@ public class GameOverScreen implements Screen {
         stage.addActor(playAgainButton);
 
         // exit button
-        this.button = new Sprite((new Texture("img/exitButton.png")));
+        this.button = new Sprite((new Texture("buttons/exitButton.png")));
         this.closeButton = new ImageButton(new SpriteDrawable(button));
         closeButton.setPosition(width/2-button.getWidth()/2, height*0.20f);
         closeButton.addListener(new ClickListener() {
