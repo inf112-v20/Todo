@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import inf112.core.util.AssMan;
 
 public class MainMenuScreen implements Screen {
 
@@ -28,7 +29,7 @@ public class MainMenuScreen implements Screen {
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
 
-        Sprite button = new Sprite(new Texture("buttons/playButton.png"));
+        Sprite button = new Sprite(AssMan.manager.get(AssMan.PLAY_BUTTON));
         playButton = new ImageButton(new SpriteDrawable(button));
         playButton.setPosition(width/2 - button.getWidth()/2, height*0.5f);
         playButton.addListener(new ClickListener() {
@@ -39,7 +40,7 @@ public class MainMenuScreen implements Screen {
         });
         stage.addActor(playButton);
 
-        button = new Sprite((new Texture("buttons/exitButton.png")));
+        button = new Sprite((AssMan.manager.get(AssMan.EXIT_BUTTON)));
         exitButton = new ImageButton(new SpriteDrawable(button));
         exitButton.setPosition(width/2-button.getWidth()/2, height*0.25f);
         exitButton.addListener(new ClickListener() {

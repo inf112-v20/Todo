@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import inf112.core.util.AssMan;
 
 public class GameOverScreen implements Screen {
 
@@ -32,13 +33,13 @@ public class GameOverScreen implements Screen {
         float height = Gdx.graphics.getHeight();
 
         // game over text
-        this.text = new Sprite(new Texture("img/gameOver.png"));
+        this.text = new Sprite(AssMan.manager.get(AssMan.GAME_OVER_TEXT));
         this.gameOver = new Image(text);
         gameOver.setPosition(width/2 - text.getWidth()/2, height*0.7f);
         stage.addActor(gameOver);
 
         // play again button
-        this.button = new Sprite(new Texture("buttons/playAgainButton.png"));
+        this.button = new Sprite(AssMan.manager.get(AssMan.PLAY_AGAIN_BUTTON));
         this.playAgainButton = new ImageButton(new SpriteDrawable(button));
         playAgainButton.setPosition(width/2 - button.getWidth()/2, height*0.35f);
         playAgainButton.addListener(new ClickListener() {
@@ -50,7 +51,7 @@ public class GameOverScreen implements Screen {
         stage.addActor(playAgainButton);
 
         // exit button
-        this.button = new Sprite((new Texture("buttons/exitButton.png")));
+        this.button = new Sprite((AssMan.manager.get(AssMan.EXIT_BUTTON)));
         this.closeButton = new ImageButton(new SpriteDrawable(button));
         closeButton.setPosition(width/2-button.getWidth()/2, height*0.20f);
         closeButton.addListener(new ClickListener() {

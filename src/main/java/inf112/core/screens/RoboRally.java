@@ -2,6 +2,7 @@ package inf112.core.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import inf112.core.util.AssMan;
 
 public class RoboRally extends Game implements IGameStateSwitcher {
 
@@ -28,6 +29,8 @@ public class RoboRally extends Game implements IGameStateSwitcher {
 
     @Override
     public void create() {
+        AssMan.load();
+        AssMan.manager.finishLoading();
         initMainMenu();
     }
 
