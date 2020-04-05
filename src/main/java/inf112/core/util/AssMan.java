@@ -3,6 +3,8 @@ package inf112.core.util;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
 
 public class AssMan {
     public static final AssetManager manager = new AssetManager();
@@ -28,6 +30,14 @@ public class AssMan {
             = new AssetDescriptor<Texture>("assets/img/gameOver.png", Texture.class);
 
 
+    //FONT
+
+    public static final AssetDescriptor<BitmapFont> CHINTZY_FONT
+            = new AssetDescriptor<BitmapFont>("assets/fonts/chintzy_font.fnt", BitmapFont.class);
+
+
+
+
 
     @SuppressWarnings("Duplicates")
     public static void load() {
@@ -40,6 +50,16 @@ public class AssMan {
 
         //TEXT
         manager.load(GAME_OVER_TEXT);
+
+        //FONT
+        manager.load(CHINTZY_FONT);
+
+
+
     }
 
+    public static void dispose() {
+        manager.clear();
+        manager.dispose();
+    }
 }

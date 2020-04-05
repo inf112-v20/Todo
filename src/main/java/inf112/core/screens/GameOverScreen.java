@@ -3,7 +3,6 @@ package inf112.core.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -37,6 +36,7 @@ public class GameOverScreen implements Screen {
         this.gameOver = new Image(text);
         gameOver.setPosition(width/2 - text.getWidth()/2, height*0.7f);
         stage.addActor(gameOver);
+
 
         // play again button
         this.button = new Sprite(AssMan.manager.get(AssMan.PLAY_AGAIN_BUTTON));
