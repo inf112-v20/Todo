@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.core.game.MainGame;
 import inf112.core.player.Player;
+import inf112.core.util.AssMan;
 
 
 public class GameScreen implements Screen {
@@ -27,6 +28,9 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         game = new MainGame();
+        game.createDeck();
+        game.givePlayerCards();
+
         mapRenderer = game.getBoard().instantiateMapRenderer();
         camera = game.getBoard().instantiateCamera();
 

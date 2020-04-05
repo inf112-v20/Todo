@@ -5,6 +5,7 @@ import inf112.core.movement.MovementHandler;
 import inf112.core.cards.Deck;
 import inf112.core.cards.ProgramCard;
 import inf112.core.testingUtils.GdxTestRunner;
+import inf112.core.util.AssMan;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +24,11 @@ public class DeckTest {
 
     @Before
     public void init() {
+        AssMan.load();
+        AssMan.manager.finishLoading();
+
         game = new MainGame();
+        game.createDeck();
         movementHandler = new MovementHandler(game);
         deck = game.getDeck();
     }

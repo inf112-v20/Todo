@@ -6,6 +6,7 @@ import inf112.core.game.MainGame;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
 import inf112.core.testingUtils.GdxTestRunner;
+import inf112.core.util.AssMan;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +28,7 @@ public class LaserPositionsTest {
 
     @Before
     public void init() {
+
         game = new MainGame(MapNames.LASER_TESTING_MAP2);
 
         shootingPlayer = new Player(6, 0);
