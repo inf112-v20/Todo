@@ -54,7 +54,7 @@ public class AssMan {
             = new AssetDescriptor<Texture>("assets/cards/right.png", Texture.class);
 
     public static final AssetDescriptor<Texture> UTURN
-            = new AssetDescriptor<Texture>("assets/cards/UTURN.png", Texture.class);
+            = new AssetDescriptor<Texture>("assets/cards/uturn.png", Texture.class);
 
 
     @SuppressWarnings("Duplicates")
