@@ -31,12 +31,30 @@ public class AssMan {
 
 
     //FONT
-
     public static final AssetDescriptor<BitmapFont> CHINTZY_FONT
             = new AssetDescriptor<BitmapFont>("assets/fonts/chintzy_font.fnt", BitmapFont.class);
 
+    //CARDS
+    public static final AssetDescriptor<Texture> FORWARD1
+            = new AssetDescriptor<Texture>("assets/cards/forward.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> FORWARD2
+            = new AssetDescriptor<Texture>("assets/cards/forward2.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> FORWARD3
+            = new AssetDescriptor<Texture>("assets/cards/forward3.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> BACKWARD
+            = new AssetDescriptor<Texture>("assets/cards/backward.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> LEFT
+            = new AssetDescriptor<Texture>("assets/cards/left.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> RIGHT
+            = new AssetDescriptor<Texture>("assets/cards/right.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> UTURN
+            = new AssetDescriptor<Texture>("assets/cards/UTURN.png", Texture.class);
 
 
     @SuppressWarnings("Duplicates")
@@ -54,7 +72,14 @@ public class AssMan {
         //FONT
         manager.load(CHINTZY_FONT);
 
-
+        //CARDS
+        manager.load(FORWARD1);
+        manager.load(FORWARD2);
+        manager.load(FORWARD3);
+        manager.load(BACKWARD);
+        manager.load(LEFT);
+        manager.load(RIGHT);
+        manager.load(UTURN);
 
     }
 

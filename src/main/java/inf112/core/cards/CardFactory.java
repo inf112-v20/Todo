@@ -1,6 +1,7 @@
 package inf112.core.cards;
 
 import com.badlogic.gdx.graphics.Texture;
+import inf112.core.util.AssMan;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,28 +26,28 @@ public enum CardFactory {
         switch (type) {
             case FORWARD1:
                 return new MovementCard(getNewPriority(),1,true,"Move forward 1 tile",
-                        new Texture("cards/forward.png"));
+                        AssMan.manager.get(AssMan.FORWARD1));
             case FORWARD2:
                 return new MovementCard(getNewPriority(),2,true,"Move forward 2 tiles",
-                        new Texture("cards/forward2.png"));
+                        AssMan.manager.get(AssMan.FORWARD2));
             case FORWARD3:
                 return new MovementCard(getNewPriority(),3,true,"Move forward 3 tiles",
-                        new Texture("cards/forward3.png"));
+                        AssMan.manager.get(AssMan.FORWARD3));
             case BACKWARDS1:
                 return new MovementCard(getNewPriority(),1,false,"Move forward 1 tile",
-                        new Texture("cards/backward.png"));
+                        AssMan.manager.get(AssMan.BACKWARD));
             case ROTATELEFT1:
                 return new RotationCard(getNewPriority(), false, 1, "Rotate left once",
-                        new Texture("cards/left.png"));
+                        AssMan.manager.get(AssMan.LEFT));
             case ROTATELEFT2:
                 return new RotationCard(getNewPriority(), false, 2, "U-Turn",
-                        new Texture("cards/uturn.png"));
+                        AssMan.manager.get(AssMan.UTURN));
             case ROTATERIGHT1:
                 return new RotationCard(getNewPriority(), true, 1, "Rotate right once",
-                        new Texture("cards/right.png"));
+                        AssMan.manager.get(AssMan.RIGHT));
             default:
                 return new MovementCard(0,0,true, "No movement",
-                        new Texture("cards/forward.png"));
+                        AssMan.manager.get(AssMan.FORWARD1));  // temp
         }
     }
 
