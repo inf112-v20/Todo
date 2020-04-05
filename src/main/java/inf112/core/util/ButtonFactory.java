@@ -14,8 +14,7 @@ public class ButtonFactory {
         TextButton button = new TextButton(text, style);
 
         button.setTransform(true);
-        button.setSize(250 * size, button.getHeight() * size);
-        button.getLabel().setFontScale(size);
+        button.getLabel().setFontScale(size/2);
 
         button.setTransform(false);
 

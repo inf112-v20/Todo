@@ -7,17 +7,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import inf112.core.util.AssMan;
+import inf112.core.util.ButtonFactory;
 
 public class GameOverScreen implements Screen {
 
     private IGameStateSwitcher gameStateSwitcher;
     private Image gameOver;
-    private ImageButton playAgainButton, closeButton;
-    private Sprite text, button;
+    private TextButton playAgainButton, closeButton;
+    private Sprite gameOverText;
     private Stage stage;
 
     public GameOverScreen(RoboRally gameStateSwitcher) {
@@ -32,16 +32,15 @@ public class GameOverScreen implements Screen {
         float height = Gdx.graphics.getHeight();
 
         // game over text
-        this.text = new Sprite(AssMan.manager.get(AssMan.GAME_OVER_TEXT));
-        this.gameOver = new Image(text);
-        gameOver.setPosition(width/2 - text.getWidth()/2, height*0.7f);
+        this.gameOverText = new Sprite(AssMan.manager.get(AssMan.GAME_OVER_TEXT));
+        this.gameOver = new Image(gameOverText);
+        gameOver.scaleBy(2);
+        gameOver.setPosition(width/4 - gameOverText.getWidth()/4, height*0.7f);
         stage.addActor(gameOver);
 
 
-        // play again button
-        this.button = new Sprite(AssMan.manager.get(AssMan.PLAY_AGAIN_BUTTON));
-        this.playAgainButton = new ImageButton(new SpriteDrawable(button));
-        playAgainButton.setPosition(width/2 - button.getWidth()/2, height*0.35f);
+        this.playAgainButton = ButtonFactory.createCustomButton("Play Again", 3);
+        playAgainButton.setPosition(width/2-playAgainButton.getWidth()/2, height*0.3f);
         playAgainButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -51,9 +50,8 @@ public class GameOverScreen implements Screen {
         stage.addActor(playAgainButton);
 
         // exit button
-        this.button = new Sprite((AssMan.manager.get(AssMan.EXIT_BUTTON)));
-        this.closeButton = new ImageButton(new SpriteDrawable(button));
-        closeButton.setPosition(width/2-button.getWidth()/2, height*0.20f);
+        this.closeButton = ButtonFactory.createCustomButton("Exit Game", 3);
+        closeButton.setPosition(width/2-closeButton.getWidth()/2, height*0.20f);
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

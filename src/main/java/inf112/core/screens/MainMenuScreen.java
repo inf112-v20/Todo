@@ -31,7 +31,7 @@ public class MainMenuScreen implements Screen {
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
 
-        TextButton play = ButtonFactory.createCustomButton("Play", 2);
+        TextButton play = ButtonFactory.createCustomButton("Play", 8);
         play.setPosition(width/2 - play.getWidth()/2, height*0.5f);
         play.addListener(new ClickListener() {
             @Override
@@ -41,7 +41,7 @@ public class MainMenuScreen implements Screen {
         });
         stage.addActor(play);
 
-        TextButton exit = ButtonFactory.createCustomButton("Exit", 2);
+        TextButton exit = ButtonFactory.createCustomButton("Exit", 4);
         exit.setPosition(width/2-exit.getWidth()/2, height*0.25f);
         exit.addListener(new ClickListener() {
             @Override
