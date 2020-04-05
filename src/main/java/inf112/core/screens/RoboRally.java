@@ -23,7 +23,6 @@ public class RoboRally extends Game implements IGameStateSwitcher {
 
     @Override
     public void closeApplication() {
-        dispose();
         Gdx.app.exit();
     }
 
