@@ -117,18 +117,22 @@ public class MainGame {
         playerSpriteSheet.dispose();
     }
 
-    public void givePlayerCards(){   // Is to be moved once we have a proper implementation for rounds
-        for (Player player : players) {
-            List<ProgramCard> fiveRandomCards = deck.getCards(5);
-            for (ProgramCard card : fiveRandomCards) {
-                player.addToRegister(card);
-            }
+    public void givePlayerCards() {   // Is to be moved once we have a proper implementation for rounds
+        for (Player player : players)
+            givePlayerCards(player);
+    }
+
+    public void givePlayerCards(Player player){   // Is to be moved once we have a proper implementation for rounds
+        List<ProgramCard> fiveRandomCards = deck.getCards(5);
+        for (ProgramCard card : fiveRandomCards){
+            player.addToProgramSheet(card);
         }
     }
 
     public Deck getDeck() {
         return deck;
     }
+
     public boolean hasLost(Player player) {
         return player.isDead() && player.isOutOfLifeTokes();
     }

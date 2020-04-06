@@ -24,6 +24,10 @@ public abstract class Card {
         return name;
     }
 
+    public String toString() {
+        return name;
+    }
+
     public Texture getTexture(){
         return texture;
     }
