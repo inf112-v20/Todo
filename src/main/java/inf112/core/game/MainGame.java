@@ -119,7 +119,7 @@ public class MainGame {
     public void givePlayerCards(Player player){   // Is to be moved once we have a proper implementation for rounds
         List<ProgramCard> fiveRandomCards = deck.getCards(5);
         for (ProgramCard card : fiveRandomCards){
-            player.addToRegister(card);
+            player.addToProgramSheet(card);
         }
     }
 

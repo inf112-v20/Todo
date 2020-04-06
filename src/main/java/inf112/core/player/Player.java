@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
+import inf112.core.cards.register.ProgramSheet;
 import inf112.core.game.MainGame;
 import inf112.core.cards.ProgramCard;
 import inf112.core.tile.Rotation;
@@ -32,7 +33,7 @@ public class Player {
     private Direction direction;
     private Direction prevDir;
     private ArchiveMarker archiveMarker;
-    private List<ProgramCard> registers;
+    private ProgramSheet programSheet;
     private int lifeTokens, damageTokens;
 
 
@@ -64,7 +65,7 @@ public class Player {
         this.position = new Vector2(xPos,yPos);
         this.direction = Direction.NORTH;
         this.archiveMarker = new ArchiveMarker(xPos, yPos);
-        this.registers = new ArrayList<>();
+        this.programSheet = new ProgramSheet();
         this.lifeTokens = 3;        // A robot can die 3 times before the player has lost
         this.damageTokens = 0;      // Starts off with 0 damage taken
     }
@@ -131,7 +132,7 @@ public class Player {
     public boolean isOutOfLifeTokes() { return lifeTokens <= 0; }
 
     public List<ProgramCard> getRegisters(){
-        return this.registers;
+        return this.programSheet.getCardList();
     }
 
     /**
@@ -181,8 +182,8 @@ public class Player {
         rotateTo(rotation.rotate(direction));
     }
 
-    public void addToRegister(ProgramCard card){
-        this.registers.add(card);
+    public void addToProgramSheet(ProgramCard card){
+        this.programSheet.add(card);
     }
 
 
