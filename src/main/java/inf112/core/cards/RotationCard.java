@@ -2,6 +2,8 @@ package inf112.core.cards;
 
 import com.badlogic.gdx.graphics.Texture;
 
+import java.util.Objects;
+
 public class RotationCard extends ProgramCard {
 
     private boolean clockwise;
@@ -18,4 +20,20 @@ public class RotationCard extends ProgramCard {
     }
 
     public int getRotations() { return rotations; }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RotationCard)) return false;
+        if (!super.equals(o)) return false;
+        RotationCard that = (RotationCard) o;
+        return clockwise == that.clockwise &&
+                rotations == that.rotations;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), clockwise, rotations);
+    }
 }

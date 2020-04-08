@@ -38,6 +38,7 @@ public class HUDScreen {
      *  Temp solution -- Proof of concept
      */
     public void createButtons(){
+
         int x = 0;
         int y = 0;
         int index = 0;

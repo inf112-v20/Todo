@@ -5,7 +5,7 @@ import inf112.core.cards.ProgramCard;
 import java.util.Arrays;
 import java.util.List;
 
-public class ProgramSheet implements IProgramSheet {
+public class ProgramSheet implements IProgramSheet<ProgramCard> {
 
     public static final int NUM_OF_REGISTERS = 5;
 
@@ -28,13 +28,13 @@ public class ProgramSheet implements IProgramSheet {
 
     @Override
     public boolean isFull() {
-        return addHere >= locked;
+        return addHere == locked;
     }
 
     @Override
     public boolean contains(ProgramCard card) {
         for (int i = 0; i < NUM_OF_REGISTERS; i++)
-            if (registers[i].equals(card))
+            if (card.equals(registers[i]))
                 return true;
         return false;
     }
@@ -45,33 +45,70 @@ public class ProgramSheet implements IProgramSheet {
             return false;
 
         registers[addHere++] = card;
+        checkInv();
         return true;
     }
 
     @Override
     public boolean remove(ProgramCard card) {
-        for (int i = 0; i < NUM_OF_REGISTERS; i++)
-            if (registers[i].equals(card)) {
+        for (int i = 0; i < locked; i++)
+            if (card.equals(registers[i])) {
                 registers[i] = null;
+                adjustAfterRemoval(i);
+                updateAddHerePointer();
+                checkInv();
                 return true;
             }
         return false;
     }
 
+    /**
+     * Moves all cards from unlocked registers to the right of removedHere one register to the left (to fill the gap)
+     *
+     * @param removedHere, index where a card just was removed
+     */
+    private void adjustAfterRemoval(int removedHere) {
+        int i;
+        for (i = removedHere; i < locked - 1; i++)
+            registers[i] = registers[i + 1];
+
+        registers[i] = null;   // to not duplicate the last element
+    }
+
+    /**
+     * Updates addHere pointer to the first empty unlocked register.
+     * If all registers are non-empty, then addHere points to the leftmost locked register (addHere == locked)
+     */
+    private void updateAddHerePointer() {
+        addHere = 0;
+        while (addHere < locked) {
+            if (registers[addHere] == null)
+                break;
+
+            addHere++;
+        }
+    }
+
     @Override
-    public void lockNext() {
+    public void lockNextRegister() {
         this.locked--;
         this.locked = Math.max(locked, 0);    // if all registers are locked, we cannot lock more registers
+        if (registers[locked] == null)
+            throw new IllegalStateException("Cannot lock an empty register");
+        updateAddHerePointer();
+        checkInv();
     }
 
     @Override
-    public void unlockNext() {
+    public void unlockNextRegister() {
         this.locked++;
-        this.locked = Math.min(locked, NUM_OF_REGISTERS);
+        this.locked = Math.min(locked, NUM_OF_REGISTERS);    // if all registers are unlocked, we cannot unlock more registers
+        updateAddHerePointer();
+        checkInv();
     }
 
     @Override
-    public void clearUnlocked() {
+    public void clearUnlockedRegisters() {
         for (int i = 0; i < locked; i++)
             registers[i] = null;
 
@@ -101,10 +138,27 @@ public class ProgramSheet implements IProgramSheet {
     }
 
     @Override
-    public boolean isLocked(int regNum) {
+    public boolean isRegisterEmpty(int regNum) {
+        if (regNum < 1 || regNum > NUM_OF_REGISTERS)
+            throw new IllegalArgumentException("Invalid register number");
+
+        return registers[regNum - 1] == null;    // "translates" register number to register index
+    }
+
+    @Override
+    public boolean isRegisterLocked(int regNum) {
         if (regNum < 1 || regNum > NUM_OF_REGISTERS)
             throw new IllegalArgumentException("Invalid register number");
 
         return (regNum - 1) >= locked;    // "translates" register number to register index
+    }
+
+    /**
+     * Class invariant.
+     */
+    private void checkInv() {
+        assert addHere <= locked : "addHere > locked";
+        assert addHere >= 0 : "addHere < 0";
+        assert locked <= NUM_OF_REGISTERS : "locked > number of registers";
     }
 }

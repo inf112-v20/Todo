@@ -8,8 +8,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import inf112.core.util.AssMan;
+import inf112.core.util.ButtonFactory;
 
 public class MainMenuScreen implements Screen {
 
@@ -28,27 +31,27 @@ public class MainMenuScreen implements Screen {
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
 
-        Sprite button = new Sprite(new Texture("img/playButton.png"));
-        playButton = new ImageButton(new SpriteDrawable(button));
-        playButton.setPosition(width/2 - button.getWidth()/2, height*0.5f);
-        playButton.addListener(new ClickListener() {
+        TextButton play = ButtonFactory.createCustomButton("Play", 8);
+        play.setPosition(width/2 - play.getWidth()/2, height*0.5f);
+        play.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 gameStateSwitcher.initMainGame();
             }
         });
-        stage.addActor(playButton);
+        stage.addActor(play);
 
-        button = new Sprite((new Texture("img/exitButton.png")));
-        exitButton = new ImageButton(new SpriteDrawable(button));
-        exitButton.setPosition(width/2-button.getWidth()/2, height*0.25f);
-        exitButton.addListener(new ClickListener() {
+        TextButton exit = ButtonFactory.createCustomButton("Exit", 4);
+        exit.setPosition(width/2-exit.getWidth()/2, height*0.25f);
+        exit.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 gameStateSwitcher.closeApplication();
             }
         });
-        stage.addActor(exitButton);
+        stage.addActor(exit);
+
+
 
         Gdx.input.setInputProcessor(stage);
     }

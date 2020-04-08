@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.core.game.MainGame;
 import inf112.core.player.Player;
+import inf112.core.util.AssMan;
 
 
 public class GameScreen implements Screen {
@@ -27,8 +28,10 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         game = new MainGame();
-        game.setGameScreen(this);
-        mapRenderer = game.getBoard().getTiledMapRenderer();
+        game.createDeck();
+        game.givePlayerCards();
+
+        mapRenderer = game.getBoard().instantiateMapRenderer();
         camera = game.getBoard().instantiateCamera();
 
         game.createPlayers(3);
@@ -37,9 +40,9 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(game.getDefaultInputProcessor());
 
         //HUDoverlay screen
-        hudScreen.setMovementHandler(game.getMovementHandler());
+        //hudScreen.setMovementHandler(game.getMovementHandler());
         //hudScreen.createButtons();    //For manual testing purposes only atm
-        stage = hudScreen.getStage();
+        //stage = hudScreen.getStage();
     }
 
     @Override
@@ -63,7 +66,7 @@ public class GameScreen implements Screen {
             Player.resetPlayerCount();
             gameStateSwitcher.initGameOver();
         }
-        stage.draw();       // HUD
+        //stage.draw();       // HUD
     }
 
     @Override

@@ -37,7 +37,6 @@ public class MainGame {
         this.players = new ArrayList<>();
         this.board = new GameBoard(mapNames, players);
         this.roundHandler = new RoundHandler(this);
-        this.deck = new Deck(CardFactory.createDefaultDeck());
         this.movementHandler = new MovementHandler(this);
         playerSpriteSheet = new Texture("img/Player_Spritesheet.png");
         playerSpriteSheetGrid = TextureRegion.split(
@@ -79,6 +78,10 @@ public class MainGame {
             LayerOperation.drawPlayer(board.getLayer(MapLayer.PLAYER_LAYER), player);
     }
 
+    public void createDeck(){
+        this.deck = new Deck(CardFactory.createDefaultDeck());
+    }
+
     private boolean createPlayer() {
         if (Player.getPlayerCount() >= playerSpriteSheetGrid.length)
             throw new IllegalStateException(
@@ -100,8 +103,6 @@ public class MainGame {
 
         movementHandler.moveAllToSpawn();
         drawPlayers();
-
-        for (Player player : players){ givePlayerCards(player); }
 
         return allAdded;
     }
@@ -128,16 +129,22 @@ public class MainGame {
         playerSpriteSheet.dispose();
     }
 
+    public void givePlayerCards() {   // Is to be moved once we have a proper implementation for rounds
+        for (Player player : players)
+            givePlayerCards(player);
+    }
+
     public void givePlayerCards(Player player){   // Is to be moved once we have a proper implementation for rounds
         List<ProgramCard> fiveRandomCards = deck.getCards(5);
         for (ProgramCard card : fiveRandomCards){
-            player.addToRegister(card);
+            player.addToProgramSheet(card);
         }
     }
 
     public Deck getDeck() {
         return deck;
     }
+
     public boolean hasLost(Player player) {
         return player.isDead() && player.isOutOfLifeTokes();
     }

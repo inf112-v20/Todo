@@ -2,9 +2,10 @@ package inf112.core.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import inf112.core.util.AssMan;
 
 public class RoboRally extends Game implements IGameStateSwitcher {
-
     @Override
     public void initMainMenu() {
         setScreen(new MainMenuScreen(this));
@@ -22,12 +23,13 @@ public class RoboRally extends Game implements IGameStateSwitcher {
 
     @Override
     public void closeApplication() {
-        dispose();
         Gdx.app.exit();
     }
 
     @Override
     public void create() {
+        AssMan.load();
+        AssMan.manager.finishLoading();
         initMainMenu();
     }
 
@@ -53,6 +55,7 @@ public class RoboRally extends Game implements IGameStateSwitcher {
 
     @Override
     public void dispose() {
+        AssMan.dispose();
         super.dispose();
     }
 }
