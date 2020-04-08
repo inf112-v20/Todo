@@ -1,11 +1,13 @@
 package inf112.core.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import inf112.core.camera.OrthographicCameraController;
 import inf112.core.game.MainGame;
 import inf112.core.player.Player;
 import inf112.core.util.AssMan;
@@ -37,7 +39,11 @@ public class GameScreen implements Screen {
         game.createPlayers(3);
         game.setActivePlayerById(1);
 
-        Gdx.input.setInputProcessor(game.getDefaultInputProcessor());
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        OrthographicCameraController cameraController = new OrthographicCameraController(camera);
+        inputMultiplexer.addProcessor(game.getDefaultInputProcessor());
+        inputMultiplexer.addProcessor(cameraController);
+        Gdx.input.setInputProcessor(inputMultiplexer);
 
         //HUDoverlay screen
         //hudScreen.setMovementHandler(game.getMovementHandler());

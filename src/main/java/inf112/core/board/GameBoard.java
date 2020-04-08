@@ -135,6 +135,7 @@ public class GameBoard extends LayeredBoard {
         OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false, getMapWidth(), getMapHeight());                           // show this many units of the world
         camera.position.set((float) getMapWidth() / 2, (float) getMapHeight() / 2,0);    // centers the camera
+        //camera.rotate(-45);
         camera.update();
         return camera;
     }
