@@ -137,7 +137,6 @@ public class MovementHandler extends InputAdapter {
         laserHandler.dealDamageToAffectedPlayers();
         handlePossibleDeaths(laserHandler.getHitPlayers());
         laserHandler.resetHitPlayers();
-        game.getGameScreen().render(0);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
@@ -326,7 +325,7 @@ public class MovementHandler extends InputAdapter {
      *
      * @param recentlyMovedPlayer
      */
-    private void handleFlagVisitation(Player recentlyMovedPlayer) {
+    public void handleFlagVisitation(Player recentlyMovedPlayer) {
         if (flagHandler.isOnCorrectFlag(recentlyMovedPlayer)) {
             flagHandler.incrementFlagsVisited(recentlyMovedPlayer);
             recentlyMovedPlayer.setArchiveMarkerHere();

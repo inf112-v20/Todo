@@ -41,7 +41,6 @@ public class RoundHandler {
 
         for(int round = 1; round <= 5; round++) {
             runPhases(round);
-            game.getGameScreen().render(0);
         }
 
         //Cleanup
@@ -76,28 +75,24 @@ public class RoundHandler {
          * Phase3
          * Move Pushers, Conveyors then Gears.
          */
-        game.getGameScreen().render(0);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 movementHandler.pushPlayerInDirection(round);
             }
         }, (float) (round - 0.8));
-        game.getGameScreen().render(0);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 movementHandler.runConveyors();
             }
         }, (float)(round - 0.7));
-        game.getGameScreen().render(0);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 movementHandler.gearsRotate();
             }
         }, (float) (round - 0.4));
-        game.getGameScreen().render(0);
 
         /**
          * Phase4
@@ -109,7 +104,6 @@ public class RoundHandler {
                 movementHandler.fireAllLasers();
             }
         }, (float) (round - 0.3));
-        game.getGameScreen().render(0);
         /**
          * Phase5
          * Register checkpoints, repairs
