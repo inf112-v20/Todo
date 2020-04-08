@@ -1,5 +1,6 @@
 package inf112.core.board;
 
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -31,4 +32,5 @@ public enum MapLayer {
     public String getName() {
         return name;
     }
+
 }

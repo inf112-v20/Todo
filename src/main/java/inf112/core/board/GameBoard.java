@@ -18,6 +18,7 @@ public class GameBoard extends LayeredBoard {
 
     Map<Vector2, ITile> collidablesMap, spawnsMap, flagsMap, voidMap, conveyorMap, laserCannonMap, gearMap, wrenchMap, pusherMap, playerMap;
     MapProperties properties;
+    OrthogonalTiledMapRenderer tiledMapRenderer;
     List<Player> players;
 
     public GameBoard() {
@@ -43,6 +44,8 @@ public class GameBoard extends LayeredBoard {
         this.pusherMap = this.filterOnAttribute(collidablesMap, Attributes.PUSHER);
 
         this.properties = super.tiledMap.getProperties();
+
+        this.tiledMapRenderer = instantiateMapRenderer();
     }
 
     private Map<Vector2, ITile> filterOnAttribute(Map<Vector2, ITile> mapping, Attributes atr) {
@@ -57,6 +60,14 @@ public class GameBoard extends LayeredBoard {
                 whiteList.put(pos, candidateTile);
         }
         return whiteList;
+    }
+
+    public OrthogonalTiledMapRenderer getTiledMapRenderer() {
+        return tiledMapRenderer;
+    }
+
+    public void renderLayer(MapLayer mapLayer) {
+        tiledMapRenderer.renderTileLayer(getLayer(mapLayer));
     }
 
     public Map<Vector2, ITile> getCollidables() { return collidablesMap; }

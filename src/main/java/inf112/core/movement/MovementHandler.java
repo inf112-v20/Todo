@@ -1,5 +1,6 @@
 package inf112.core.movement;
 
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -102,16 +103,13 @@ public class MovementHandler extends InputAdapter {
                 runConveyors();
                 gearsRotate();
                 wrenchesRepair();
-                pushPlayerInDirection();
+                pushPlayerInDirection(1);
+                break;
+            case Input.Keys.R:
+                game.getRoundHandler().instantiateNextRoundPhase();
                 break;
             case Input.Keys.L:
-                laserHandler.updateLaserPositions();
-                laserHandler.fireLasersVisually();
-                laserHandler.dealDamageToAffectedPlayers();
-
-                handlePossibleDeaths(laserHandler.getHitPlayers());
-
-                laserHandler.resetHitPlayers();
+                fireAllLasers();
                 break;
             default:
                 return false;
@@ -125,12 +123,31 @@ public class MovementHandler extends InputAdapter {
     public boolean keyUp(int keycode) {
         switch (keycode) {
             case Input.Keys.L:
-                laserHandler.disableLasersVisually();
+                removeLasers();
                 break;
             default:
                 return false;
         }
         return true;
+    }
+
+    public void fireAllLasers(){
+        laserHandler.updateLaserPositions();
+        laserHandler.fireLasersVisually();
+        laserHandler.dealDamageToAffectedPlayers();
+        handlePossibleDeaths(laserHandler.getHitPlayers());
+        laserHandler.resetHitPlayers();
+        game.getGameScreen().render(0);
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                removeLasers();
+            }
+        }, (float) 0.1);
+    }
+
+    public void removeLasers() {
+        laserHandler.disableLasersVisually();
     }
 
     private void handlePossibleDeath(Player player) {
@@ -416,14 +433,14 @@ public class MovementHandler extends InputAdapter {
         }
     }
 
-    public void pushPlayerInDirection() {
+    public void pushPlayerInDirection(int round) {
         for (Player player : players) {
             MovementHandler movementHandler = game.getMovementHandler();
-            if (board.isOnEvenPusher(player)) { // TODO lagre hvilket register vi er på, så spillere bare blir pushet på register 2 og 4
+            if (board.isOnEvenPusher(player) && (round % 2 == 0)) {
                 PusherTile pusherTile = (PusherTile) board.getPushers().get(player.getPositionCopy());
                 Direction direction = pusherTile.getDirection();
                 movementHandler.attemptToMove(player, direction);
-            } else if (board.isOnOddPusher(player)) {
+            } else if (board.isOnOddPusher(player) && (round % 2 != 0)) {
                 PusherTile pusherTile = (PusherTile) board.getPushers().get(player.getPositionCopy());
                 Direction direction = pusherTile.getDirection();
                 movementHandler.attemptToMove(player, direction);

@@ -1,6 +1,7 @@
 package inf112.core.game;
 
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.core.board.GameBoard;
@@ -21,6 +22,7 @@ public class MainGame {
     public static final int MAX_DAMAGE_TOKENS_LIMIT = 10;    // a player should not be able to receive more damage tokens
     public static final int MAX_PLAYER_LIMIT = 8;
 
+    private Screen gameScreen;
     private GameBoard board;
     private MovementHandler movementHandler;
     private List<Player> players;
@@ -31,6 +33,7 @@ public class MainGame {
     private Player winner;
 
     public MainGame(MapNames mapNames) {
+        this.gameScreen = gameScreen;
         this.players = new ArrayList<>();
         this.board = new GameBoard(mapNames, players);
         this.roundHandler = new RoundHandler(this);
@@ -42,6 +45,7 @@ public class MainGame {
                 board.getTileWidthInPixels(),
                 board.getTileHeightInPixels()
         );
+
     }
 
     public MainGame() {
@@ -50,6 +54,14 @@ public class MainGame {
 
     public GameBoard getBoard() {
         return board;
+    }
+
+    public void setGameScreen(Screen gameScreen) {
+       this.gameScreen = gameScreen;
+    }
+
+    public Screen getGameScreen() {
+        return this.gameScreen;
     }
 
     public List<Player> getPlayers() { return players; }
