@@ -286,7 +286,7 @@ public class MovementHandler extends InputAdapter {
     }
 
     /**
-     * Checks if the player is outside the board dimensions, and if so, kills the player.
+     * s if the player is outside the board dimensions, and if so, kills the player.
      *
      * WARNING: the process of moving dead players do not happen here
      *
@@ -308,15 +308,6 @@ public class MovementHandler extends InputAdapter {
     private void handleVoidVisitation(Player recentlyMovedPlayer){
         if (voidHandler.isOnVoid(recentlyMovedPlayer)){
             recentlyMovedPlayer.destroy();
-        }
-    }
-
-    private void handlePusher(Player recentlyMovesPlayer){
-        if (board.isOnEvenPusher(recentlyMovesPlayer)){
-            attemptToMove(recentlyMovesPlayer, Direction.EAST);
-        }
-        if (board.isOnOddPusher(recentlyMovesPlayer)){
-            attemptToMove(recentlyMovesPlayer, Direction.EAST);
         }
     }
 

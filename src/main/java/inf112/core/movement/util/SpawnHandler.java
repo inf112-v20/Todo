@@ -216,8 +216,13 @@ public class SpawnHandler extends InputAdapter {
                     activePlayer.rotateTo(Direction.NORTH);
                     break;
                 case Input.Keys.ENTER:
-                    Gdx.input.setInputProcessor(game.getDefaultInputProcessor());    // spawn handling over
-                    System.out.println("Rotation confirmed.");
+                    if (board.checkIfFacingAnotherPlayerWithin3squares(activePlayer)){
+                        System.out.println("Can't choose this position cause your facing another player within three squares");
+                    }
+                    else {
+                        Gdx.input.setInputProcessor(game.getDefaultInputProcessor());    // spawn handling over
+                        System.out.println("Rotation confirmed.");
+                    }
                     break;
                 default:
                     System.out.println("Unknown key");

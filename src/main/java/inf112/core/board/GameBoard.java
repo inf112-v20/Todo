@@ -5,8 +5,10 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import inf112.core.player.Direction;
 import inf112.core.player.Player;
 import inf112.core.tile.*;
+import inf112.core.util.VectorMovement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -166,6 +168,15 @@ public class GameBoard extends LayeredBoard {
     public boolean isOnOddPusher (Player player){
         return (getPushers().get(player.getPositionCopy()) != null &&
                 getPushers().get(player.getPositionCopy()).getTileId().hasAttribute(Attributes.ODD));
+    }
+    public boolean checkIfFacingAnotherPlayerWithin3squares (Player player) {
+        Vector2 checkingASquare = player.getPositionCopy();
+        for (int i = 0; i < 3; i++) {
+            if (playerOnLoc(VectorMovement.go(checkingASquare, player.getDirection()))) {
+                return true;
+            }
+        }
+            return false;
     }
 
 }
