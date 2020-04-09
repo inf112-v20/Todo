@@ -1,5 +1,6 @@
 package inf112.core.board;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
@@ -17,7 +18,16 @@ import java.util.Map;
 
 
 public class GameBoard extends LayeredBoard {
-
+    //Camera
+    OrthographicCamera camera;
+    private float defaultWidth;
+    private float defaultHeight;
+    private float currentHeight;
+    private float currentWidth;
+    private float zoomSens;
+    private float zoomMax;
+    private float zoomMin;
+    //TieleLayer maps
     Map<Vector2, ITile> collidablesMap, spawnsMap, flagsMap, voidMap, conveyorMap, laserCannonMap, gearMap, wrenchMap, pusherMap, playerMap;
     MapProperties properties;
     OrthogonalTiledMapRenderer tiledMapRenderer;
@@ -32,6 +42,11 @@ public class GameBoard extends LayeredBoard {
     public GameBoard(MapNames mapName, List<Player> players) {
         makeBoard(mapName);
         this.players = players;
+        //Camera
+        zoomSens = tiledMap.getProperties().get("zoomsensitivity", 1f, float.class);
+        zoomSens = tiledMap.getProperties().get("maxzoom", 10f, float.class);
+        zoomSens = tiledMap.getProperties().get("minzoom", 2f, float.class);
+        //TileLayer Maps
         this.collidablesMap = super.mapCollidables();
         this.spawnsMap = super.mapSpawns();
         this.flagsMap = super.mapFlags();
@@ -40,14 +55,10 @@ public class GameBoard extends LayeredBoard {
         this.gearMap = super.mapGear();
         this.wrenchMap = super.mapWrench();
         this.playerMap = super.mapPlayers();
-
         this.laserCannonMap = this.filterOnAttribute(collidablesMap, Attributes.SHOOTS_LASER);
-
         this.pusherMap = this.filterOnAttribute(collidablesMap, Attributes.PUSHER);
 
         this.properties = super.tiledMap.getProperties();
-
-        this.tiledMapRenderer = instantiateMapRenderer();
     }
 
     private Map<Vector2, ITile> filterOnAttribute(Map<Vector2, ITile> mapping, Attributes atr) {
@@ -127,19 +138,33 @@ public class GameBoard extends LayeredBoard {
         return pos.x >= 0 && pos.y >= 0 && pos.x < getMapWidth() && pos.y < getMapHeight();
     }
 
-    public OrthogonalTiledMapRenderer instantiateMapRenderer() {
+    public void instantiateMapRenderer() {
         // set unit scale, how many pixels per world unit (1 unit == tilePixelHeight pixels)
         float unitScale = (float) 1/getTileHeightInPixels();
-        return new OrthogonalTiledMapRenderer(super.tiledMap, unitScale);
+        this.tiledMapRenderer = new OrthogonalTiledMapRenderer(super.tiledMap, unitScale);
     }
 
     public OrthographicCamera instantiateCamera() {
-        OrthographicCamera camera = new OrthographicCamera();
-        camera.setToOrtho(false, getMapWidth(), getMapHeight());                           // show this many units of the world
-        camera.position.set((float) getMapWidth() / 2, (float) getMapHeight() / 2,0);    // centers the camera
-        //camera.rotate(-45);
+        defaultWidth = Gdx.graphics.getWidth();
+        defaultHeight = Gdx.graphics.getHeight();
+        camera = new OrthographicCamera();
+        //camera.setToOrtho(false, getMapWidth(), getMapHeight());                           // show this many units of the world
+        //camera.position.set((float) getMapWidth() / 2, (float) getMapHeight() / 2,0);    // centers the camera
         camera.update();
         return camera;
+    }
+
+    public void resize(int width, int height) {
+        if(camera == null) {
+            return;
+        }
+        currentWidth = width;
+        currentHeight = height;
+        camera.setToOrtho(false, width, height);
+
+        camera.zoom = zoomMax;
+        camera.position.x = getMapWidth() * getTileWidthInPixels() / 2f;
+        camera.position.y = getMapHeight() * getTileHeightInPixels() / 2f;
     }
 
     public boolean onConveyor(Player player) {

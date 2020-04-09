@@ -30,10 +30,11 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         game = new MainGame();
+        game.getBoard().instantiateMapRenderer();
         game.createDeck();
         game.givePlayerCards();
 
-        mapRenderer = game.getBoard().instantiateMapRenderer();
+        mapRenderer = game.getBoard().getTiledMapRenderer();
         camera = game.getBoard().instantiateCamera();
 
         game.createPlayers(3);

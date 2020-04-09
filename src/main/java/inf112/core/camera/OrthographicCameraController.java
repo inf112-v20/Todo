@@ -1,5 +1,6 @@
 package inf112.core.camera;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
@@ -13,7 +14,24 @@ public class OrthographicCameraController implements InputProcessor {
 
     @Override
     public boolean keyDown(int i) {
-        return false;
+        switch (i) {
+            case Input.Keys.W:
+                camera.translate(0, -1);
+                break;
+            case Input.Keys.D:
+                camera.translate(1, 0);
+                break;
+            case Input.Keys.S:
+                camera.translate(0, 1);
+                break;
+            case Input.Keys.A:
+                camera.translate(-1, 0);
+                break;
+            default:
+                return false;
+
+        }
+        return true;
     }
 
     @Override
@@ -48,6 +66,7 @@ public class OrthographicCameraController implements InputProcessor {
 
     @Override
     public boolean scrolled(int i) {
-        return false;
+        camera.zoom += i;
+        return true;
     }
 }
