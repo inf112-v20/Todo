@@ -1,31 +1,41 @@
 package inf112.core.camera;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import inf112.core.game.MainGame;
+import inf112.core.screens.GameScreen;
 
 public class OrthographicCameraController implements InputProcessor {
 
-    final OrthographicCamera camera;
+    OrthographicCamera camera;
+    MainGame game;
 
-    public OrthographicCameraController(OrthographicCamera camera) {
-        this.camera = camera;
+    public OrthographicCameraController(MainGame game) {
+        this.game = game;
     }
 
     @Override
     public boolean keyDown(int i) {
         switch (i) {
             case Input.Keys.W:
-                camera.translate(0, -1);
+                game.getBoard().moveCamera(0, -1);
                 break;
             case Input.Keys.D:
-                camera.translate(1, 0);
+                game.getBoard().moveCamera(1, 0);
                 break;
             case Input.Keys.S:
-                camera.translate(0, 1);
+                game.getBoard().moveCamera(0, 1);
                 break;
             case Input.Keys.A:
-                camera.translate(-1, 0);
+                game.getBoard().moveCamera(-1, 0);
+                break;
+            case Input.Keys.PERIOD:
+                game.getBoard().zoomCamera(-1);
+                break;
+            case Input.Keys.MINUS:
+                game.getBoard().zoomCamera(1);
                 break;
             default:
                 return false;
@@ -55,8 +65,9 @@ public class OrthographicCameraController implements InputProcessor {
     }
 
     @Override
-    public boolean touchDragged(int i, int i1, int i2) {
-        return false;
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        game.getBoard().moveCamera(-Gdx.input.getDeltaX(), Gdx.input.getDeltaY());
+        return true;
     }
 
     @Override
@@ -65,8 +76,8 @@ public class OrthographicCameraController implements InputProcessor {
     }
 
     @Override
-    public boolean scrolled(int i) {
-        camera.zoom += i;
+    public boolean scrolled(int dir) {
+        game.getBoard().zoomCamera(dir);
         return true;
     }
 }

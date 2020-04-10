@@ -15,7 +15,7 @@ import inf112.core.util.AssMan;
 
 public class GameScreen implements Screen {
 
-    private MainGame game;
+    private static MainGame game;
     private IGameStateSwitcher gameStateSwitcher;
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
         game.setActivePlayerById(1);
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        OrthographicCameraController cameraController = new OrthographicCameraController(camera);
+        OrthographicCameraController cameraController = new OrthographicCameraController(game);
         inputMultiplexer.addProcessor(game.getDefaultInputProcessor());
         inputMultiplexer.addProcessor(cameraController);
         Gdx.input.setInputProcessor(inputMultiplexer);
@@ -65,10 +65,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float v) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        mapRenderer.setView(camera);
-        mapRenderer.render();
+        game.getBoard().render();
         if (game.hasWon()) {
             Player.resetPlayerCount();
             gameStateSwitcher.initGameOver();
@@ -77,11 +76,18 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {}
+    public void resize(int width, int height) {
+        //game.getBoard().resize(width, height);
+    }
 
     @Override
     public void pause() {}
 
     @Override
     public void resume() {}
+
+    public static MainGame getGame() {
+        return game;
+    }
+
 }
