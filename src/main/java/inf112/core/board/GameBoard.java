@@ -20,11 +20,17 @@ import java.util.Map;
 
 public class GameBoard extends LayeredBoard {
     //Camera
+    public boolean playerCamera = false;
+
     OrthographicCamera camera;
     private float defaultWidth;
     private float defaultHeight;
     private float currentHeight;
     private float currentWidth;
+    private float xMin;
+    private float yMin;
+    private float xMax;
+    private float yMax;
     private float zoomSens;
     private float zoomMax;
     private float zoomMin;
@@ -156,8 +162,6 @@ public class GameBoard extends LayeredBoard {
         defaultWidth = Gdx.graphics.getWidth();
         defaultHeight = Gdx.graphics.getHeight();
         camera = new OrthographicCamera();
-        //camera.setToOrtho(false, getMapWidth(), getMapHeight());                           // show this many units of the world
-        //camera.position.set((float) getMapWidth() / 2, (float) getMapHeight() / 2,0);    // centers the camera
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
         return camera;
@@ -171,27 +175,39 @@ public class GameBoard extends LayeredBoard {
         currentHeight = height;
         camera.setToOrtho(false, width, height);
 
+        //set Bounds
+        xMin = camera.position.x;
+        yMin = camera.position.y;
+        xMax = xMin + (getMapWidth() * (getTileWidthInPixels() * unitScale));
+        yMax = yMin + (getMapHeight() * (getTileHeightInPixels() * unitScale));
+
         camera.zoom = zoomMax;
+        //center
         camera.position.x = (float) (getMapWidth() * (getTileWidthInPixels() * unitScale)) / 2f;
         camera.position.y = (float) (getMapHeight() * (getTileHeightInPixels() * unitScale)) / 2f;
 
-        //handleCameraOutOfBounds();
+        handleCameraOutOfBounds();
     }
 
     public void zoomCamera(int dir) {
         if(dir == 0)
             return;
 
-        //camera.zoom += Math.signum(dir) * zoomSens;
-        camera.zoom += Math.signum(dir);
-        //handleCameraOutOfBounds();
+        camera.zoom += Math.signum(dir) * zoomSens;
+        handleCameraOutOfBounds();
         System.out.println(camera.zoom);
     }
 
     public void moveCamera(float deltaX, float deltaY) {
         camera.position.x += deltaX * camera.zoom;
         camera.position.y += deltaY * camera.zoom;
-        //handleCameraOutOfBounds();
+        handleCameraOutOfBounds();
+    }
+
+    public void centerCameraOnPlayer(Player player) {
+        camera.position.x = player.getX() * getTileWidthInPixels() + (getTileWidthInPixels()/2);
+        camera.position.y = player.getY() * getTileHeightInPixels() + (getTileHeightInPixels()/2);
+        handleCameraOutOfBounds();
     }
 
     public void handleCameraOutOfBounds() {
@@ -202,13 +218,6 @@ public class GameBoard extends LayeredBoard {
         else if (camera.zoom < zoomMin) {
             camera.zoom = zoomMin;
         }
-
-        //check width and height bounds
-        //Map should always be visible
-        float xMin = -(getMapWidth() * getTileWidthInPixels()) + 1;
-        float xMax = (getMapWidth() * getTileWidthInPixels() * 2) - 1;
-        float yMin = -(getMapHeight() * getTileHeightInPixels()) + 1;
-        float yMax = (getMapHeight() * getTileHeightInPixels() * 2) - 1;
 
         if(camera.position.x > xMax) {
             camera.position.x = xMax;

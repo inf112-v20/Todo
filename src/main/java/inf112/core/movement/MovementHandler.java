@@ -31,8 +31,7 @@ public class MovementHandler extends InputAdapter {
     private int phase = 0;   // TODO refaktorerer inn i MainGame
     private MainGame game;
     private GameBoard board;
-    private List<Player> players;
-    private Player activePlayer;                 // movement will affect this player. Should be changed actively
+    private List<Player> players;              // movement will affect this player. Should be changed actively
     private TiledMapTileLayer playerLayer;       // layer in which all player cells are placed (for graphics)
     private CollisionHandler collisionHandler;
     private SpawnHandler spawnHandler;
@@ -53,7 +52,7 @@ public class MovementHandler extends InputAdapter {
     }
 
     public Player getActivePlayer() {
-        return activePlayer;
+        return game.getActivePlayer();
     }
 
     public List<Player> getPlayers() { return players; }
@@ -61,43 +60,43 @@ public class MovementHandler extends InputAdapter {
     public boolean add(Player player) {
         if (contains(player))
             return false;
-        return players.add(player);
+        return game.getPlayers().add(player);
     }
 
     public boolean add(Player... playersToBeAdded) {
-        return players.addAll(Arrays.asList(playersToBeAdded));
+        return game.getPlayers().addAll(Arrays.asList(playersToBeAdded));
     }
 
     public boolean contains(Player player) {
-        return players.contains(player);
+        return game.getPlayers().contains(player);
     }
 
     public void setActive(Player player) {
         if (!contains(player))
             throw new IllegalArgumentException("Unknown player");
-        this.activePlayer = player;
+        game.setActivePlayer(player);
     }
 
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Input.Keys.UP:
-                attemptToMoveForward(activePlayer);
+                attemptToMoveForward(game.getActivePlayer());
                 break;
             case Input.Keys.DOWN:
-                attemptToMoveBackward(activePlayer);
+                attemptToMoveBackward(game.getActivePlayer());
                 break;
             case Input.Keys.LEFT:
-                activePlayer.rotateLeft();
+                game.getActivePlayer().rotateLeft();
                 break;
             case Input.Keys.RIGHT:
-                activePlayer.rotateRight();
+                game.getActivePlayer().rotateRight();
                 break;
             case Input.Keys.C:
-                activePlayer.setArchiveMarkerHere();
+                game.getActivePlayer().setArchiveMarkerHere();
                 break;
             case Input.Keys.SPACE:
-                moveToBackup(activePlayer);
+                moveToBackup(game.getActivePlayer());
                 break;
             case Input.Keys.T:
                 runConveyors();
@@ -183,21 +182,21 @@ public class MovementHandler extends InputAdapter {
         if (currentCard instanceof MovementCard) {
             if (((MovementCard) currentCard).isForward()) {
                 for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++) {
-                    attemptToMoveForward(activePlayer);
+                    attemptToMoveForward(game.getActivePlayer());
                 }
             } else {
                 for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++) {
-                    attemptToMoveBackward(activePlayer);
+                    attemptToMoveBackward(game.getActivePlayer());
                 }
             }
         } else if (currentCard instanceof RotationCard) {
             if (((RotationCard) currentCard).isClockwise()) {
                 for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++) {
-                    activePlayer.rotateRight();
+                    game.getActivePlayer().rotateRight();
                 }
             } else {
                 for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++) {
-                    activePlayer.rotateLeft();
+                    game.getActivePlayer().rotateLeft();
                 }
             }
         }

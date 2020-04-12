@@ -67,6 +67,10 @@ public class GameScreen implements Screen {
     public void render(float v) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+
+        if(game.getBoard().playerCamera)
+            game.getBoard().centerCameraOnPlayer(game.getActivePlayer());
+
         game.getBoard().render();
         if (game.hasWon()) {
             Player.resetPlayerCount();

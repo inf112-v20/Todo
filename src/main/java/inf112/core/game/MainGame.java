@@ -26,6 +26,7 @@ public class MainGame {
     private GameBoard board;
     private MovementHandler movementHandler;
     private List<Player> players;
+    private Player activePlayer;
     private Texture playerSpriteSheet;
     private TextureRegion[][] playerSpriteSheetGrid;
     private RoundHandler roundHandler;
@@ -33,7 +34,6 @@ public class MainGame {
     private Player winner;
 
     public MainGame(MapNames mapNames) {
-        this.gameScreen = gameScreen;
         this.players = new ArrayList<>();
         this.board = new GameBoard(mapNames, players);
         this.roundHandler = new RoundHandler(this);
@@ -110,7 +110,7 @@ public class MainGame {
     public void setActivePlayerById(int id) {
         for (Player player : players)
             if (player.getId() == id) {
-                movementHandler.setActive(player);
+                activePlayer = player;
                 return;
             }
         throw new IllegalArgumentException("No player with the given id exists");
@@ -168,5 +168,13 @@ public class MainGame {
 
     public boolean hasWon() {
         return this.winner != null;
+    }
+
+    public Player getActivePlayer() {
+        return activePlayer;
+    }
+
+    public void setActivePlayer(Player player) {
+        this.activePlayer = player;
     }
 }
