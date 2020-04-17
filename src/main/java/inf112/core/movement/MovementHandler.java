@@ -16,6 +16,7 @@ import inf112.core.cards.ProgramCard;
 import inf112.core.cards.RotationCard;
 import inf112.core.tile.*;
 import inf112.core.util.LayerOperation;
+import org.mockito.internal.matchers.Null;
 
 import java.util.*;
 
@@ -160,6 +161,12 @@ public class MovementHandler extends InputAdapter {
                 // remove loser physically
                 System.out.println(player.getName() + " has lost");
                 LayerOperation.removePlayer(playerLayer, player);
+
+                if (getActivePlayer()== player){
+                    //removes player from list of players and sets the next player as active
+                    players.remove(player);
+                    setActive(players.get(0));
+                }
             }
             else {    // respawn
                 player.resetDamageTokens();
