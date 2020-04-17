@@ -63,6 +63,10 @@ public class MovementHandler extends InputAdapter {
         return game.getPlayers().add(player);
     }
 
+    public SpawnHandler getSpawnHandler() {
+        return spawnHandler;
+    }
+
     public boolean add(Player... playersToBeAdded) {
         return game.getPlayers().addAll(Arrays.asList(playersToBeAdded));
     }
