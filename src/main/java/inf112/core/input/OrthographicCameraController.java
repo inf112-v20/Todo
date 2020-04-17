@@ -1,4 +1,4 @@
-package inf112.core.camera;
+package inf112.core.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -37,12 +37,14 @@ public class OrthographicCameraController implements InputProcessor {
                     return true;
             }
         }
+
         //CameraMode playerCamera
         if(board.playerCamera) {
             switch (i) {
 
             }
         }
+
         //Common functions for both cameraModes
         switch (i) {
             case Input.Keys.PERIOD:

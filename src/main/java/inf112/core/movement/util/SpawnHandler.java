@@ -3,13 +3,16 @@ package inf112.core.movement.util;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
 import inf112.core.board.MapLayer;
 import inf112.core.game.MainGame;
+import inf112.core.input.SpawnController;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
+import inf112.core.screens.GameScreen;
 import inf112.core.tile.ITile;
 import inf112.core.tile.SpawnTile;
 import inf112.core.util.LayerOperation;
@@ -26,17 +29,17 @@ import java.util.Map;
  *
  * @author eskil
  */
-public class SpawnHandler extends InputAdapter {
+public class SpawnHandler {
 
-    private enum SpawnState {
-        SELECT_POSITION, SELECT_ROTATION;
+    public enum SpawnState {
+        SELECT_POSITION, SELECT_ROTATION, NONE;
     }
 
     private MainGame game;
     private GameBoard board;
     private TiledMapTileLayer playerLayer;
     private Map<Vector2, ITile> spawnPosToTileMapping;
-    private SpawnState state;
+    private SpawnState state = SpawnState.NONE;
     private Player activePlayer;
     private Vector2 activePlayerBackupPos;
     private List<Vector2> adjPositions;
@@ -46,6 +49,18 @@ public class SpawnHandler extends InputAdapter {
         this.board = game.getBoard();
         this.playerLayer = board.getLayer(MapLayer.PLAYER_LAYER);
         this.spawnPosToTileMapping = board.getSpawns();
+    }
+
+    public SpawnState getState() {
+        return state;
+    }
+
+    public Player getActivePlayer() {
+        return activePlayer;
+    }
+
+    public List<Vector2> getAdjPositions() {
+        return adjPositions;
     }
 
     public void initSpawning(Player playerToBeSpawned) {
@@ -60,7 +75,8 @@ public class SpawnHandler extends InputAdapter {
         else {
             initPositionSelection();
         }
-        Gdx.input.setInputProcessor(this);
+        //Add SpawnController first in multiplexer, so that it can block the other processors
+        ((InputMultiplexer) Gdx.input.getInputProcessor()).addProcessor(0, new SpawnController(game));
     }
 
     public void initPositionSelection() {
@@ -138,96 +154,6 @@ public class SpawnHandler extends InputAdapter {
                 continue;
             if (p.hasPosition(backUp))
                 return false;
-        }
-        return true;
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        if (state.equals(SpawnState.SELECT_POSITION)) {
-            Vector2 proposedSpawnPos = activePlayerBackupPos.cpy();
-            switch (keycode) {
-                case Input.Keys.NUMPAD_1:
-                case Input.Keys.NUM_1:
-                    VectorMovement.go(proposedSpawnPos, Direction.SOUTH);
-                    VectorMovement.go(proposedSpawnPos, Direction.WEST);
-                    break;
-                case Input.Keys.NUMPAD_2:
-                case Input.Keys.NUM_2:
-                    VectorMovement.go(proposedSpawnPos, Direction.SOUTH);
-                    break;
-                case Input.Keys.NUMPAD_3:
-                case Input.Keys.NUM_3:
-                    VectorMovement.go(proposedSpawnPos, Direction.SOUTH);
-                    VectorMovement.go(proposedSpawnPos, Direction.EAST);
-                    break;
-                case Input.Keys.NUMPAD_4:
-                case Input.Keys.NUM_4:
-                    VectorMovement.go(proposedSpawnPos, Direction.WEST);
-                    break;
-                case Input.Keys.NUMPAD_6:
-                case Input.Keys.NUM_6:
-                    VectorMovement.go(proposedSpawnPos, Direction.EAST);
-                    break;
-                case Input.Keys.NUMPAD_7:
-                case Input.Keys.NUM_7:
-                    VectorMovement.go(proposedSpawnPos, Direction.NORTH);
-                    VectorMovement.go(proposedSpawnPos, Direction.WEST);
-                    break;
-                case Input.Keys.NUMPAD_8:
-                case Input.Keys.NUM_8:
-                    VectorMovement.go(proposedSpawnPos, Direction.NORTH);
-                    break;
-                case Input.Keys.NUMPAD_9:
-                case Input.Keys.NUM_9:
-                    VectorMovement.go(proposedSpawnPos, Direction.NORTH);
-                    VectorMovement.go(proposedSpawnPos, Direction.EAST);
-                    break;
-                case Input.Keys.ENTER:
-                    System.out.println("Position confirmed.");
-                    initRotationSelection();
-                    return true;
-                default:
-                    System.out.println("Unknown key");
-                    return false;
-            }
-            if (adjPositions.contains(proposedSpawnPos))    // i.e. proposed position is legal
-                game.getMovementHandler().moveToPos(activePlayer, proposedSpawnPos);
-            else {
-                System.out.println("Cannot spawn player here.");
-            }
-        }
-        else { // state == SELECT_ROTATION
-            switch (keycode) {
-                case Input.Keys.NUMPAD_2:
-                case Input.Keys.DOWN:
-                    activePlayer.rotateTo(Direction.SOUTH);
-                    break;
-                case Input.Keys.NUMPAD_4:
-                case Input.Keys.LEFT:
-                    activePlayer.rotateTo(Direction.WEST);
-                    break;
-                case Input.Keys.NUMPAD_6:
-                case Input.Keys.RIGHT:
-                    activePlayer.rotateTo(Direction.EAST);
-                    break;
-                case Input.Keys.NUMPAD_8:
-                case Input.Keys.UP:
-                    activePlayer.rotateTo(Direction.NORTH);
-                    break;
-                case Input.Keys.ENTER:
-                    if (board.checkIfFacingAnotherPlayerWithin3squares(activePlayer)){
-                        System.out.println("Can't choose this position cause your facing another player within three squares");
-                    }
-                    else {
-                        Gdx.input.setInputProcessor(game.getDefaultInputProcessor());    // spawn handling over
-                        System.out.println("Rotation confirmed.");
-                    }
-                    break;
-                default:
-                    System.out.println("Unknown key");
-                    return false;
-            }
         }
         return true;
     }

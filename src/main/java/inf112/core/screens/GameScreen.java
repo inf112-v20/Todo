@@ -7,10 +7,9 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import inf112.core.camera.OrthographicCameraController;
+import inf112.core.input.OrthographicCameraController;
 import inf112.core.game.MainGame;
 import inf112.core.player.Player;
-import inf112.core.util.AssMan;
 
 
 public class GameScreen implements Screen {
