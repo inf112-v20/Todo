@@ -45,14 +45,14 @@ public class GameBoard extends LayeredBoard {
     float unitScale = 1;
 
     public GameBoard() {
-        this(MapNames.TESTING_MAP, new MainGame().get);
+        this(MapNames.TESTING_MAP, new MainGame().getPlayerHandler());
     }
 
     public GameBoard(PlayerHandler playerHandler) {this(MapNames.TESTING_MAP, playerHandler);}
 
     public GameBoard(MapNames mapName, PlayerHandler playerHandler) {
         makeBoard(mapName);
-        this.players = players;
+        this.players = playerHandler.getPlayers();
         //Camera
         zoomSens = tiledMap.getProperties().get("zoomsensitivity", 1f, float.class);
         zoomMax = tiledMap.getProperties().get("maxzoom", 9f, float.class);

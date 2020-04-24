@@ -31,12 +31,12 @@ public class GameScreen implements Screen {
         game = new MainGame();
         game.getBoard().instantiateMapRenderer();
         game.createDeck();
-        game.givePlayerCards();
+        game.getPlayerHandler().givePlayersCards();
 
         mapRenderer = game.getBoard().getTiledMapRenderer();
         camera = game.getBoard().instantiateCamera();
 
-        game.createPlayers(3);
+        game.getPlayerHandler().createPlayers(3);
         game.setActivePlayerById(1);
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();

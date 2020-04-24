@@ -16,6 +16,7 @@ public class PlayerHandler {
 
     public PlayerHandler(MainGame game) {
         this.game = game;
+        players = new ArrayList<>();
     }
 
     private boolean createPlayer() {

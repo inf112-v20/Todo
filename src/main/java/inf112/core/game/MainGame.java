@@ -99,6 +99,10 @@ public class MainGame {
         return deck;
     }
 
+    public PlayerHandler getPlayerHandler() {
+        return playerHandler;
+    }
+
     public boolean hasLost(Player player) {
         return player.isDead() && player.isOutOfLifeTokes();
     }
