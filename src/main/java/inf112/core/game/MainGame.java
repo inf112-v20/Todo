@@ -12,6 +12,7 @@ import inf112.core.player.Player;
 import inf112.core.cards.CardFactory;
 import inf112.core.cards.Deck;
 import inf112.core.cards.ProgramCard;
+import inf112.core.player.PlayerHandler;
 import inf112.core.util.LayerOperation;
 
 import java.util.ArrayList;
@@ -25,8 +26,7 @@ public class MainGame {
     private Screen gameScreen;
     private GameBoard board;
     private MovementHandler movementHandler;
-    private List<Player> players;
-    private Player activePlayer;
+    private PlayerHandler playerHandler;
     private Texture playerSpriteSheet;
     private TextureRegion[][] playerSpriteSheetGrid;
     private RoundHandler roundHandler;
@@ -34,8 +34,8 @@ public class MainGame {
     private Player winner;
 
     public MainGame(MapNames mapNames) {
-        this.players = new ArrayList<>();
-        this.board = new GameBoard(mapNames, players);
+        this.playerHandler = new PlayerHandler(this);
+        this.board = new GameBoard(mapNames, playerHandler);
         this.roundHandler = new RoundHandler(this);
         this.movementHandler = new MovementHandler(this);
         playerSpriteSheet = new Texture("img/Player_Spritesheet.png");
@@ -63,7 +63,7 @@ public class MainGame {
         return this.gameScreen;
     }
 
-    public List<Player> getPlayers() { return players; }
+    public List<Player> getPlayers() { return playerHandler.getPlayers(); }
 
     public RoundHandler getRoundHandler() { return roundHandler; }
 
@@ -74,7 +74,7 @@ public class MainGame {
     public InputProcessor getDefaultInputProcessor() { return movementHandler; }
 
     public void drawPlayers() {
-        for (Player player : players)
+        for (Player player : playerHandler.getPlayers())
             LayerOperation.drawPlayer(board.getLayer(MapLayer.PLAYER_LAYER), player);
     }
 
@@ -82,63 +82,17 @@ public class MainGame {
         this.deck = new Deck(CardFactory.createDefaultDeck());
     }
 
-    private boolean createPlayer() {
-        if (Player.getPlayerCount() >= playerSpriteSheetGrid.length)
-            throw new IllegalStateException(
-                    "Cannot create more players than the number of available textures"
-            );
-
-        TextureRegion graphic = playerSpriteSheetGrid[Player.getPlayerCount()][0];
-        return players.add(new Player(graphic));
-    }
-
-    public boolean createPlayers(int quantity) {
-        if (quantity <= 0)
-            throw new IllegalArgumentException("Illegal quantity");
-
-        boolean allAdded = true;
-        for (int i = 0; i < quantity; i++)
-            if (!createPlayer())
-                allAdded = false;
-
-        movementHandler.moveAllToSpawn();
-        drawPlayers();
-
-        return allAdded;
-    }
-
     public void setActivePlayerById(int id) {
-        for (Player player : players)
-            if (player.getId() == id) {
-                activePlayer = player;
-                return;
-            }
-        throw new IllegalArgumentException("No player with the given id exists");
+        playerHandler.setActivePlayerById(id);
     }
 
     public Player getPlayerById(int id) {
-        for (Player player : players)
-            if (player.getId() == id) {
-                return player;
-            }
-        throw new IllegalArgumentException("No player with the given id exists");
+        return playerHandler.getPlayerById(id);
     }
 
     public void dispose() {
         board.dispose();
         playerSpriteSheet.dispose();
-    }
-
-    public void givePlayerCards() {   // Is to be moved once we have a proper implementation for rounds
-        for (Player player : players)
-            givePlayerCards(player);
-    }
-
-    public void givePlayerCards(Player player){   // Is to be moved once we have a proper implementation for rounds
-        List<ProgramCard> fiveRandomCards = deck.getCards(5);
-        for (ProgramCard card : fiveRandomCards){
-            player.addToProgramSheet(card);
-        }
     }
 
     public Deck getDeck() {
@@ -150,11 +104,12 @@ public class MainGame {
     }
 
     public void removeLosers() {
-        players.removeIf(player -> hasLost(player));
+        playerHandler.getPlayers().removeIf(player -> hasLost(player));
     }
 
     // should be called between each movement
     public void attemptToAppointWinner() {
+        List<Player> players = playerHandler.getPlayers();
         if (players.size() == 1 && Player.getPlayerCount() > 1) {    // all other players has lost
             this.winner = players.get(0);
             return;
@@ -171,10 +126,14 @@ public class MainGame {
     }
 
     public Player getActivePlayer() {
-        return activePlayer;
+        return playerHandler.getActivePlayer();
     }
 
     public void setActivePlayer(Player player) {
-        this.activePlayer = player;
+        playerHandler.setActivePlayer(player);
+    }
+
+    public TextureRegion[][] getPlayerSpriteSheetGrid() {
+        return playerSpriteSheetGrid;
     }
 }
