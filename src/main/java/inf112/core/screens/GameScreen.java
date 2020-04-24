@@ -7,9 +7,12 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import inf112.core.input.OrthographicCameraController;
 import inf112.core.game.MainGame;
 import inf112.core.player.Player;
+import inf112.core.util.AssMan;
+import inf112.core.util.ButtonFactory;
 
 
 public class GameScreen implements Screen {
@@ -18,20 +21,17 @@ public class GameScreen implements Screen {
     private IGameStateSwitcher gameStateSwitcher;
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
-    private HUDScreen hudScreen;
     private Stage stage;
 
     public GameScreen(RoboRally gameStateSwitcher) {
         this.gameStateSwitcher = gameStateSwitcher;
-        this.hudScreen = new HUDScreen(this);
     }
 
     @Override
     public void show() {
+        stage = new Stage();
         game = new MainGame();
         game.getBoard().instantiateMapRenderer();
-        game.createDeck();
-        game.givePlayerCards();
 
         mapRenderer = game.getBoard().getTiledMapRenderer();
         camera = game.getBoard().instantiateCamera();
@@ -39,16 +39,33 @@ public class GameScreen implements Screen {
         game.createPlayers(3);
         game.setActivePlayerById(1);
 
+        ImageButton button1 = ButtonFactory.createImageButton(AssMan.manager.get(AssMan.FORWARD1), -50);
+        button1.setPosition(40,-50);
+        stage.addActor(button1);
+
+        ImageButton button2 = ButtonFactory.createImageButton(AssMan.manager.get(AssMan.FORWARD1), -50);
+        button2.setPosition(150,-50);
+        stage.addActor(button2);
+
+        ImageButton button3 = ButtonFactory.createImageButton(AssMan.manager.get(AssMan.FORWARD1), -50);
+        button3.setPosition(260,-50);
+        stage.addActor(button3);
+
+        ImageButton button4 = ButtonFactory.createImageButton(AssMan.manager.get(AssMan.FORWARD1), -50);
+        button4.setPosition(370,-50);
+        stage.addActor(button4);
+
+        ImageButton button5 = ButtonFactory.createImageButton(AssMan.manager.get(AssMan.FORWARD1), -50);
+        button5.setPosition(480,-50);
+        stage.addActor(button5);
+
+
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         OrthographicCameraController cameraController = new OrthographicCameraController(game);
         inputMultiplexer.addProcessor(game.getDefaultInputProcessor());
         inputMultiplexer.addProcessor(cameraController);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
-        //HUDoverlay screen
-        //hudScreen.setMovementHandler(game.getMovementHandler());
-        //hudScreen.createButtons();    //For manual testing purposes only atm
-        //stage = hudScreen.getStage();
     }
 
     @Override
@@ -71,11 +88,12 @@ public class GameScreen implements Screen {
             game.getBoard().centerCameraOnPlayer(game.getActivePlayer());
 
         game.getBoard().render();
+
         if (game.hasWon()) {
             Player.resetPlayerCount();
             gameStateSwitcher.initGameOver();
         }
-        //stage.draw();       // HUD
+        stage.draw();
     }
 
     @Override

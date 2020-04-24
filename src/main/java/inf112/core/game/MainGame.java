@@ -45,6 +45,8 @@ public class MainGame {
                 board.getTileHeightInPixels()
         );
 
+        createDeck();
+        givePlayerCards();
     }
 
     public MainGame() {
@@ -129,7 +131,7 @@ public class MainGame {
         playerSpriteSheet.dispose();
     }
 
-    public void givePlayerCards() {   // Is to be moved once we have a proper implementation for rounds
+    public void givePlayerCards() {
         for (Player player : players)
             givePlayerCards(player);
     }
