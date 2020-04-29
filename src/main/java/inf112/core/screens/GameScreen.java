@@ -18,6 +18,7 @@ import inf112.core.util.ButtonFactory;
 public class GameScreen implements Screen {
 
     private static MainGame game;
+    private UserInterface ui;
     private IGameStateSwitcher gameStateSwitcher;
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
@@ -31,6 +32,9 @@ public class GameScreen implements Screen {
     public void show() {
         stage = new Stage();
         game = new MainGame();
+        ui = new UserInterface(stage);
+        stage.addActor(ui);
+
         game.getBoard().instantiateMapRenderer();
 
         mapRenderer = game.getBoard().getTiledMapRenderer();
@@ -39,31 +43,11 @@ public class GameScreen implements Screen {
         game.createPlayers(3);
         game.setActivePlayerById(1);
 
-        ImageButton button1 = ButtonFactory.createImageButton(AssMan.manager.get(AssMan.FORWARD1), -50);
-        button1.setPosition(40,-50);
-        stage.addActor(button1);
-
-        ImageButton button2 = ButtonFactory.createImageButton(AssMan.manager.get(AssMan.FORWARD1), -50);
-        button2.setPosition(150,-50);
-        stage.addActor(button2);
-
-        ImageButton button3 = ButtonFactory.createImageButton(AssMan.manager.get(AssMan.FORWARD1), -50);
-        button3.setPosition(260,-50);
-        stage.addActor(button3);
-
-        ImageButton button4 = ButtonFactory.createImageButton(AssMan.manager.get(AssMan.FORWARD1), -50);
-        button4.setPosition(370,-50);
-        stage.addActor(button4);
-
-        ImageButton button5 = ButtonFactory.createImageButton(AssMan.manager.get(AssMan.FORWARD1), -50);
-        button5.setPosition(480,-50);
-        stage.addActor(button5);
-
-
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         OrthographicCameraController cameraController = new OrthographicCameraController(game);
         inputMultiplexer.addProcessor(game.getDefaultInputProcessor());
         inputMultiplexer.addProcessor(cameraController);
+        inputMultiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
     }

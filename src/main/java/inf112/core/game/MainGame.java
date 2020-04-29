@@ -38,15 +38,13 @@ public class MainGame {
         this.board = new GameBoard(mapNames, players);
         this.roundHandler = new RoundHandler(this);
         this.movementHandler = new MovementHandler(this);
+        this.deck = new Deck(CardFactory.createDefaultDeck());
         playerSpriteSheet = new Texture("img/Player_Spritesheet.png");
         playerSpriteSheetGrid = TextureRegion.split(
                 playerSpriteSheet,
                 board.getTileWidthInPixels(),
                 board.getTileHeightInPixels()
         );
-
-        createDeck();
-        givePlayerCards();
     }
 
     public MainGame() {

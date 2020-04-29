@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
+import inf112.core.cards.Deck;
 import inf112.core.game.MainGame;
 import inf112.core.laser.LaserHandler;
 import inf112.core.movement.util.*;
@@ -111,6 +112,9 @@ public class MovementHandler extends InputAdapter {
                 break;
             case Input.Keys.R:
                 game.getRoundHandler().instantiateNextRoundPhase();
+                break;
+            case Input.Keys.B:
+
                 break;
             case Input.Keys.L:
                 fireAllLasers();
