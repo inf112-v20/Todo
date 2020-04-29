@@ -3,11 +3,15 @@ package inf112.core.game;
 import com.badlogic.gdx.utils.Timer;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
+import inf112.core.player.PlayerHandler;
 
 import java.util.List;
 
 public class RoundHandler {
+    public static final int ROUND_COUNT = 5;
+
     MainGame game;
+    PlayerHandler playerHandler;
     List<Player> players;
 
     /**
@@ -17,6 +21,7 @@ public class RoundHandler {
      */
     public RoundHandler(MainGame game) {
         this.game = game;
+        this.playerHandler = game.getPlayerHandler();
         this.players = game.getPlayers();
     }
 
@@ -24,12 +29,15 @@ public class RoundHandler {
      * main function for starting a new round
      */
     public void instantiateNextRoundPhase() {
-        //Deal out new cards for the players
-        //TODO mangler kort funksjonalitet
-        for(Player player : players) {
-            ;
-        }
+        /**
+         * Card phase
+         */
+        //ProgramSheets are cleared
+        playerHandler.clearAllProgramsheets();
+        //All players receive a new set of cards
+        playerHandler.giveAllPlayersCards();
         //Wait for all players to lay down their program
+
         /*
         //TODO metode som setter en timer på 30 sekunder etter første program er lagt ned
         while(!playerProgramsReady()){
@@ -39,12 +47,9 @@ public class RoundHandler {
         //Handle powerdown
         //TODO powerdown funksjonalitet
 
-        for(int round = 1; round <= 5; round++) {
+        for(int round = 1; round <= ROUND_COUNT; round++) {
             runPhases(round);
         }
-
-        //Cleanup
-        //TODO reset playerCards
     }
 
     private boolean playerProgramsReady() {

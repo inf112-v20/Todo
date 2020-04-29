@@ -68,9 +68,18 @@ public class PlayerHandler {
         }
     }
 
-    public void givePlayersCards() {   // Is to be moved once we have a proper implementation for rounds
+    public void giveAllPlayersCards() {   // Is to be moved once we have a proper implementation for rounds
         for (Player player : players)
             givePlayerCards(player);
+    }
+
+    public void clearAllProgramsheets() {
+        for(Player player : players)
+            clearProgramsheet(player);
+    }
+
+    private void clearProgramsheet(Player player) {
+        player.clearProgramSheet();
     }
 
 

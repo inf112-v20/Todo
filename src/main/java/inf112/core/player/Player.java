@@ -177,13 +177,15 @@ public class Player {
     }
 
     public void rotate(Rotation rotation) {
-//        this.direction = rotation.rotate(direction);
-//        this.cell.setRotation(direction.getCellRotation());
         rotateTo(rotation.rotate(direction));
     }
 
     public void addToProgramSheet(ProgramCard card){
         this.programSheet.add(card);
+    }
+
+    public void clearProgramSheet() {
+        programSheet.clear();
     }
 
 
@@ -208,6 +210,5 @@ public class Player {
     public void setPrevDir(Direction prevDir) {
         this.prevDir = prevDir;
     }
-
 
 }
