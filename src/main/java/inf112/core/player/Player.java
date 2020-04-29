@@ -184,6 +184,10 @@ public class Player {
         this.programSheet.add(card);
     }
 
+    public void addToHand(List<ProgramCard> programCards) {
+        programSheet.addToHand(programCards);
+    }
+
     public void clearProgramSheet() {
         programSheet.clear();
     }

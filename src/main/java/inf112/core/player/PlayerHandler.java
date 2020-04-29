@@ -9,6 +9,8 @@ import java.util.List;
 
 public class PlayerHandler {
 
+    public static boolean programsReady = false;
+
     private MainGame game;
 
     private ArrayList<Player> players;
@@ -61,14 +63,22 @@ public class PlayerHandler {
         throw new IllegalArgumentException("No player with the given id exists");
     }
 
-    public void givePlayerCards(Player player){   // Is to be moved once we have a proper implementation for rounds
+    public boolean areProgramsReady() {
+        for(Player player : players) {
+            if (!player.programReady)
+                return false;
+        }
+        return false;
+    }
+
+    public void givePlayerCards(Player player){
         List<ProgramCard> fiveRandomCards = game.getDeck().getCards(5);
         for (ProgramCard card : fiveRandomCards){
             player.addToProgramSheet(card);
         }
     }
 
-    public void giveAllPlayersCards() {   // Is to be moved once we have a proper implementation for rounds
+    public void giveAllPlayersCards() {
         for (Player player : players)
             givePlayerCards(player);
     }
