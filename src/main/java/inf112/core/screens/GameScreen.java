@@ -7,12 +7,10 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import inf112.core.input.OrthographicCameraController;
 import inf112.core.game.MainGame;
 import inf112.core.player.Player;
-import inf112.core.util.AssMan;
-import inf112.core.util.ButtonFactory;
+import inf112.core.screens.userinterface.UserInterface;
 
 
 public class GameScreen implements Screen {
@@ -28,11 +26,12 @@ public class GameScreen implements Screen {
         this.gameStateSwitcher = gameStateSwitcher;
     }
 
+
     @Override
     public void show() {
         stage = new Stage();
         game = new MainGame();
-        ui = new UserInterface(stage);
+        ui = new UserInterface(this);
         stage.addActor(ui);
 
         game.getBoard().instantiateMapRenderer();
@@ -40,7 +39,7 @@ public class GameScreen implements Screen {
         mapRenderer = game.getBoard().getTiledMapRenderer();
         camera = game.getBoard().instantiateCamera();
 
-        game.createPlayers(3);
+        game.getPlayerHandler().createPlayers(3);
         game.setActivePlayerById(1);
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
@@ -50,6 +49,10 @@ public class GameScreen implements Screen {
         inputMultiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
+    }
+
+    public Stage getStage(){
+        return stage;
     }
 
     @Override

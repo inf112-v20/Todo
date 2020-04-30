@@ -27,6 +27,7 @@ public class RoundHandler {
         //Deal out new cards for the players
         //TODO mangler kort funksjonalitet
         for(Player player : players) {
+
             ;
         }
         //Wait for all players to lay down their program

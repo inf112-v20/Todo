@@ -43,7 +43,7 @@ public class SpawnHandlerTest {
 
         Player.resetPlayerCount();
         game = new MainGame(MapNames.SPAWN_TESTING);
-        game.createPlayers(2);
+        game.getPlayerHandler().createPlayers(2);
         flagPos = new Vector2(2,2);
         availableAdjPosFromCentre = new ArrayList<>();
         availableAdjPosFromCentre.add(new Vector2(1,1));

@@ -31,7 +31,7 @@ public class ButtonFactory {
         TextureRegion textureRegion = new TextureRegion(texture);
         TextureRegionDrawable texRegionDrawable = new TextureRegionDrawable(textureRegion);
         ImageButton button = new ImageButton(texRegionDrawable);
-        button.sizeBy(size);
+        button.setSize(16*size,32*size);
 
         return button;
     }
