@@ -1,10 +1,15 @@
 package inf112.core.game;
 
 import com.badlogic.gdx.utils.Timer;
+import inf112.core.cards.ProgramCard;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
+import inf112.core.player.PlayerAI;
 import inf112.core.player.PlayerHandler;
+import org.javatuples.Pair;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class RoundHandler {
@@ -38,6 +43,16 @@ public class RoundHandler {
         playerHandler.giveAllPlayersCards();
         //Wait for all players to lay down their program
 
+        playerHandler.makeAIPrograms();
+        for(Player player : playerHandler.getPlayers()) {
+            if(!(player instanceof PlayerAI)) {
+                player.setRandomProgram();
+            }
+            System.out.println(player.programReady);
+        }
+
+        if(!playerHandler.areProgramsReady())
+            throw new AssertionError("programs should be ready");
         /*
         //TODO metode som setter en timer på 30 sekunder etter første program er lagt ned
         while(!playerProgramsReady()){
@@ -52,14 +67,6 @@ public class RoundHandler {
         }
     }
 
-    private boolean playerProgramsReady() {
-        for(Player player : players){
-            if(!player.programReady)
-                return false;
-        }
-        return true;
-    }
-
     /**
      * Function for running the phases of a round.
      */
@@ -69,12 +76,14 @@ public class RoundHandler {
          * Phase1
          * Show next playerCard
          */
-        //Todo phase1
+        playerHandler.nextCard();
 
         /**
          * Phase2
          * Move Robots
          */
+        getSortedMoves();
+
 
         /**
          * Phase3
@@ -117,6 +126,20 @@ public class RoundHandler {
             movementHandler.handleFlagVisitation(player);
         }
         movementHandler.wrenchesRepair();
+    }
+
+    private List<Pair<Player, ProgramCard>> getSortedMoves() {
+        List<Pair<Player, ProgramCard>> moves = new ArrayList<>();
+        for(Player player : playerHandler.getPlayers()) {
+            moves.add(new Pair<>(player, player.getCurrentCard()));
+        }
+        moves.sort(new Comparator<Pair<Player, ProgramCard>>() {
+            @Override
+            public int compare(Pair<Player, ProgramCard> p1, Pair<Player, ProgramCard> p2) {
+                return p1.getValue1().getPriority() - p2.getValue1().getPriority();
+            }
+        });
+        return moves;
     }
 
 }

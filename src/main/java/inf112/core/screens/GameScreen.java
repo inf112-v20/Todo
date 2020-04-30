@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.core.input.OrthographicCameraController;
 import inf112.core.game.MainGame;
 import inf112.core.player.Player;
+import inf112.core.player.PlayerHandler;
 
 
 public class GameScreen implements Screen {
@@ -36,7 +37,7 @@ public class GameScreen implements Screen {
         mapRenderer = game.getBoard().getTiledMapRenderer();
         camera = game.getBoard().instantiateCamera();
 
-        game.getPlayerHandler().createPlayers(3);
+        game.getPlayerHandler().setupPlayers(1);
         game.setActivePlayerById(1);
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
@@ -72,7 +73,7 @@ public class GameScreen implements Screen {
 
         game.getBoard().render();
         if (game.hasWon()) {
-            Player.resetPlayerCount();
+            PlayerHandler.playerCount = 0;
             gameStateSwitcher.initGameOver();
         }
         //stage.draw();       // HUD

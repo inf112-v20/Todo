@@ -49,12 +49,6 @@ public interface IProgramSheet<C> {
     boolean addToRegister(C card);
 
     /**
-     * Clears the entire programSheet, making it ready to receive a new set of programCards.
-     * Does not reset amount of locked registers.
-     */
-    void clear();
-
-    /**
      * Removes the card in question from the first unlocked register where its equality is matched, and if so,
      * all cards to the right is moved one register to the left (to fill the gap).
      * However, cards in locked registers stay where they are.

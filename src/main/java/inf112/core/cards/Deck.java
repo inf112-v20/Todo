@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
+
+    public static final int HAND_SIZE = 8;
+
     private List<ProgramCard> activeDeck;
     private List<ProgramCard> discardDeck;
     private List<ProgramCard> inUse;

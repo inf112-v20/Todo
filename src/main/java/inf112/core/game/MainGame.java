@@ -21,7 +21,7 @@ import java.util.List;
 public class MainGame {
 
     public static final int MAX_DAMAGE_TOKENS_LIMIT = 10;    // a player should not be able to receive more damage tokens
-    public static final int MAX_PLAYER_LIMIT = 8;
+    public static int playerLimit = 0;
 
     private Screen gameScreen;
     private GameBoard board;
@@ -36,6 +36,7 @@ public class MainGame {
     public MainGame(MapNames mapNames) {
         this.playerHandler = new PlayerHandler(this);
         this.board = new GameBoard(mapNames, playerHandler);
+        playerLimit = board.getSpawns().size();
         this.roundHandler = new RoundHandler(this);
         this.movementHandler = new MovementHandler(this);
         playerSpriteSheet = new Texture("img/Player_Spritesheet.png");
@@ -114,7 +115,7 @@ public class MainGame {
     // should be called between each movement
     public void attemptToAppointWinner() {
         List<Player> players = playerHandler.getPlayers();
-        if (players.size() == 1 && Player.getPlayerCount() > 1) {    // all other players has lost
+        if (players.size() == 1 && PlayerHandler.playerCount > 1) {    // all other players has lost
             this.winner = players.get(0);
             return;
         }

@@ -68,14 +68,6 @@ public class ProgramSheet implements IProgramSheet<ProgramCard> {
     }
 
     @Override
-    public void clear() {
-        this.hand.clear();
-        this.registers = new ProgramCard[NUM_OF_REGISTERS];
-        this.addHere = 0;
-        this.current = 0;
-    }
-
-    @Override
     public boolean remove(ProgramCard card) {
         for (int i = 0; i < locked; i++)
             if (card.equals(registers[i])) {
@@ -140,6 +132,7 @@ public class ProgramSheet implements IProgramSheet<ProgramCard> {
 
         this.addHere = 0;
         this.current = 0;
+        this.hand.clear();
     }
 
     @Override

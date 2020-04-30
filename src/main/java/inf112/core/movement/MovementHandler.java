@@ -16,7 +16,6 @@ import inf112.core.cards.ProgramCard;
 import inf112.core.cards.RotationCard;
 import inf112.core.tile.*;
 import inf112.core.util.LayerOperation;
-import org.mockito.internal.matchers.Null;
 
 import java.util.*;
 
@@ -386,7 +385,7 @@ public class MovementHandler extends InputAdapter {
         int count = 0;
         //Limits the while loop to the max amount of players repetitions.
         //This is a very crude fix for certain edge cases and should be fixed.
-        while(!players.isEmpty() && count < game.MAX_PLAYER_LIMIT) {
+        while(!players.isEmpty() && count < game.playerLimit) {
             List<Player> moved = new ArrayList<>();
             for (Player player : players) {
                 MovementHandler movementHandler = game.getMovementHandler();

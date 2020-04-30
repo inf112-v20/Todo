@@ -1,15 +1,15 @@
 package inf112.core.player;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import inf112.core.cards.ProgramCard;
+import inf112.core.cards.Deck;
 import inf112.core.game.MainGame;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PlayerHandler {
 
-    public static boolean programsReady = false;
+    public static int humanPlayers = 0;
+    public static int playerCount = 0;
 
     private MainGame game;
 
@@ -21,14 +21,32 @@ public class PlayerHandler {
         players = new ArrayList<>();
     }
 
+    /**
+     * creates a player setup with given amount of human players, the rest of the player limit is filled with playerAI
+     *
+     * @param humanPlayers amount of human players
+     */
+    public void setupPlayers(int humanPlayers) {
+        createPlayers(humanPlayers);
+        createAI(game.playerLimit - humanPlayers);
+
+        game.getMovementHandler().moveAllToSpawn();
+        game.drawPlayers();
+    }
+
     private boolean createPlayer() {
-        if (Player.getPlayerCount() >= game.getPlayerSpriteSheetGrid().length)
+        if (playerCount >= game.getPlayerSpriteSheetGrid().length)
             throw new IllegalStateException(
                     "Cannot create more players than the number of available textures"
             );
 
-        TextureRegion graphic = game.getPlayerSpriteSheetGrid()[Player.getPlayerCount()][0];
-        return players.add(new Player(graphic));
+        TextureRegion graphic = game.getPlayerSpriteSheetGrid()[playerCount][0];
+        if(players.add(new Player(graphic))) {
+            humanPlayers++;
+            return true;
+        }
+        return false;
+
     }
 
     public boolean createPlayers(int quantity) {
@@ -40,10 +58,27 @@ public class PlayerHandler {
             if (!createPlayer())
                 allAdded = false;
 
-        game.getMovementHandler().moveAllToSpawn();
-        game.drawPlayers();
-
         return allAdded;
+    }
+
+    public boolean createAI() {
+        if (playerCount >= game.getPlayerSpriteSheetGrid().length)
+            throw new IllegalStateException(
+                    "Cannot create more players than the number of available textures"
+            );
+
+        TextureRegion graphic = game.getPlayerSpriteSheetGrid()[playerCount][0];
+        return players.add(new PlayerAI(graphic));
+    }
+
+    public boolean createAI(int quantity) {
+        boolean allAdded = true;
+        for(int i = 0; i < quantity; i++) {
+            if(!(playerCount < MainGame.playerLimit))
+                return false;
+            createAI();
+        }
+        return true;
     }
 
     public Player getPlayerById(int id) {
@@ -65,22 +100,32 @@ public class PlayerHandler {
 
     public boolean areProgramsReady() {
         for(Player player : players) {
-            if (!player.programReady)
+            if (!player.programReady) {
                 return false;
+            }
         }
-        return false;
+        return true;
+    }
+
+    public void makeAIPrograms() {
+        for(Player player : players) {
+            if(player instanceof PlayerAI)
+                ((PlayerAI) player).makeProgram();
+        }
     }
 
     public void givePlayerCards(Player player){
-        List<ProgramCard> fiveRandomCards = game.getDeck().getCards(5);
-        for (ProgramCard card : fiveRandomCards){
-            player.addToProgramSheet(card);
-        }
+        player.addToHand(game.getDeck().getCards(Deck.HAND_SIZE));
     }
 
     public void giveAllPlayersCards() {
         for (Player player : players)
             givePlayerCards(player);
+    }
+
+    public void nextCard() {
+        for (Player player : players)
+            player.nextCard();
     }
 
     public void clearAllProgramsheets() {
@@ -90,6 +135,7 @@ public class PlayerHandler {
 
     private void clearProgramsheet(Player player) {
         player.clearProgramSheet();
+        player.programReady = false;
     }
 
 

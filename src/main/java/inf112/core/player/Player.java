@@ -11,6 +11,7 @@ import inf112.core.tile.Rotation;
 import inf112.core.util.VectorMovement;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,8 +21,6 @@ import java.util.Objects;
  * @author eskil
  */
 public class Player {
-
-    private static int playerCount = 0;
 
     public boolean programReady = false;
 
@@ -34,11 +33,12 @@ public class Player {
     private Direction prevDir;
     private ArchiveMarker archiveMarker;
     private ProgramSheet programSheet;
+    private ProgramCard currentCard;
     private int lifeTokens, damageTokens;
 
 
     public Player() {
-        this("Player " + (playerCount + 1));
+        this("Player " + (PlayerHandler.playerCount + 1));
     }
 
     public Player(String name) {
@@ -50,15 +50,15 @@ public class Player {
     }
 
     public Player(int xPos, int yPos) {
-        this("Player " + (playerCount + 1), new TextureRegion(), xPos, yPos);
+        this("Player " + (PlayerHandler.playerCount + 1), new TextureRegion(), xPos, yPos);
     }
 
     public Player(TextureRegion region) {
-        this("Player " + (playerCount + 1), region, 0, 0);
+        this("Player " + (PlayerHandler.playerCount + 1), region, 0, 0);
     }
 
     public Player(String name, TextureRegion region, int xPos, int yPos) {
-        this.id = ++playerCount;
+        this.id = ++PlayerHandler.playerCount;
         this.name = name;
         this.cell = new Cell();
         this.cell.setTile(new StaticTiledMapTile(region));
@@ -68,14 +68,6 @@ public class Player {
         this.programSheet = new ProgramSheet();
         this.lifeTokens = 3;        // A robot can die 3 times before the player has lost
         this.damageTokens = 0;      // Starts off with 0 damage taken
-    }
-
-    public static void resetPlayerCount() {
-        playerCount = 0;
-    }
-
-    public static int getPlayerCount() {
-        return playerCount;
     }
 
     public void reduceLifeTokens() { this.lifeTokens--; }
@@ -99,6 +91,14 @@ public class Player {
     public int getDamageTokens(){ return damageTokens; }
 
     public String getName() { return name; }
+
+    public ProgramSheet getProgramSheet() {
+        return programSheet;
+    }
+
+    public ProgramCard getCurrentCard() {
+        return currentCard;
+    }
 
     public int getId() { return id; }
 
@@ -181,7 +181,7 @@ public class Player {
     }
 
     public void addToProgramSheet(ProgramCard card){
-        this.programSheet.add(card);
+        this.programSheet.addToRegister(card);
     }
 
     public void addToHand(List<ProgramCard> programCards) {
@@ -189,9 +189,22 @@ public class Player {
     }
 
     public void clearProgramSheet() {
-        programSheet.clear();
+        programSheet.clearUnlockedRegisters();
+        programReady = false;
     }
 
+    public void setRandomProgram() {
+        List<ProgramCard> hand = programSheet.getHand();
+        Collections.shuffle(hand);
+        while(!programSheet.isFull()) {
+            programSheet.addToRegister(hand.remove(0));
+        }
+        programReady = true;
+    }
+
+    public void nextCard() {
+        this.currentCard = programSheet.getNext();
+    }
 
     @Override
     public boolean equals(Object o) {
