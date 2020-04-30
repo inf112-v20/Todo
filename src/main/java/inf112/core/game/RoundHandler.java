@@ -14,6 +14,7 @@ import java.util.List;
 
 public class RoundHandler {
     public static final int ROUND_COUNT = 5;
+    private float delay = (float) 0;
 
     MainGame game;
     PlayerHandler playerHandler;
@@ -34,6 +35,7 @@ public class RoundHandler {
      * main function for starting a new round
      */
     public void instantiateNextRoundPhase() {
+
         /**
          * Card phase
          */
@@ -61,16 +63,17 @@ public class RoundHandler {
         */
         //Handle powerdown
         //TODO powerdown funksjonalitet
-
         for(int round = 1; round <= ROUND_COUNT; round++) {
-            runPhases(round);
+            System.out.println("initiate Round " + round);
+            runPhases(round, delay);
         }
+        delay = 0;
     }
 
     /**
      * Function for running the phases of a round.
      */
-    private void runPhases(int round) {
+    private void runPhases(int round, float delay) {
         MovementHandler movementHandler = game.getMovementHandler();
         /**
          * Phase1
@@ -83,19 +86,14 @@ public class RoundHandler {
          * Move Robots
          */
         List<Pair<Player, ProgramCard>> moves = getSortedMoves();
-        //game.getBoard().playerCamera = true;
-        //game.getBoard().centerCameraOnPlayer(moves.get(0).getValue0());
-        float delayShift = 0;
-        for(Pair<Player, ProgramCard> move : getSortedMoves()) {
+
+        for(Pair<Player, ProgramCard> move : moves) {
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
-                    //game.getBoard().centerCameraOnPlayer(move.getValue0());
                     movementHandler.cardMovement(move.getValue0(), move.getValue1());
                 }
-            }, round + delayShift);
-
-            delayShift += 0.5;
+            }, (delay += 1.0));
         }
         game.getBoard().playerCamera = false;
 
@@ -109,19 +107,19 @@ public class RoundHandler {
             public void run() {
                 movementHandler.pushPlayerInDirection(round);
             }
-        }, (float) ((round + delayShift) - 0.8));
+        }, (float) ++delay);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 movementHandler.runConveyors();
             }
-        }, (float)((round + delayShift) - 0.7));
+        }, (float) ++delay);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 movementHandler.gearsRotate();
             }
-        }, (float) ((round + delayShift) - 0.4));
+        }, (float) ++delay);
 
         /**
          * Phase4
@@ -132,7 +130,7 @@ public class RoundHandler {
             public void run() {
                 movementHandler.fireAllLasers();
             }
-        }, (float) ((round + delayShift) - 0.3));
+        }, (float) delay++);
         /**
          * Phase5
          * Register checkpoints, repairs
@@ -146,7 +144,8 @@ public class RoundHandler {
     private List<Pair<Player, ProgramCard>> getSortedMoves() {
         List<Pair<Player, ProgramCard>> moves = new ArrayList<>();
         for(Player player : playerHandler.getPlayers()) {
-            moves.add(new Pair<>(player, player.getCurrentCard()));
+            if(player.getCurrentCard() != null)
+                moves.add(new Pair<>(player, player.getCurrentCard()));
         }
         moves.sort(new Comparator<Pair<Player, ProgramCard>>() {
             @Override
