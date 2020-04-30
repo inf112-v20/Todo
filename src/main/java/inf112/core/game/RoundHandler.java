@@ -82,7 +82,9 @@ public class RoundHandler {
          * Phase2
          * Move Robots
          */
-        getSortedMoves();
+        for(Pair<Player, ProgramCard> move : getSortedMoves()) {
+
+        }
 
 
         /**
