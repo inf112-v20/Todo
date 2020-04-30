@@ -7,6 +7,7 @@ import inf112.core.player.Player;
 import inf112.core.cards.MovementCard;
 import inf112.core.cards.RotationCard;
 import inf112.core.testingUtils.GdxTestRunner;
+import inf112.core.tile.Rotation;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -80,7 +81,7 @@ public class CardMovementTest {
 
     @Test
     public void rotateLeftCardRotatesLeft(){
-        testPlayer.addToProgramSheet(new RotationCard(0,false,1,"",null));
+        testPlayer.addToProgramSheet(new RotationCard(0, Rotation.LEFT,1,"",null));
         movementHandler.cardMovement(testPlayer,0);
 
         assertEquals(oldPlayerDir.rotateLeft(), movementHandler.getActivePlayer().getDirection());
@@ -88,7 +89,7 @@ public class CardMovementTest {
 
     @Test
     public void rotateRightCardRotatesRight(){
-        testPlayer.addToProgramSheet(new RotationCard(0,true,1,"",null));
+        testPlayer.addToProgramSheet(new RotationCard(0,Rotation.RIGHT,1,"",null));
         movementHandler.cardMovement(testPlayer,0);
 
         assertEquals(oldPlayerDir.rotateRight(), movementHandler.getActivePlayer().getDirection());

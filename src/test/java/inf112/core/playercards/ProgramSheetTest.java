@@ -3,6 +3,7 @@ package inf112.core.playercards;
 import inf112.core.cards.*;
 import inf112.core.cards.register.IProgramSheet;
 import inf112.core.cards.register.ProgramSheet;
+import inf112.core.tile.Rotation;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,9 +20,9 @@ public class ProgramSheetTest {
         this.card1 = new MovementCard(1, 1, true, "Card1", null);
         this.card2 = new MovementCard(2, 1, true, "Card2", null);
         this.card3 = new MovementCard(3, 1, true, "Card3", null);
-        this.card4 = new RotationCard(4, false, 1, "Card4", null);
-        this.card5 = new RotationCard(5, false, 1, "Card5", null);
-        this.card6 = new RotationCard(6, false, 1, "Card6", null);
+        this.card4 = new RotationCard(4, Rotation.LEFT, 1, "Card4", null);
+        this.card5 = new RotationCard(5, Rotation.LEFT, 1, "Card5", null);
+        this.card6 = new RotationCard(6, Rotation.LEFT, 1, "Card6", null);
     }
 
     private void fillProgramSheet() {

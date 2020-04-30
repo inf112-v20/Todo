@@ -1,6 +1,7 @@
 package inf112.core.cards;
 
 import com.badlogic.gdx.graphics.Texture;
+import inf112.core.tile.Rotation;
 import inf112.core.util.AssMan;
 
 import java.util.ArrayList;
@@ -37,13 +38,13 @@ public enum CardFactory {
                 return new MovementCard(getNewPriority(),1,false,"Move forward 1 tile",
                         AssMan.manager.get(AssMan.BACKWARD));
             case ROTATELEFT1:
-                return new RotationCard(getNewPriority(), false, 1, "Rotate left once",
+                return new RotationCard(getNewPriority(), Rotation.LEFT, 1, "Rotate left once",
                         AssMan.manager.get(AssMan.LEFT));
             case ROTATELEFT2:
-                return new RotationCard(getNewPriority(), false, 2, "U-Turn",
+                return new RotationCard(getNewPriority(), Rotation.LEFT, 2, "U-Turn",
                         AssMan.manager.get(AssMan.UTURN));
             case ROTATERIGHT1:
-                return new RotationCard(getNewPriority(), true, 1, "Rotate right once",
+                return new RotationCard(getNewPriority(), Rotation.RIGHT, 1, "Rotate right once",
                         AssMan.manager.get(AssMan.RIGHT));
             default:
                 return new MovementCard(0,0,true, "No movement",

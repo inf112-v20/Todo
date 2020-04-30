@@ -82,9 +82,22 @@ public class RoundHandler {
          * Phase2
          * Move Robots
          */
+        List<Pair<Player, ProgramCard>> moves = getSortedMoves();
+        //game.getBoard().playerCamera = true;
+        //game.getBoard().centerCameraOnPlayer(moves.get(0).getValue0());
+        float delayShift = 0;
         for(Pair<Player, ProgramCard> move : getSortedMoves()) {
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    //game.getBoard().centerCameraOnPlayer(move.getValue0());
+                    movementHandler.cardMovement(move.getValue0(), move.getValue1());
+                }
+            }, round + delayShift);
 
+            delayShift += 0.5;
         }
+        game.getBoard().playerCamera = false;
 
 
         /**
@@ -96,19 +109,19 @@ public class RoundHandler {
             public void run() {
                 movementHandler.pushPlayerInDirection(round);
             }
-        }, (float) (round - 0.8));
+        }, (float) ((round + delayShift) - 0.8));
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 movementHandler.runConveyors();
             }
-        }, (float)(round - 0.7));
+        }, (float)((round + delayShift) - 0.7));
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 movementHandler.gearsRotate();
             }
-        }, (float) (round - 0.4));
+        }, (float) ((round + delayShift) - 0.4));
 
         /**
          * Phase4
@@ -119,7 +132,7 @@ public class RoundHandler {
             public void run() {
                 movementHandler.fireAllLasers();
             }
-        }, (float) (round - 0.3));
+        }, (float) ((round + delayShift) - 0.3));
         /**
          * Phase5
          * Register checkpoints, repairs

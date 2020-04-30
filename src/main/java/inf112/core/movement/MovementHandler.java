@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
+import inf112.core.cards.register.ProgramSheet;
 import inf112.core.game.MainGame;
 import inf112.core.laser.LaserHandler;
 import inf112.core.movement.util.*;
@@ -179,37 +180,29 @@ public class MovementHandler extends InputAdapter {
                 handlePossibleDeath(player);
     }
 
-    /**
-     *
-     */
-
-    public void cardMovement(Player player, int index) {
+    public void cardMovement(Player player, ProgramCard programCard) {
         if (!contains(player))
             throw new IllegalArgumentException("Unknown player");
 
-        ProgramCard currentCard = player.getRegisters().get(index);
-        System.out.println(currentCard.getName());
-        if (currentCard instanceof MovementCard) {
-            if (((MovementCard) currentCard).isForward()) {
-                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++) {
-                    attemptToMoveForward(game.getActivePlayer());
+        System.out.println(programCard.getName());
+        if (programCard instanceof MovementCard) {
+            if (((MovementCard) programCard).isForward()) {
+                for (int i = 0; i < ((MovementCard) programCard).getDistance(); i++) {
+                    attemptToMoveForward(player);
                 }
             } else {
-                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++) {
-                    attemptToMoveBackward(game.getActivePlayer());
+                for (int i = 0; i < ((MovementCard) programCard).getDistance(); i++) {
+                    attemptToMoveBackward(player);
                 }
             }
-        } else if (currentCard instanceof RotationCard) {
-            if (((RotationCard) currentCard).isClockwise()) {
-                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++) {
-                    game.getActivePlayer().rotateRight();
-                }
-            } else {
-                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++) {
-                    game.getActivePlayer().rotateLeft();
-                }
-            }
+        } else if (programCard instanceof RotationCard) {
+            player.rotate(((RotationCard) programCard).getRotation());
         }
+    }
+
+    public void cardMovement(Player player, int index) {
+        assert(index > ProgramSheet.NUM_OF_REGISTERS);
+        cardMovement(player, player.getProgramSheet().get(index));
     }
 
     /**

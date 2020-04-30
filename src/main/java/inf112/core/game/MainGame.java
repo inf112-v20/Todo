@@ -37,6 +37,7 @@ public class MainGame {
         this.playerHandler = new PlayerHandler(this);
         this.board = new GameBoard(mapNames, playerHandler);
         playerLimit = board.getSpawns().size();
+        playerLimit = 3;
         this.roundHandler = new RoundHandler(this);
         this.movementHandler = new MovementHandler(this);
         playerSpriteSheet = new Texture("img/Player_Spritesheet.png");
