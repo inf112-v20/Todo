@@ -56,6 +56,10 @@ public class AssMan {
     public static final AssetDescriptor<Texture> UTURN
             = new AssetDescriptor<Texture>("assets/cards/uturn.png", Texture.class);
 
+    // UI
+    public static final AssetDescriptor<Texture> OVERLAY
+            = new AssetDescriptor<Texture>("assets/ui/overlay.png", Texture.class);
+
 
     @SuppressWarnings("Duplicates")
     public static void load() {
@@ -80,6 +84,9 @@ public class AssMan {
         manager.load(LEFT);
         manager.load(RIGHT);
         manager.load(UTURN);
+
+        // UI
+        manager.load(OVERLAY);
 
     }
 

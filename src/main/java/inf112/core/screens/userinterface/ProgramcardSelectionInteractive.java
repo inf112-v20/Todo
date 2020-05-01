@@ -3,6 +3,7 @@ package inf112.core.screens.userinterface;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.core.cards.ProgramCard;
 import inf112.core.util.ButtonFactory;
@@ -16,30 +17,23 @@ public class ProgramcardSelectionInteractive {
 
     private boolean hide = true;
     private final int MAX_SELECTION_SIZE = 9;
-    private final int SELECTION_CARD_SIZE = 8;
+    private final int SELECTION_CARD_SIZE = 4;
 
-    private List<ProgramCardButtonWrapper> buttons;
     private int[] posX;
     private int[] posY;
 
     private ProgramCardButtonWrapper[] selectionPile;
     private ProgramCardButtonWrapper[] registerPile;
 
-    private boolean[] registerPositionStatus = {false, false, false, false, false};
 
     private final int[] registerPosX = {20, 121, 222, 323, 424};
     private final int registerPosY = 28;
-
-    //Klasse som extender imagebutton...
-    //ImageButton som inneholder 2 posisjoner, en metode for å bytte posisjon, et programkort, og en getter for programkortet
 
     public ProgramcardSelectionInteractive(){
         selectionPile = new ProgramCardButtonWrapper[9];
         registerPile = new ProgramCardButtonWrapper[5];
 
 
-
-        buttons = new ArrayList<>();
         posX = new int[MAX_SELECTION_SIZE];
         posY = new int[MAX_SELECTION_SIZE];
         for(int i = 0; i < MAX_SELECTION_SIZE; i++){
@@ -61,44 +55,49 @@ public class ProgramcardSelectionInteractive {
             ImageButton button = ButtonFactory.createImageButton(currentCardTexture, SELECTION_CARD_SIZE);
             button.setPosition(posX[i], posY[i]);
             ProgramCardButtonWrapper buttonContainer = new ProgramCardButtonWrapper(button, currentCard);
-            button.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    moveToRegister(buttonContainer);
-                    removeFromSelectionPile(buttonContainer);
-                }
-            });
+            buttonListenerForSelection(buttonContainer);
             selectionPile[i] = buttonContainer;
-
         }
+    }
+
+    public TextButton createLockSelectionButton(){
+        TextButton button = ButtonFactory.createCustomButton("Confirm", 3);
+        button.setPosition(1100, 550);
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                button.remove();
+                lockSelection();
+            }
+        });
+        return button;
     }
 
 
     public void hideButtons() {
-        if (hide) {
-            for (ProgramCardButtonWrapper card : buttons) {
-                if (card.isVisible()) {
-                    card.setVisible(false);
-                }
-            }
-        } else {
-            for (ProgramCardButtonWrapper card : buttons) {
-                if (!card.isVisible()) {
-                    card.setVisible(true);
-                }
-            }
+        for (ProgramCardButtonWrapper card : selectionPile) {
+            if (card == null) {continue;}
+            card.setVisible(!card.isVisible());
         }
+        for (ProgramCardButtonWrapper card : registerPile) {
+            if (card == null) {continue;}
+            card.setVisible(!card.isVisible());
+        }
+
         hide = !hide;
     }
 
     private void moveToRegister(ProgramCardButtonWrapper button){
         int newX = getFirstFreeRegister();
-        System.out.println(newX);
         if (newX == -1) {return;}
 
         registerPile[newX] = button;
 
-        button.setPosition(registerPosX[newX], 28);
+        button.setPosition(registerPosX[newX], registerPosY);
+        buttonListenerForDeselection(button);
+    }
+
+    private void buttonListenerForDeselection(ProgramCardButtonWrapper button){
         button.getButton().clearListeners();
         button.getButton().addListener(new ClickListener() {
             @Override
@@ -106,13 +105,20 @@ public class ProgramcardSelectionInteractive {
                 deselectCard(button);
             }
         });
+    }
 
-
+    private void buttonListenerForSelection(ProgramCardButtonWrapper button){
+        button.getButton().addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                moveToRegister(button);
+                removeFromSelectionPile(button);
+            }
+        });
     }
 
     private void removeFromSelectionPile(ProgramCardButtonWrapper button){
         for(int i = 0; i < selectionPile.length; i++){
-            //ProgramCardButtonWrapper buttonInList : selectionPile){
             ProgramCardButtonWrapper buttonInList = selectionPile[i];
             if (button == buttonInList){
                 selectionPile[i] = null;
@@ -153,6 +159,7 @@ public class ProgramcardSelectionInteractive {
         button.returnPosition();
         removeFromRegisterPile(button);
         selectionPile[selectionPilePosition] = button;
+        buttonListenerForSelection(button);
     }
 
     public void addLockedCards(List<ProgramCard> lockedCards){
@@ -161,23 +168,28 @@ public class ProgramcardSelectionInteractive {
         }
     }
 
-    public boolean canSelectCard(){
-        // valgte kort er ikke fullt (Må ha med kort fra registeret...)
-
-        return false;
-    }
-
-    public ProgramCard selectCard(){
-        //
-
-        return null;
-    }
 
     public List<ProgramCard> lockSelection(){
-        // Har valgt alle kort
-        // canLockSelection
-        // Player Register...
-        return null;
+        List<ProgramCard> cards = new ArrayList<>();
+        for(ProgramCardButtonWrapper button : registerPile){
+            if (button == null) {return null;}
+            cards.add(button.getCard());
+        }
+
+        for(ProgramCard card : cards){
+            System.out.println(card.getName());
+        }
+
+        for(ProgramCardButtonWrapper button : selectionPile){
+            if (button == null) {continue;}
+            button.dispose();
+        }
+        for(ProgramCardButtonWrapper button : registerPile){
+            if (button == null) {continue;}
+            button.dispose();
+        }
+
+        return cards;
     }
 
 }
