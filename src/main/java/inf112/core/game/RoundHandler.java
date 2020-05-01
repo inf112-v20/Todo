@@ -14,7 +14,7 @@ import java.util.List;
 
 public class RoundHandler {
     public static final int ROUND_COUNT = 5;
-    private float delay = (float) 0;
+    private float totalDelay = (float) 0;
 
     MainGame game;
     PlayerHandler playerHandler;
@@ -65,9 +65,9 @@ public class RoundHandler {
         //TODO powerdown funksjonalitet
         for(int round = 1; round <= ROUND_COUNT; round++) {
             System.out.println("initiate Round " + round);
-            runPhases(round, delay);
+            runPhases(round, totalDelay);
         }
-        delay = 0;
+        totalDelay = 0;
     }
 
     /**
@@ -86,14 +86,14 @@ public class RoundHandler {
          * Move Robots
          */
         List<Pair<Player, ProgramCard>> moves = getSortedMoves();
-
         for(Pair<Player, ProgramCard> move : moves) {
+            float
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
                     movementHandler.cardMovement(move.getValue0(), move.getValue1());
                 }
-            }, (delay += 1.0));
+            }, );
         }
         game.getBoard().playerCamera = false;
 
@@ -107,19 +107,19 @@ public class RoundHandler {
             public void run() {
                 movementHandler.pushPlayerInDirection(round);
             }
-        }, (float) ++delay);
+        }, (float) (delay += 1));
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 movementHandler.runConveyors();
             }
-        }, (float) ++delay);
+        }, (float) (delay += 1));
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 movementHandler.gearsRotate();
             }
-        }, (float) ++delay);
+        }, (float) (delay++));
 
         /**
          * Phase4
@@ -130,7 +130,7 @@ public class RoundHandler {
             public void run() {
                 movementHandler.fireAllLasers();
             }
-        }, (float) delay++);
+        }, (float) (delay += 1));
         /**
          * Phase5
          * Register checkpoints, repairs

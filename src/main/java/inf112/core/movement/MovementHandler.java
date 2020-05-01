@@ -82,59 +82,6 @@ public class MovementHandler extends InputAdapter {
         game.setActivePlayer(player);
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        switch (keycode) {
-            case Input.Keys.UP:
-                attemptToMoveForward(game.getActivePlayer());
-                break;
-            case Input.Keys.DOWN:
-                attemptToMoveBackward(game.getActivePlayer());
-                break;
-            case Input.Keys.LEFT:
-                game.getActivePlayer().rotateLeft();
-                break;
-            case Input.Keys.RIGHT:
-                game.getActivePlayer().rotateRight();
-                break;
-            case Input.Keys.C:
-                game.getActivePlayer().setArchiveMarkerHere();
-                break;
-            case Input.Keys.SPACE:
-                moveToBackup(game.getActivePlayer());
-                break;
-            case Input.Keys.T:
-                runConveyors();
-                gearsRotate();
-                wrenchesRepair();
-                pushPlayerInDirection(1);
-                break;
-            case Input.Keys.R:
-                game.getRoundHandler().instantiateNextRoundPhase();
-                break;
-            case Input.Keys.L:
-                fireAllLasers();
-                break;
-            default:
-                return false;
-        }
-        game.removeLosers();    // strictly speaking unnecessary to call this upon every move
-        game.attemptToAppointWinner();
-        return true;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        switch (keycode) {
-            case Input.Keys.L:
-                removeLasers();
-                break;
-            default:
-                return false;
-        }
-        return true;
-    }
-
     public void fireAllLasers(){
         laserHandler.updateLaserPositions();
         laserHandler.fireLasersVisually();
@@ -283,7 +230,7 @@ public class MovementHandler extends InputAdapter {
      *
      * @param playerToBeMoved
      */
-    private void moveToBackup(Player playerToBeMoved) {
+    public void moveToBackup(Player playerToBeMoved) {
         spawnHandler.initSpawning(playerToBeMoved);
     }
 
