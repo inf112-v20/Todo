@@ -11,6 +11,7 @@ import inf112.core.game.MainGame;
 import inf112.core.screens.GameScreen;
 import inf112.core.util.ButtonFactory;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -45,10 +46,14 @@ public class UserInterface extends Actor{
     }
 
     public void showSelectionCards(List<ProgramCard> cards){
-        List<ImageButton> buttons = selectionButtons.renderSelectionButtons(cards);
-        for(ImageButton button : buttons){
-            stage.addActor(button);
+
+        selectionButtons.renderSelectionButtons(cards);
+        List<ProgramCardButtonWrapper> buttons = Arrays.asList(selectionButtons.getSelectionPile());
+
+        for(ProgramCardButtonWrapper button : buttons){
+            stage.addActor(button.getButton());
         }
+
     }
 
 }
