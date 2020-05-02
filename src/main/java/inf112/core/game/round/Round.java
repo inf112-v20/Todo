@@ -14,32 +14,19 @@ import java.util.List;
 public class Round {
 
     private int rounds;
-    private float roundDelay;
     private List<Phase> phases;
 
-    public Round(int rounds) {
+    public Round(int rounds, List<Phase> phases) {
         this.rounds = rounds;
-        this.phases = new ArrayList<>();
-        this.roundDelay = 0f;
+        this.phases = phases;
     }
 
-    public void instantiateNewGameRound() {
-        for(int i = 0; i < rounds; i++) {
-            roundStart();
-            //2 second pause between each round
-            roundDelay += 2f;
-        }
-    }
-
-    private void roundStart() {
+    private void roundStart(float delay) {
+        float phaseDelay = delay;
         for(Phase phase : phases) {
-            phase.startPhase();
-
+            phase.startPhase(phaseDelay);
+            phaseDelay += phase.getRuntime();
         }
-    }
-
-    public void addPhase(Phase phase) {
-        phases.add(phase);
     }
 
     public float getRoundRuntime() {

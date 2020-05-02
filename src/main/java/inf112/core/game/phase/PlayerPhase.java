@@ -19,13 +19,11 @@ public class PlayerPhase implements Phase {
     private PlayerHandler playerHandler;
     private MovementHandler movementHandler;
 
-    private float delay;
     private static float runtime;
 
-    public PlayerPhase(PlayerHandler playerHandler, MovementHandler movementHandler, float delay) {
+    public PlayerPhase(PlayerHandler playerHandler, MovementHandler movementHandler) {
         this.playerHandler = playerHandler;
         this.movementHandler = movementHandler;
-        this.delay = delay;
         setRuntime();
         this.queuedMoves = getSortedMoves();
         setEvents();
@@ -47,11 +45,9 @@ public class PlayerPhase implements Phase {
     }
 
     private void setEvents() {
-        float eventDelay = delay;
         for(Pair<Player ,ProgramCard> move : queuedMoves) {
-            Event newPlayerEvent = new PlayerEvent(move.getValue0(), movementHandler, eventDelay);
+            Event newPlayerEvent = new PlayerEvent(move.getValue0(), movementHandler);
             events.add(newPlayerEvent);
-            eventDelay += newPlayerEvent.getRuntime();
         }
     }
 
@@ -64,9 +60,11 @@ public class PlayerPhase implements Phase {
     }
 
     @Override
-    public void startPhase() {
+    public void startPhase(float delay) {
+        float eventDelay = delay;
         for(Event event : events) {
-            event.startEvent();
+            event.startEvent(eventDelay);
+            eventDelay += event.getRuntime();
         }
     }
 

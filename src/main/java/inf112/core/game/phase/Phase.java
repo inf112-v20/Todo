@@ -10,7 +10,7 @@ public interface Phase {
      * Starts the phase. In practice it should start the events of the phase in he correct order, and calculate the
      * timing of every event.
      */
-    void startPhase();
+    void startPhase(float delay);
 
     /**
      * returns runtime of phase in float, used for timing tasks

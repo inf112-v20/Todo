@@ -9,7 +9,7 @@ public interface Event {
     /**
      * Starts the event.
      */
-    void startEvent();
+    void startEvent(float delay);
 
     /**
      * Runtime of an event. Must be atleast larger than the actual runtime of the code, or timing errors will occur

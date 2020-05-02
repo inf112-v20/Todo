@@ -12,17 +12,15 @@ public class PlayerEvent implements Event {
 
     private Player player;
     private MovementHandler movementHandler;
-    private float delay;
 
     private static float runtime = 1f;
 
-    public PlayerEvent(Player player, MovementHandler movementHandler, float delay) {
+    public PlayerEvent(Player player, MovementHandler movementHandler) {
         this.player = player;
         this.movementHandler = movementHandler;
-        this.delay = delay;
     }
 
-    public void startEvent() {
+    public void startEvent(float delay) {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {

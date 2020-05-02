@@ -33,7 +33,7 @@ public class RoundHandler {
     /**
      * main function for starting a new round
      */
-    public void instantiateNextRoundPhase() {
+    public void instantiateNextRound() {
 
         /**
          * Card phase
@@ -84,18 +84,6 @@ public class RoundHandler {
          * Phase2
          * Move Robots
          */
-        List<Pair<Player, ProgramCard>> moves = getSortedMoves();
-        for(Pair<Player, ProgramCard> move : moves) {
-            float
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    movementHandler.cardMovement(move.getValue0(), move.getValue1());
-                }
-            }, );
-        }
-        game.getBoard().playerCamera = false;
-
 
         /**
          * Phase3
