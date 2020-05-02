@@ -18,7 +18,6 @@ import java.util.List;
 public class PlayerPhase implements Phase {
 
     private List<Pair<Player, ProgramCard>> queuedMoves;
-    private List<Event> events;
     private PlayerHandler playerHandler;
     private MovementHandler movementHandler;
 
@@ -27,7 +26,6 @@ public class PlayerPhase implements Phase {
     public PlayerPhase(PlayerHandler playerHandler, MovementHandler movementHandler) {
         this.playerHandler = playerHandler;
         this.movementHandler = movementHandler;
-        this.events = new ArrayList<>();
     }
 
     private List<Pair<Player, ProgramCard>> getSortedMoves() {
@@ -45,47 +43,38 @@ public class PlayerPhase implements Phase {
         return moves;
     }
 
-    private void setEvents() {
+    private List<Event> setupEvents() {
+        List<Event> events = new ArrayList<>();
         for(Pair<Player, ProgramCard> move : queuedMoves) {
             Event newPlayerEvent = new PlayerEvent(move.getValue0(), movementHandler);
             events.add(newPlayerEvent);
         }
-        System.out.print("Events: ");
-        System.out.println(events);
+        return events;
     }
 
-    private void setRuntime() {
+    /**
+     * Calculates runtime from a list of events
+     */
+    private float setupRuntime(List<Event> events) {
         float rTime = 0f;
         for(Event event : events) {
             rTime += event.getRuntime();
         }
-        this.runtime = rTime;
+        return rTime;
     }
 
     @Override
     public void startPhase(float delay) {
         playerHandler.nextCard();
         this.queuedMoves = getSortedMoves();
-        System.out.print("Sorted Moves: ");
-        System.out.println(queuedMoves);
-        setEvents();
-        setRuntime();
-
-        GameScreen.cameraController.switchCameraMode();
-        MainGame.playerHandler.setActivePlayer(queuedMoves.get(0).getValue0());
+        List<Event> events = setupEvents();
+        this.runtime = setupRuntime(events);
 
         float eventDelay = delay;
         for(Event event : events) {
             event.startEvent(eventDelay);
             eventDelay += event.getRuntime();
         }
-
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                GameScreen.cameraController.switchCameraMode();
-            }
-        }, eventDelay);
     }
 
     @Override

@@ -131,7 +131,6 @@ public class MovementHandler extends InputAdapter {
         if (!contains(player))
             throw new IllegalArgumentException("Unknown player");
 
-        System.out.println(programCard.getName());
         if (programCard instanceof MovementCard) {
             if (((MovementCard) programCard).isForward()) {
                 for (int i = 0; i < ((MovementCard) programCard).getDistance(); i++) {

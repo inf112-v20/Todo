@@ -24,20 +24,11 @@ public class PlayerEvent implements Event {
 
     public void startEvent(float delay) {
         MovementHandler movementHandler = this.movementHandler;
-        System.out.println("Start playerEvent for " + player.getName());
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                System.out.println("Camera focus on " + player.getName());
-                MainGame.playerHandler.setActivePlayer(player);
-            }
-        }, delay);
-        delay += 0.8f;
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-
                 MainGame.movementHandler.cardMovement(player, player.getCurrentCard());
+                System.out.println(player.getName() + " : " + player.getCurrentCard().getName());
             }
         }, delay);
     }

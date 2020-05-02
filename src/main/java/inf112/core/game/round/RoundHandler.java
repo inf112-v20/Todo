@@ -30,6 +30,7 @@ public class RoundHandler {
      * main function for starting a new round
      */
     public void instantiateNextRound() {
+        resetDelay();
         //ProgramSheets are cleared
         playerHandler.clearAllProgramsheets();
         //All players receive a new set of cards
@@ -46,12 +47,13 @@ public class RoundHandler {
 
         //Remove player Control
         GameScreen.blockControls();
+        System.out.println("Controls locked");
         //Generate round
         Round round = GameRule.generateDefaultRound(playerHandler, movementHandler);
         //1 second delay before rounds start
         totalDelay += 1f;
         //Repeat base round for the amount of rounds
-        for(int i = 0; i < 1; i++) {
+        for(int i = 0; i < round.getAmountOfRounds(); i++) {
             round.roundStart(totalDelay);
             //delay is incremented by runtime of round
             totalDelay += round.getRoundRuntime();
@@ -64,69 +66,10 @@ public class RoundHandler {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
+                System.out.println("Controls unblocked");
                 GameScreen.unblockControls();
-                resetDelay();
             }
         }, totalDelay);
-    }
-
-    /**
-     * Function for running the phases of a round.
-     */
-    private void runPhases(int round, float delay) {
-        MovementHandler movementHandler = game.getMovementHandler();
-        /**
-         * Phase1
-         * Show next playerCard
-         */
-        playerHandler.nextCard();
-
-        /**
-         * Phase2
-         * Move Robots
-         */
-
-        /**
-         * Phase3
-         * Move Pushers, Conveyors then Gears.
-         */
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                movementHandler.pushPlayerInDirection(round);
-            }
-        }, (float) (delay += 1));
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                movementHandler.runConveyors();
-            }
-        }, (float) (delay += 1));
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                movementHandler.gearsRotate();
-            }
-        }, (float) (delay++));
-
-        /**
-         * Phase4
-         * Fire all lasers
-         */
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                movementHandler.fireAllLasers();
-            }
-        }, (float) (delay += 1));
-        /**
-         * Phase5
-         * Register checkpoints, repairs
-         */
-        for(Player player : players) {
-            movementHandler.handleFlagVisitation(player);
-        }
-        movementHandler.wrenchesRepair();
     }
 
     public void resetDelay() {
