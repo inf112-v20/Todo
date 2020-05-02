@@ -6,9 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.core.cards.ProgramCard;
+import inf112.core.cards.register.ProgramSheet;
 import inf112.core.util.ButtonFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.Integer.min;
@@ -19,8 +21,8 @@ public class ProgramcardSelectionInteractive {
     private final int MAX_SELECTION_SIZE = 9;
     private final int SELECTION_CARD_SIZE = 4;
 
-    private int[] posX;
-    private int[] posY;
+    private int[] posX = {800,900,1000,1100,1200,800,900,1000,1100};
+    private int[] posY = {300,300,300,300,300,400,400,400,400};
 
     private ProgramCardButtonWrapper[] selectionPile;
     private ProgramCardButtonWrapper[] registerPile;
@@ -32,15 +34,6 @@ public class ProgramcardSelectionInteractive {
     public ProgramcardSelectionInteractive(){
         selectionPile = new ProgramCardButtonWrapper[9];
         registerPile = new ProgramCardButtonWrapper[5];
-
-
-        posX = new int[MAX_SELECTION_SIZE];
-        posY = new int[MAX_SELECTION_SIZE];
-        for(int i = 0; i < MAX_SELECTION_SIZE; i++){
-            posX[i] = 30 + 84*i;
-            posY[i] = 250;
-        }
-
     }
 
     public ProgramCardButtonWrapper[] getSelectionPile() {
@@ -58,8 +51,21 @@ public class ProgramcardSelectionInteractive {
             buttonListenerForSelection(buttonContainer);
             selectionPile[i] = buttonContainer;
         }
-    }
 
+    }
+    protected List<ProgramCard> releaseCards(){
+        List<ProgramCard> cards = new ArrayList<>();
+        for (ProgramCardButtonWrapper button : registerPile){
+            if(button==null) {continue;}
+            cards.add(button.getCard());
+        }
+        for (ProgramCardButtonWrapper button : selectionPile){
+            if(button==null) {continue;}
+            cards.add(button.getCard());
+        }
+        registerPile = new ProgramCardButtonWrapper[5];
+        return cards;
+    }
 
 
     public void hideButtons() {
@@ -80,7 +86,7 @@ public class ProgramcardSelectionInteractive {
 
         registerPile[newX] = button;
 
-        button.setPosition(registerPosX[newX], registerPosY);
+        button.setPosition(registerPosX[newX]+768, registerPosY);
         buttonListenerForDeselection(button);
     }
 
@@ -178,5 +184,6 @@ public class ProgramcardSelectionInteractive {
 
         return cards;
     }
+
 
 }

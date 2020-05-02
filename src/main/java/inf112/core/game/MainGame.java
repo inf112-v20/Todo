@@ -25,7 +25,7 @@ public class MainGame {
     public static final int MAX_DAMAGE_TOKENS_LIMIT = 10;    // a player should not be able to receive more damage tokens
     public static final int MAX_PLAYER_LIMIT = 8;
 
-    private Screen gameScreen;
+    private GameScreen gameScreen;
     private GameBoard board;
     private MovementHandler movementHandler;
     private PlayerHandler playerHandler;
@@ -59,7 +59,7 @@ public class MainGame {
         return board;
     }
 
-    public void setGameScreen(Screen gameScreen) {
+    public void setGameScreen(GameScreen gameScreen) {
        this.gameScreen = gameScreen;
     }
 
@@ -80,10 +80,6 @@ public class MainGame {
     public void drawPlayers() {
         for (Player player : playerHandler.getPlayers())
             LayerOperation.drawPlayer(board.getLayer(MapLayer.PLAYER_LAYER), player);
-    }
-
-    public void createDeck(){
-        this.deck = new Deck(CardFactory.createDefaultDeck());
     }
 
     public void setActivePlayerById(int id) {

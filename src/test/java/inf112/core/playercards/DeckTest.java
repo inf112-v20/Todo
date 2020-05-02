@@ -28,7 +28,6 @@ public class DeckTest {
         AssMan.manager.finishLoading();
 
         game = new MainGame();
-        game.createDeck();
         movementHandler = new MovementHandler(game);
         deck = game.getDeck();
     }

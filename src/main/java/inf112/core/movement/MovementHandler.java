@@ -1,5 +1,6 @@
 package inf112.core.movement;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -15,7 +16,10 @@ import inf112.core.player.Player;
 import inf112.core.cards.MovementCard;
 import inf112.core.cards.ProgramCard;
 import inf112.core.cards.RotationCard;
+import inf112.core.screens.GameScreen;
+import inf112.core.screens.userinterface.UserInterface;
 import inf112.core.tile.*;
+import inf112.core.util.ButtonFactory;
 import inf112.core.util.LayerOperation;
 import org.mockito.internal.matchers.Null;
 
@@ -114,7 +118,11 @@ public class MovementHandler extends InputAdapter {
                 game.getRoundHandler().instantiateNextRoundPhase();
                 break;
             case Input.Keys.B:
-
+                GameScreen screen = (GameScreen) game.getGameScreen();
+                screen.getUi().initializeSelectionPhase(game.getDeck().getCards(9));
+                break;
+            case Input.Keys.M:
+                cardMovement(getActivePlayer());
                 break;
             case Input.Keys.L:
                 fireAllLasers();
@@ -188,11 +196,11 @@ public class MovementHandler extends InputAdapter {
      *
      */
 
-    public void cardMovement(Player player, int index) {
+    public void cardMovement(Player player) {
         if (!contains(player))
             throw new IllegalArgumentException("Unknown player");
 
-        ProgramCard currentCard = player.getRegisters().get(index);
+        ProgramCard currentCard = player.getProgramSheet().getNext();
         System.out.println(currentCard.getName());
         if (currentCard instanceof MovementCard) {
             if (((MovementCard) currentCard).isForward()) {

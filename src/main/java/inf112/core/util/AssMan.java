@@ -60,6 +60,10 @@ public class AssMan {
     public static final AssetDescriptor<Texture> OVERLAY
             = new AssetDescriptor<Texture>("assets/ui/overlay.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> UIBACKGROUND
+            = new AssetDescriptor<Texture>("assets/ui/uibackground.png", Texture.class);
+
+
 
     @SuppressWarnings("Duplicates")
     public static void load() {
@@ -87,6 +91,7 @@ public class AssMan {
 
         // UI
         manager.load(OVERLAY);
+        manager.load(UIBACKGROUND);
 
     }
 

@@ -28,6 +28,8 @@ public class MainMenuScreen implements Screen {
     public void show() {
         stage = new Stage();
 
+
+
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
 

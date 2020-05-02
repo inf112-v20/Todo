@@ -1,9 +1,15 @@
 package inf112.core.game;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Timer;
+import inf112.core.cards.Deck;
 import inf112.core.cards.ProgramCard;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
+import inf112.core.screens.GameScreen;
+import inf112.core.screens.userinterface.UserInterface;
+import inf112.core.util.AssMan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +33,16 @@ public class RoundHandler {
      */
     public void instantiateNextRoundPhase() {
         //Deal out new cards for the players
+        GameScreen screen = (GameScreen) game.getGameScreen();
+//        Stage stage = screen.getStage();
+//        UserInterface ui = screen.getUi();//.initializeSelectionPhase(game.getDeck().getCards(9));
+
         //TODO mangler kort funksjonalitet
         for(Player player : players) {
-            List<ProgramCard> cards = new ArrayList<>();
 
+
+            //screen.drawPlayerCondition(player);  EVT stage
+            //screen.getStage().addActor();
 
         }
         //Wait for all players to lay down their program
