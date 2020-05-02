@@ -2,7 +2,6 @@ package inf112.core.game.round;
 
 import inf112.core.game.phase.Phase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +20,7 @@ public class Round {
         this.phases = phases;
     }
 
-    private void roundStart(float delay) {
+    public void roundStart(float delay) {
         float phaseDelay = delay;
         for(Phase phase : phases) {
             phase.startPhase(phaseDelay);
@@ -35,5 +34,9 @@ public class Round {
             runtime += phase.getRuntime();
         }
         return runtime;
+    }
+
+    public int getAmountOfRounds() {
+        return rounds;
     }
 }

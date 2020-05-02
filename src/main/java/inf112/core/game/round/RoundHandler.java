@@ -1,32 +1,27 @@
 package inf112.core.game.round;
 
 import com.badlogic.gdx.utils.Timer;
-import inf112.core.cards.ProgramCard;
+import inf112.core.game.GameRule;
 import inf112.core.game.MainGame;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
 import inf112.core.player.PlayerAI;
 import inf112.core.player.PlayerHandler;
-import org.javatuples.Pair;
 
 import java.util.List;
 
 public class RoundHandler {
-    public static final int ROUND_COUNT = 5;
-    private float totalDelay = (float) 0;
+    private float totalDelay = 0f;
 
-    MainGame game;
-    PlayerHandler playerHandler;
-    List<Player> players;
+    private MainGame game;
+    private PlayerHandler playerHandler;
+    private MovementHandler movementHandler;
+    private List<Player> players;
 
-    /**
-     * Class that handles a gameRound. Every round has several phases, and every phase has different actions.
-     * @param game
-     * @author Alvar
-     */
     public RoundHandler(MainGame game) {
         this.game = game;
         this.playerHandler = game.getPlayerHandler();
+        this.movementHandler = game.getMovementHandler();
         this.players = game.getPlayers();
     }
 
@@ -34,39 +29,35 @@ public class RoundHandler {
      * main function for starting a new round
      */
     public void instantiateNextRound() {
-
-        /**
-         * Card phase
-         */
         //ProgramSheets are cleared
         playerHandler.clearAllProgramsheets();
         //All players receive a new set of cards
-        playerHandler.giveAllPlayersCards();
-        //Wait for all players to lay down their program
 
+        playerHandler.giveAllPlayersCards();
         playerHandler.makeAIPrograms();
-        for(Player player : playerHandler.getPlayers()) {
-            if(!(player instanceof PlayerAI)) {
+        for (Player player : playerHandler.getPlayers()) {
+            if (!(player instanceof PlayerAI)) {
                 player.setRandomProgram();
             }
-            System.out.println(player.programReady);
+        }
+        if(!playerHandler.areProgramsReady())
+            throw new IllegalStateException("All programs must be ready at this stage");
+
+        //Remove player Control
+
+        //Generate round
+        Round round = GameRule.generateDefaultRound(playerHandler, movementHandler);
+        //1 second delay before rounds start
+        totalDelay += 1f;
+        //Repeat base round for the amount of rounds
+        for(int i = 0; i < round.getAmountOfRounds(); i++) {
+            round.roundStart(totalDelay);
+            //delay is incremented by runtime of round
+            totalDelay += round.getRoundRuntime();
+            //1 second delay between each round
+            totalDelay += 1f;
         }
 
-        if(!playerHandler.areProgramsReady())
-            throw new AssertionError("programs should be ready");
-        /*
-        //TODO metode som setter en timer på 30 sekunder etter første program er lagt ned
-        while(!playerProgramsReady()){
-            ;
-        }
-        */
-        //Handle powerdown
-        //TODO powerdown funksjonalitet
-        for(int round = 1; round <= ROUND_COUNT; round++) {
-            System.out.println("initiate Round " + round);
-            runPhases(round, totalDelay);
-        }
-        totalDelay = 0;
     }
 
     /**
@@ -126,6 +117,10 @@ public class RoundHandler {
             movementHandler.handleFlagVisitation(player);
         }
         movementHandler.wrenchesRepair();
+    }
+
+    public void resetDelay() {
+        this.totalDelay = 0f;
     }
 
 }
