@@ -1,11 +1,14 @@
 package inf112.core.game.phase;
 
+import com.badlogic.gdx.utils.Timer;
 import inf112.core.cards.ProgramCard;
+import inf112.core.game.MainGame;
 import inf112.core.game.event.Event;
 import inf112.core.game.event.PlayerEvent;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
 import inf112.core.player.PlayerHandler;
+import inf112.core.screens.GameScreen;
 import org.javatuples.Pair;
 
 import java.util.ArrayList;
@@ -24,9 +27,7 @@ public class PlayerPhase implements Phase {
     public PlayerPhase(PlayerHandler playerHandler, MovementHandler movementHandler) {
         this.playerHandler = playerHandler;
         this.movementHandler = movementHandler;
-        setRuntime();
-        this.queuedMoves = getSortedMoves();
-        setEvents();
+        this.events = new ArrayList<>();
     }
 
     private List<Pair<Player, ProgramCard>> getSortedMoves() {
@@ -45,10 +46,12 @@ public class PlayerPhase implements Phase {
     }
 
     private void setEvents() {
-        for(Pair<Player ,ProgramCard> move : queuedMoves) {
+        for(Pair<Player, ProgramCard> move : queuedMoves) {
             Event newPlayerEvent = new PlayerEvent(move.getValue0(), movementHandler);
             events.add(newPlayerEvent);
         }
+        System.out.print("Events: ");
+        System.out.println(events);
     }
 
     private void setRuntime() {
@@ -61,11 +64,28 @@ public class PlayerPhase implements Phase {
 
     @Override
     public void startPhase(float delay) {
+        playerHandler.nextCard();
+        this.queuedMoves = getSortedMoves();
+        System.out.print("Sorted Moves: ");
+        System.out.println(queuedMoves);
+        setEvents();
+        setRuntime();
+
+        GameScreen.cameraController.switchCameraMode();
+        MainGame.playerHandler.setActivePlayer(queuedMoves.get(0).getValue0());
+
         float eventDelay = delay;
         for(Event event : events) {
             event.startEvent(eventDelay);
             eventDelay += event.getRuntime();
         }
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                GameScreen.cameraController.switchCameraMode();
+            }
+        }, eventDelay);
     }
 
     @Override

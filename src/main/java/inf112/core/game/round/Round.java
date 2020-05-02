@@ -21,6 +21,7 @@ public class Round {
     }
 
     public void roundStart(float delay) {
+        System.out.println("Round started");
         float phaseDelay = delay;
         for(Phase phase : phases) {
             phase.startPhase(phaseDelay);

@@ -17,6 +17,8 @@ import inf112.core.player.PlayerHandler;
 
 public class GameScreen implements Screen {
 
+    public static OrthographicCameraController cameraController;
+
     private static MainGame game;
     private static InputProcessor inputBlocker;
     private IGameStateSwitcher gameStateSwitcher;
@@ -45,7 +47,7 @@ public class GameScreen implements Screen {
         game.setActivePlayerById(1);
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        OrthographicCameraController cameraController = new OrthographicCameraController(game);
+        cameraController = new OrthographicCameraController(game);
         inputMultiplexer.addProcessor(game.getDefaultInputProcessor());
         //CameraControlles should always be on index 0 of the multiplexer, as the player should always be able to move their camera
         inputMultiplexer.addProcessor(0, cameraController);

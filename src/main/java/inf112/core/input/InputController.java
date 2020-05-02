@@ -43,7 +43,7 @@ public class InputController extends InputAdapter {
                 movementHandler.pushPlayerInDirection(1);
                 break;
             case Input.Keys.R:
-                //game.getRoundHandler().instantiateNextRoundPhase();
+                game.getRoundHandler().instantiateNextRound();
                 break;
             case Input.Keys.L:
                 movementHandler.fireAllLasers();

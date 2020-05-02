@@ -7,6 +7,7 @@ import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
 import inf112.core.player.PlayerAI;
 import inf112.core.player.PlayerHandler;
+import inf112.core.screens.GameScreen;
 
 import java.util.List;
 
@@ -44,20 +45,29 @@ public class RoundHandler {
             throw new IllegalStateException("All programs must be ready at this stage");
 
         //Remove player Control
-
+        GameScreen.blockControls();
         //Generate round
         Round round = GameRule.generateDefaultRound(playerHandler, movementHandler);
         //1 second delay before rounds start
         totalDelay += 1f;
         //Repeat base round for the amount of rounds
-        for(int i = 0; i < round.getAmountOfRounds(); i++) {
+        for(int i = 0; i < 1; i++) {
             round.roundStart(totalDelay);
             //delay is incremented by runtime of round
             totalDelay += round.getRoundRuntime();
             //1 second delay between each round
             totalDelay += 1f;
         }
-
+        //extra margin for last round to end
+        totalDelay += 1f;
+        //Schedule unblockControlls to after last round is completed
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                GameScreen.unblockControls();
+                resetDelay();
+            }
+        }, totalDelay);
     }
 
     /**

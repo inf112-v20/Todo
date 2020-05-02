@@ -229,4 +229,7 @@ public class Player {
         this.prevDir = prevDir;
     }
 
+    public String toString() {
+        return name;
+    }
 }

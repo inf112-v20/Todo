@@ -23,12 +23,12 @@ public class MainGame {
 
     public static final int MAX_DAMAGE_TOKENS_LIMIT = 10;    // a player should not be able to receive more damage tokens
     public static int playerLimit = 0;
+    public static MovementHandler movementHandler;
+    public static PlayerHandler playerHandler;
 
     private Screen gameScreen;
     private GameBoard board;
-    private MovementHandler movementHandler;
     private InputAdapter defaultInputAdapter;
-    private PlayerHandler playerHandler;
     private Texture playerSpriteSheet;
     private TextureRegion[][] playerSpriteSheetGrid;
     private RoundHandler roundHandler;
