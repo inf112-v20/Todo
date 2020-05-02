@@ -104,6 +104,8 @@ public class Player {
 
     public Cell getCell() { return cell; }
 
+    public ProgramSheet getProgramSheet() { return programSheet; }
+
     public int getX() { return (int) position.x; }
 
     public int getY() { return (int) position.y; }

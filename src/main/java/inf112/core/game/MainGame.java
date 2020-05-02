@@ -50,6 +50,7 @@ public class MainGame {
         );
     }
 
+
     public MainGame() {
         this(MapNames.TESTING_MAP);
     }

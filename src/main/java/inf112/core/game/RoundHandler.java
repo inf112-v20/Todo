@@ -1,9 +1,11 @@
 package inf112.core.game;
 
 import com.badlogic.gdx.utils.Timer;
+import inf112.core.cards.ProgramCard;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoundHandler {
@@ -27,8 +29,9 @@ public class RoundHandler {
         //Deal out new cards for the players
         //TODO mangler kort funksjonalitet
         for(Player player : players) {
+            List<ProgramCard> cards = new ArrayList<>();
 
-            ;
+
         }
         //Wait for all players to lay down their program
         /*

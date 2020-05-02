@@ -37,7 +37,7 @@ public class ProgramcardSelectionInteractive {
         posX = new int[MAX_SELECTION_SIZE];
         posY = new int[MAX_SELECTION_SIZE];
         for(int i = 0; i < MAX_SELECTION_SIZE; i++){
-            posX[i] = 30 + 128*i;
+            posX[i] = 30 + 84*i;
             posY[i] = 250;
         }
 
@@ -60,18 +60,6 @@ public class ProgramcardSelectionInteractive {
         }
     }
 
-    public TextButton createLockSelectionButton(){
-        TextButton button = ButtonFactory.createCustomButton("Confirm", 3);
-        button.setPosition(1100, 550);
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                button.remove();
-                lockSelection();
-            }
-        });
-        return button;
-    }
 
 
     public void hideButtons() {
@@ -83,7 +71,6 @@ public class ProgramcardSelectionInteractive {
             if (card == null) {continue;}
             card.setVisible(!card.isVisible());
         }
-
         hide = !hide;
     }
 

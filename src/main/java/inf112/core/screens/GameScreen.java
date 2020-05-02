@@ -31,6 +31,7 @@ public class GameScreen implements Screen {
     public void show() {
         stage = new Stage();
         game = new MainGame();
+
         ui = new UserInterface(this);
         stage.addActor(ui);
 
@@ -53,6 +54,10 @@ public class GameScreen implements Screen {
 
     public Stage getStage(){
         return stage;
+    }
+
+    public UserInterface getUi(){
+        return ui;
     }
 
     @Override

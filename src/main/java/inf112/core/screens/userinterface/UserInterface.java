@@ -1,14 +1,13 @@
 package inf112.core.screens.userinterface;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.core.cards.ProgramCard;
+import inf112.core.cards.register.ProgramSheet;
 import inf112.core.game.MainGame;
 import inf112.core.player.Player;
 import inf112.core.screens.GameScreen;
@@ -31,13 +30,12 @@ public class UserInterface extends Actor{
     public UserInterface(GameScreen screen){
         this.screen = screen;
         this.stage = screen.getStage();
-        game = GameScreen.getGame();
-        selectionButtons = new ProgramcardSelectionInteractive();
+        this.game = GameScreen.getGame();
+        this.selectionButtons = new ProgramcardSelectionInteractive();
 
         overlay = new Image(AssMan.manager.get(AssMan.OVERLAY));
         stage.addActor(overlay);
 
-        showSelectionCards(game.getDeck().getCards(9));
 
         hideButton = ButtonFactory.createCustomButton("Hide UI", 3);
         hideButton.setPosition(1100, 650);
@@ -50,10 +48,28 @@ public class UserInterface extends Actor{
         });
         stage.addActor(hideButton);
 
-        TextButton lockinButton = selectionButtons.createLockSelectionButton();
-        stage.addActor(lockinButton);
+        initializeSelectionPhase(game.getDeck().getCards(9));
 
+    }
 
+    public void initializeSelectionPhase(List<ProgramCard> cards){
+        showSelectionCards(cards);
+        stage.addActor(createLockSelectionButton());
+    }
+
+    public TextButton createLockSelectionButton(){
+        TextButton button = ButtonFactory.createCustomButton("Confirm", 3);
+        button.setPosition(1100, 550);
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (selectionButtons.lockSelection() != null){
+                    button.remove();
+
+                }
+            }
+        });
+        return button;
     }
 
     public void showSelectionCards(List<ProgramCard> cards){
@@ -66,7 +82,16 @@ public class UserInterface extends Actor{
         }
     }
 
-    public void drawRegisters(Player player){
+
+
+    public void drawPlayerCondition(Player player){
+        drawRegisters(player.getProgramSheet());
+
+    }
+
+
+    public void drawRegisters(ProgramSheet programSheet){
+        List<ProgramCard> cards = programSheet.getCardList();
 
     }
 
