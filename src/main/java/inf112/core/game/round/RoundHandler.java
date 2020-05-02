@@ -1,7 +1,8 @@
-package inf112.core.game;
+package inf112.core.game.round;
 
 import com.badlogic.gdx.utils.Timer;
 import inf112.core.cards.ProgramCard;
+import inf112.core.game.MainGame;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
 import inf112.core.player.PlayerAI;
@@ -139,21 +140,6 @@ public class RoundHandler {
             movementHandler.handleFlagVisitation(player);
         }
         movementHandler.wrenchesRepair();
-    }
-
-    private List<Pair<Player, ProgramCard>> getSortedMoves() {
-        List<Pair<Player, ProgramCard>> moves = new ArrayList<>();
-        for(Player player : playerHandler.getPlayers()) {
-            if(player.getCurrentCard() != null)
-                moves.add(new Pair<>(player, player.getCurrentCard()));
-        }
-        moves.sort(new Comparator<Pair<Player, ProgramCard>>() {
-            @Override
-            public int compare(Pair<Player, ProgramCard> p1, Pair<Player, ProgramCard> p2) {
-                return p1.getValue1().getPriority() - p2.getValue1().getPriority();
-            }
-        });
-        return moves;
     }
 
 }

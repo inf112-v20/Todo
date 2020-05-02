@@ -23,6 +23,7 @@ import java.util.Objects;
 public class Player {
 
     public boolean programReady = false;
+    public boolean powerDown = false;
 
     private String name;
     private int id;

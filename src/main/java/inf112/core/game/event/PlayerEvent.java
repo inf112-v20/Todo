@@ -1,10 +1,14 @@
-package inf112.core.game;
+package inf112.core.game.event;
 
 import com.badlogic.gdx.utils.Timer;
+import inf112.core.game.event.Event;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
 
-public class PlayerEvent implements Event{
+/**
+ * PlayerEvent. An event where a player is moved by their current programCard
+ */
+public class PlayerEvent implements Event {
 
     private Player player;
     private MovementHandler movementHandler;

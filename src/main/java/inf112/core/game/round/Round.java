@@ -1,4 +1,6 @@
-package inf112.core.game;
+package inf112.core.game.round;
+
+import inf112.core.game.phase.EventPhase;
 
 import java.util.List;
 
