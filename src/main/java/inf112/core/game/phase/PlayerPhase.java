@@ -1,36 +1,28 @@
 package inf112.core.game.phase;
 
-import com.badlogic.gdx.utils.Timer;
 import inf112.core.cards.ProgramCard;
 import inf112.core.game.MainGame;
 import inf112.core.game.event.Event;
 import inf112.core.game.event.PlayerEvent;
-import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
-import inf112.core.player.PlayerHandler;
-import inf112.core.screens.GameScreen;
 import org.javatuples.Pair;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class PlayerPhase implements Phase {
 
     private List<Pair<Player, ProgramCard>> queuedMoves;
-    private PlayerHandler playerHandler;
-    private MovementHandler movementHandler;
+    private Queue<Event> events;
 
     private static float runtime;
 
-    public PlayerPhase(PlayerHandler playerHandler, MovementHandler movementHandler) {
-        this.playerHandler = playerHandler;
-        this.movementHandler = movementHandler;
+    public PlayerPhase() {
+        this.events = new LinkedList<>();
     }
 
     private List<Pair<Player, ProgramCard>> getSortedMoves() {
         List<Pair<Player, ProgramCard>> moves = new ArrayList<>();
-        for(Player player : playerHandler.getPlayers()) {
+        for(Player player : MainGame.playerHandler.getPlayers()) {
             if(player.getCurrentCard() != null)
                 moves.add(new Pair<>(player, player.getCurrentCard()));
         }
@@ -43,38 +35,34 @@ public class PlayerPhase implements Phase {
         return moves;
     }
 
-    private List<Event> setupEvents() {
-        List<Event> events = new ArrayList<>();
+    private void setupEvents() {
         for(Pair<Player, ProgramCard> move : queuedMoves) {
-            Event newPlayerEvent = new PlayerEvent(move.getValue0(), movementHandler);
+            Event newPlayerEvent = new PlayerEvent(move.getValue0());
             events.add(newPlayerEvent);
         }
-        return events;
-    }
-
-    /**
-     * Calculates runtime from a list of events
-     */
-    private float setupRuntime(List<Event> events) {
-        float rTime = 0f;
-        for(Event event : events) {
-            rTime += event.getRuntime();
-        }
-        return rTime;
     }
 
     @Override
     public void startPhase(float delay) {
-        playerHandler.nextCard();
+        MainGame.playerHandler.nextCard();
         this.queuedMoves = getSortedMoves();
-        List<Event> events = setupEvents();
-        this.runtime = setupRuntime(events);
+        setupEvents();
+        setRuntime();
 
         float eventDelay = delay;
-        for(Event event : events) {
+        while(!events.isEmpty()) {
+            Event event = events.poll();
             event.startEvent(eventDelay);
             eventDelay += event.getRuntime();
         }
+    }
+
+    private void setRuntime() {
+        float rTime = 0f;
+        for(Event event : events) {
+            rTime += event.getRuntime();
+        }
+        runtime = rTime;
     }
 
     @Override

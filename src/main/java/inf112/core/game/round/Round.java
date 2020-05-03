@@ -1,5 +1,6 @@
 package inf112.core.game.round;
 
+import inf112.core.game.GameRule;
 import inf112.core.game.phase.Phase;
 
 import java.util.List;
@@ -14,13 +15,16 @@ public class Round {
 
     private int rounds;
     private List<Phase> phases;
+    public static int roundCount;
 
     public Round(int rounds, List<Phase> phases) {
         this.rounds = rounds;
         this.phases = phases;
+        this.roundCount = 0;
     }
 
     public void roundStart(float delay) {
+        iterateRoundCount();
         System.out.println("Round started");
         float phaseDelay = delay;
         for(Phase phase : phases) {
@@ -39,5 +43,10 @@ public class Round {
 
     public int getAmountOfRounds() {
         return rounds;
+    }
+
+    private void iterateRoundCount() {
+        int temp = roundCount;
+        roundCount = (temp % GameRule.NUMBER_OF_ROUNDS) + 1;
     }
 }

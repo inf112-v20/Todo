@@ -13,17 +13,14 @@ import inf112.core.screens.GameScreen;
 public class PlayerEvent implements Event {
 
     private Player player;
-    private MovementHandler movementHandler;
 
     private static float runtime = 1.5f;
 
-    public PlayerEvent(Player player, MovementHandler movementHandler) {
+    public PlayerEvent(Player player) {
         this.player = player;
-        this.movementHandler = movementHandler;
     }
 
     public void startEvent(float delay) {
-        MovementHandler movementHandler = this.movementHandler;
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
