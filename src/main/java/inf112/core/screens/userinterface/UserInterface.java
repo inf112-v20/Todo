@@ -34,9 +34,14 @@ public class UserInterface extends Actor{
         this.stage = screen.getStage();
         this.table = new Table();
 
+        uibackground = new Image(AssMan.manager.get(AssMan.UIBACKGROUND));
+        uibackground.setPosition(768,0);
+        stage.addActor(uibackground);
+
         overlay = new Image(AssMan.manager.get(AssMan.OVERLAY));
         overlay.setPosition(768,0);
         stage.addActor(overlay);
+
 
         stage.addActor(table);
 
@@ -47,7 +52,8 @@ public class UserInterface extends Actor{
             public void clicked(InputEvent event, float x, float y) {
                 selectionButtons.hideButtons();
                 overlay.setVisible(!overlay.isVisible());
-                //uibackground.setVisible(!uibackground.isVisible());
+                uibackground.setVisible(!uibackground.isVisible());
+                table.setVisible(!table.isVisible());
             }
         });
         stage.addActor(hideButton);
@@ -58,12 +64,8 @@ public class UserInterface extends Actor{
     }
 
     public void initializeSelectionPhase(List<ProgramCard> cards){
-        table.clearChildren();
         GameScreen.getGame().getDeck().discardCards(selectionButtons.releaseCards());
-
         showSelectionCards(cards);
-
-
     }
 
 
@@ -81,13 +83,50 @@ public class UserInterface extends Actor{
 
 
     public void drawPlayerCondition(Player player){
+        table.clearChildren();
         drawRegisters(player.getProgramSheet());
+        drawLifetokens(player.getLifeTokens());
+        drawDamagetokens(player.getDamageTokens());
+    }
+
+    private void drawDamagetokens(int damageTokens) {
+        int lifetokenPosX = 800;
+        int lifetokenPosY = 200;
+
+        for(int i = 0; i < damageTokens; i++){
+            Image image = new Image(AssMan.manager.get(AssMan.DAMAGETOKEN));
+            image.setPosition(lifetokenPosX + 30*i, lifetokenPosY);
+            image.setSize(28,28);
+            table.addActor(image);
+        }
+    }
+
+    private void drawLifetokens(int lifeTokens) {
+        int[] lifetokenPosX = { 1120, 1170, 1220 };
+        int[] lifetokenPosY = { 200,200,200 };
+
+        for(int i = 0; i < lifeTokens; i++){
+            Image image = new Image(AssMan.manager.get(AssMan.LIFETOKEN));
+            image.setPosition(lifetokenPosX[i], lifetokenPosY[i]);
+            image.setSize(32,32);
+            table.addActor(image);
+        }
 
     }
 
 
     public void drawRegisters(ProgramSheet programSheet){
+        int[] registerPosX = {20, 121, 222, 323, 424};
+        int index = 0;
         List<ProgramCard> cards = programSheet.getCardList();
+        for (ProgramCard card : cards) {
+            index++;
+            if (card == null) { continue; }
+            Image image = new Image(card.getTexture());
+            image.setSize(64, 128);
+            image.setPosition(registerPosX[index - 1] + 768, 28);
+            table.addActor(image);
+        }
 
     }
 
@@ -101,11 +140,16 @@ public class UserInterface extends Actor{
                 if (selected != null){
                     button.remove();
                     Player player = GameScreen.getGame().getActivePlayer();
+
                     for(ProgramCard card : selected){
                         player.addToProgramSheet(card);
                     }
-                    // discard kort som ikke blir brukt...
 
+                    drawPlayerCondition(player);
+
+                    System.out.println(GameScreen.getGame().getDeck().getActiveDeck().size());
+                    System.out.println(GameScreen.getGame().getDeck().getDiscardDeck().size());
+                    System.out.println(GameScreen.getGame().getDeck().getInUse().size());
 
                 }
             }

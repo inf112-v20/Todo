@@ -63,6 +63,12 @@ public class AssMan {
     public static final AssetDescriptor<Texture> UIBACKGROUND
             = new AssetDescriptor<Texture>("assets/ui/uibackground.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> LIFETOKEN
+            = new AssetDescriptor<Texture>("assets/ui/lifetoken.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> DAMAGETOKEN
+            = new AssetDescriptor<Texture>("assets/ui/damagetoken.png", Texture.class);
+
 
 
     @SuppressWarnings("Duplicates")
@@ -92,6 +98,8 @@ public class AssMan {
         // UI
         manager.load(OVERLAY);
         manager.load(UIBACKGROUND);
+        manager.load(LIFETOKEN);
+        manager.load(DAMAGETOKEN);
 
     }
 

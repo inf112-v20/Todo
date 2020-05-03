@@ -119,6 +119,7 @@ public class MovementHandler extends InputAdapter {
                 break;
             case Input.Keys.B:
                 GameScreen screen = (GameScreen) game.getGameScreen();
+                screen.getUi().drawPlayerCondition(getActivePlayer());
                 screen.getUi().initializeSelectionPhase(game.getDeck().getCards(9));
                 break;
             case Input.Keys.M:

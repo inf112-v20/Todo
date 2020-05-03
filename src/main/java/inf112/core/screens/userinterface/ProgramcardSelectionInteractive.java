@@ -3,14 +3,11 @@ package inf112.core.screens.userinterface;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.core.cards.ProgramCard;
-import inf112.core.cards.register.ProgramSheet;
 import inf112.core.util.ButtonFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.Integer.min;
@@ -19,7 +16,7 @@ public class ProgramcardSelectionInteractive {
 
     private boolean hide = true;
     private final int MAX_SELECTION_SIZE = 9;
-    private final int SELECTION_CARD_SIZE = 4;
+    private final float SELECTION_CARD_SIZE = 2;
 
     private int[] posX = {800,900,1000,1100,1200,800,900,1000,1100};
     private int[] posY = {300,300,300,300,300,400,400,400,400};
