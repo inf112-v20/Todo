@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import inf112.core.cards.Card;
 import inf112.core.cards.Deck;
 import inf112.core.cards.ProgramCard;
 import inf112.core.input.InputBlocker;
@@ -24,6 +25,8 @@ import inf112.core.util.ButtonFactory;
 
 import java.util.List;
 
+import static inf112.core.game.MainGame.playerHandler;
+
 
 public class GameScreen implements Screen {
 
@@ -31,11 +34,11 @@ public class GameScreen implements Screen {
 
     private static MainGame game;
     private static InputProcessor inputBlocker;
+    private static UserInterface ui;
+    private static Stage stage;
     private IGameStateSwitcher gameStateSwitcher;
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
-    private Stage stage;
-    private UserInterface ui;
 
     public GameScreen(RoboRally gameStateSwitcher) {
         this.gameStateSwitcher = gameStateSwitcher;
@@ -83,7 +86,8 @@ public class GameScreen implements Screen {
     }
 
 
-    public void createLockSelectionButton(){
+    public static void createLockSelectionButton(){
+
         ui.showSelectionCards(game.getActivePlayer().getProgramSheet().getHand());
 
         TextButton button = ButtonFactory.createCustomButton("Confirm", 3);
@@ -96,9 +100,14 @@ public class GameScreen implements Screen {
                 if (selected != null){
                     for(ProgramCard card : selected){
                         game.getActivePlayer().addToProgramSheet(card);
+                        System.out.println(card.getName());
                     }
                     if(game.getActivePlayer().getProgramSheet().isFull()) { game.getActivePlayer().programReady = true; }
                     else { throw new IllegalStateException(); }
+
+                    for(Card card : game.getActivePlayer().getProgramSheet().getProgram()){
+                        System.out.println(card.getName());
+                    }
 
                     ui.drawPlayerCondition(game.getActivePlayer());
                     game.getRoundHandler().instantiateNextRound();

@@ -181,6 +181,4 @@ public class ProgramcardSelectionInteractive {
 
         return cards;
     }
-
-
 }

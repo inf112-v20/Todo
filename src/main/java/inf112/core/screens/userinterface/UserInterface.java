@@ -47,7 +47,6 @@ public class UserInterface extends Actor{
         overlay.setPosition(768,0);
         stage.addActor(overlay);
 
-
         stage.addActor(table);
 
         hideButton = ButtonFactory.createCustomButton("Hide UI", 3);
@@ -137,28 +136,10 @@ public class UserInterface extends Actor{
 
     }
 
-    public void createLockSelectionButton(Player player){
-        TextButton button = ButtonFactory.createCustomButton("Confirm", 3);
-        button.setPosition(1100, 550);
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                List<ProgramCard> selected = selectionButtons.lockSelection();
-                if (selected != null){
-                    for(ProgramCard card : selected){
-                        player.addToProgramSheet(card);
-                    }
 
-                    drawPlayerCondition(player);
-
-                    System.out.println(player.getProgramSheet().isFull());
-                    game.getRoundHandler().instantiateNextRound();
-
-
-                }
-            }
-        });
-        table.addActor(button);
+    public void resetSelectionButtons(){
+        table.clearChildren();
+        this.selectionButtons = new ProgramcardSelectionInteractive();
     }
 
 }

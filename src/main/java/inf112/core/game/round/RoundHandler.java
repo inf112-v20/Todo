@@ -1,5 +1,6 @@
 package inf112.core.game.round;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.utils.Timer;
 import inf112.core.game.GameRule;
 import inf112.core.game.MainGame;
@@ -77,7 +78,12 @@ public class RoundHandler {
             @Override
             public void run() {
                 System.out.println("Controls unblocked");
+                playerHandler.clearAllProgramsheets();
                 GameScreen.unblockControls();
+                ((GameScreen) game.getGameScreen()).getUi().resetSelectionButtons();
+                playerHandler.giveAllPlayersCards();
+                GameScreen.createLockSelectionButton();
+
             }
         }, totalDelay);
 
