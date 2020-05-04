@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Deck {
 
-    public static final int HAND_SIZE = 8;
+    public static final int HAND_SIZE = 9;
 
     private List<ProgramCard> activeDeck;
     private List<ProgramCard> discardDeck;

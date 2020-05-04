@@ -1,5 +1,7 @@
 package inf112.core.screens.userinterface;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,10 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.core.cards.ProgramCard;
 import inf112.core.cards.register.ProgramSheet;
+import inf112.core.game.MainGame;
 import inf112.core.player.Player;
 import inf112.core.screens.GameScreen;
 import inf112.core.util.AssMan;
 import inf112.core.util.ButtonFactory;
+import org.lwjgl.input.Keyboard;
 
 
 import java.util.List;
@@ -25,10 +29,11 @@ public class UserInterface extends Actor{
     private Image uibackground;
     private TextButton hideButton;
     private GameScreen screen;
+    private MainGame game;
     private ProgramcardSelectionInteractive selectionButtons;
     private Table table;
     private Stage stage;
-    public UserInterface(GameScreen screen){
+    public UserInterface(GameScreen screen, MainGame game){
         this.screen = screen;
         this.selectionButtons = new ProgramcardSelectionInteractive();
         this.stage = screen.getStage();
@@ -63,24 +68,26 @@ public class UserInterface extends Actor{
         return table;
     }
 
-    public void initializeSelectionPhase(List<ProgramCard> cards){
-        GameScreen.getGame().getDeck().discardCards(selectionButtons.releaseCards());
+    public ProgramcardSelectionInteractive getSelectionButtons() {
+        return selectionButtons;
+    }
+
+    public void initializeSelectionPhase(List<ProgramCard> cards) {
+        game.getDeck().discardCards(selectionButtons.releaseCards());
         showSelectionCards(cards);
     }
 
 
     public void showSelectionCards(List<ProgramCard> cards){
-
         selectionButtons.renderSelectionButtons(cards);
         ProgramCardButtonWrapper[] buttons = selectionButtons.getSelectionPile();
 
         for(ProgramCardButtonWrapper button : buttons){
+            if (button == null) {continue; }
             table.addActor(button.getButton());
         }
-        table.addActor(createLockSelectionButton());
+        //table.addActor(createLockSelectionButton());
     }
-
-
 
     public void drawPlayerCondition(Player player){
         table.clearChildren();
@@ -130,7 +137,7 @@ public class UserInterface extends Actor{
 
     }
 
-    public TextButton createLockSelectionButton(){
+    public void createLockSelectionButton(Player player){
         TextButton button = ButtonFactory.createCustomButton("Confirm", 3);
         button.setPosition(1100, 550);
         button.addListener(new ClickListener() {
@@ -138,23 +145,20 @@ public class UserInterface extends Actor{
             public void clicked(InputEvent event, float x, float y) {
                 List<ProgramCard> selected = selectionButtons.lockSelection();
                 if (selected != null){
-                    button.remove();
-                    Player player = GameScreen.getGame().getActivePlayer();
-
                     for(ProgramCard card : selected){
                         player.addToProgramSheet(card);
                     }
 
                     drawPlayerCondition(player);
 
-                    System.out.println(GameScreen.getGame().getDeck().getActiveDeck().size());
-                    System.out.println(GameScreen.getGame().getDeck().getDiscardDeck().size());
-                    System.out.println(GameScreen.getGame().getDeck().getInUse().size());
+                    System.out.println(player.getProgramSheet().isFull());
+                    game.getRoundHandler().instantiateNextRound();
+
 
                 }
             }
         });
-        return button;
+        table.addActor(button);
     }
 
 }

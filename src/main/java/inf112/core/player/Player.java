@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.core.cards.register.ProgramSheet;
 import inf112.core.game.MainGame;
 import inf112.core.cards.ProgramCard;
+import inf112.core.screens.GameScreen;
 import inf112.core.tile.Rotation;
 import inf112.core.util.VectorMovement;
 
@@ -92,10 +93,6 @@ public class Player {
     public int getDamageTokens(){ return damageTokens; }
 
     public String getName() { return name; }
-
-    public ProgramSheet getProgramSheet() {
-        return programSheet;
-    }
 
     public ProgramCard getCurrentCard() {
         return currentCard;
@@ -204,6 +201,7 @@ public class Player {
         }
         programReady = true;
     }
+
 
     public void nextCard() {
         this.currentCard = programSheet.getNext();

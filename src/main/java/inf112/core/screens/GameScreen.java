@@ -4,19 +4,25 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import inf112.core.cards.Deck;
+import inf112.core.cards.ProgramCard;
 import inf112.core.input.InputBlocker;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.core.input.OrthographicCameraController;
 import inf112.core.game.MainGame;
 import inf112.core.player.Player;
 import inf112.core.player.PlayerHandler;
 import inf112.core.screens.userinterface.UserInterface;
+import inf112.core.util.ButtonFactory;
+
+import java.util.List;
 
 
 public class GameScreen implements Screen {
@@ -42,19 +48,16 @@ public class GameScreen implements Screen {
         this.game = new MainGame();
         this.stage = new Stage();
 
-        this.ui = new UserInterface(this);
+        this.ui = new UserInterface(this, game);
         stage.addActor(ui.getTable());
-        ui.getTable().setColor(Color.CHARTREUSE);
 
         game.getBoard().instantiateMapRenderer();
-        game.createDeck();
-        game.getPlayerHandler().giveAllPlayersCards();
-
         mapRenderer = game.getBoard().getTiledMapRenderer();
         camera = game.getBoard().instantiateCamera();
 
         game.getPlayerHandler().setupPlayers(1);
         game.setActivePlayerById(1);
+        game.getPlayerHandler().giveAllPlayersCards();
         game.setGameScreen(this);
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
@@ -66,17 +69,46 @@ public class GameScreen implements Screen {
         inputMultiplexer.addProcessor(0, cameraController);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
-  //      ui.initializeSelectionPhase(game.getDeck().getCards(9));
-
+        // Creates button which starts the rounds once cards have been selected
+        createLockSelectionButton();
     }
 
     public UserInterface getUi(){
         return ui;
     }
 
+
     public Stage getStage(){
         return stage;
     }
+
+
+    public void createLockSelectionButton(){
+        ui.showSelectionCards(game.getActivePlayer().getProgramSheet().getHand());
+
+        TextButton button = ButtonFactory.createCustomButton("Confirm", 3);
+        button.setPosition(1100, 550);
+        stage.addActor(button);
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                List<ProgramCard> selected = ui.getSelectionButtons().lockSelection();
+                if (selected != null){
+                    for(ProgramCard card : selected){
+                        game.getActivePlayer().addToProgramSheet(card);
+                    }
+                    if(game.getActivePlayer().getProgramSheet().isFull()) { game.getActivePlayer().programReady = true; }
+                    else { throw new IllegalStateException(); }
+
+                    ui.drawPlayerCondition(game.getActivePlayer());
+                    game.getRoundHandler().instantiateNextRound();
+                    button.remove();
+
+                }
+            }
+        });
+    }
+
 
 
     @Override

@@ -17,7 +17,6 @@ import inf112.core.util.ButtonFactory;
 public class MainMenuScreen implements Screen {
 
     private IGameStateSwitcher gameStateSwitcher;
-    private ImageButton playButton, exitButton;
     private Stage stage;
 
     public MainMenuScreen(IGameStateSwitcher gameStateSwitcher){
@@ -27,8 +26,6 @@ public class MainMenuScreen implements Screen {
     @Override
     public void show() {
         stage = new Stage();
-
-
 
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();

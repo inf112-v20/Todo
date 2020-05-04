@@ -43,6 +43,7 @@ public class InputController extends InputAdapter {
                 movementHandler.pushPlayerInDirection(1);
                 break;
             case Input.Keys.R:
+                game.getActivePlayer().setRandomProgram();
                 game.getRoundHandler().instantiateNextRound();
                 break;
             case Input.Keys.L:
