@@ -126,13 +126,18 @@ public class ProgramSheet implements IProgramSheet<ProgramCard> {
     }
 
     @Override
-    public void clearUnlockedRegisters() {
-        for (int i = 0; i < locked; i++)
+    public List<ProgramCard> clearUnlockedRegisters() {
+        List<ProgramCard> cards = new ArrayList<>();
+
+        for (int i = 0; i < locked; i++){
+            cards.add(registers[i]);
             registers[i] = null;
+        }
 
         this.addHere = 0;
         this.current = 0;
         this.hand.clear();
+        return cards;
     }
 
     @Override

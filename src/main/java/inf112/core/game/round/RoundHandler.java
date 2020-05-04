@@ -2,6 +2,8 @@ package inf112.core.game.round;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.utils.Timer;
+import inf112.core.cards.Deck;
+import inf112.core.cards.ProgramCard;
 import inf112.core.game.GameRule;
 import inf112.core.game.MainGame;
 import inf112.core.movement.MovementHandler;
@@ -36,11 +38,11 @@ public class RoundHandler {
 
         GameScreen screen = (GameScreen) game.getGameScreen();
 
-
         //ProgramSheets are cleared
         //playerHandler.clearAllProgramsheets();
         //All players receive a new set of cards
         playerHandler.giveAllPlayersCards();
+
 
         playerHandler.makeAIPrograms();
         for (Player player : playerHandler.getPlayers()) {
@@ -65,6 +67,8 @@ public class RoundHandler {
         //Repeat base round for the amount of rounds
         for(int i = 0; i < round.getAmountOfRounds(); i++) {
             screen.getUi().drawPlayerCondition(game.getActivePlayer());
+
+
             round.roundStart(totalDelay);
             //delay is incremented by runtime of round
             totalDelay += round.getRoundRuntime();

@@ -134,7 +134,7 @@ public class PlayerHandler {
     }
 
     private void clearProgramsheet(Player player) {
-        player.clearProgramSheet();
+        game.getDeck().discardCards(player.clearProgramSheet());
         player.programReady = false;
     }
 

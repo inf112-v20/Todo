@@ -188,9 +188,9 @@ public class Player {
         programSheet.addToHand(programCards);
     }
 
-    public void clearProgramSheet() {
-        programSheet.clearUnlockedRegisters();
+    public List<ProgramCard> clearProgramSheet() {
         programReady = false;
+        return programSheet.clearUnlockedRegisters();
     }
 
     public void setRandomProgram() {
