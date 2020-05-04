@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import inf112.core.board.GameBoard;
 import inf112.core.game.MainGame;
+import inf112.core.player.Player;
 
 public class OrthographicCameraController implements InputProcessor {
 
@@ -101,10 +102,14 @@ public class OrthographicCameraController implements InputProcessor {
         return true;
     }
 
-    private void switchCameraMode() {
+    public void switchCameraMode() {
         if(board.playerCamera)
             board.playerCamera = false;
         else
             board.playerCamera = true;
+    }
+
+    public void centerCameraOnPlayer(Player player) {
+        board.centerCameraOnPlayer(player);
     }
 }

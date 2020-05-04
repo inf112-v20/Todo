@@ -2,19 +2,21 @@ package inf112.core.cards.register;
 
 import inf112.core.cards.ProgramCard;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class ProgramSheet implements IProgramSheet<ProgramCard> {
-
     public static final int NUM_OF_REGISTERS = 5;
 
+    private List<ProgramCard> hand;
     private ProgramCard[] registers;
     private int addHere;               // points to the next available space in register array
     private int locked;                // points to first locked register (from left)
     private int current;               // points to current card being played
 
     public ProgramSheet() {
+        this.hand = new ArrayList<>();
         this.registers = new ProgramCard[NUM_OF_REGISTERS];
         this.addHere = 0;
         this.locked = NUM_OF_REGISTERS;
@@ -39,14 +41,30 @@ public class ProgramSheet implements IProgramSheet<ProgramCard> {
         return false;
     }
 
+    public List<ProgramCard> getProgram() {
+        assert(isFull());
+
+        return Arrays.asList(registers);
+    }
+
     @Override
-    public boolean add(ProgramCard card) {
+    public boolean addToRegister(ProgramCard card) {
+        assert(hand.contains(card));
+
         if (isFull())
             return false;
 
         registers[addHere++] = card;
         checkInv();
         return true;
+    }
+
+    public void addToHand(List<ProgramCard> programCards) {
+        hand.addAll(programCards);
+    }
+
+    public List<ProgramCard> getHand() {
+        return hand;
     }
 
     @Override
@@ -114,6 +132,7 @@ public class ProgramSheet implements IProgramSheet<ProgramCard> {
 
         this.addHere = 0;
         this.current = 0;
+        this.hand.clear();
     }
 
     @Override

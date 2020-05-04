@@ -5,6 +5,7 @@ import inf112.core.board.MapNames;
 import inf112.core.game.MainGame;
 import inf112.core.movement.util.SpawnHandler;
 import inf112.core.player.Player;
+import inf112.core.player.PlayerHandler;
 import inf112.core.testingUtils.GdxTestRunner;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,9 +42,11 @@ public class SpawnHandlerTest {
          * i.e. both has their spawn on the flag
          */
 
-        Player.resetPlayerCount();
+        PlayerHandler.playerCount = 0;
         game = new MainGame(MapNames.SPAWN_TESTING);
         game.getPlayerHandler().createPlayers(2);
+        game.getMovementHandler().moveAllToSpawn();
+        game.drawPlayers();
         flagPos = new Vector2(2,2);
         availableAdjPosFromCentre = new ArrayList<>();
         availableAdjPosFromCentre.add(new Vector2(1,1));

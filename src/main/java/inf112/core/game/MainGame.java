@@ -1,6 +1,7 @@
 package inf112.core.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,27 +9,28 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.core.board.GameBoard;
 import inf112.core.board.MapLayer;
 import inf112.core.board.MapNames;
+import inf112.core.game.round.RoundHandler;
+import inf112.core.input.InputController;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Player;
 import inf112.core.cards.CardFactory;
 import inf112.core.cards.Deck;
-import inf112.core.cards.ProgramCard;
 import inf112.core.player.PlayerHandler;
 import inf112.core.screens.GameScreen;
 import inf112.core.util.LayerOperation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainGame {
 
     public static final int MAX_DAMAGE_TOKENS_LIMIT = 10;    // a player should not be able to receive more damage tokens
-    public static final int MAX_PLAYER_LIMIT = 8;
+    public static int playerLimit = 0;
+    public static MovementHandler movementHandler;
+    public static PlayerHandler playerHandler;
 
     private GameScreen gameScreen;
     private GameBoard board;
-    private MovementHandler movementHandler;
-    private PlayerHandler playerHandler;
+    private InputAdapter defaultInputAdapter;
     private Texture playerSpriteSheet;
     private TextureRegion[][] playerSpriteSheetGrid;
     private RoundHandler roundHandler;
@@ -38,18 +40,21 @@ public class MainGame {
     public MainGame(MapNames mapNames) {
         this.playerHandler = new PlayerHandler(this);
         this.board = new GameBoard(mapNames, playerHandler);
+        playerLimit = board.getSpawns().size();
+        playerLimit = 3;
         this.roundHandler = new RoundHandler(this);
         this.movementHandler = new MovementHandler(this);
         this.deck = new Deck(CardFactory.createDefaultDeck());
 
+        this.defaultInputAdapter = new InputController(this);
         playerSpriteSheet = new Texture("img/Player_Spritesheet.png");
         playerSpriteSheetGrid = TextureRegion.split(
                 playerSpriteSheet,
                 board.getTileWidthInPixels(),
                 board.getTileHeightInPixels()
         );
-    }
 
+    }
 
     public MainGame() {
         this(MapNames.TESTING_MAP);
@@ -75,7 +80,7 @@ public class MainGame {
         return movementHandler;    // this should of course change
     }
 
-    public InputProcessor getDefaultInputProcessor() { return movementHandler; }
+    public InputProcessor getDefaultInputProcessor() { return defaultInputAdapter; }
 
     public void drawPlayers() {
         for (Player player : playerHandler.getPlayers())
@@ -114,7 +119,7 @@ public class MainGame {
     // should be called between each movement
     public void attemptToAppointWinner() {
         List<Player> players = playerHandler.getPlayers();
-        if (players.size() == 1 && Player.getPlayerCount() > 1) {    // all other players has lost
+        if (players.size() == 1 && PlayerHandler.playerCount > 1) {    // all other players has lost
             this.winner = players.get(0);
             return;
         }

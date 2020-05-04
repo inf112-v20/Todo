@@ -3,6 +3,7 @@ package inf112.core.playercards;
 import inf112.core.cards.*;
 import inf112.core.cards.register.IProgramSheet;
 import inf112.core.cards.register.ProgramSheet;
+import inf112.core.tile.Rotation;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,28 +20,28 @@ public class ProgramSheetTest {
         this.card1 = new MovementCard(1, 1, true, "Card1", null);
         this.card2 = new MovementCard(2, 1, true, "Card2", null);
         this.card3 = new MovementCard(3, 1, true, "Card3", null);
-        this.card4 = new RotationCard(4, false, 1, "Card4", null);
-        this.card5 = new RotationCard(5, false, 1, "Card5", null);
-        this.card6 = new RotationCard(6, false, 1, "Card6", null);
+        this.card4 = new RotationCard(4, Rotation.LEFT, 1, "Card4", null);
+        this.card5 = new RotationCard(5, Rotation.LEFT, 1, "Card5", null);
+        this.card6 = new RotationCard(6, Rotation.LEFT, 1, "Card6", null);
     }
 
     private void fillProgramSheet() {
-        programSheet.add(card1);
-        programSheet.add(card2);
-        programSheet.add(card3);
-        programSheet.add(card4);
-        programSheet.add(card5);
+        programSheet.addToRegister(card1);
+        programSheet.addToRegister(card2);
+        programSheet.addToRegister(card3);
+        programSheet.addToRegister(card4);
+        programSheet.addToRegister(card5);
     }
 
     @Test
     public void containsAddedCardYielsTrueTest() {
-        programSheet.add(card1);
+        programSheet.addToRegister(card1);
         assertTrue(programSheet.contains(card1));
     }
 
     @Test
     public void containsNotAddedCardYieldsFalseTest() {
-        programSheet.add(card2);
+        programSheet.addToRegister(card2);
         assertFalse(programSheet.contains(card1));
     }
 
@@ -51,62 +52,62 @@ public class ProgramSheetTest {
 
     @Test
     public void nonEmptyProgramSheetIsNotEmptyTest() {
-        programSheet.add(card1);
+        programSheet.addToRegister(card1);
         assertFalse(programSheet.isEmpty());
     }
 
     @Test
     public void containsAddedCardThatHasBeenRemovedYieldsFalse1Test() {
-        programSheet.add(card3);
+        programSheet.addToRegister(card3);
         programSheet.remove(card3);
         assertFalse(programSheet.contains(card3));
     }
 
     @Test
     public void containsAddedCardThatHasBeenRemovedYieldsFalse2Test() {
-        programSheet.add(card3);
-        programSheet.add(card2);
+        programSheet.addToRegister(card3);
+        programSheet.addToRegister(card2);
         programSheet.remove(card3);
         assertFalse(programSheet.contains(card3));
     }
 
     @Test
     public void containsAddedCardThatHasBeenRemovedYieldsFalse3Test() {
-        programSheet.add(card3);
+        programSheet.addToRegister(card3);
         programSheet.remove(card3);
-        programSheet.add(card2);
+        programSheet.addToRegister(card2);
         assertFalse(programSheet.contains(card3));
     }
 
     @Test
     public void theFirstCardAddedShouldBeAtRegisterNumberOneTest() {
-        programSheet.add(card1);
-        programSheet.add(card2);
-        programSheet.add(card3);
+        programSheet.addToRegister(card1);
+        programSheet.addToRegister(card2);
+        programSheet.addToRegister(card3);
         assertEquals(card1, programSheet.get(1));
     }
 
     @Test
     public void theSecondCardAddedShouldBeAtRegisterNumberTwoTest() {
-        programSheet.add(card1);
-        programSheet.add(card2);
-        programSheet.add(card3);
+        programSheet.addToRegister(card1);
+        programSheet.addToRegister(card2);
+        programSheet.addToRegister(card3);
         assertEquals(card2, programSheet.get(2));
     }
 
     @Test
     public void addingFiveCardsShouldYieldTrueTest() {
-        assertTrue(programSheet.add(card1));
-        assertTrue(programSheet.add(card2));
-        assertTrue(programSheet.add(card3));
-        assertTrue(programSheet.add(card4));
-        assertTrue(programSheet.add(card5));
+        assertTrue(programSheet.addToRegister(card1));
+        assertTrue(programSheet.addToRegister(card2));
+        assertTrue(programSheet.addToRegister(card3));
+        assertTrue(programSheet.addToRegister(card4));
+        assertTrue(programSheet.addToRegister(card5));
     }
 
     @Test
     public void addingTheSixthCardShouldYieldFalseTest() {
         fillProgramSheet();
-        assertFalse(programSheet.add(card6));
+        assertFalse(programSheet.addToRegister(card6));
     }
 
     @Test
@@ -187,9 +188,9 @@ public class ProgramSheetTest {
 
         programSheet.clearUnlockedRegisters();
 
-        programSheet.add(card6);    // fill reg 1
-        programSheet.add(card2);    // fill reg 2
-        programSheet.add(card4);    // fill reg 3
+        programSheet.addToRegister(card6);    // fill reg 1
+        programSheet.addToRegister(card2);    // fill reg 2
+        programSheet.addToRegister(card4);    // fill reg 3
 
         assertTrue(programSheet.isFull());
     }
@@ -239,9 +240,9 @@ public class ProgramSheetTest {
         fillProgramSheet();
 
         programSheet.remove(card3);
-        programSheet.add(card2);
+        programSheet.addToRegister(card2);
         programSheet.remove(card4);
-        programSheet.add(card6);
+        programSheet.addToRegister(card6);
 
         assertEquals(card1, programSheet.get(1));
         assertEquals(card2, programSheet.get(2));
@@ -290,7 +291,7 @@ public class ProgramSheetTest {
         programSheet.remove(card2);
         programSheet.remove(card4);
 
-        programSheet.add(card6);
+        programSheet.addToRegister(card6);
 
         assertEquals(card1, programSheet.get(1));
         assertEquals(card3, programSheet.get(2));
@@ -301,10 +302,10 @@ public class ProgramSheetTest {
 
     @Test
     public void removingACardDuplicateOnlyRemovesTheFirstOccurrenceTest() {
-        programSheet.add(card1);
-        programSheet.add(card2);
-        programSheet.add(card3);
-        programSheet.add(card2);
+        programSheet.addToRegister(card1);
+        programSheet.addToRegister(card2);
+        programSheet.addToRegister(card3);
+        programSheet.addToRegister(card2);
         programSheet.remove(card2);
 
         assertEquals(card1, programSheet.get(1));

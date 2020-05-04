@@ -46,7 +46,7 @@ public interface IProgramSheet<C> {
      * @param card in question
      * @return true if the card was successfully added to the data structure, and false otherwise
      */
-    boolean add(C card);
+    boolean addToRegister(C card);
 
     /**
      * Removes the card in question from the first unlocked register where its equality is matched, and if so,

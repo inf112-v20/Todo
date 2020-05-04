@@ -1,10 +1,9 @@
 package inf112.core.map;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.MapNames;
 import inf112.core.game.MainGame;
-import inf112.core.game.RoundHandler;
+import inf112.core.game.round.RoundHandler;
 import inf112.core.movement.MovementHandler;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;

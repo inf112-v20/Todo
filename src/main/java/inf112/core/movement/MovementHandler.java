@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.board.GameBoard;
+import inf112.core.cards.register.ProgramSheet;
 import inf112.core.cards.Deck;
 import inf112.core.game.MainGame;
 import inf112.core.laser.LaserHandler;
@@ -21,7 +22,6 @@ import inf112.core.screens.userinterface.UserInterface;
 import inf112.core.tile.*;
 import inf112.core.util.ButtonFactory;
 import inf112.core.util.LayerOperation;
-import org.mockito.internal.matchers.Null;
 
 import java.util.*;
 
@@ -87,67 +87,6 @@ public class MovementHandler extends InputAdapter {
         game.setActivePlayer(player);
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        switch (keycode) {
-            case Input.Keys.UP:
-                attemptToMoveForward(game.getActivePlayer());
-                break;
-            case Input.Keys.DOWN:
-                attemptToMoveBackward(game.getActivePlayer());
-                break;
-            case Input.Keys.LEFT:
-                game.getActivePlayer().rotateLeft();
-                break;
-            case Input.Keys.RIGHT:
-                game.getActivePlayer().rotateRight();
-                break;
-            case Input.Keys.C:
-                game.getActivePlayer().setArchiveMarkerHere();
-                break;
-            case Input.Keys.SPACE:
-                moveToBackup(game.getActivePlayer());
-                break;
-            case Input.Keys.T:
-                runConveyors();
-                gearsRotate();
-                wrenchesRepair();
-                pushPlayerInDirection(1);
-                break;
-            case Input.Keys.R:
-                game.getRoundHandler().instantiateNextRoundPhase();
-                break;
-            case Input.Keys.B:
-                GameScreen screen = (GameScreen) game.getGameScreen();
-                screen.getUi().drawPlayerCondition(getActivePlayer());
-                screen.getUi().initializeSelectionPhase(game.getDeck().getCards(9));
-                break;
-            case Input.Keys.M:
-                cardMovement(getActivePlayer());
-                break;
-            case Input.Keys.L:
-                fireAllLasers();
-                break;
-            default:
-                return false;
-        }
-        game.removeLosers();    // strictly speaking unnecessary to call this upon every move
-        game.attemptToAppointWinner();
-        return true;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        switch (keycode) {
-            case Input.Keys.L:
-                removeLasers();
-                break;
-            default:
-                return false;
-        }
-        return true;
-    }
-
     public void fireAllLasers(){
         laserHandler.updateLaserPositions();
         laserHandler.fireLasersVisually();
@@ -159,7 +98,7 @@ public class MovementHandler extends InputAdapter {
             public void run() {
                 removeLasers();
             }
-        }, (float) 0.1);
+        }, (float) 0.4);
     }
 
     public void removeLasers() {
@@ -193,37 +132,28 @@ public class MovementHandler extends InputAdapter {
                 handlePossibleDeath(player);
     }
 
-    /**
-     *
-     */
-
-    public void cardMovement(Player player) {
+    public void cardMovement(Player player, ProgramCard programCard) {
         if (!contains(player))
             throw new IllegalArgumentException("Unknown player");
 
-        ProgramCard currentCard = player.getProgramSheet().getNext();
-        System.out.println(currentCard.getName());
-        if (currentCard instanceof MovementCard) {
-            if (((MovementCard) currentCard).isForward()) {
-                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++) {
-                    attemptToMoveForward(game.getActivePlayer());
+        if (programCard instanceof MovementCard) {
+            if (((MovementCard) programCard).isForward()) {
+                for (int i = 0; i < ((MovementCard) programCard).getDistance(); i++) {
+                    attemptToMoveForward(player);
                 }
             } else {
-                for (int i = 0; i < ((MovementCard) currentCard).getDistance(); i++) {
-                    attemptToMoveBackward(game.getActivePlayer());
+                for (int i = 0; i < ((MovementCard) programCard).getDistance(); i++) {
+                    attemptToMoveBackward(player);
                 }
             }
-        } else if (currentCard instanceof RotationCard) {
-            if (((RotationCard) currentCard).isClockwise()) {
-                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++) {
-                    game.getActivePlayer().rotateRight();
-                }
-            } else {
-                for (int i = 0; i < ((RotationCard) currentCard).getRotations(); i++) {
-                    game.getActivePlayer().rotateLeft();
-                }
-            }
+        } else if (programCard instanceof RotationCard) {
+            player.rotate(((RotationCard) programCard).getRotation());
         }
+    }
+
+    public void cardMovement(Player player, int index) {
+        assert(index > ProgramSheet.NUM_OF_REGISTERS);
+        cardMovement(player, player.getProgramSheet().get(index));
     }
 
     /**
@@ -304,7 +234,7 @@ public class MovementHandler extends InputAdapter {
      *
      * @param playerToBeMoved
      */
-    private void moveToBackup(Player playerToBeMoved) {
+    public void moveToBackup(Player playerToBeMoved) {
         spawnHandler.initSpawning(playerToBeMoved);
     }
 
@@ -399,7 +329,7 @@ public class MovementHandler extends InputAdapter {
         int count = 0;
         //Limits the while loop to the max amount of players repetitions.
         //This is a very crude fix for certain edge cases and should be fixed.
-        while(!players.isEmpty() && count < game.MAX_PLAYER_LIMIT) {
+        while(!players.isEmpty() && count < game.playerLimit) {
             List<Player> moved = new ArrayList<>();
             for (Player player : players) {
                 MovementHandler movementHandler = game.getMovementHandler();

@@ -1,13 +1,15 @@
 package inf112.core.player;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import inf112.core.cards.ProgramCard;
+import inf112.core.cards.Deck;
 import inf112.core.game.MainGame;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PlayerHandler {
+
+    public static int humanPlayers = 0;
+    public static int playerCount = 0;
 
     private MainGame game;
 
@@ -19,14 +21,32 @@ public class PlayerHandler {
         players = new ArrayList<>();
     }
 
+    /**
+     * creates a player setup with given amount of human players, the rest of the player limit is filled with playerAI
+     *
+     * @param humanPlayers amount of human players
+     */
+    public void setupPlayers(int humanPlayers) {
+        createPlayers(humanPlayers);
+        createAI(game.playerLimit - humanPlayers);
+
+        game.getMovementHandler().moveAllToSpawn();
+        game.drawPlayers();
+    }
+
     private boolean createPlayer() {
-        if (Player.getPlayerCount() >= game.getPlayerSpriteSheetGrid().length)
+        if (playerCount >= game.getPlayerSpriteSheetGrid().length)
             throw new IllegalStateException(
                     "Cannot create more players than the number of available textures"
             );
 
-        TextureRegion graphic = game.getPlayerSpriteSheetGrid()[Player.getPlayerCount()][0];
-        return players.add(new Player(graphic));
+        TextureRegion graphic = game.getPlayerSpriteSheetGrid()[playerCount][0];
+        if(players.add(new Player(graphic))) {
+            humanPlayers++;
+            return true;
+        }
+        return false;
+
     }
 
     public boolean createPlayers(int quantity) {
@@ -38,10 +58,27 @@ public class PlayerHandler {
             if (!createPlayer())
                 allAdded = false;
 
-        game.getMovementHandler().moveAllToSpawn();
-        game.drawPlayers();
-
         return allAdded;
+    }
+
+    public boolean createAI() {
+        if (playerCount >= game.getPlayerSpriteSheetGrid().length)
+            throw new IllegalStateException(
+                    "Cannot create more players than the number of available textures"
+            );
+
+        TextureRegion graphic = game.getPlayerSpriteSheetGrid()[playerCount][0];
+        return players.add(new PlayerAI(graphic));
+    }
+
+    public boolean createAI(int quantity) {
+        boolean allAdded = true;
+        for(int i = 0; i < quantity; i++) {
+            if(!(playerCount < MainGame.playerLimit))
+                return false;
+            createAI();
+        }
+        return true;
     }
 
     public Player getPlayerById(int id) {
@@ -61,16 +98,44 @@ public class PlayerHandler {
         throw new IllegalArgumentException("No player with the given id exists");
     }
 
-    public void givePlayerCards(Player player){   // Is to be moved once we have a proper implementation for rounds
-        List<ProgramCard> randomCards = game.getDeck().getCards(9 - player.getDamageTokens());
-        for (ProgramCard card : randomCards){
+    public boolean areProgramsReady() {
+        for(Player player : players) {
+            if (!player.programReady) {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    public void makeAIPrograms() {
+        for(Player player : players) {
+            if(player instanceof PlayerAI)
+                ((PlayerAI) player).makeProgram();
         }
     }
 
-    public void givePlayersCards() {   // Is to be moved once we have a proper implementation for rounds
+    public void givePlayerCards(Player player){
+        player.addToHand(game.getDeck().getCards(Deck.HAND_SIZE));
+    }
+
+    public void giveAllPlayersCards() {
         for (Player player : players)
             givePlayerCards(player);
+    }
+
+    public void nextCard() {
+        for (Player player : players)
+            player.nextCard();
+    }
+
+    public void clearAllProgramsheets() {
+        for(Player player : players)
+            clearProgramsheet(player);
+    }
+
+    private void clearProgramsheet(Player player) {
+        player.clearProgramSheet();
+        player.programReady = false;
     }
 
 

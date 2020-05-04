@@ -1,25 +1,30 @@
 package inf112.core.cards;
 
 import com.badlogic.gdx.graphics.Texture;
+import inf112.core.tile.Rotation;
 
 import java.util.Objects;
 
 public class RotationCard extends ProgramCard {
 
-    private boolean clockwise;
-    private int rotations;
+    private Rotation rotation;
+    private int amount;
 
-    public RotationCard(int priority, boolean clockwise, int rotations, String name, Texture texture) {
+    public RotationCard(int priority, Rotation rotation, int amount, String name, Texture texture) {
         super(CardType.ROTATION, priority, name, texture);
-        this.clockwise = clockwise;
-        this.rotations = rotations;
+        this.rotation = rotation;
+        this.amount = amount;
     }
 
     public boolean isClockwise(){
-        return clockwise;
+        return rotation.equals(Rotation.RIGHT);
     }
 
-    public int getRotations() { return rotations; }
+    public int getAmount() { return amount; }
+
+    public Rotation getRotation() {
+        return rotation;
+    }
 
 
     @Override
@@ -28,12 +33,12 @@ public class RotationCard extends ProgramCard {
         if (!(o instanceof RotationCard)) return false;
         if (!super.equals(o)) return false;
         RotationCard that = (RotationCard) o;
-        return clockwise == that.clockwise &&
-                rotations == that.rotations;
+        return rotation == that.rotation &&
+                amount == that.amount;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), clockwise, rotations);
+        return Objects.hash(super.hashCode(), isClockwise(), amount);
     }
 }
