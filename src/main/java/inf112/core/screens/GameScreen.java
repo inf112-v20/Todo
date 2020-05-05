@@ -100,14 +100,11 @@ public class GameScreen implements Screen {
                 if (selected != null){
                     for(ProgramCard card : selected){
                         game.getActivePlayer().addToProgramSheet(card);
-                        System.out.println(card.getName());
+                        //System.out.println(card.getName());
                     }
                     if(game.getActivePlayer().getProgramSheet().isFull()) { game.getActivePlayer().programReady = true; }
                     else { throw new IllegalStateException(); }
 
-                    for(Card card : game.getActivePlayer().getProgramSheet().getProgram()){
-                        System.out.println(card.getName());
-                    }
 
                     ui.drawPlayerCondition(game.getActivePlayer());
                     game.getRoundHandler().instantiateNextRound();

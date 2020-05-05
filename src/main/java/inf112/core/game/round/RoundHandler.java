@@ -47,7 +47,7 @@ public class RoundHandler {
         playerHandler.makeAIPrograms();
         for (Player player : playerHandler.getPlayers()) {
             if (!(player instanceof PlayerAI)) {
-                System.out.println(player.getId());
+                //System.out.println(player.getId());
                 //player.setRandomProgram();
                 continue;
             }
@@ -68,7 +68,6 @@ public class RoundHandler {
         for(int i = 0; i < round.getAmountOfRounds(); i++) {
             screen.getUi().drawPlayerCondition(game.getActivePlayer());
 
-
             round.roundStart(totalDelay);
             //delay is incremented by runtime of round
             totalDelay += round.getRoundRuntime();
@@ -84,10 +83,10 @@ public class RoundHandler {
                 System.out.println("Controls unblocked");
                 playerHandler.clearAllProgramsheets();
                 GameScreen.unblockControls();
+
                 ((GameScreen) game.getGameScreen()).getUi().resetSelectionButtons();
                 playerHandler.giveAllPlayersCards();
                 GameScreen.createLockSelectionButton();
-
             }
         }, totalDelay);
 
