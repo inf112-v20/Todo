@@ -66,7 +66,7 @@ public class SpawnHandler {
     public void initSpawning(Player playerToBeSpawned) {
         this.activePlayer = playerToBeSpawned;
         this.activePlayerBackupPos = playerToBeSpawned.getArchiveMarkerCopy();
-        LayerOperation.removePlayer(playerLayer, playerToBeSpawned);
+        game.getPlayerHandler().revivePlayer(activePlayer);
 
         if (isBackupAvailable()) {
             activePlayer.resetPosition();
@@ -75,27 +75,20 @@ public class SpawnHandler {
         else {
             initPositionSelection();
         }
-        //Add SpawnController first in multiplexer, so that it can block the other processors
-        ((InputMultiplexer) Gdx.input.getInputProcessor()).addProcessor(0, new SpawnController(game));
     }
 
     public void initPositionSelection() {
         this.state = SpawnState.SELECT_POSITION;
         this.adjPositions = getAvailableAdjPositions(activePlayerBackupPos);
 
-        // temporarily move player to one of the available positions
+        // move player to one of the available positions
         game.getMovementHandler().moveToPos(activePlayer, adjPositions.get(0));
         LayerOperation.drawPlayer(playerLayer, activePlayer);
-
-        System.out.println("Use numpad to select any of the neighboring positions.");
-        System.out.println("Conclude with ENTER\n");
     }
 
     public void initRotationSelection() {
         this.state = SpawnState.SELECT_ROTATION;
         LayerOperation.drawPlayer(playerLayer, activePlayer);
-        System.out.println("Use numpad or arrow keys to select a rotation.");
-        System.out.println("Conclude with ENTER\n");
     }
 
     /**

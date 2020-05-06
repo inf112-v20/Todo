@@ -12,6 +12,8 @@ public class CleanupPhase implements Phase {
 
     public CleanupPhase() {
         this.events = new ArrayList<>();
+        events.add(new RespawnEvent());
+        events.add(new CheckWinEvent());
         setRuntime();
     }
 

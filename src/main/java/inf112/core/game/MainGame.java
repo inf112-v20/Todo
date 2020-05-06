@@ -35,13 +35,13 @@ public class MainGame {
     private TextureRegion[][] playerSpriteSheetGrid;
     private RoundHandler roundHandler;
     private Deck deck;
-    private Player winner;
+    private static Player winner;
 
     public MainGame(MapNames mapNames) {
         this.playerHandler = new PlayerHandler(this);
         this.board = new GameBoard(mapNames, playerHandler);
         playerLimit = board.getSpawns().size();
-        playerLimit = 3;
+        playerLimit = 2;
         this.roundHandler = new RoundHandler(this);
         this.movementHandler = new MovementHandler(this);
         this.deck = new Deck(CardFactory.createDefaultDeck());
@@ -116,16 +116,15 @@ public class MainGame {
         playerHandler.getPlayers().removeIf(player -> hasLost(player));
     }
 
-    // should be called between each movement
-    public void attemptToAppointWinner() {
+    public static void attemptToAppointWinner() {
         List<Player> players = playerHandler.getPlayers();
-        if (players.size() == 1 && PlayerHandler.playerCount > 1) {    // all other players has lost
-            this.winner = players.get(0);
+        if (players.size() == 1 && PlayerHandler.playerCount > 1 && !playerHandler.hasRevivablePlayers()) {    // all other players has lost
+            winner = players.get(0);
             return;
         }
         for (Player player : players)
             if (movementHandler.getFlagWinnerChecker().hasVisitedAllFlags(player)) {
-                this.winner = player;
+                winner = player;
                 return;
             }
     }

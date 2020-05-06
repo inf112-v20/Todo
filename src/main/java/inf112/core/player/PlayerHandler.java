@@ -5,7 +5,12 @@ import inf112.core.cards.Deck;
 import inf112.core.game.MainGame;
 
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Class for handling operations on players.
+ * @author Alvar
+ */
 public class PlayerHandler {
 
     public static int humanPlayers = 0;
@@ -14,11 +19,13 @@ public class PlayerHandler {
     private MainGame game;
 
     private ArrayList<Player> players;
+    private ArrayList<Player> disabledPlayers;
     private Player activePlayer;
 
     public PlayerHandler(MainGame game) {
         this.game = game;
         players = new ArrayList<>();
+        disabledPlayers = new ArrayList<>();
     }
 
     /**
@@ -34,6 +41,10 @@ public class PlayerHandler {
         game.drawPlayers();
     }
 
+    /**
+     * Function that creates a new player
+     * @return true if adding player is completed, false if not
+     */
     private boolean createPlayer() {
         if (playerCount >= game.getPlayerSpriteSheetGrid().length)
             throw new IllegalStateException(
@@ -59,6 +70,37 @@ public class PlayerHandler {
                 allAdded = false;
 
         return allAdded;
+    }
+
+    /**
+     * Function for removing a player from the game
+     * @param player
+     */
+    public void destroyPlayer(Player player) {
+        if(!players.contains(player))
+            return;
+        players.remove(player);
+        disabledPlayers.add(player);
+    }
+
+    /**
+     * Function for reviving a player
+     * @param player
+     */
+    public void revivePlayer(Player player) {
+        if(!disabledPlayers.contains(player))
+            return;
+
+        disabledPlayers.remove(player);
+        players.add(player);
+    }
+
+    public boolean hasRevivablePlayers() {
+        for(Player player : disabledPlayers) {
+            if(!player.isOutOfLifeTokes())
+                return true;
+        }
+        return false;
     }
 
     public boolean createAI() {
@@ -155,4 +197,7 @@ public class PlayerHandler {
         this.activePlayer = activePlayer;
     }
 
+    public List<Player> getDisabledPlayers() {
+        return disabledPlayers;
+    }
 }

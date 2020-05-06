@@ -7,7 +7,7 @@ import inf112.core.game.MainGame;
  * Laser Event. An event where all lasers are fired
  */
 public class LaserEvent implements Event{
-    private static float runtime = 0.5f;
+    private static float runtime = 0.2f;
 
     public void startEvent(float delay) {
         Timer.schedule(new Timer.Task() {

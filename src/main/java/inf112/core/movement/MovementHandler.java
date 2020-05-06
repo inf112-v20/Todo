@@ -108,22 +108,8 @@ public class MovementHandler extends InputAdapter {
     private void handlePossibleDeath(Player player) {
         if (player.isDead()) {
             player.reduceLifeTokens();
-
-            if (game.hasLost(player)) {
-                // remove loser physically
-                System.out.println(player.getName() + " has lost");
-                LayerOperation.removePlayer(playerLayer, player);
-
-                if (getActivePlayer()== player){
-                    //removes player from list of players and sets the next player as active
-                    players.remove(player);
-                    setActive(players.get(0));
-                }
-            }
-            else {    // respawn
-                player.resetDamageTokens();
-                moveToBackup(player);
-            }
+            game.getPlayerHandler().destroyPlayer(player);
+            LayerOperation.removePlayer(playerLayer, player);
         }
     }
 
@@ -133,6 +119,8 @@ public class MovementHandler extends InputAdapter {
     }
 
     public void cardMovement(Player player, ProgramCard programCard) {
+        if(game.getPlayerHandler().getDisabledPlayers().contains(player))
+            return;
         if (!contains(player))
             throw new IllegalArgumentException("Unknown player");
 
@@ -152,7 +140,7 @@ public class MovementHandler extends InputAdapter {
     }
 
     public void cardMovement(Player player, int index) {
-        assert(index > ProgramSheet.NUM_OF_REGISTERS);
+        assert(index < ProgramSheet.NUM_OF_REGISTERS);
         cardMovement(player, player.getProgramSheet().get(index));
     }
 
@@ -189,6 +177,8 @@ public class MovementHandler extends InputAdapter {
     public void attemptToMove(Player playerToBeMoved, Direction direction) {
         List<Player> affectedPlayers = new ArrayList<>();
         collisionHandler.gatherAffectedPlayers(playerToBeMoved.getPositionCopy(), direction, affectedPlayers);
+        if(affectedPlayers.isEmpty())
+            return;
 
         Player last = affectedPlayers.get(0);
         if(collisionHandler.canGo(last.getPositionCopy(), direction))

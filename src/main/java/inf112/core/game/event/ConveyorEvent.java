@@ -7,7 +7,7 @@ import inf112.core.game.MainGame;
  * Conveyor Event. An event where all conveyors on the board moves a player if it is standing on said conveyor
  */
 public class ConveyorEvent implements Event{
-    private static float runtime = 0.5f;
+    private static float runtime = 0.1f;
 
     public void startEvent(float delay) {
         Timer.schedule(new Timer.Task() {
