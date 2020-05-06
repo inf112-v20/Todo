@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 
 public class AssMan {
@@ -28,6 +29,11 @@ public class AssMan {
     //TEXT
     public static final AssetDescriptor<Texture> GAME_OVER_TEXT
             = new AssetDescriptor<Texture>("assets/img/gameOver.png", Texture.class);
+
+    // SKIN
+    public static final AssetDescriptor<TextureAtlas> SKIN
+            = new AssetDescriptor<>("assets/skins/skin/quantum-horizon-ui.atlas", TextureAtlas.class);
+
 
 
     //FONT
@@ -100,6 +106,9 @@ public class AssMan {
         manager.load(UIBACKGROUND);
         manager.load(LIFETOKEN);
         manager.load(DAMAGETOKEN);
+
+        // SKIN
+        manager.load(SKIN);
 
     }
 

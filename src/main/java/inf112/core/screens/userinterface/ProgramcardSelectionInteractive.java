@@ -1,5 +1,6 @@
 package inf112.core.screens.userinterface;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -43,7 +44,7 @@ public class ProgramcardSelectionInteractive {
             ProgramCard currentCard = cards.get(i);
             Texture currentCardTexture = currentCard.getTexture();
             ImageButton button = ButtonFactory.createImageButton(currentCardTexture, SELECTION_CARD_SIZE);
-            button.setPosition(posX[i], posY[i]);
+            button.setPosition(getXPos(posX[i]), getYPos(posY[i]));
             ProgramCardButtonWrapper buttonContainer = new ProgramCardButtonWrapper(button, currentCard);
             buttonListenerForSelection(buttonContainer);
             selectionPile[i] = buttonContainer;
@@ -146,7 +147,7 @@ public class ProgramcardSelectionInteractive {
         int selectionPilePosition = getFreePositionInSelectionPile();
         if (selectionPilePosition == -1) {return;}
 
-        button.returnPosition();
+        button.setPosition(button.getX(), button.getY());
         removeFromRegisterPile(button);
         selectionPile[selectionPilePosition] = button;
         buttonListenerForSelection(button);
@@ -178,7 +179,15 @@ public class ProgramcardSelectionInteractive {
             if (button == null) {continue;}
             button.dispose();
         }
-
         return cards;
     }
+
+    private float getXPos(float x){
+        return ((float) x / 1280) * Gdx.graphics.getWidth();
+    }
+    private float getYPos(float y){
+        return ((float) y / 720) * Gdx.graphics.getHeight();
+    }
+
+
 }

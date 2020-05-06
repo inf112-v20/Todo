@@ -66,9 +66,8 @@ public class RoundHandler {
         totalDelay += 1f;
         //Repeat base round for the amount of rounds
         for(int i = 0; i < round.getAmountOfRounds(); i++) {
-            screen.getUi().drawPlayerCondition(game.getActivePlayer());
-
             round.roundStart(totalDelay);
+            screen.getUi().drawPlayerCondition(game.getActivePlayer());
             //delay is incremented by runtime of round
             totalDelay += round.getRoundRuntime();
             //1 second delay between each round
@@ -85,6 +84,7 @@ public class RoundHandler {
                 GameScreen.unblockControls();
 
                 ((GameScreen) game.getGameScreen()).getUi().resetSelectionButtons();
+                screen.getUi().drawPlayerCondition(game.getActivePlayer());
                 playerHandler.giveAllPlayersCards();
                 GameScreen.createLockSelectionButton();
             }

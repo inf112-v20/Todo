@@ -115,7 +115,7 @@ public class PlayerHandler {
     }
 
     public void givePlayerCards(Player player){
-        player.addToHand(game.getDeck().getCards(Deck.HAND_SIZE));
+        player.addToHand(game.getDeck().getCards(Deck.HAND_SIZE - player.getDamageTokens()));
     }
 
     public void giveAllPlayersCards() {

@@ -137,6 +137,7 @@ public class ProgramSheet implements IProgramSheet<ProgramCard> {
         this.addHere = 0;
         this.current = 0;
         this.hand.clear();
+
         return cards;
     }
 
