@@ -157,7 +157,7 @@ public class PlayerHandler {
     }
 
     public void givePlayerCards(Player player){
-        player.addToHand(game.getDeck().getCards(Deck.HAND_SIZE));
+        player.addToHand(game.getDeck().getCards(Deck.HAND_SIZE - player.getDamageTokens()));
     }
 
     public void giveAllPlayersCards() {
@@ -176,7 +176,7 @@ public class PlayerHandler {
     }
 
     private void clearProgramsheet(Player player) {
-        player.clearProgramSheet();
+        game.getDeck().discardCards(player.clearProgramSheet());
         player.programReady = false;
     }
 

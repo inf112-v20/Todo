@@ -25,10 +25,6 @@ public class ProgramCardButtonWrapper {
         return button;
     }
 
-    protected void returnPosition(){
-        button.setPosition(x,y);
-    }
-
     protected void setPosition(float x, float y){
         button.setPosition(x,y);
     }
@@ -40,7 +36,6 @@ public class ProgramCardButtonWrapper {
     public boolean isVisible() {
         return button.isVisible();
     }
-
 
     public void setVisible(boolean b) {
         button.setVisible(b);

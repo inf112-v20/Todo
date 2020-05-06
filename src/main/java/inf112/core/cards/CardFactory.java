@@ -35,7 +35,7 @@ public enum CardFactory {
                 return new MovementCard(getNewPriority(),3,true,"Move forward 3 tiles",
                         AssMan.manager.get(AssMan.FORWARD3));
             case BACKWARDS1:
-                return new MovementCard(getNewPriority(),1,false,"Move forward 1 tile",
+                return new MovementCard(getNewPriority(),1,false,"Move backwards 1 tile",
                         AssMan.manager.get(AssMan.BACKWARD));
             case ROTATELEFT1:
                 return new RotationCard(getNewPriority(), Rotation.LEFT, 1, "Rotate left once",

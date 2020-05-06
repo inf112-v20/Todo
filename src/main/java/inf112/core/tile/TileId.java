@@ -272,7 +272,6 @@ public enum TileId {
      * @return TileId of Conveyor
      */
     public static TileId getConveyor(Direction outputDir, Direction inputDir) {
-        //litt treig, noen måte å optimalisere?
         for(TileId id : getConveyors()) {
             List<Direction> directions = id.getFacingDirections();
             if(directions.get(0) == outputDir && directions.get(1) == inputDir)

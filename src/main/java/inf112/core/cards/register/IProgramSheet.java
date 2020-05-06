@@ -1,5 +1,7 @@
 package inf112.core.cards.register;
 
+import inf112.core.cards.ProgramCard;
+
 import java.util.List;
 
 /**
@@ -76,8 +78,9 @@ public interface IProgramSheet<C> {
 
     /**
      * Removes the cards from all unlocked registers. Locked registers keep their cards in place.
+     * @return
      */
-    void clearUnlockedRegisters();
+    List<ProgramCard> clearUnlockedRegisters();
 
     /**
      * @return a list of all the cards in the program sheet, in the order of the registers

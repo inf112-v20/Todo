@@ -32,12 +32,15 @@ public class PlayerPhase implements Phase {
                 return p1.getValue1().getPriority() - p2.getValue1().getPriority();
             }
         });
+
+
         return moves;
     }
 
     private void setupEvents() {
         for(Pair<Player, ProgramCard> move : queuedMoves) {
-            Event newPlayerEvent = new PlayerEvent(move.getValue0());
+
+            Event newPlayerEvent = new PlayerEvent(move.getValue0(), move.getValue1());
             events.add(newPlayerEvent);
         }
     }

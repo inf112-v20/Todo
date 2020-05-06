@@ -9,15 +9,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import inf112.core.cards.Deck;
 import inf112.core.cards.ProgramCard;
 import inf112.core.input.InputBlocker;
 import inf112.core.input.OrthographicCameraController;
 import inf112.core.game.MainGame;
-import inf112.core.player.Player;
 import inf112.core.player.PlayerHandler;
 import inf112.core.screens.userinterface.UserInterface;
 import inf112.core.util.ButtonFactory;
@@ -31,11 +28,11 @@ public class GameScreen implements Screen {
 
     private static MainGame game;
     private static InputProcessor inputBlocker;
+    private static UserInterface ui;
+    private static Stage stage;
     private IGameStateSwitcher gameStateSwitcher;
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
-    private Stage stage;
-    private UserInterface ui;
 
     public GameScreen(RoboRally gameStateSwitcher) {
         this.gameStateSwitcher = gameStateSwitcher;
@@ -83,11 +80,17 @@ public class GameScreen implements Screen {
     }
 
 
-    public void createLockSelectionButton(){
+    public static void createLockSelectionButton(){
+
+        float width = ((float) 1100 / 1280) * Gdx.graphics.getWidth();
+        float height = ((float) 550 / 720) * Gdx.graphics.getHeight();
+
+
+
         ui.showSelectionCards(game.getActivePlayer().getProgramSheet().getHand());
 
         TextButton button = ButtonFactory.createCustomButton("Confirm", 3);
-        button.setPosition(1100, 550);
+        button.setPosition(width, height);
         stage.addActor(button);
         button.addListener(new ClickListener() {
             @Override
@@ -96,9 +99,11 @@ public class GameScreen implements Screen {
                 if (selected != null){
                     for(ProgramCard card : selected){
                         game.getActivePlayer().addToProgramSheet(card);
+                        //System.out.println(card.getName());
                     }
                     if(game.getActivePlayer().getProgramSheet().isFull()) { game.getActivePlayer().programReady = true; }
                     else { throw new IllegalStateException(); }
+
 
                     ui.drawPlayerCondition(game.getActivePlayer());
                     game.getRoundHandler().instantiateNextRound();
@@ -151,6 +156,7 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         //game.getBoard().resize(width, height);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override

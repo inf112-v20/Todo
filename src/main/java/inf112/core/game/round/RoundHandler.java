@@ -1,6 +1,9 @@
 package inf112.core.game.round;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.utils.Timer;
+import inf112.core.cards.Deck;
+import inf112.core.cards.ProgramCard;
 import inf112.core.game.GameRule;
 import inf112.core.game.MainGame;
 import inf112.core.movement.MovementHandler;
@@ -35,16 +38,16 @@ public class RoundHandler {
 
         GameScreen screen = (GameScreen) game.getGameScreen();
 
-
         //ProgramSheets are cleared
         //playerHandler.clearAllProgramsheets();
         //All players receive a new set of cards
         playerHandler.giveAllPlayersCards();
 
+
         playerHandler.makeAIPrograms();
         for (Player player : playerHandler.getPlayers()) {
             if (!(player instanceof PlayerAI)) {
-                System.out.println(player.getId());
+                //System.out.println(player.getId());
                 //player.setRandomProgram();
                 continue;
             }
@@ -63,8 +66,8 @@ public class RoundHandler {
         totalDelay += 1f;
         //Repeat base round for the amount of rounds
         for(int i = 0; i < round.getAmountOfRounds(); i++) {
-            screen.getUi().drawPlayerCondition(game.getActivePlayer());
             round.roundStart(totalDelay);
+            screen.getUi().drawPlayerCondition(game.getActivePlayer());
             //delay is incremented by runtime of round
             totalDelay += round.getRoundRuntime();
             //1 second delay between each round
@@ -77,7 +80,13 @@ public class RoundHandler {
             @Override
             public void run() {
                 System.out.println("Controls unblocked");
+                playerHandler.clearAllProgramsheets();
                 GameScreen.unblockControls();
+
+                ((GameScreen) game.getGameScreen()).getUi().resetSelectionButtons();
+                screen.getUi().drawPlayerCondition(game.getActivePlayer());
+                playerHandler.giveAllPlayersCards();
+                GameScreen.createLockSelectionButton();
             }
         }, totalDelay);
 

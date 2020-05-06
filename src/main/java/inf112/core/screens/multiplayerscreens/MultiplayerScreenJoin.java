@@ -1,66 +1,69 @@
-package inf112.core.screens;
+package inf112.core.screens.multiplayerscreens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import inf112.core.util.AssMan;
+import inf112.core.screens.IGameStateSwitcher;
 import inf112.core.util.ButtonFactory;
 
-public class MainMenuScreen implements Screen {
+public class MultiplayerScreenJoin implements Screen {
 
-    private IGameStateSwitcher gameStateSwitcher;
     private Stage stage;
+    private IGameStateSwitcher gameStateSwitcher;
+    private String PlayerName;
 
-    public MainMenuScreen(IGameStateSwitcher gameStateSwitcher){
+    public MultiplayerScreenJoin(IGameStateSwitcher gameStateSwitcher){
         this.gameStateSwitcher = gameStateSwitcher;
     }
 
+
     @Override
     public void show() {
-        stage = new Stage();
+        this.stage = new Stage();
 
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
 
-        TextButton play = ButtonFactory.createCustomButton("SinglePlayer", 8);
-        play.setPosition(width/2 - play.getWidth()/2, height*0.6f);
-        play.addListener(new ClickListener() {
+        TextButton join = ButtonFactory.createCustomButton("Join Game", 8);
+        join.setPosition(width/2 - join.getWidth()/2, height*0.6f);
+        join.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 gameStateSwitcher.initMainGame();
             }
         });
-        stage.addActor(play);
+        stage.addActor(join);
 
-        TextButton multiplayer = ButtonFactory.createCustomButton("Multiplayer", 8);
-        multiplayer.setPosition(width/2 - play.getWidth()/2, height*0.4f);
-        multiplayer.addListener(new ClickListener() {
+
+        TextButton host = ButtonFactory.createCustomButton("Host Game", 8);
+        host.setPosition(width/2 - host.getWidth()/2, height*0.4f);
+        host.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gameStateSwitcher.initMultiplayerPlayername();
+                gameStateSwitcher.initMainGame();
             }
         });
-        stage.addActor(multiplayer);
+        stage.addActor(host);
 
-        TextButton exit = ButtonFactory.createCustomButton("Exit", 4);
-        exit.setPosition(width/2-exit.getWidth()/2, height*0.2f);
-        exit.addListener(new ClickListener() {
+
+
+
+        TextButton back = ButtonFactory.createCustomButton("Back", 4);
+        back.setPosition(width/2 - back.getWidth()/2, height*0.2f);
+        back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gameStateSwitcher.closeApplication();
+                gameStateSwitcher.initMainGame();
             }
         });
-        stage.addActor(exit);
+        stage.addActor(back);
 
         Gdx.input.setInputProcessor(stage);
+
     }
 
     @Override
@@ -87,11 +90,11 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void hide() {
-        dispose();
+
     }
 
     @Override
     public void dispose() {
-        stage.dispose();
+
     }
 }
