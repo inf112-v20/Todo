@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -23,6 +24,7 @@ import static com.badlogic.gdx.graphics.g3d.particles.ParticleChannels.Color;
 
 public class MultiplayerScreenPlayername implements Screen {
 
+    static String name;
     private Stage stage;
     private IGameStateSwitcher gameStateSwitcher;
     private boolean clicked;
@@ -45,12 +47,11 @@ public class MultiplayerScreenPlayername implements Screen {
         font.getData().setScale(2);
         style.fontColor = com.badlogic.gdx.graphics.Color.BLUE;
 
-
-        TextField text = new TextField("'Enter something here'", style);
+        TextField text = new TextField("", style);
+        text.setText(name == null ? "Enter name here" : name);
+        clicked = name != null;
         text.setSize(1000,200);
         text.setMaxLength(20);
-
-
         text.setPosition(width/2 - text.getWidth()/2, height*0.6f);
         text.setAlignment(Align.center);
         text.setMaxLength(20);
@@ -65,20 +66,19 @@ public class MultiplayerScreenPlayername implements Screen {
         stage.addActor(text);
 
 
-        TextButton host = ButtonFactory.createCustomButton("Confirm name", 6);
-        host.setPosition(width/2 - host.getWidth()/2, height*0.4f);
-        host.addListener(new ClickListener() {
+        TextButton confirm = ButtonFactory.createCustomButton("Confirm name", 6);
+        confirm.setPosition(width/2 - confirm.getWidth()/2, height*0.4f);
+        confirm.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (!clicked || (text.getText().length() < 3)) {
                     return;
                 }
-                gameStateSwitcher.initMultiplayerSettings(text.getText());
+                name = text.getText();
+                gameStateSwitcher.initMultiplayerSettings();
             }
         });
-        stage.addActor(host);
-
-
+        stage.addActor(confirm);
 
 
         TextButton back = ButtonFactory.createCustomButton("Back", 4);

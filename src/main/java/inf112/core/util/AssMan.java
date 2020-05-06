@@ -30,11 +30,6 @@ public class AssMan {
     public static final AssetDescriptor<Texture> GAME_OVER_TEXT
             = new AssetDescriptor<Texture>("assets/img/gameOver.png", Texture.class);
 
-    // SKIN
-    public static final AssetDescriptor<TextureAtlas> SKIN
-            = new AssetDescriptor<>("assets/skins/skin/quantum-horizon-ui.atlas", TextureAtlas.class);
-
-
 
     //FONT
     public static final AssetDescriptor<BitmapFont> CHINTZY_FONT
@@ -106,9 +101,6 @@ public class AssMan {
         manager.load(UIBACKGROUND);
         manager.load(LIFETOKEN);
         manager.load(DAMAGETOKEN);
-
-        // SKIN
-        manager.load(SKIN);
 
     }
 

@@ -16,9 +16,8 @@ public class MultiplayerScreenJoin implements Screen {
     private IGameStateSwitcher gameStateSwitcher;
     private String PlayerName;
 
-    public MultiplayerScreenJoin(IGameStateSwitcher gameStateSwitcher, String name){
+    public MultiplayerScreenJoin(IGameStateSwitcher gameStateSwitcher){
         this.gameStateSwitcher = gameStateSwitcher;
-        this.PlayerName = name;
     }
 
 

@@ -3,22 +3,24 @@ package inf112.core.screens.multiplayerscreens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.core.screens.IGameStateSwitcher;
+import inf112.core.util.AssMan;
 import inf112.core.util.ButtonFactory;
 
 public class MultiplayerScreen implements Screen {
 
-    private String PlayerName;
     private Stage stage;
     private IGameStateSwitcher gameStateSwitcher;
 
-    public MultiplayerScreen(IGameStateSwitcher gameStateSwitcher, String name){
+    public MultiplayerScreen(IGameStateSwitcher gameStateSwitcher){
         this.gameStateSwitcher = gameStateSwitcher;
-        this.PlayerName = name;
+        System.out.println(MultiplayerScreenPlayername.name);
     }
 
 
@@ -28,6 +30,18 @@ public class MultiplayerScreen implements Screen {
 
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
+
+
+        BitmapFont font = AssMan.manager.get(AssMan.CHINTZY_FONT.fileName);
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = font;
+        font.getData().setScale(2);
+        style.fontColor = com.badlogic.gdx.graphics.Color.BLUE;
+        Label label = new Label("Hello " + MultiplayerScreenPlayername.name + "!", style);
+        label.setPosition(width/2 - label.getWidth()/2, height*0.8f);
+        stage.addActor(label);
+
+
 
         TextButton join = ButtonFactory.createCustomButton("Join Game", 8);
         join.setPosition(width/2 - join.getWidth()/2, height*0.6f);
@@ -45,7 +59,7 @@ public class MultiplayerScreen implements Screen {
         host.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gameStateSwitcher.initMainGame();
+                gameStateSwitcher.initMultiplayerHost();
             }
         });
         stage.addActor(host);
@@ -58,7 +72,7 @@ public class MultiplayerScreen implements Screen {
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gameStateSwitcher.initMainGame();
+                gameStateSwitcher.initMultiplayerPlayername();
             }
         });
         stage.addActor(back);
