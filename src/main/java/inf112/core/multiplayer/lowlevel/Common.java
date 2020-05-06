@@ -1,9 +1,8 @@
-package inf112.core.multiplayer;
+package inf112.core.multiplayer.lowlevel;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
-import inf112.core.multiplayer.packets.Packet00JoinGameRequest;
-import inf112.core.multiplayer.packets.Packet01JoinGameResponse;
+import inf112.core.multiplayer.packets.*;
 
 
 public class Common {
@@ -20,6 +19,13 @@ public class Common {
         Kryo kryo = endpoint.getKryo();
         kryo.register(Packet00JoinGameRequest.class);
         kryo.register(Packet01JoinGameResponse.class);
+        kryo.register(Packet02NewPlayerBroadcast.class);
+        kryo.register(Packet03StartGameBroadcast.class);
+        kryo.register(Packet04StartGameReady.class);
+        kryo.register(Packet05StartRoundBroadcast.class);
+        kryo.register(Packet06ProgramSheetData.class);
+        kryo.register(Packet07ProgramSheetsDataBroadcast.class);
+        kryo.register(Packet99PlayerDisconnected.class);
     }
 
 }
