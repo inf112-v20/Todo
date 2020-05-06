@@ -1,20 +1,22 @@
 package inf112.core.game.event;
 
 import com.badlogic.gdx.utils.Timer;
+import inf112.core.game.GameRule;
 import inf112.core.game.MainGame;
+import inf112.core.game.round.Round;
 
 /**
- * Gear Event. An event where all gears will rotate players standing on them.
+ * CheckWinEvent. An event where all MainGame checks for a win condition.
  */
-public class GearEvent implements Event{
+public class CheckWinEvent implements Event{
     private static float runtime = 0.1f;
 
     public void startEvent(float delay) {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                MainGame.movementHandler.gearsRotate();
-                System.out.println("Rotating Gears");
+                System.out.println("Checking for winning player");
+                MainGame.attemptToAppointWinner();
             }
         }, delay);
     }

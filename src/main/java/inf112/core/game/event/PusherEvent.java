@@ -8,7 +8,7 @@ import inf112.core.game.round.Round;
  * Pusher Event. An event where all pushers will push a player in its direction, if the round number is even or odd.
  */
 public class PusherEvent implements Event{
-    private static float runtime = 0.5f;
+    private static float runtime = 0.1f;
 
     public void startEvent(float delay) {
         Timer.schedule(new Timer.Task() {

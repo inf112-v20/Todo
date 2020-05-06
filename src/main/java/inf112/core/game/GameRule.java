@@ -1,6 +1,7 @@
 package inf112.core.game;
 
 import inf112.core.game.phase.BoardPhase;
+import inf112.core.game.phase.CleanupPhase;
 import inf112.core.game.phase.PlayerPhase;
 import inf112.core.game.round.Round;
 import inf112.core.game.round.RoundFactory;
@@ -17,6 +18,7 @@ public class GameRule {
         roundFactory.setAmountOfRounds(5);
         roundFactory.addPhase(new PlayerPhase());
         roundFactory.addPhase(new BoardPhase());
+        roundFactory.addPhase(new CleanupPhase());
 
         return roundFactory.generate();
     }

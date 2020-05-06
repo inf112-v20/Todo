@@ -8,7 +8,7 @@ import inf112.core.game.round.Round;
  * Repair Event. An event where all wrenches will repair players standing on them.
  */
 public class RepairEvent implements Event{
-    private static float runtime = 0.5f;
+    private static float runtime = 0.1f;
 
     public void startEvent(float delay) {
         Timer.schedule(new Timer.Task() {

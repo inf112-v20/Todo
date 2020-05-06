@@ -51,8 +51,6 @@ public class InputController extends InputAdapter {
             default:
                 return false;
         }
-        game.removeLosers();    // strictly speaking unnecessary to call this upon every move
-        game.attemptToAppointWinner();
         return true;
     }
 
