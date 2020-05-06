@@ -147,7 +147,7 @@ public class MovementHandler extends InputAdapter {
     }
 
     public void cardMovement(Player player, int index) {
-        assert(index > ProgramSheet.NUM_OF_REGISTERS);
+        assert(index < ProgramSheet.NUM_OF_REGISTERS);
         cardMovement(player, player.getProgramSheet().get(index));
     }
 

@@ -49,8 +49,6 @@ public class ProgramSheet implements IProgramSheet<ProgramCard> {
 
     @Override
     public boolean addToRegister(ProgramCard card) {
-        assert(hand.contains(card));
-
         if (isFull())
             return false;
 
