@@ -173,6 +173,8 @@ public class ServerRunnable implements Runnable {
     }
 
 
+
+
     public void broadcastPlayerNames() {
         Packet03StartGameBroadcast packet = new Packet03StartGameBroadcast();
         packet.names = ServerData.playerNames;

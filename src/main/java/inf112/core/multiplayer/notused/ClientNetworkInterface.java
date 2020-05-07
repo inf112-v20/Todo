@@ -1,17 +1,18 @@
-package inf112.core.multiplayer;
+package inf112.core.multiplayer.notused;
 
 import inf112.core.multiplayer.lowlevel.ClientData;
 import inf112.core.multiplayer.lowlevel.ClientRunnable;
 
 /**
- * A human player wanting to connect to a another host should instantiate this class.
+ * This class acts as the interface between the game logic and the client network logic.
+ * Every human player wanting to play multiplayer (both the host and clients) should instantiate this class.
  */
-public class ClientInterface {
+public class ClientNetworkInterface {
 
     private Thread threadClient;
     private ClientRunnable client;
 
-    public ClientInterface() {}
+    public ClientNetworkInterface() {}
 
     public void setServerIP(String serverIP) {
         ClientData.serverIP = serverIP;
@@ -21,6 +22,7 @@ public class ClientInterface {
     public void startClientThread(String serverIP) {
         this.client = new ClientRunnable();
         threadClient = new Thread(client);
+        threadClient.start();
     }
 
     public void attemptToJoinServer(String proposedName) {
@@ -28,6 +30,8 @@ public class ClientInterface {
         client.sendJoinGameRequest();
     }
 
-//    public boolean
+    public boolean isConnectedToServer() {
+        return client.isConnected();
+    }
 
 }

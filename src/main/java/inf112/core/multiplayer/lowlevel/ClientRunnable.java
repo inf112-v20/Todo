@@ -111,4 +111,8 @@ public class ClientRunnable implements Runnable {
         requestPacket.playerName = ClientData.playerName;
         client.sendTCP(requestPacket);
     }
+
+    public boolean isConnected() {
+        return client.isConnected();
+    }
 }

@@ -12,6 +12,7 @@ import inf112.core.board.MapNames;
 import inf112.core.game.round.RoundHandler;
 import inf112.core.input.InputController;
 import inf112.core.movement.MovementHandler;
+import inf112.core.multiplayer.Multiplayer;
 import inf112.core.player.Player;
 import inf112.core.cards.CardFactory;
 import inf112.core.cards.Deck;
@@ -27,7 +28,6 @@ public class MainGame {
     public static int playerLimit = 0;
     public static MovementHandler movementHandler;
     public static PlayerHandler playerHandler;
-
     private GameScreen gameScreen;
     private GameBoard board;
     private InputAdapter defaultInputAdapter;
@@ -36,6 +36,8 @@ public class MainGame {
     private RoundHandler roundHandler;
     private Deck deck;
     private static Player winner;
+
+    public static Multiplayer multiplayer;
 
     public MainGame(MapNames mapNames) {
         this.playerHandler = new PlayerHandler(this);
