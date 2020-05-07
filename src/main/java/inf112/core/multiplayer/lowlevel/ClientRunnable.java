@@ -16,13 +16,6 @@ public class ClientRunnable implements Runnable {
         @Override
         public void connected(Connection connection) {
             Log.info("[client] Connection ip: " + connection.getRemoteAddressTCP().getAddress().getHostAddress());
-            ClientData.hasConnected = true;
-
-//            Packet00JoinGameRequest requestPacket = new Packet00JoinGameRequest();
-//            requestPacket.playerName = "Eskil";
-//
-//            connection.sendTCP(requestPacket);
-//            Log.info("[client] Join game request sent.");
         }
 
         @Override
@@ -45,16 +38,27 @@ public class ClientRunnable implements Runnable {
                 Packet01JoinGameResponse receivedPacket = (Packet01JoinGameResponse) o;
 
                 if (receivedPacket.hitServer) {
-                    if (receivedPacket.nameValidated)
+                    if (receivedPacket.nameValidated) {
+                        ClientData.joinedPlayers = receivedPacket.joinedPlayers;
+                        ClientData.connectionConfirmedByServer = true;
+
                         Log.info("[client] The server registered your name.");
-                    else
+                    }
+                    else {
+                        ClientData.connectionConfirmedByServer = false;
+
                         Log.info("[client] The server denied the name you provided.");
+                    }
                 }
                 else {
-                    Log.info("[client] Server denied your request! Perhaps you tried connection to a client?");
                     connection.close();
+
+                    Log.info("[client] Server denied your request! Perhaps you tried connection to a client?");
                 }
 
+            }
+            else if (o instanceof Packet02NewPlayerBroadcast) {
+                // TODO register new player
             }
             else if (o instanceof Packet03StartGameBroadcast) {
                 // server sent us all the players
@@ -94,21 +98,52 @@ public class ClientRunnable implements Runnable {
 
         Log.set(Log.LEVEL_DEBUG);
 
+        attemptToConnect();
+    }
+
+    public boolean attemptToConnect() {
         try {
             client.connect(Common.TIMEOUT, ClientData.serverIP, Common.PORT_TCP);
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
             Log.info("[client] Couldn't connect to server.");
+            return false;
         }
-
     }
 
-    public void sendJoinGameRequest() {
-        if (!client.isConnected())
+    /**
+     * Prompts the server to join the game, based on the name given in ClientData.
+     *
+     * @return true if the packet is sent, and false if there is no connection to the server
+     */
+    public boolean sendJoinGameRequest() {
+        if (!client.isConnected()) {
             Log.debug("[client] You are not connected to any server.");
+            return false;
+        }
 
         Packet00JoinGameRequest requestPacket = new Packet00JoinGameRequest();
         requestPacket.playerName = ClientData.playerName;
         client.sendTCP(requestPacket);
+        return true;
+    }
+
+    /**
+     * Closes the connection to the server
+     */
+    public void close() {
+        client.close();
+    }
+
+    /**
+     * @return true if it's safe to send packets to the server.
+     */
+    public boolean isReady() {
+        return client != null && client.isConnected();
+    }
+
+    public boolean isConnected() {
+        return client.isConnected();
     }
 }

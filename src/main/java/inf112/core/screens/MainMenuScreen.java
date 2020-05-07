@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import inf112.core.game.MainGame;
 import inf112.core.util.AssMan;
 import inf112.core.util.ButtonFactory;
 
@@ -35,6 +36,7 @@ public class MainMenuScreen implements Screen {
         play.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                MainGame.isMultiplayer = false;
                 gameStateSwitcher.initSelectScreen();
             }
         });
@@ -45,6 +47,7 @@ public class MainMenuScreen implements Screen {
         multiplayer.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                MainGame.isMultiplayer = true;
                 gameStateSwitcher.initMultiplayerPlayername();
             }
         });
