@@ -70,26 +70,13 @@ public class UserInterface extends Actor{
     }
 
 
-    public void showSelectionCards(List<ProgramCard> cards){
-        /*
+    public void showSelectionCards(){
+
         selectionCards.createcardbuttons();
         ImageCardWrapper[] cards = selectionCards.getSelectionPile();
         for(ImageCardWrapper card : cards) {
             table.addActor(card.getImage());
         }
-
-         */
-
-
-        selectionButtons.renderSelectionButtons(cards);
-        ProgramCardButtonWrapper[] buttons = selectionButtons.getSelectionPile();
-
-        for(ProgramCardButtonWrapper button : buttons){
-            if (button == null) {continue; }
-            table.addActor(button.getButton());
-        }
-        //table.addActor(createLockSelectionButton());
-
 
     }
 
@@ -152,6 +139,10 @@ public class UserInterface extends Actor{
     }
     private float getYPos(float y){
         return ((float) y / 720) * Gdx.graphics.getHeight();
+    }
+
+    public SelectionCards getSelectionCards(){
+        return selectionCards;
     }
 
 }

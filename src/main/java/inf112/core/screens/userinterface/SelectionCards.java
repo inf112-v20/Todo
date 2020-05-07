@@ -1,5 +1,6 @@
 package inf112.core.screens.userinterface;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -9,9 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.core.cards.ProgramCard;
 import inf112.core.cards.register.ProgramSheet;
+import inf112.core.game.MainGame;
 import inf112.core.player.Player;
 import inf112.core.screens.GameScreen;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SelectionCards {
@@ -20,7 +23,7 @@ public class SelectionCards {
     private final float SELECTION_CARD_SIZE = 2;
 
     private int[] posX = {140,210,280,350,420,490,560,630,700};
-    private int[] posY = {10,10,10,10,10,10,10,10,10};
+    private int posY = 10;
 
     private ImageCardWrapper[] selectionPile;
 
@@ -43,7 +46,7 @@ public class SelectionCards {
         for(int i = 0; i < cards.size(); i++){
             ProgramCard card = cards.get(i);
             selectionPile[i] = createcardButton(card);
-            selectionPile[i].getImage().setPosition(newX(posX[i]), newY(posY[i]));
+            selectionPile[i].setPosition(newX(posX[i]), newY(posY));
             selectionPile[i].getImage().setSize(32*SELECTION_CARD_SIZE,64*SELECTION_CARD_SIZE );
             unselectedlistener(selectionPile[i]);
         }
@@ -67,8 +70,12 @@ public class SelectionCards {
         card.getImage().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                programSheet.addToRegister(card.getCard());
-                card.getImage().setPosition(registerPosX[getPos()], registerPosY+100);
+                if (!programSheet.isFull() && getPos() != -1) {
+                    selectedlistener(card);
+                    card.getImage().setPosition(newX(registerPosX[getPos()]+768), newY(registerPosY));
+                    programSheet.addToRegister(card.getCard());
+                }
+
             }
         });
     }
@@ -78,17 +85,54 @@ public class SelectionCards {
         card.getImage().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (!programSheet.remove(card.getCard())) throw new IllegalStateException();
-                card.getImage().setPosition(registerPosX[getPos()], registerPosY+100);
+                if (!programSheet.remove(card.getCard())) return;
+                unselectedlistener(card);
+                card.returnToPosition();
+                updatePositions();
             }
         });
     }
 
     private int getPos(){
-        return programSheet.getCardList().size();
+        List<ProgramCard> cards = programSheet.getCardList();
+        for(int i = 0; i < cards.size(); i++){
+            if (cards.get(i) == null) {return i;}
+        }
+        return -1;
     }
 
     public ImageCardWrapper[] getSelectionPile() {
         return selectionPile;
+    }
+
+    private void updatePositions(){
+        List<ProgramCard> cards = programSheet.getCardList();
+        for(int i = 0; i < cards.size(); i++){
+            ProgramCard card = cards.get(i);
+            if (card == null) { break; }
+
+            for (ImageCardWrapper wrapper : selectionPile){
+                if (wrapper.isCard(card)){
+                    wrapper.getImage().setPosition(newX(registerPosX[i]+768), newY(registerPosY));
+                }
+            }
+        }
+    }
+
+    private boolean selectionReady(){
+        return programSheet.isFull();
+    }
+
+    public ProgramSheet lockSelection(){
+        if (!selectionReady()) return null;
+
+        List<ProgramCard> discardCards = new ArrayList<>();
+        for(ImageCardWrapper card : selectionPile){
+            if (!programSheet.getProgram().contains(card.getCard())){
+                discardCards.add(card.getCard());
+            }
+        }
+        MainGame.deck.discardCards(discardCards);
+        return programSheet;
     }
 }

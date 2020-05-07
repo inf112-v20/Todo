@@ -7,11 +7,16 @@ public class ImageCardWrapper {
 
     private final Image image;
     private final ProgramCard card;
+    private float x;
+    private float y;
 
 
     public ImageCardWrapper(Image image, ProgramCard card){
         this.image = image;
         this.card = card;
+        this.x = image.getX();
+        this.y = image.getY();
+
     }
 
     protected ProgramCard getCard(){
@@ -23,11 +28,21 @@ public class ImageCardWrapper {
     }
 
     protected void setPosition(float x, float y){
+        this.x = x;
+        this.y = y;
         image.setPosition(x,y);
     }
 
     protected void dispose(){
         image.remove();
+    }
+
+    protected void returnToPosition(){
+        setPosition(x, y);
+    }
+
+    public boolean isCard(ProgramCard card){
+        return getCard() == card;
     }
 
 }

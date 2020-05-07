@@ -15,6 +15,7 @@ import inf112.core.cards.ProgramCard;
 import inf112.core.input.InputBlocker;
 import inf112.core.input.OrthographicCameraController;
 import inf112.core.game.MainGame;
+import inf112.core.player.Player;
 import inf112.core.player.PlayerHandler;
 import inf112.core.screens.userinterface.StatusScreen;
 import inf112.core.screens.userinterface.UserInterface;
@@ -89,10 +90,12 @@ public class GameScreen implements Screen {
 
     public static void createLockSelectionButton(){
 
+        Player player = game.getActivePlayer();
+
         float width = ((float) 10 / 1280) * Gdx.graphics.getWidth();
         float height = ((float) 550 / 720) * Gdx.graphics.getHeight();
 
-        ui.showSelectionCards(game.getActivePlayer().getProgramSheet().getHand());
+        ui.showSelectionCards();
 
         TextButton button = ButtonFactory.createCustomButton("Confirm", 2);
         button.setPosition(width, height);
@@ -100,20 +103,13 @@ public class GameScreen implements Screen {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                List<ProgramCard> selected = ui.getSelectionButtons().lockSelection();
-                if (selected != null){
-                    for(ProgramCard card : selected){
-                        game.getActivePlayer().addToProgramSheet(card);
-                        //System.out.println(card.getName());
-                    }
-                    if(game.getActivePlayer().getProgramSheet().isFull()) { game.getActivePlayer().programReady = true; }
-                    else { throw new IllegalStateException(); }
 
-
+                if (ui.getSelectionCards().lockSelection() != null) {
+                    player.programReady = true;
+                    System.out.println("Selection registered");
                     ui.drawPlayerCondition(game.getActivePlayer());
                     game.getRoundHandler().instantiateNextRound();
                     button.remove();
-
                 }
             }
         });
