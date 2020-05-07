@@ -37,7 +37,7 @@ public class MainGame {
     private Texture playerSpriteSheet;
     private TextureRegion[][] playerSpriteSheetGrid;
     private RoundHandler roundHandler;
-    private Deck deck;
+    static Deck deck;
     private static Player winner;
 
     public MainGame(MapNames mapNames) {
