@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
+import inf112.core.audio.SoundStore;
 import inf112.core.board.GameBoard;
 import inf112.core.cards.register.ProgramSheet;
 import inf112.core.cards.Deck;
@@ -93,6 +94,7 @@ public class MovementHandler extends InputAdapter {
         laserHandler.dealDamageToAffectedPlayers();
         handlePossibleDeaths(laserHandler.getHitPlayers());
         laserHandler.resetHitPlayers();
+        MainGame.soundHandler.playSound(SoundStore.LASER_FIRE_1);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
@@ -183,7 +185,7 @@ public class MovementHandler extends InputAdapter {
             return;
 
         Player last = affectedPlayers.get(0);
-        if(collisionHandler.canGo(last.getPositionCopy(), direction))
+        if(collisionHandler.canGo(last.getPositionCopy(), direction)) {
             for (Player affectedPlayer : affectedPlayers) {
                 moveUnchecked(affectedPlayer, direction);
                 affectedPlayer.setPrevDir(direction);
@@ -191,6 +193,8 @@ public class MovementHandler extends InputAdapter {
                 handleVoidVisitation(affectedPlayer);               // players on a hole is moved to spawn
                 handleFlagVisitation(affectedPlayer);
             }
+            MainGame.soundHandler.playSound(SoundStore.ROBOT_MOVE);
+        }
         handlePossibleDeaths(affectedPlayers);
     }
 
@@ -253,6 +257,7 @@ public class MovementHandler extends InputAdapter {
     private void handleVoidVisitation(Player recentlyMovedPlayer){
         if (voidHandler.isOnVoid(recentlyMovedPlayer)){
             recentlyMovedPlayer.destroy();
+            MainGame.soundHandler.playSound(SoundStore.ROBOT_FALL);
         }
     }
 
@@ -346,6 +351,7 @@ public class MovementHandler extends InputAdapter {
                 Rotation rotation = gear.getRotation();
                 if (rotation == Rotation.LEFT) player.rotateLeft();
                 else player.rotateRight();
+                MainGame.soundHandler.playSound(SoundStore.ROBOT_ROTATE);
             }
         }
     }

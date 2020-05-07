@@ -6,6 +6,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import inf112.core.audio.SoundHandler;
+import inf112.core.audio.SoundStore;
 import inf112.core.board.GameBoard;
 import inf112.core.board.MapLayer;
 import inf112.core.board.MapNames;
@@ -27,6 +29,7 @@ public class MainGame {
     public static int playerLimit = 0;
     public static MovementHandler movementHandler;
     public static PlayerHandler playerHandler;
+    public static SoundHandler soundHandler;
 
     private GameScreen gameScreen;
     private GameBoard board;
@@ -46,6 +49,9 @@ public class MainGame {
         this.movementHandler = new MovementHandler(this);
         this.deck = new Deck(CardFactory.createDefaultDeck());
 
+        this.soundHandler = new SoundHandler();
+        soundHandler.setBackgroundMusic(SoundStore.COFFIN_DANCE_MUSIC);
+        soundHandler.playBackgroundMusic();
         this.defaultInputAdapter = new InputController(this);
         playerSpriteSheet = new Texture("img/Player_Spritesheet.png");
         playerSpriteSheetGrid = TextureRegion.split(
