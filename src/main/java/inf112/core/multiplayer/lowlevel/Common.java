@@ -26,6 +26,7 @@ public class Common {
         kryo.register(Packet06ProgramSheetData.class);
         kryo.register(Packet07ProgramSheetsDataBroadcast.class);
         kryo.register(Packet99PlayerDisconnected.class);
+        kryo.register(java.util.ArrayList.class);
     }
 
 }

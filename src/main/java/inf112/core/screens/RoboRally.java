@@ -2,6 +2,10 @@ package inf112.core.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import inf112.core.screens.multiplayerscreens.MultiplayerHostStandby;
+import inf112.core.screens.multiplayerscreens.MultiplayerScreen;
+import inf112.core.screens.multiplayerscreens.MultiplayerScreenJoin;
+import inf112.core.screens.multiplayerscreens.MultiplayerScreenPlayerName;
 import inf112.core.screens.multiplayerscreens.*;
 import inf112.core.util.AssMan;
 
@@ -43,7 +47,7 @@ public class RoboRally extends Game implements IGameStateSwitcher {
 
     @Override
     public void initMultiplayerPlayername() {
-        setScreen(new MultiplayerScreenPlayername(this));
+        setScreen(new MultiplayerScreenPlayerName(this));
     }
     @Override
     public void initSelectScreen() {

@@ -1,6 +1,5 @@
 package inf112.core.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -39,6 +38,8 @@ public class MainGame {
     private RoundHandler roundHandler;
     private Deck deck;
     private static Player winner;
+
+    public static boolean isMultiplayer = false;
 
     public MainGame(MapNames mapNames) {
         this.playerHandler = new PlayerHandler(this);

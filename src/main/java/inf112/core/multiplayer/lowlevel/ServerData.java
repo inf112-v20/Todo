@@ -8,6 +8,8 @@ import java.util.*;
 
 public abstract class ServerData {
 
+    static final int MAX_PLAYER_COUNT = 8;
+
     // a server should set this field
     static String IP;
 

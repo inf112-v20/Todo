@@ -50,7 +50,6 @@ public class ServerRunnable implements Runnable {
 
             // at this point, we should first verify the connection
             if (!ServerData.connectionToPlayerNameMap.containsKey(connection)) {
-                Log.debug("[server] Unregistered connection. Server will ignore.");
                 return;
             }
 
@@ -72,6 +71,9 @@ public class ServerRunnable implements Runnable {
         }
 
         private void respondToGameRequest(Connection c, String nameProposed) {
+            if (ServerData.connectionsCount >= ServerData.MAX_PLAYER_COUNT)
+                c.close();    // party is full
+
             Packet01JoinGameResponse responsePacket = new Packet01JoinGameResponse();
             responsePacket.hitServer = true;
 
@@ -81,10 +83,12 @@ public class ServerRunnable implements Runnable {
                 Log.info("[server] Rejected client: " + nameProposed);
             }
             else {                                                                        // request accepted
-                responsePacket.nameValidated = true;
-
                 // register client in our system
                 ServerData.registerConnection(c, nameProposed);
+
+                // update packet
+                responsePacket.nameValidated = true;
+                responsePacket.joinedPlayers = ServerData.playerNames;
 
                 // inform all other clients of the new player
                 Packet02NewPlayerBroadcast newPlayerPacket = new Packet02NewPlayerBroadcast();
@@ -170,6 +174,10 @@ public class ServerRunnable implements Runnable {
             Log.info("[server] Failed to detect your host address.");
             System.exit(1);
         }
+    }
+
+    public void close() {
+        server.close();
     }
 
 
