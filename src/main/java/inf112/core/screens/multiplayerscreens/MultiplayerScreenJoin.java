@@ -68,9 +68,6 @@ public class MultiplayerScreenJoin implements Screen {
         });
         stage.addActor(connect);
 
-
-
-
         TextButton back = ButtonFactory.createCustomButton("Back", 4);
         back.setPosition(width/2 - back.getWidth()/2, height*0.2f);
         back.addListener(new ClickListener() {

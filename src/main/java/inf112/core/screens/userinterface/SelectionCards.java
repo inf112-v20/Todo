@@ -47,7 +47,6 @@ public class SelectionCards {
             selectionPile[i].setPosition(newX(posX[i]), newY(posY[i]));
             unselectedlistener(selectionPile[i]);
         }
-
     }
 
     private Image createButton(ProgramCard card){
