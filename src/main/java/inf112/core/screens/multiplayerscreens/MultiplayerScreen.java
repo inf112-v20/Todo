@@ -49,7 +49,7 @@ public class MultiplayerScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 dispose();
-                gameStateSwitcher.initMainGame();
+                gameStateSwitcher.initMultiplayerJoin();
             }
         });
         stage.addActor(join);
