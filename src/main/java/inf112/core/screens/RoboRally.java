@@ -2,10 +2,7 @@ package inf112.core.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import inf112.core.screens.multiplayerscreens.MultiplayerHostStandby;
-import inf112.core.screens.multiplayerscreens.MultiplayerScreen;
-import inf112.core.screens.multiplayerscreens.MultiplayerScreenJoin;
-import inf112.core.screens.multiplayerscreens.MultiplayerScreenPlayername;
+import inf112.core.screens.multiplayerscreens.*;
 import inf112.core.util.AssMan;
 
 public class RoboRally extends Game implements IGameStateSwitcher {
@@ -32,7 +29,6 @@ public class RoboRally extends Game implements IGameStateSwitcher {
     @Override
     public void initMultiplayerJoin() {
         setScreen(new MultiplayerScreenJoin(this));
-
     }
 
     @Override
@@ -41,8 +37,17 @@ public class RoboRally extends Game implements IGameStateSwitcher {
     }
 
     @Override
+    public void initMultiplayerStandby() {
+        setScreen(new MultiplayerJoinStandby(this));
+    }
+
+    @Override
     public void initMultiplayerPlayername() {
         setScreen(new MultiplayerScreenPlayername(this));
+    }
+    @Override
+    public void initSelectScreen() {
+        setScreen(new SelectmapScreen(this));
     }
 
     @Override
