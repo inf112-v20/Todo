@@ -143,7 +143,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float v) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(251/255f, 251/255f, 251/255f, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         if(game.getBoard().playerCamera)
