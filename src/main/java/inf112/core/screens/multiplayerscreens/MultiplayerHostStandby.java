@@ -59,7 +59,8 @@ public class MultiplayerHostStandby implements Screen {
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gameStateSwitcher.initMultiplayerPlayername();
+                dispose();
+                gameStateSwitcher.initMultiplayerSettings();
             }
         });
         stage.addActor(back);
@@ -69,6 +70,7 @@ public class MultiplayerHostStandby implements Screen {
         start.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                dispose();
                 gameStateSwitcher.initMainGame();
             }
         });
@@ -119,6 +121,6 @@ public class MultiplayerHostStandby implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }

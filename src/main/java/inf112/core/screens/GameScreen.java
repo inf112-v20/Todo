@@ -47,11 +47,6 @@ public class GameScreen implements Screen {
         this.game = new MainGame();
         this.stage = new Stage();
 
-        this.ui = new UserInterface(this, game);
-        stage.addActor(ui.getTable());
-
-        this.statusScreen = new StatusScreen(this, game);
-        stage.addActor(statusScreen.getTable());
 
         game.getBoard().instantiateMapRenderer();
         mapRenderer = game.getBoard().getTiledMapRenderer();
@@ -60,7 +55,6 @@ public class GameScreen implements Screen {
         game.createDeck();
         game.getPlayerHandler().setupPlayers(1);
         game.setActivePlayerById(1);
-        game.getPlayerHandler().giveAllPlayersCards();
         game.setGameScreen(this);
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
@@ -72,7 +66,14 @@ public class GameScreen implements Screen {
         inputMultiplexer.addProcessor(0, cameraController);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
+        this.statusScreen = new StatusScreen(this, game);
+        stage.addActor(statusScreen.getTable());
+
+        this.ui = new UserInterface(this, game);
+        stage.addActor(ui.getTable());
+
         // Creates button which starts the rounds once cards have been selected
+        game.getPlayerHandler().giveAllPlayersCards(); // Deals cards
         createLockSelectionButton();
     }
 
@@ -90,8 +91,6 @@ public class GameScreen implements Screen {
 
         float width = ((float) 1100 / 1280) * Gdx.graphics.getWidth();
         float height = ((float) 550 / 720) * Gdx.graphics.getHeight();
-
-
 
         ui.showSelectionCards(game.getActivePlayer().getProgramSheet().getHand());
 

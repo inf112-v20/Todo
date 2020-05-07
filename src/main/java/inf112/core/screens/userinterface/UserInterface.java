@@ -26,7 +26,6 @@ import java.util.List;
 public class UserInterface extends Actor{
 
     private Image overlay;
-    private Image uibackground;
     private TextButton hideButton;
     private GameScreen screen;
     private MainGame game;
@@ -39,24 +38,21 @@ public class UserInterface extends Actor{
         this.stage = screen.getStage();
         this.table = new Table();
 
-        uibackground = new Image(AssMan.manager.get(AssMan.UIBACKGROUND));
-        uibackground.setPosition(getXPos(768),0);
-        stage.addActor(uibackground);
 
         overlay = new Image(AssMan.manager.get(AssMan.OVERLAY));
         overlay.setPosition(getXPos(768),0);
         stage.addActor(overlay);
 
+
         stage.addActor(table);
 
-        hideButton = ButtonFactory.createCustomButton("Hide UI", 3);
-        hideButton.setPosition(getXPos(1100), (getYPos(650)));
+        hideButton = ButtonFactory.createCustomButton("Hide UI", 2);
+        hideButton.setPosition(getXPos(10), (getYPos(650)));
         hideButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 selectionButtons.hideButtons();
                 overlay.setVisible(!overlay.isVisible());
-                uibackground.setVisible(!uibackground.isVisible());
                 table.setVisible(!table.isVisible());
             }
         });
@@ -69,11 +65,6 @@ public class UserInterface extends Actor{
 
     public ProgramcardSelectionInteractive getSelectionButtons() {
         return selectionButtons;
-    }
-
-    public void initializeSelectionPhase(List<ProgramCard> cards) {
-        game.getDeck().discardCards(selectionButtons.releaseCards());
-        showSelectionCards(cards);
     }
 
 
