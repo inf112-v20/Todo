@@ -3,8 +3,10 @@ package inf112.core.laser;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
+import inf112.core.audio.SoundStore;
 import inf112.core.board.GameBoard;
 import inf112.core.board.MapLayer;
+import inf112.core.game.MainGame;
 import inf112.core.player.Player;
 import inf112.core.tile.TileId;
 import inf112.core.util.LayerOperation;
@@ -56,6 +58,7 @@ public class LaserHandler {
         for (Player player: laserPositions.getHitPlayersMap().keySet()) {
             player.addDamageTokens(laserPositions.getHitPlayersMap().get(player));
             System.out.println(player.getName() + " has damage tokens equal to: " + player.getDamageTokens());
+            MainGame.soundHandler.playSound(SoundStore.ROBOT_HIT_3);
         }
     }
 
