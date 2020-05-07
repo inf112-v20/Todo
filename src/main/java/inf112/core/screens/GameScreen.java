@@ -52,6 +52,7 @@ public class GameScreen implements Screen {
         mapRenderer = game.getBoard().getTiledMapRenderer();
         camera = game.getBoard().instantiateCamera();
 
+        game.createDeck();
         game.getPlayerHandler().setupPlayers(1);
         game.setActivePlayerById(1);
         game.setGameScreen(this);

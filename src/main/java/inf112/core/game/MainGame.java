@@ -47,7 +47,6 @@ public class MainGame {
         playerLimit = 5;
         this.roundHandler = new RoundHandler(this);
         this.movementHandler = new MovementHandler(this);
-        this.deck = new Deck(CardFactory.createDefaultDeck());
 
         this.soundHandler = new SoundHandler();
         soundHandler.setBackgroundMusic(SoundStore.COFFIN_DANCE_MUSIC);
@@ -60,6 +59,10 @@ public class MainGame {
                 board.getTileHeightInPixels()
         );
 
+    }
+
+    public void createDeck() {
+        this.deck = new Deck(CardFactory.createDefaultDeck());
     }
 
     public MainGame() {

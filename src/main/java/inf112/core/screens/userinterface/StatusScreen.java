@@ -61,7 +61,7 @@ public class StatusScreen extends Actor {
 
             Label playerName = new Label(player.getName(), new Label.LabelStyle(font, Color.BLACK));
             playerName.setText(player.getName());
-            playerName.setPosition(lifetokenPosX, lifetokenPosY-75+y);
+            playerName.setPosition(lifetokenPosX, lifetokenPosY+y);
             playerName.setSize(50, 100);
             playerName.setFontScale(0.80f);
             table.addActor(playerName);

@@ -43,7 +43,7 @@ public class CardMovementTest {
     public void forward1CardMovesPlayerForward1() {
 
         testPlayer.addToProgramSheet(new MovementCard(1,1,true,"",null));
-        movementHandler.cardMovement(testPlayer,0);
+        movementHandler.cardMovement(testPlayer,1);
 
         assertEquals(oldPlayerX, movementHandler.getActivePlayer().getX());
         assertEquals(oldPlayerY+1, movementHandler.getActivePlayer().getY());
@@ -53,7 +53,7 @@ public class CardMovementTest {
     public void forward2CardMovesPlayerForward2() {
 
         testPlayer.addToProgramSheet(new MovementCard(1,2,true,"",null));
-        movementHandler.cardMovement(testPlayer,0);
+        movementHandler.cardMovement(testPlayer,1);
 
         assertEquals(oldPlayerX, movementHandler.getActivePlayer().getX());
         assertEquals(oldPlayerY+2, movementHandler.getActivePlayer().getY());
@@ -63,7 +63,7 @@ public class CardMovementTest {
     public void forward3CardMovesPlayerForward3() {
 
         testPlayer.addToProgramSheet(new MovementCard(1,3,true,"",null));
-        movementHandler.cardMovement(testPlayer,0);
+        movementHandler.cardMovement(testPlayer,1);
 
         assertEquals(oldPlayerX, movementHandler.getActivePlayer().getX());
         assertEquals(oldPlayerY+3, movementHandler.getActivePlayer().getY());
@@ -73,7 +73,7 @@ public class CardMovementTest {
     public void backwardsCardMovesPlayerBackward() {
         testPlayer.rotateTo(Direction.SOUTH); // Must be facing south as the player cannot move out of the board
         testPlayer.addToProgramSheet(new MovementCard(1,1,false,"",null));
-        movementHandler.cardMovement(testPlayer,0);
+        movementHandler.cardMovement(testPlayer,1);
 
         assertEquals(oldPlayerX, movementHandler.getActivePlayer().getX());
         assertEquals(oldPlayerY+1, movementHandler.getActivePlayer().getY());
@@ -82,7 +82,7 @@ public class CardMovementTest {
     @Test
     public void rotateLeftCardRotatesLeft(){
         testPlayer.addToProgramSheet(new RotationCard(0, Rotation.LEFT,1,"",null));
-        movementHandler.cardMovement(testPlayer,0);
+        movementHandler.cardMovement(testPlayer,1);
 
         assertEquals(oldPlayerDir.rotateLeft(), movementHandler.getActivePlayer().getDirection());
     }
@@ -90,7 +90,7 @@ public class CardMovementTest {
     @Test
     public void rotateRightCardRotatesRight(){
         testPlayer.addToProgramSheet(new RotationCard(0,Rotation.RIGHT,1,"",null));
-        movementHandler.cardMovement(testPlayer,0);
+        movementHandler.cardMovement(testPlayer,1);
 
         assertEquals(oldPlayerDir.rotateRight(), movementHandler.getActivePlayer().getDirection());
     }
