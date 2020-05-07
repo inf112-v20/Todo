@@ -14,6 +14,9 @@ import inf112.core.screens.GameScreen;
 import inf112.core.util.AssMan;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StatusScreen extends Actor {
 
@@ -22,6 +25,7 @@ public class StatusScreen extends Actor {
     private GameScreen screen;
     private Table table;
     private Stage stage;
+    private List<Player> allPlayers;
     private final int lifetokenPosX = 0;
     private final int lifetokenPosY = 100;
     private final int damageTokenPosX = 0;
@@ -49,7 +53,7 @@ public class StatusScreen extends Actor {
     }
 
     private void drawTokens(){
-        Iterable<Player> players = game.getPlayers();
+        Iterable<Player> players = Stream.concat(game.getPlayers().stream(), game.getDisabledPlayers().stream()).collect(Collectors.toList());
 
         int y = 0;
         for (Player player : players){
