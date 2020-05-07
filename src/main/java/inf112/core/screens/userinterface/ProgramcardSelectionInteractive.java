@@ -19,8 +19,8 @@ public class ProgramcardSelectionInteractive {
     private final int MAX_SELECTION_SIZE = 9;
     private final float SELECTION_CARD_SIZE = 2;
 
-    private int[] posX = {800,900,1000,1100,1200,800,900,1000,1100};
-    private int[] posY = {300,300,300,300,300,400,400,400,400};
+    private int[] posX = {140,210,280,350,420,490,560,630,700};
+    private int[] posY = {10,10,10,10,10,10,10,10,10};
 
     private ProgramCardButtonWrapper[] selectionPile;
     private ProgramCardButtonWrapper[] registerPile;
@@ -188,6 +188,4 @@ public class ProgramcardSelectionInteractive {
     private float getYPos(float y){
         return ((float) y / 720) * Gdx.graphics.getHeight();
     }
-
-
 }

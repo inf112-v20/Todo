@@ -75,6 +75,7 @@ public class MultiplayerScreenPlayername implements Screen {
                     return;
                 }
                 name = text.getText();
+                dispose();
                 gameStateSwitcher.initMultiplayerSettings();
             }
         });
@@ -86,6 +87,7 @@ public class MultiplayerScreenPlayername implements Screen {
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                dispose();
                 gameStateSwitcher.initMainMenu();
             }
         });
@@ -124,6 +126,6 @@ public class MultiplayerScreenPlayername implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }

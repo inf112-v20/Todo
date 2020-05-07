@@ -14,7 +14,6 @@ public class MultiplayerScreenJoin implements Screen {
 
     private Stage stage;
     private IGameStateSwitcher gameStateSwitcher;
-    private String PlayerName;
 
     public MultiplayerScreenJoin(IGameStateSwitcher gameStateSwitcher){
         this.gameStateSwitcher = gameStateSwitcher;
@@ -33,6 +32,7 @@ public class MultiplayerScreenJoin implements Screen {
         join.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                dispose();
                 gameStateSwitcher.initMainGame();
             }
         });
@@ -44,6 +44,7 @@ public class MultiplayerScreenJoin implements Screen {
         host.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                dispose();
                 gameStateSwitcher.initMainGame();
             }
         });
@@ -57,6 +58,7 @@ public class MultiplayerScreenJoin implements Screen {
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                dispose();
                 gameStateSwitcher.initMainGame();
             }
         });
@@ -95,6 +97,6 @@ public class MultiplayerScreenJoin implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }

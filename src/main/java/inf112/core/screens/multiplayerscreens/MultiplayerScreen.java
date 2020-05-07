@@ -48,6 +48,7 @@ public class MultiplayerScreen implements Screen {
         join.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                dispose();
                 gameStateSwitcher.initMainGame();
             }
         });
@@ -59,6 +60,7 @@ public class MultiplayerScreen implements Screen {
         host.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                dispose();
                 gameStateSwitcher.initMultiplayerHost();
             }
         });
@@ -72,6 +74,7 @@ public class MultiplayerScreen implements Screen {
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                dispose();
                 gameStateSwitcher.initMultiplayerPlayername();
             }
         });
@@ -110,6 +113,6 @@ public class MultiplayerScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }
