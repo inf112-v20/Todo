@@ -89,12 +89,12 @@ public class GameScreen implements Screen {
 
     public static void createLockSelectionButton(){
 
-        float width = ((float) 1100 / 1280) * Gdx.graphics.getWidth();
+        float width = ((float) 10 / 1280) * Gdx.graphics.getWidth();
         float height = ((float) 550 / 720) * Gdx.graphics.getHeight();
 
         ui.showSelectionCards(game.getActivePlayer().getProgramSheet().getHand());
 
-        TextButton button = ButtonFactory.createCustomButton("Confirm", 3);
+        TextButton button = ButtonFactory.createCustomButton("Confirm", 2);
         button.setPosition(width, height);
         stage.addActor(button);
         button.addListener(new ClickListener() {
