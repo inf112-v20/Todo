@@ -10,6 +10,7 @@ import inf112.core.multiplayer.lowlevel.ServerRunnable;
  */
 public class HostNetworkInterface {
 
+    private static boolean started;
     private static ServerRunnable server;
     private static Thread threadServer;
 
@@ -23,11 +24,14 @@ public class HostNetworkInterface {
 
         threadServer.setName("Server");
         threadServer.start();
+        started = true;
     }
 
     public static void stop() {
-        server.close();
-        threadServer.interrupt();
-        System.out.println("HostNetworkInterface stopped.");
+        if (started) {
+            server.close();
+            threadServer.interrupt();
+            System.out.println("HostNetworkInterface stopped.");
+        }
     }
 }

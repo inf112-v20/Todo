@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import inf112.core.multiplayer.ClientNetworkInterface;
 import inf112.core.screens.IGameStateSwitcher;
 import inf112.core.util.AssMan;
 import inf112.core.util.ButtonFactory;
@@ -62,8 +63,26 @@ public class MultiplayerScreenJoin implements Screen {
         connect.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                // attempting to connect to server with the ip address typed by the human player
+                ClientNetworkInterface.setServerIP(text.getText());
+                ClientNetworkInterface.startClientThread();
+
+                int i = 0;
+                while (i < 25 && (!ClientNetworkInterface.isReady())) {
+                    i++;
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 dispose();
-                gameStateSwitcher.initMultiplayerStandby();
+                if (ClientNetworkInterface.isConnected()) {            // connected to server
+                    gameStateSwitcher.initMultiplayerClientStandby();
+                }
+                else                                                   // couldn't connect, takes him back
+                    gameStateSwitcher.initMultiplayerSettings();
             }
         });
         stage.addActor(connect);

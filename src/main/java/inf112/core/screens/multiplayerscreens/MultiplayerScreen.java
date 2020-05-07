@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.core.multiplayer.ClientNetworkInterface;
 import inf112.core.multiplayer.HostNetworkInterface;
-import inf112.core.multiplayer.notused.Multiplayer;
 import inf112.core.screens.IGameStateSwitcher;
 import inf112.core.util.AssMan;
 import inf112.core.util.ButtonFactory;
@@ -78,7 +77,7 @@ public class MultiplayerScreen implements Screen {
                 // there should be no problem connecting to local server since no name is taken
                 // so we immediately go to next screen
                 dispose();
-                gameStateSwitcher.initMultiplayerHost();
+                gameStateSwitcher.initMultiplayerHostStandby();
             }
         });
         stage.addActor(host);
