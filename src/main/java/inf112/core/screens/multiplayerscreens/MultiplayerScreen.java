@@ -9,6 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import inf112.core.multiplayer.ClientNetworkInterface;
+import inf112.core.multiplayer.HostNetworkInterface;
+import inf112.core.multiplayer.notused.Multiplayer;
 import inf112.core.screens.IGameStateSwitcher;
 import inf112.core.util.AssMan;
 import inf112.core.util.ButtonFactory;
@@ -20,7 +23,7 @@ public class MultiplayerScreen implements Screen {
 
     public MultiplayerScreen(IGameStateSwitcher gameStateSwitcher){
         this.gameStateSwitcher = gameStateSwitcher;
-        System.out.println(MultiplayerScreenPlayername.name);
+        System.out.println(MultiplayerScreenPlayerName.nameTyped);
     }
 
 
@@ -37,10 +40,9 @@ public class MultiplayerScreen implements Screen {
         style.font = font;
         font.getData().setScale(2);
         style.fontColor = com.badlogic.gdx.graphics.Color.BLUE;
-        Label label = new Label("Hello " + MultiplayerScreenPlayername.name + "!", style);
+        Label label = new Label("Hello " + MultiplayerScreenPlayerName.nameTyped + "!", style);
         label.setPosition(width/2 - label.getWidth()/2, height*0.8f);
         stage.addActor(label);
-
 
 
         TextButton join = ButtonFactory.createCustomButton("Join Game", 8);
@@ -48,7 +50,7 @@ public class MultiplayerScreen implements Screen {
         join.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gameStateSwitcher.initMainGame();
+                // TODO new screen: type in server IP
             }
         });
         stage.addActor(join);
@@ -59,12 +61,26 @@ public class MultiplayerScreen implements Screen {
         host.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
+                // start both network threads
+                HostNetworkInterface.startServerThread();
+                ClientNetworkInterface.startClientThread();
+
+                while (!ClientNetworkInterface.isReady()) {    // need to wait until we have a connection
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                ClientNetworkInterface.attemptToJoinServer(MultiplayerScreenPlayerName.nameTyped);
+
+                // there should be no problem connecting to local server since no name is taken
+                // so we immediately go to next screen
                 gameStateSwitcher.initMultiplayerHost();
             }
         });
         stage.addActor(host);
-
-
 
 
         TextButton back = ButtonFactory.createCustomButton("Back", 4);

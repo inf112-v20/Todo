@@ -2,34 +2,26 @@ package inf112.core.screens.multiplayerscreens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import inf112.core.screens.IGameStateSwitcher;
 import inf112.core.util.AssMan;
 import inf112.core.util.ButtonFactory;
 
-import static com.badlogic.gdx.graphics.g3d.particles.ParticleChannels.Color;
+public class MultiplayerScreenPlayerName implements Screen {
 
-public class MultiplayerScreenPlayername implements Screen {
-
-    static String name;
+    static String nameTyped;
     private Stage stage;
     private IGameStateSwitcher gameStateSwitcher;
     private boolean clicked;
 
-    public MultiplayerScreenPlayername(IGameStateSwitcher gameStateSwitcher){
+    public MultiplayerScreenPlayerName(IGameStateSwitcher gameStateSwitcher){
         this.gameStateSwitcher = gameStateSwitcher;
     }
 
@@ -48,8 +40,8 @@ public class MultiplayerScreenPlayername implements Screen {
         style.fontColor = com.badlogic.gdx.graphics.Color.BLUE;
 
         TextField text = new TextField("", style);
-        text.setText(name == null ? "Enter name here" : name);
-        clicked = name != null;
+        text.setText(nameTyped == null ? "Enter name here" : nameTyped);
+        clicked = nameTyped != null;
         text.setSize(1000,200);
         text.setMaxLength(20);
         text.setPosition(width/2 - text.getWidth()/2, height*0.6f);
@@ -74,7 +66,7 @@ public class MultiplayerScreenPlayername implements Screen {
                 if (!clicked || (text.getText().length() < 3)) {
                     return;
                 }
-                name = text.getText();
+                nameTyped = text.getText();
                 gameStateSwitcher.initMultiplayerSettings();
             }
         });

@@ -1,6 +1,5 @@
 package inf112.core.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -12,7 +11,6 @@ import inf112.core.board.MapNames;
 import inf112.core.game.round.RoundHandler;
 import inf112.core.input.InputController;
 import inf112.core.movement.MovementHandler;
-import inf112.core.multiplayer.Multiplayer;
 import inf112.core.player.Player;
 import inf112.core.cards.CardFactory;
 import inf112.core.cards.Deck;
@@ -37,7 +35,7 @@ public class MainGame {
     private Deck deck;
     private static Player winner;
 
-    public static Multiplayer multiplayer;
+    public static boolean isMultiplayer = false;
 
     public MainGame(MapNames mapNames) {
         this.playerHandler = new PlayerHandler(this);
