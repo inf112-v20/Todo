@@ -1,4 +1,4 @@
-package inf112.core.multiplayer;
+package inf112.core.multiplayer.lowlevel;
 
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -6,23 +6,23 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 import inf112.core.cards.register.ProgramSheet;
 import inf112.core.multiplayer.packets.*;
-import inf112.core.player.Player;
 
 import java.io.IOException;
 import java.util.List;
 
-public class ClientThread implements Runnable {
+public class ClientRunnable implements Runnable {
 
-    class ClientListener extends Listener {
+    private class ClientListener extends Listener {
         @Override
         public void connected(Connection connection) {
             Log.info("[client] Connection ip: " + connection.getRemoteAddressTCP().getAddress().getHostAddress());
+            ClientData.hasConnected = true;
 
-            Packet00JoinGameRequest requestPacket = new Packet00JoinGameRequest();
-            requestPacket.playerName = "Eskil";
-
-            connection.sendTCP(requestPacket);
-            Log.info("[client] Join game request sent.");
+//            Packet00JoinGameRequest requestPacket = new Packet00JoinGameRequest();
+//            requestPacket.playerName = "Eskil";
+//
+//            connection.sendTCP(requestPacket);
+//            Log.info("[client] Join game request sent.");
         }
 
         @Override
@@ -56,18 +56,23 @@ public class ClientThread implements Runnable {
                 }
 
             }
-            else if (o instanceof Packet02PlayersData) {
+            else if (o instanceof Packet03StartGameBroadcast) {
                 // server sent us all the players
-                Packet02PlayersData playersPacket = (Packet02PlayersData) o;
-                List<Player> players = playersPacket.players;
+                Packet03StartGameBroadcast playersPacket = (Packet03StartGameBroadcast) o;
+                List<String> playerNames = playersPacket.names;
+                int aiCount = playersPacket.aiCount;
+
+                // TODO create players and AIs!
 
                 System.out.println("Received these players:");
-                for (Player player : players)
+                for (String player : playerNames)
                     System.out.println(player);
+
+                // players and Ai
             }
-            else if (o instanceof Packet03ProgramSheetRequest) {
+            else if (o instanceof Packet05StartRoundBroadcast) {
                 // server basicly just started the card programming phase
-                Packet04ProgramSheetData responseData = new Packet04ProgramSheetData();
+                Packet06ProgramSheetData responseData = new Packet06ProgramSheetData();
                 responseData.programSheet = new ProgramSheet();
 
                 connection.sendTCP(responseData);
@@ -90,12 +95,20 @@ public class ClientThread implements Runnable {
         Log.set(Log.LEVEL_DEBUG);
 
         try {
-            client.connect(Common.TIMEOUT, Common.serverIP, Common.PORT_TCP);
+            client.connect(Common.TIMEOUT, ClientData.serverIP, Common.PORT_TCP);
         } catch (IOException e) {
             e.printStackTrace();
             Log.info("[client] Couldn't connect to server.");
-            System.exit(1);
         }
 
+    }
+
+    public void sendJoinGameRequest() {
+        if (!client.isConnected())
+            Log.debug("[client] You are not connected to any server.");
+
+        Packet00JoinGameRequest requestPacket = new Packet00JoinGameRequest();
+        requestPacket.playerName = ClientData.playerName;
+        client.sendTCP(requestPacket);
     }
 }

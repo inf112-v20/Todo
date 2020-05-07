@@ -9,18 +9,26 @@ import java.util.List;
 public class ProgramSheet implements IProgramSheet<ProgramCard> {
     public static final int NUM_OF_REGISTERS = 5;
 
+    public final String playerName;
+
     private List<ProgramCard> hand;
     private ProgramCard[] registers;
     private int addHere;               // points to the next available space in register array
     private int locked;                // points to first locked register (from left)
     private int current;               // points to current card being played
 
-    public ProgramSheet() {
+    public ProgramSheet(String playerName) {
         this.hand = new ArrayList<>();
         this.registers = new ProgramCard[NUM_OF_REGISTERS];
         this.addHere = 0;
         this.locked = NUM_OF_REGISTERS;
         this.current = 0;
+
+        this.playerName = playerName;
+    }
+
+    public ProgramSheet() {
+        this("No name");
     }
 
     @Override

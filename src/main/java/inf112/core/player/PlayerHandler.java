@@ -45,31 +45,42 @@ public class PlayerHandler {
      * Function that creates a new player
      * @return true if adding player is completed, false if not
      */
-    private boolean createPlayer() {
+    private boolean createPlayer(String name) {
         if (playerCount >= game.getPlayerSpriteSheetGrid().length)
             throw new IllegalStateException(
                     "Cannot create more players than the number of available textures"
             );
 
         TextureRegion graphic = game.getPlayerSpriteSheetGrid()[playerCount][0];
-        if(players.add(new Player(graphic))) {
+        if (players.add(new Player(name, graphic))) {
             humanPlayers++;
             return true;
         }
         return false;
-
     }
 
-    public boolean createPlayers(int quantity) {
-        if (quantity <= 0)
-            throw new IllegalArgumentException("Illegal quantity");
+    public boolean createPlayer() {
+        return createPlayer("Player" + (playerCount + 1));
+    }
+
+    public boolean createPlayers(List<String> playerNames) {
+        if (playerNames.isEmpty())
+            throw new IllegalArgumentException("List of player names cannot be empty.");
 
         boolean allAdded = true;
-        for (int i = 0; i < quantity; i++)
-            if (!createPlayer())
+        for (int i = 0; i < playerNames.size(); i++)
+            if (!createPlayer(playerNames.get(i)))
                 allAdded = false;
 
         return allAdded;
+    }
+
+    public boolean createPlayers(int quantity) {
+        List<String> playerNames = new ArrayList<>(quantity);
+        for (int i = 0; i < quantity; i++)
+            playerNames.add("Player " + (i + 1));
+
+        return createPlayers(playerNames);
     }
 
     /**
