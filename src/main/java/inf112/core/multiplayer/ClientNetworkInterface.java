@@ -48,6 +48,16 @@ public class ClientNetworkInterface {
         return client.isConnected();
     }
 
+    public static boolean hasJoinedServer() {
+        return ClientData.connectionConfirmedByServer;
+    }
+
+    /**
+     * Checks if the server IP field in ClientData has been set.
+     * A server thread sets this automatically, so the host doesn't have to type it in manually.
+     *
+     * @return
+     */
     public static boolean hasServerIP() {
         return ClientData.serverIP != null;
     }
@@ -69,9 +79,7 @@ public class ClientNetworkInterface {
         client.sendJoinGameRequest();
     }
 
-    public static boolean hasJoinedServer() {
-        return ClientData.connectionConfirmedByServer;
-    }
+
 
 
 

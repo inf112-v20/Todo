@@ -13,7 +13,7 @@ import inf112.core.screens.IGameStateSwitcher;
 import inf112.core.util.AssMan;
 import inf112.core.util.ButtonFactory;
 
-public class SelectmapScreen implements Screen {
+public class SelectMapScreen implements Screen {
 
     private float width;
     private float height;
@@ -26,7 +26,7 @@ public class SelectmapScreen implements Screen {
     private IGameStateSwitcher gameStateSwitcher;
     private Label[] names;
 
-    public SelectmapScreen(IGameStateSwitcher gameStateSwitcher){
+    public SelectMapScreen(IGameStateSwitcher gameStateSwitcher){
         this.gameStateSwitcher = gameStateSwitcher;
 
         width = Gdx.graphics.getWidth();

@@ -2,10 +2,10 @@ package inf112.core.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import inf112.core.screens.multiplayerscreens.MultiplayerHostStandby;
-import inf112.core.screens.multiplayerscreens.MultiplayerScreen;
-import inf112.core.screens.multiplayerscreens.MultiplayerScreenJoin;
-import inf112.core.screens.multiplayerscreens.MultiplayerScreenPlayerName;
+import inf112.core.screens.multiplayerscreens.MultiplayerHostStandbyScreen;
+import inf112.core.screens.multiplayerscreens.MultiplayerJoinOrHostScreen;
+import inf112.core.screens.multiplayerscreens.MultiplayerClientPromptIPScreen;
+import inf112.core.screens.multiplayerscreens.MultiplayerPromptNameScreen;
 import inf112.core.screens.multiplayerscreens.*;
 import inf112.core.util.AssMan;
 
@@ -26,32 +26,33 @@ public class RoboRally extends Game implements IGameStateSwitcher {
     }
 
     @Override
-    public void initMultiplayerSettings() {
-        setScreen(new MultiplayerScreen(this));
+    public void initMultiplayerJoinOrHost() {
+        setScreen(new MultiplayerJoinOrHostScreen(this));
     }
 
     @Override
-    public void initMultiplayerJoin() {
-        setScreen(new MultiplayerScreenJoin(this));
+    public void initMultiplayerClientPromptIP() {
+        setScreen(new MultiplayerClientPromptIPScreen(this));
     }
 
     @Override
     public void initMultiplayerClientStandby() {
-        setScreen(new MultiplayerJoinStandby(this));
+        setScreen(new MultiplayerClientStandbyScreen(this));
     }
 
     @Override
     public void initMultiplayerHostStandby() {
-        setScreen(new MultiplayerHostStandby(this));
+        setScreen(new MultiplayerHostStandbyScreen(this));
     }
 
     @Override
-    public void initMultiplayerPlayername() {
-        setScreen(new MultiplayerScreenPlayerName(this));
+    public void initMultiplayerPromptName() {
+        setScreen(new MultiplayerPromptNameScreen(this));
     }
+
     @Override
-    public void initSelectScreen() {
-        setScreen(new SelectmapScreen(this));
+    public void initSelectMap() {
+        setScreen(new SelectMapScreen(this));
     }
 
     @Override

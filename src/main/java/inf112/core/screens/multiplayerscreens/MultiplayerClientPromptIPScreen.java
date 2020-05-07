@@ -15,13 +15,13 @@ import inf112.core.screens.IGameStateSwitcher;
 import inf112.core.util.AssMan;
 import inf112.core.util.ButtonFactory;
 
-public class MultiplayerScreenJoin implements Screen {
+public class MultiplayerClientPromptIPScreen implements Screen {
 
     private boolean clicked = false;
     private Stage stage;
     private IGameStateSwitcher gameStateSwitcher;
 
-    public MultiplayerScreenJoin(IGameStateSwitcher gameStateSwitcher){
+    public MultiplayerClientPromptIPScreen(IGameStateSwitcher gameStateSwitcher){
         this.gameStateSwitcher = gameStateSwitcher;
     }
 
@@ -63,26 +63,7 @@ public class MultiplayerScreenJoin implements Screen {
         connect.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // attempting to connect to server with the ip address typed by the human player
-                ClientNetworkInterface.setServerIP(text.getText());
-                ClientNetworkInterface.startClientThread();
-
-                int i = 0;
-                while (i < 25 && (!ClientNetworkInterface.isReady())) {
-                    i++;
-                    try {
-                        Thread.sleep(20);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                dispose();
-                if (ClientNetworkInterface.isConnected()) {            // connected to server
-                    gameStateSwitcher.initMultiplayerClientStandby();
-                }
-                else                                                   // couldn't connect, takes him back
-                    gameStateSwitcher.initMultiplayerSettings();
+                joinGame(text.getText(), MultiplayerPromptNameScreen.nameTyped);
             }
         });
         stage.addActor(connect);
@@ -93,7 +74,7 @@ public class MultiplayerScreenJoin implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 dispose();
-                gameStateSwitcher.initMultiplayerSettings();
+                gameStateSwitcher.initMultiplayerJoinOrHost();
             }
         });
         stage.addActor(back);
@@ -132,5 +113,62 @@ public class MultiplayerScreenJoin implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    private void joinGame(String ip, String desiredName) {
+        // attempting to connect to server with the ip address typed by the human player
+        ClientNetworkInterface.setServerIP(ip);
+        ClientNetworkInterface.startClientThread();
+
+        // takes some time to establish a connection
+        int i = 0;
+        while (i < 25 && (!ClientNetworkInterface.isReady())) {
+            i++;
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // connection failed
+        if (!ClientNetworkInterface.isConnected()) {
+            ClientNetworkInterface.stop();                   // stops the remaining ongoing multiplayer threads
+            dispose();
+            gameStateSwitcher.initMultiplayerJoinOrHost();   // takes the player back one screen
+            return;
+        }
+
+        // connection succeeded, let's send join game request
+        ClientNetworkInterface.attemptToJoinServer(desiredName);
+
+        // takes som time to verify the typed name
+        i = 0;
+        while (i < 25 && (!ClientNetworkInterface.hasJoinedServer())) {
+            i++;
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        dispose();
+
+        // connection was dropped, party is full
+        if (!ClientNetworkInterface.isConnected()) {
+            ClientNetworkInterface.stop();                   // stops the remaining ongoing multiplayer threads
+            gameStateSwitcher.initMultiplayerJoinOrHost();   // takes the player back one screen
+            return;
+        }
+
+        // server rejected the desired name
+        if (!ClientNetworkInterface.hasJoinedServer()) {
+            ClientNetworkInterface.stop();
+            gameStateSwitcher.initMultiplayerPromptName();   // takes the player back one screen
+            return;
+        }
+
+        // WE JOINED THE SERVER
+        gameStateSwitcher.initMultiplayerClientStandby();
     }
 }

@@ -15,14 +15,14 @@ import inf112.core.screens.IGameStateSwitcher;
 import inf112.core.util.AssMan;
 import inf112.core.util.ButtonFactory;
 
-public class MultiplayerScreen implements Screen {
+public class MultiplayerJoinOrHostScreen implements Screen {
 
     private Stage stage;
     private IGameStateSwitcher gameStateSwitcher;
 
-    public MultiplayerScreen(IGameStateSwitcher gameStateSwitcher){
+    public MultiplayerJoinOrHostScreen(IGameStateSwitcher gameStateSwitcher){
         this.gameStateSwitcher = gameStateSwitcher;
-        System.out.println(MultiplayerScreenPlayerName.nameTyped);
+        System.out.println(MultiplayerPromptNameScreen.nameTyped);
     }
 
 
@@ -39,7 +39,7 @@ public class MultiplayerScreen implements Screen {
         style.font = font;
         font.getData().setScale(2);
         style.fontColor = com.badlogic.gdx.graphics.Color.BLUE;
-        Label label = new Label("Hello " + MultiplayerScreenPlayerName.nameTyped + "!", style);
+        Label label = new Label("Hello " + MultiplayerPromptNameScreen.nameTyped + "!", style);
         label.setPosition(width/2 - label.getWidth()/2, height*0.8f);
         stage.addActor(label);
 
@@ -50,7 +50,7 @@ public class MultiplayerScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 dispose();
-                gameStateSwitcher.initMultiplayerJoin();
+                gameStateSwitcher.initMultiplayerClientPromptIP();
             }
         });
         stage.addActor(join);
@@ -61,23 +61,7 @@ public class MultiplayerScreen implements Screen {
         host.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // start both network threads
-                HostNetworkInterface.startServerThread();
-                ClientNetworkInterface.startClientThread();
-
-                while (!ClientNetworkInterface.isReady()) {    // need to wait until we have a connection
-                    try {
-                        Thread.sleep(20);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                ClientNetworkInterface.attemptToJoinServer(MultiplayerScreenPlayerName.nameTyped);
-
-                // there should be no problem connecting to local server since no name is taken
-                // so we immediately go to next screen
-                dispose();
-                gameStateSwitcher.initMultiplayerHostStandby();
+                hostGame(MultiplayerPromptNameScreen.nameTyped);
             }
         });
         stage.addActor(host);
@@ -89,7 +73,7 @@ public class MultiplayerScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 dispose();
-                gameStateSwitcher.initMultiplayerPlayername();
+                gameStateSwitcher.initMultiplayerPromptName();
             }
         });
         stage.addActor(back);
@@ -129,4 +113,26 @@ public class MultiplayerScreen implements Screen {
     public void dispose() {
         stage.dispose();
     }
+
+
+    private void hostGame(String desiredName) {
+        // start both network threads
+        HostNetworkInterface.startServerThread();
+        ClientNetworkInterface.startClientThread();
+
+        while (!ClientNetworkInterface.isReady()) {    // need to wait until we have a connection
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        ClientNetworkInterface.attemptToJoinServer(desiredName);
+
+        // there should be no problem connecting to local server since no name is taken
+        // so we can safely go to next screen immediately
+        dispose();
+        gameStateSwitcher.initMultiplayerHostStandby();
+    }
+
 }

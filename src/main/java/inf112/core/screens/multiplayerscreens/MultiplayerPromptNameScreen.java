@@ -14,14 +14,14 @@ import inf112.core.screens.IGameStateSwitcher;
 import inf112.core.util.AssMan;
 import inf112.core.util.ButtonFactory;
 
-public class MultiplayerScreenPlayerName implements Screen {
+public class MultiplayerPromptNameScreen implements Screen {
 
     static String nameTyped;
     private Stage stage;
     private IGameStateSwitcher gameStateSwitcher;
     private boolean clicked;
 
-    public MultiplayerScreenPlayerName(IGameStateSwitcher gameStateSwitcher){
+    public MultiplayerPromptNameScreen(IGameStateSwitcher gameStateSwitcher){
         this.gameStateSwitcher = gameStateSwitcher;
     }
 
@@ -68,7 +68,7 @@ public class MultiplayerScreenPlayerName implements Screen {
                 }
                 nameTyped = text.getText();
                 dispose();
-                gameStateSwitcher.initMultiplayerSettings();
+                gameStateSwitcher.initMultiplayerJoinOrHost();
             }
         });
         stage.addActor(confirm);

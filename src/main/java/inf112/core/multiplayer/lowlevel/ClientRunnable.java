@@ -54,7 +54,7 @@ public class ClientRunnable implements Runnable {
                 else {
                     connection.close();
 
-                    Log.info("[client] Server denied your request! Perhaps you tried connection to a client?");
+                    Log.debug("[client] Did not hit server. Connection was closed.");
                 }
 
             }
@@ -63,6 +63,10 @@ public class ClientRunnable implements Runnable {
                     return;       // no new player should join after the game has started, so we should ignore
 
                 Packet02NewPlayerBroadcast newPlayerPacket = (Packet02NewPlayerBroadcast) o;
+
+                if (ClientData.playerName.equals(newPlayerPacket.playerName))
+                    Log.debug("[client] ERROR: Server informed me about a new player with my name");
+
                 ClientData.joinedPlayers.add(newPlayerPacket.playerName);
             }
             else if (o instanceof Packet03StartGameBroadcast) {
@@ -77,7 +81,6 @@ public class ClientRunnable implements Runnable {
                 for (String player : playerNames)
                     System.out.println(player);
 
-                // players and Ai
             }
             else if (o instanceof Packet05StartRoundBroadcast) {
                 // server basicly just started the card programming phase

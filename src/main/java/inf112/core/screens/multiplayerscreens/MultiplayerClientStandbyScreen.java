@@ -10,14 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.core.multiplayer.ClientNetworkInterface;
-import inf112.core.multiplayer.HostNetworkInterface;
 import inf112.core.screens.IGameStateSwitcher;
 import inf112.core.util.AssMan;
 import inf112.core.util.ButtonFactory;
 
 import java.util.List;
 
-public class MultiplayerHostStandby implements Screen {
+public class MultiplayerClientStandbyScreen implements Screen {
 
     private float width;
     private float height;
@@ -30,10 +29,8 @@ public class MultiplayerHostStandby implements Screen {
     private Stage stage;
     private IGameStateSwitcher gameStateSwitcher;
     private Label[] nameLabels;
-    private Label ipLabel;
-    private boolean fetchedServerIP;
 
-    public MultiplayerHostStandby(IGameStateSwitcher gameStateSwitcher){
+    public MultiplayerClientStandbyScreen(IGameStateSwitcher gameStateSwitcher){
         this.gameStateSwitcher = gameStateSwitcher;
 
         width = Gdx.graphics.getWidth();
@@ -46,7 +43,6 @@ public class MultiplayerHostStandby implements Screen {
         style.font = font;
         style.fontColor = com.badlogic.gdx.graphics.Color.BLUE;
 
-        this.fetchedServerIP = false;
         this.nameLabels = new Label[MAX_NAMES];
     }
 
@@ -55,11 +51,11 @@ public class MultiplayerHostStandby implements Screen {
     public void show() {
         this.stage = new Stage();
 
-        createPlayerNameLabels();
+        createLabels();
 
-        this.ipLabel = new Label("Your IP address: ", style);
-        ipLabel.setPosition(width/3 - ipLabel.getWidth()/2, height*0.9f);
-        stage.addActor(ipLabel);
+        Label label = new Label("Waiting for host to start game" , style);
+        label.setPosition(width/2 - label.getWidth()/2, height*0.9f);
+        stage.addActor(label);
 
 
         TextButton back = ButtonFactory.createCustomButton("Back", 4);
@@ -68,24 +64,13 @@ public class MultiplayerHostStandby implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 ClientNetworkInterface.stop();
-                HostNetworkInterface.stop();
 
                 dispose();
-                gameStateSwitcher.initMultiplayerSettings();
+                gameStateSwitcher.initMultiplayerJoinOrHost();
             }
         });
         stage.addActor(back);
 
-        TextButton start = ButtonFactory.createCustomButton("Start Game", 4);
-        start.setPosition(width/4*3 - start.getWidth()/2, height*0.10f);
-        start.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                dispose();
-                gameStateSwitcher.initMainGame();
-            }
-        });
-        stage.addActor(start);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -96,21 +81,12 @@ public class MultiplayerHostStandby implements Screen {
         Gdx.gl.glClearColor(1,1,1,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if (!fetchedServerIP && ClientNetworkInterface.hasServerIP()) {
-            setIPLabel(ClientNetworkInterface.getServerIP());
-            this.fetchedServerIP = true;
-        }
-
         setNameLabelTexts(ClientNetworkInterface.getConnectedPlayerNames());
 
         stage.draw();
     }
 
-    private void setIPLabel(String ip) {
-        this.ipLabel.setText("Your IP address: " + ip);
-    }
-
-    private void createPlayerNameLabels(){
+    private void createLabels(){
         for(int i = 0; i < MAX_NAMES; i++){
             Label player = new Label("Waiting for player " + (i+1), style);
             player.setPosition(width/2 - player.getWidth()/2, height*(0.8f - i * 0.08f));

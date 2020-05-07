@@ -5,10 +5,10 @@ public interface IGameStateSwitcher {
     void initMainMenu();
     void initMainGame();
     void initGameOver();
-    void initMultiplayerSettings();
-    void initMultiplayerJoin();
-    void initMultiplayerPlayername();
-    void initSelectScreen();
+    void initMultiplayerJoinOrHost();
+    void initMultiplayerClientPromptIP();
+    void initMultiplayerPromptName();
+    void initSelectMap();
     void initMultiplayerClientStandby();
     void initMultiplayerHostStandby();
     void closeApplication();
