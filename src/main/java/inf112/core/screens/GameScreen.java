@@ -16,6 +16,7 @@ import inf112.core.input.InputBlocker;
 import inf112.core.input.OrthographicCameraController;
 import inf112.core.game.MainGame;
 import inf112.core.player.PlayerHandler;
+import inf112.core.screens.userinterface.StatusScreen;
 import inf112.core.screens.userinterface.UserInterface;
 import inf112.core.util.ButtonFactory;
 
@@ -29,6 +30,7 @@ public class GameScreen implements Screen {
     private static MainGame game;
     private static InputProcessor inputBlocker;
     private static UserInterface ui;
+    private static StatusScreen statusScreen;
     private static Stage stage;
     private IGameStateSwitcher gameStateSwitcher;
     private OrthogonalTiledMapRenderer mapRenderer;
@@ -47,6 +49,9 @@ public class GameScreen implements Screen {
 
         this.ui = new UserInterface(this, game);
         stage.addActor(ui.getTable());
+
+        this.statusScreen = new StatusScreen(this, game);
+        stage.addActor(statusScreen.getTable());
 
         game.getBoard().instantiateMapRenderer();
         mapRenderer = game.getBoard().getTiledMapRenderer();
@@ -150,6 +155,7 @@ public class GameScreen implements Screen {
             PlayerHandler.playerCount = 0;
             gameStateSwitcher.initGameOver();
         }
+        statusScreen.drawStatus();
         stage.draw();
     }
 

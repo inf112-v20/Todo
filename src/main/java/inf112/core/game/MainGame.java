@@ -41,7 +41,7 @@ public class MainGame {
         this.playerHandler = new PlayerHandler(this);
         this.board = new GameBoard(mapNames, playerHandler);
         playerLimit = board.getSpawns().size();
-        playerLimit = 2;
+        playerLimit = 5;
         this.roundHandler = new RoundHandler(this);
         this.movementHandler = new MovementHandler(this);
         this.deck = new Deck(CardFactory.createDefaultDeck());
@@ -73,6 +73,8 @@ public class MainGame {
     }
 
     public List<Player> getPlayers() { return playerHandler.getPlayers(); }
+
+    public List<Player> getDisabledPlayers() { return playerHandler.getDisabledPlayers(); }
 
     public RoundHandler getRoundHandler() { return roundHandler; }
 
