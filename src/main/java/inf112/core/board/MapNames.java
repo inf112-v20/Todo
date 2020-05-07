@@ -1,16 +1,23 @@
 package inf112.core.board;
 
+/**
+ * Enum for easily adding and changing TileMaps
+ */
 public enum MapNames {
     /**
-     * Enum for easily adding and changing TileMaps
+     * GameMaps
      */
-    TESTING_MAP("maps/testingMap.tmx"),
-    CONVEYOR_TESTING_MAP("maps/conveyorTestingMap.tmx"),
-    LASER_TESTING_MAP("maps/laserTestingMap.tmx"),
-    LASER_TESTING_MAP2("maps/laserTestingMap2.tmx"),
-    WRENCH_AND_GEARS_TESTING_MAP("maps/wrenchAndGearsTestingMap.tmx"),
-    GEAR_TEST_MAP("maps/gearTestMap.tmx"),
-    SPAWN_TESTING("maps/spawnTestingMap.tmx")
+    GARBAGE_CHUTE("maps/gameMaps/GarbageChute.tmx"),
+    /**
+     * TestMaps
+     */
+    TESTING_MAP("maps/testMaps/testingMap.tmx"),
+    CONVEYOR_TESTING_MAP("maps/testMaps/conveyorTestingMap.tmx"),
+    LASER_TESTING_MAP("maps/testMaps/laserTestingMap.tmx"),
+    LASER_TESTING_MAP2("maps/testMaps/laserTestingMap2.tmx"),
+    WRENCH_AND_GEARS_TESTING_MAP("maps/testMaps/wrenchAndGearsTestingMap.tmx"),
+    GEAR_TEST_MAP("maps/testMaps/gearTestMap.tmx"),
+    SPAWN_TESTING("maps/testMaps/spawnTestingMap.tmx")
     ;
 
     private String name;
