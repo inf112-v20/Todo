@@ -30,6 +30,7 @@ public class UserInterface extends Actor{
     private GameScreen screen;
     private MainGame game;
     private ProgramcardSelectionInteractive selectionButtons;
+    private SelectionCards selectionCards;
     private Table table;
     private Stage stage;
     public UserInterface(GameScreen screen, MainGame game){
@@ -43,6 +44,7 @@ public class UserInterface extends Actor{
         overlay.setPosition(getXPos(768),0);
         stage.addActor(overlay);
 
+        this.selectionCards = new SelectionCards();
 
         stage.addActor(table);
 
@@ -69,6 +71,16 @@ public class UserInterface extends Actor{
 
 
     public void showSelectionCards(List<ProgramCard> cards){
+        /*
+        selectionCards.createcardbuttons();
+        ImageCardWrapper[] cards = selectionCards.getSelectionPile();
+        for(ImageCardWrapper card : cards) {
+            table.addActor(card.getImage());
+        }
+
+         */
+
+
         selectionButtons.renderSelectionButtons(cards);
         ProgramCardButtonWrapper[] buttons = selectionButtons.getSelectionPile();
 
@@ -77,6 +89,8 @@ public class UserInterface extends Actor{
             table.addActor(button.getButton());
         }
         //table.addActor(createLockSelectionButton());
+
+
     }
 
     public void drawPlayerCondition(Player player){

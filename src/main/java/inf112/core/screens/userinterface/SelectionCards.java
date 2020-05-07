@@ -2,6 +2,7 @@ package inf112.core.screens.userinterface;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -22,8 +23,6 @@ public class SelectionCards {
     private int[] posY = {10,10,10,10,10,10,10,10,10};
 
     private ImageCardWrapper[] selectionPile;
-    private ImageCardWrapper[] registerPile;
-
 
     private final int[] registerPosX = {20, 121, 222, 323, 424};
     private final int registerPosY = 28;
@@ -34,7 +33,6 @@ public class SelectionCards {
 
     public SelectionCards(){
         selectionPile = new ImageCardWrapper[9];
-        registerPile = new ImageCardWrapper[5];
         player = GameScreen.getGame().getActivePlayer();
         programSheet = player.getProgramSheet();
     }
@@ -44,13 +42,14 @@ public class SelectionCards {
 
         for(int i = 0; i < cards.size(); i++){
             ProgramCard card = cards.get(i);
-            selectionPile[i] = createButton(card);
+            selectionPile[i] = createcardButton(card);
             selectionPile[i].getImage().setPosition(newX(posX[i]), newY(posY[i]));
+            selectionPile[i].getImage().setSize(32*SELECTION_CARD_SIZE,64*SELECTION_CARD_SIZE );
             unselectedlistener(selectionPile[i]);
         }
     }
 
-    private ImageCardWrapper createButton(ProgramCard card){
+    private ImageCardWrapper createcardButton(ProgramCard card){
         Texture cardTexture = card.getTexture();
         Image image = new Image(cardTexture);
         return new ImageCardWrapper(image, card);
@@ -64,23 +63,32 @@ public class SelectionCards {
     }
 
     private void unselectedlistener(ImageCardWrapper card){
+        card.getImage().clearListeners();
         card.getImage().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("hei");
+                programSheet.addToRegister(card.getCard());
+                card.getImage().setPosition(registerPosX[getPos()], registerPosY+100);
             }
         });
     }
 
-    private void selectedlistener(Image card){
-        card.addListener(new ClickListener() {
+    private void selectedlistener(ImageCardWrapper card){
+        card.getImage().clearListeners();
+        card.getImage().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("hade");
+                if (!programSheet.remove(card.getCard())) throw new IllegalStateException();
+                card.getImage().setPosition(registerPosX[getPos()], registerPosY+100);
             }
         });
     }
 
+    private int getPos(){
+        return programSheet.getCardList().size();
+    }
 
-
+    public ImageCardWrapper[] getSelectionPile() {
+        return selectionPile;
+    }
 }
