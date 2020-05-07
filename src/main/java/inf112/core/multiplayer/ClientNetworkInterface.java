@@ -11,21 +11,12 @@ import java.util.List;
  */
 public class ClientNetworkInterface {
 
+    private static boolean started = false;
     private static Thread threadClient;
     private static ClientRunnable client;
 
     private ClientNetworkInterface() {
         throw new IllegalStateException("ClientNetworkInterface has been instantiated.");
-    }
-
-    /**
-     * Starts the client network thread by
-     *
-     * @param serverIP
-     */
-    public static void startClientThread(String serverIP) {
-        ClientData.serverIP = serverIP;
-        startClientThread();
     }
 
     /**
@@ -36,12 +27,17 @@ public class ClientNetworkInterface {
         client = new ClientRunnable();
         threadClient = new Thread(client);
         threadClient.start();
+        started = true;
+
     }
 
     public static void stop() {
-        client.close();
-        threadClient.interrupt();
-        System.out.println("Client network interface stopped");
+        if (started) {
+            client.close();
+            threadClient.interrupt();
+            started = false;
+            System.out.println("Client network interface stopped");
+        }
     }
 
     public static boolean isReady() {
@@ -71,6 +67,10 @@ public class ClientNetworkInterface {
     public static void attemptToJoinServer(String proposedName) {
         ClientData.playerName = proposedName;
         client.sendJoinGameRequest();
+    }
+
+    public static boolean hasJoinedServer() {
+        return ClientData.connectionConfirmedByServer;
     }
 
 

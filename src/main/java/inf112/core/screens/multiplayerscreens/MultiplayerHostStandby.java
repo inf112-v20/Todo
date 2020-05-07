@@ -110,9 +110,6 @@ public class MultiplayerHostStandby implements Screen {
         this.ipLabel.setText("Your IP address: " + ip);
     }
 
-    /**
-     * Instantiates
-     */
     private void createPlayerNameLabels(){
         for(int i = 0; i < MAX_NAMES; i++){
             Label player = new Label("Waiting for player " + (i+1), style);
@@ -121,7 +118,6 @@ public class MultiplayerHostStandby implements Screen {
             stage.addActor(player);
         }
     }
-
 
     /**
      * Sets the name labels to be the strings given in the argument.

@@ -3,6 +3,7 @@ package inf112.core.multiplayer.lowlevel;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import inf112.core.cards.register.ProgramSheet;
 import inf112.core.multiplayer.packets.*;
@@ -58,7 +59,11 @@ public class ClientRunnable implements Runnable {
 
             }
             else if (o instanceof Packet02NewPlayerBroadcast) {
-                // TODO register new player
+                if (ClientData.hasGameBegun)
+                    return;       // no new player should join after the game has started, so we should ignore
+
+                Packet02NewPlayerBroadcast newPlayerPacket = (Packet02NewPlayerBroadcast) o;
+                ClientData.joinedPlayers.add(newPlayerPacket.playerName);
             }
             else if (o instanceof Packet03StartGameBroadcast) {
                 // server sent us all the players
@@ -98,18 +103,23 @@ public class ClientRunnable implements Runnable {
 
         Log.set(Log.LEVEL_DEBUG);
 
-        attemptToConnect();
+        ClientData.initialConnectionMade = attemptToConnect();
     }
 
+    /**
+     * Attempts to connect to the server based on the server IP given in ClientData.
+     *
+     * @return true if connection was made, and false if no such server was found or attempt timed out.
+     */
     public boolean attemptToConnect() {
         try {
             client.connect(Common.TIMEOUT, ClientData.serverIP, Common.PORT_TCP);
-            return true;
         } catch (IOException e) {
             e.printStackTrace();
             Log.info("[client] Couldn't connect to server.");
             return false;
         }
+        return true;
     }
 
     /**
