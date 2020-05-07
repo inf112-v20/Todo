@@ -135,7 +135,9 @@ public class MovementHandler extends InputAdapter {
                 }
             }
         } else if (programCard instanceof RotationCard) {
-            player.rotate(((RotationCard) programCard).getRotation());
+            for(int i = 0; i < ((RotationCard) programCard).getAmount(); i++){
+                player.rotate(((RotationCard) programCard).getRotation());
+            }
         }
     }
 
