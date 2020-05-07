@@ -29,13 +29,11 @@ public class UserInterface extends Actor{
     private TextButton hideButton;
     private GameScreen screen;
     private MainGame game;
-    private ProgramcardSelectionInteractive selectionButtons;
     private SelectionCards selectionCards;
     private Table table;
     private Stage stage;
     public UserInterface(GameScreen screen, MainGame game){
         this.screen = screen;
-        this.selectionButtons = new ProgramcardSelectionInteractive();
         this.stage = screen.getStage();
         this.table = new Table();
 
@@ -53,7 +51,6 @@ public class UserInterface extends Actor{
         hideButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                selectionButtons.hideButtons();
                 overlay.setVisible(!overlay.isVisible());
                 table.setVisible(!table.isVisible());
             }
@@ -65,9 +62,6 @@ public class UserInterface extends Actor{
         return table;
     }
 
-    public ProgramcardSelectionInteractive getSelectionButtons() {
-        return selectionButtons;
-    }
 
 
     public void showSelectionCards(){
@@ -131,7 +125,6 @@ public class UserInterface extends Actor{
 
     public void resetSelectionButtons(){
         table.clearChildren();
-        this.selectionButtons = new ProgramcardSelectionInteractive();
     }
 
     private float getXPos(float x){
