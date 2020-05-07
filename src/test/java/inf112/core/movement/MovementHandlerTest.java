@@ -49,16 +49,4 @@ public class MovementHandlerTest {
             fail();
         } catch (Exception e) {}
     }
-
-    @Test
-    public void keyPressMovesActivePlayerOneForwardTest() {
-        player1.rotateTo(Direction.NORTH);
-        int oldPlayerX = player1.getX();
-        int oldPlayerY = player1.getY();
-        movementHandler.add(player1);
-        movementHandler.setActive(player1);
-        movementHandler.keyDown(Input.Keys.UP);
-        assertEquals(oldPlayerX, movementHandler.getActivePlayer().getX());
-        assertEquals(oldPlayerY+1, movementHandler.getActivePlayer().getY());
-    }
 }
