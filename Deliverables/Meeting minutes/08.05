@@ -1,0 +1,18 @@
+#Referat: 08.05.2020
+
+Alle medlemmene møte opp på discord
+
+## Dette har vi blitt enige om
+
+Med tanke på at innleveringen skal leveres et par timer etter møtet, har vi for det meste diskutert hvilke aspekter av prosjektet det er viktigst for oss å prioritere. Vi har innsett for litt siden at vi ikke kommer til å ha muligheten til å implementere en brøkdel av det vi har hatt lyst til, så vi må prioritere de absolutt viktigste delene av oppgaven. Vi bestemte oss for å prioritere valg av kart og antall spillere, powerdown og generell reformatering og kommentering av kodebasen. Mindre viktige aspekt av prosjektet som local multiplayer, scrollbar log-boks og å gjøre guien vår penere har vi satt på benken.  
+Dette har vi gjort siden sist
+Alvar: Laget et enkelt rammeverk for lyd og musikkavspilling. Implementert resten av spill funksjonaliteten i den nye løsningen vår for runder. Mye bugfiksing.
+
+## Dette har vi gjort siden sist
+
+Øyvind: Har laget en oversikt på skjermen som viser antall life- og damagetokens til de andre spillerne. Litt bugfiksing.
+
+Eskil: Har jobbet videre med multiplayer. Koblet knappene “Host game” og “Join game” opp med client- og serverklassene, slik at disse multiplayer-threadsene kjører i bakgrunnen. En Host vil få opp IP adressen sin og en lobby med alle tilkoblede spillere. En client har mulighet til å koble seg til en Host ved å skrive hosten sin IP. Clienten kommer da inn i lobbyen, og har oversikt over alle tilkoblede spillere.
+Laget også en budget Main Theme sang i Audacity som han ble strålende fornøyd med.
+
+Pål: Har jobbet med å implementere alle mulige slags skjermer som er relevant for multiplayer implementasjonen vår. I tillegg har jeg vært på bugjakt, og refaktorert en del kode.
