@@ -12,8 +12,8 @@ public class SoundHandler {
     private Music backgroundMusic;
 
     public SoundHandler() {
-        this.musicVolume = 0.5f;
-        this.soundVolume = 0.7f;
+        this.musicVolume = 0.1f;
+        this.soundVolume = 0.9f;
     }
 
     public void setBackgroundMusic(SoundStore soundStore) {
