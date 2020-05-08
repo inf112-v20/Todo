@@ -50,7 +50,7 @@ public class MainGame {
         this.movementHandler = new MovementHandler(this);
 
         this.soundHandler = new SoundHandler();
-        soundHandler.setBackgroundMusic(SoundStore.COFFIN_DANCE_MUSIC);
+        soundHandler.setBackgroundMusic(SoundStore.ROBO_RALLY_MAIN_THEME);
         soundHandler.playBackgroundMusic();
         this.defaultInputAdapter = new InputController(this);
         playerSpriteSheet = new Texture("img/Player_Spritesheet.png");

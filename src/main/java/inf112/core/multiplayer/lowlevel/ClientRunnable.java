@@ -118,7 +118,7 @@ public class ClientRunnable implements Runnable {
         try {
             client.connect(Common.TIMEOUT, ClientData.serverIP, Common.PORT_TCP);
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             Log.info("[client] Couldn't connect to server.");
             return false;
         }
