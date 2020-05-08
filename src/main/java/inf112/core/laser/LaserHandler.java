@@ -57,8 +57,7 @@ public class LaserHandler {
     public void dealDamageToAffectedPlayers() {
         for (Player player: laserPositions.getHitPlayersMap().keySet()) {
             player.addDamageTokens(laserPositions.getHitPlayersMap().get(player));
-            System.out.println(player.getName() + " has damage tokens equal to: " + player.getDamageTokens());
-            MainGame.soundHandler.playSound(SoundStore.ROBOT_HIT_3);
+            System.out.println(player.getName() + " has damage tokens equal to: " + player.getDamageTokens());it
         }
     }
 
