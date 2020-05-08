@@ -18,6 +18,7 @@ import inf112.core.cards.CardFactory;
 import inf112.core.cards.Deck;
 import inf112.core.player.PlayerHandler;
 import inf112.core.screens.GameScreen;
+import inf112.core.screens.SelectMapScreen;
 import inf112.core.util.LayerOperation;
 
 import java.util.List;
@@ -45,7 +46,7 @@ public class MainGame {
         this.playerHandler = new PlayerHandler(this);
         this.board = new GameBoard(mapNames, playerHandler);
         playerLimit = board.getSpawns().size();
-        playerLimit = 5;
+        playerLimit = SelectMapScreen.numPlayers;
         this.roundHandler = new RoundHandler(this);
         this.movementHandler = new MovementHandler(this);
 

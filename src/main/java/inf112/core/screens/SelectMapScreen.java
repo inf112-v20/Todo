@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import inf112.core.game.MainGame;
 import inf112.core.screens.IGameStateSwitcher;
 import inf112.core.util.AssMan;
 import inf112.core.util.ButtonFactory;
@@ -18,13 +19,16 @@ public class SelectMapScreen implements Screen {
     private float width;
     private float height;
 
+    public static String mapFilePath;
+    public static int numPlayers = 1;
 
     private Label.LabelStyle style;
     private BitmapFont font;
 
     private Stage stage;
     private IGameStateSwitcher gameStateSwitcher;
-    private Label[] names;
+
+    private Label playerAmountLabel;
 
     public SelectMapScreen(IGameStateSwitcher gameStateSwitcher){
         this.gameStateSwitcher = gameStateSwitcher;
@@ -47,9 +51,42 @@ public class SelectMapScreen implements Screen {
         this.stage = new Stage();
 
 
-        Label label = new Label("Select map!" , style);
-        label.setPosition(width/2 - label.getWidth()/2, height*0.9f);
-        stage.addActor(label);
+        Label mapLabel = new Label("Select map!" , style);
+        mapLabel.setPosition(width/3 - mapLabel.getWidth()/2, height*0.9f);
+        stage.addActor(mapLabel);
+
+        Label playersLabel = new Label("Players!" , style);
+        playersLabel.setPosition(width/4*3 - playersLabel.getWidth()/2, height*0.9f);
+        stage.addActor(playersLabel);
+
+        playerAmountLabel = new Label("" , style);
+        playerAmountLabel.setPosition(width/4*3 - playerAmountLabel.getWidth()/2, height*0.55f);
+        stage.addActor(playerAmountLabel);
+
+
+
+        TextButton addPlayer = ButtonFactory.createCustomButton("+", 4);
+        addPlayer.setPosition(width/4*3 - addPlayer.getWidth()/2, height*0.6f);
+        addPlayer.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                numPlayers = Math.min(++numPlayers, 8);
+                updateNumPlayers();
+            }
+        });
+        stage.addActor(addPlayer);
+
+        TextButton removePlayer = ButtonFactory.createCustomButton("-", 4);
+        removePlayer.setPosition(width/4*3 - removePlayer.getWidth()/2, height*0.40f);
+        removePlayer.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                numPlayers = Math.max(--numPlayers, 1);
+                updateNumPlayers();
+            }
+        });
+        stage.addActor(removePlayer);
+
 
 
         TextButton back = ButtonFactory.createCustomButton("Back", 4);
@@ -74,6 +111,7 @@ public class SelectMapScreen implements Screen {
         });
         stage.addActor(start);
 
+        updateNumPlayers();
 
         Gdx.input.setInputProcessor(stage);
 
@@ -109,5 +147,9 @@ public class SelectMapScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    public void updateNumPlayers(){
+        playerAmountLabel.setText(numPlayers);
     }
 }

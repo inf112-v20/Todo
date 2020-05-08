@@ -238,6 +238,12 @@ public class Player {
         return name;
     }
 
+    /**
+     * Recursive function for updating the locks in the players programsheet.
+     * It calculates the difference between the amount of damagetokens and the
+     * index of the current lock. Recursively doing so until all locks that
+     * are supposed to be locked, are locked.
+     */
     public void updateRegisterlocks(){
         int lockingtokens = Math.max(damageTokens - 4, 0);
         int wantedlockindex = ProgramSheet.NUM_OF_REGISTERS - lockingtokens;
