@@ -68,7 +68,7 @@ public class MainGame {
     }
 
     public MainGame() {
-        this(MapNames.TESTING_MAP);
+        this(SelectMapScreen.getMap());
     }
 
     public GameBoard getBoard() {

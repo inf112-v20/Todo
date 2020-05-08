@@ -92,7 +92,7 @@ public class GameScreen implements Screen {
 
         Player player = game.getActivePlayer();
 
-        float width = ((float) 10 / 1280) * Gdx.graphics.getWidth();
+        float width = ((float) -40 / 1280) * Gdx.graphics.getWidth();
         float height = ((float) 550 / 720) * Gdx.graphics.getHeight();
 
         ui.showSelectionCards();

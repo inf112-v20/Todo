@@ -47,7 +47,7 @@ public class UserInterface extends Actor{
         stage.addActor(table);
 
         hideButton = ButtonFactory.createCustomButton("Hide UI", 2);
-        hideButton.setPosition(getXPos(10), (getYPos(650)));
+        hideButton.setPosition(getXPos(-40), (getYPos(650)));
         hideButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

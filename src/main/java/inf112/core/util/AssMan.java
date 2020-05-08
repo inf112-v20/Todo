@@ -70,6 +70,15 @@ public class AssMan {
     public static final AssetDescriptor<Texture> DAMAGETOKEN
             = new AssetDescriptor<Texture>("assets/ui/damagetoken.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> CHUTEMAP
+            = new AssetDescriptor<Texture>("assets/maps/imgMaps/GarbageChute.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> TESTMAP
+            = new AssetDescriptor<Texture>("assets/maps/imgMaps/testMap.png", Texture.class);
+
+
+
+
 
 
     @SuppressWarnings("Duplicates")
@@ -101,6 +110,10 @@ public class AssMan {
         manager.load(UIBACKGROUND);
         manager.load(LIFETOKEN);
         manager.load(DAMAGETOKEN);
+
+        // MAPS
+        manager.load(CHUTEMAP);
+        manager.load(TESTMAP);
 
     }
 

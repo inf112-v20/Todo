@@ -11,6 +11,7 @@ import inf112.core.game.MainGame;
 import inf112.core.player.Direction;
 import inf112.core.player.Player;
 import inf112.core.player.PlayerHandler;
+import inf112.core.screens.SelectMapScreen;
 import inf112.core.tile.*;
 import inf112.core.util.VectorMovement;
 
@@ -45,10 +46,12 @@ public class GameBoard extends LayeredBoard {
     float unitScale = 1;
 
     public GameBoard() {
-        this(MapNames.TESTING_MAP, new MainGame().getPlayerHandler());
+        this(SelectMapScreen.getMap(), new MainGame().getPlayerHandler());
     }
 
-    public GameBoard(PlayerHandler playerHandler) {this(MapNames.TESTING_MAP, playerHandler);}
+    public GameBoard(PlayerHandler playerHandler) {this(SelectMapScreen.getMap(), playerHandler);}
+
+
 
     public GameBoard(MapNames mapName, PlayerHandler playerHandler) {
         makeBoard(mapName);
