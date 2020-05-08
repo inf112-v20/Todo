@@ -186,6 +186,13 @@ public class PlayerHandler {
             clearProgramsheet(player);
     }
 
+    public void updateRegisterLocks(){
+        for(Player player : players){
+            player.updateRegisterlocks();
+        }
+    }
+
+
     private void clearProgramsheet(Player player) {
         game.getDeck().discardCards(player.clearProgramSheet());
         player.programReady = false;

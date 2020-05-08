@@ -35,13 +35,11 @@ public class RoundHandler {
      */
     public void instantiateNextRound() {
         resetDelay();
-
         GameScreen screen = (GameScreen) game.getGameScreen();
 
         //ProgramSheets are cleared
         //playerHandler.clearAllProgramsheets();
         //All players receive a new set of cards
-        playerHandler.giveAllPlayersCards();
 
 
         playerHandler.makeAIPrograms();
@@ -55,6 +53,10 @@ public class RoundHandler {
         if(!playerHandler.areProgramsReady()){
             throw new IllegalStateException("All programs must be ready at this stage");
         }
+
+        System.out.println(MainGame.deck.getInUse().size());
+        System.out.println(MainGame.deck.getDiscardDeck().size());
+        System.out.println(MainGame.deck.getActiveDeck().size());
 
 
         //Remove player Control
@@ -80,8 +82,12 @@ public class RoundHandler {
             @Override
             public void run() {
                 System.out.println("Controls unblocked");
+
+                playerHandler.updateRegisterLocks();
                 playerHandler.clearAllProgramsheets();
+
                 GameScreen.unblockControls();
+
 
                 ((GameScreen) game.getGameScreen()).getUi().resetSelectionButtons();
                 screen.getUi().drawPlayerCondition(game.getActivePlayer());

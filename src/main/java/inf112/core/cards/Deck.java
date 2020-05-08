@@ -24,7 +24,7 @@ public class Deck {
             reshuffleDeck();
             System.out.println("Reshuffled deck");
 
-            if (activeDeck.size() <= 0) {   // returns null if no more cards are available
+            if (activeDeck.size() <= 1) {   // returns null if no more cards are available
                 return null;
             }
         }

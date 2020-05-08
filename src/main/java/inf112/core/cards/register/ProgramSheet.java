@@ -192,4 +192,8 @@ public class ProgramSheet implements IProgramSheet<ProgramCard> {
         assert addHere >= 0 : "addHere < 0";
         assert locked <= NUM_OF_REGISTERS : "locked > number of registers";
     }
+
+    public int getLocked() {
+        return locked;
+    }
 }

@@ -6,7 +6,10 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import inf112.core.cards.ProgramCard;
 import inf112.core.cards.register.ProgramSheet;
+import inf112.core.game.MainGame;
+import inf112.core.screens.userinterface.ImageCardWrapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerAI extends Player {
@@ -41,6 +44,13 @@ public class PlayerAI extends Player {
         while(!programSheet.isFull()) {
             programSheet.addToRegister(hand.remove(0));
         }
+        List<ProgramCard> discardCards = new ArrayList<>();
+        for(ProgramCard card : programSheet.getHand()){
+            if (!programSheet.getProgram().contains(card)){
+                discardCards.add(card);
+            }
+        }
+        MainGame.deck.discardCards(discardCards);
         programReady = true;
     }
 }

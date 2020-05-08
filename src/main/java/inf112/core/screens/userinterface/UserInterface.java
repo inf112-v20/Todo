@@ -65,17 +65,18 @@ public class UserInterface extends Actor{
 
 
     public void showSelectionCards(){
-
         selectionCards.createcardbuttons();
         ImageCardWrapper[] cards = selectionCards.getSelectionPile();
+        int i = 0;
         for(ImageCardWrapper card : cards) {
+            if (card == null) {continue;}
+            System.out.println(i++);
             table.addActor(card.getImage());
         }
 
     }
 
     public void drawPlayerCondition(Player player){
-        table.clearChildren();
         drawRegisters(player.getProgramSheet());
         drawLifetokens(player.getLifeTokens());
         drawDamagetokens(player.getDamageTokens());
@@ -113,7 +114,7 @@ public class UserInterface extends Actor{
         List<ProgramCard> cards = programSheet.getCardList();
         for (ProgramCard card : cards) {
             index++;
-            if (card == null) { continue; }
+            if (card == null) {continue;}
             Image image = new Image(card.getTexture());
             image.setSize(64, 128);
             image.setPosition(getXPos(registerPosX[index - 1] + 768), getYPos(28));
@@ -136,6 +137,10 @@ public class UserInterface extends Actor{
 
     public SelectionCards getSelectionCards(){
         return selectionCards;
+    }
+
+    public void clearTable(){
+        table.clearChildren();
     }
 
 }

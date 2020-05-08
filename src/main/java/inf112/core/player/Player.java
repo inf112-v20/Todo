@@ -232,4 +232,21 @@ public class Player {
     public String toString() {
         return name;
     }
+
+    public void updateRegisterlocks(){
+        int lockingtokens = Math.max(damageTokens - 4, 0);
+        int wantedlockindex = ProgramSheet.NUM_OF_REGISTERS - lockingtokens;
+
+        if (wantedlockindex == programSheet.getLocked()) {return;}
+
+        if (wantedlockindex < programSheet.getLocked()){
+            programSheet.lockNextRegister();
+            updateRegisterlocks();
+        }
+        else if (wantedlockindex > programSheet.getLocked()){
+            programSheet.unlockNextRegister();
+            updateRegisterlocks();
+        }
+    }
+
 }

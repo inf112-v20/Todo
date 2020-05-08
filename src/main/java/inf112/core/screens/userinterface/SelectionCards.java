@@ -112,6 +112,7 @@ public class SelectionCards {
             if (card == null) { break; }
 
             for (ImageCardWrapper wrapper : selectionPile){
+                if (wrapper == null) {continue;}
                 if (wrapper.isCard(card)){
                     wrapper.getImage().setPosition(newX(registerPosX[i]+768), newY(registerPosY));
                 }
@@ -128,11 +129,19 @@ public class SelectionCards {
 
         List<ProgramCard> discardCards = new ArrayList<>();
         for(ImageCardWrapper card : selectionPile){
+            if (card == null) { continue; }
             if (!programSheet.getProgram().contains(card.getCard())){
                 discardCards.add(card.getCard());
             }
         }
         MainGame.deck.discardCards(discardCards);
+        clearSelectionPile();
         return programSheet;
+    }
+
+    private void clearSelectionPile(){
+        for(int i = 0; i < selectionPile.length; i++){
+            selectionPile[i] = null;
+        }
     }
 }
