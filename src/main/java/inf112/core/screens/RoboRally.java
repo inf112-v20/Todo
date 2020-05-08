@@ -36,6 +36,11 @@ public class RoboRally extends Game implements IGameStateSwitcher {
     }
 
     @Override
+    public void initMultiplayerClientConnectingFailed() {
+        setScreen(new MultiplayerClientConnectingFailedScreen(this));
+    }
+
+    @Override
     public void initMultiplayerClientStandby() {
         setScreen(new MultiplayerClientStandbyScreen(this));
     }

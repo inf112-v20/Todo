@@ -39,45 +39,47 @@ public class MultiplayerClientPromptIPScreen implements Screen {
         font.getData().setScale(2);
         style.fontColor = com.badlogic.gdx.graphics.Color.BLUE;
 
-        TextField text = new TextField("", style);
-        text.setText("Enter IP address here");
-        text.setSize(1000,200);
-        text.setMaxLength(20);
+        TextField writeIPText = new TextField("", style);
+        writeIPText.setText("Enter IP address here");
+        writeIPText.setSize(1000,200);
+        writeIPText.setMaxLength(20);
 
-        text.setPosition(width/2 - text.getWidth()/2, height*0.6f);
-        text.setAlignment(Align.center);
-        text.setMaxLength(20);
+        writeIPText.setPosition(width/2 - writeIPText.getWidth()/2, height*0.6f);
+        writeIPText.setAlignment(Align.center);
+        writeIPText.setMaxLength(20);
 
-        text.addListener(new ClickListener() {
+        writeIPText.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (!clicked) text.setText("");
+                if (!clicked) writeIPText.setText("");
                 clicked = true;
             }
         });
-        stage.addActor(text);
+        stage.addActor(writeIPText);
 
 
-        TextButton connect = ButtonFactory.createCustomButton("Connect", 8);
-        connect.setPosition(width/2 - connect.getWidth()/2, height*0.4f);
-        connect.addListener(new ClickListener() {
+        TextButton connectButton = ButtonFactory.createCustomButton("Connect", 8);
+        connectButton.setPosition(width/2 - connectButton.getWidth()/2, height*0.4f);
+        connectButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                joinGame(text.getText(), MultiplayerPromptNameScreen.nameTyped);
+                if (clicked) {
+                    tryToJoinGame(writeIPText.getText(), MultiplayerPromptNameScreen.nameTyped);
+                }
             }
         });
-        stage.addActor(connect);
+        stage.addActor(connectButton);
 
-        TextButton back = ButtonFactory.createCustomButton("Back", 4);
-        back.setPosition(width/2 - back.getWidth()/2, height*0.2f);
-        back.addListener(new ClickListener() {
+        TextButton backButton = ButtonFactory.createCustomButton("Back", 4);
+        backButton.setPosition(width/2 - backButton.getWidth()/2, height*0.2f);
+        backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 dispose();
                 gameStateSwitcher.initMultiplayerJoinOrHost();
             }
         });
-        stage.addActor(back);
+        stage.addActor(backButton);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -115,7 +117,7 @@ public class MultiplayerClientPromptIPScreen implements Screen {
         stage.dispose();
     }
 
-    private void joinGame(String ip, String desiredName) {
+    private void tryToJoinGame(String ip, String desiredName) {
         // attempting to connect to server with the ip address typed by the human player
         ClientNetworkInterface.setServerIP(ip);
         ClientNetworkInterface.startClientThread();
@@ -135,7 +137,7 @@ public class MultiplayerClientPromptIPScreen implements Screen {
         if (!ClientNetworkInterface.isConnected()) {
             ClientNetworkInterface.stop();                   // stops the remaining ongoing multiplayer threads
             dispose();
-            gameStateSwitcher.initMultiplayerJoinOrHost();   // takes the player back one screen
+            gameStateSwitcher.initMultiplayerClientConnectingFailed();
             return;
         }
 
@@ -157,17 +159,16 @@ public class MultiplayerClientPromptIPScreen implements Screen {
         // connection was dropped, party is full
         if (!ClientNetworkInterface.isConnected()) {
             ClientNetworkInterface.stop();                   // stops the remaining ongoing multiplayer threads
-            gameStateSwitcher.initMultiplayerJoinOrHost();   // takes the player back one screen
+            gameStateSwitcher.initMultiplayerClientConnectingFailed();
             return;
         }
 
         // server rejected the desired name
         if (!ClientNetworkInterface.hasJoinedServer()) {
             ClientNetworkInterface.stop();
-            gameStateSwitcher.initMultiplayerPromptName();   // takes the player back one screen
+            gameStateSwitcher.initMultiplayerClientConnectingFailed();   // takes the player back one screen
             return;
         }
-
         // WE JOINED THE SERVER
         gameStateSwitcher.initMultiplayerClientStandby();
     }

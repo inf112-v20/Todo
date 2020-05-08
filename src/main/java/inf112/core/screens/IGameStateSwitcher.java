@@ -7,6 +7,7 @@ public interface IGameStateSwitcher {
     void initGameOver();
     void initMultiplayerJoinOrHost();
     void initMultiplayerClientPromptIP();
+    void initMultiplayerClientConnectingFailed();
     void initMultiplayerPromptName();
     void initSelectMap();
     void initMultiplayerClientStandby();
