@@ -76,6 +76,9 @@ public class AssMan {
     public static final AssetDescriptor<Texture> TESTMAP
             = new AssetDescriptor<Texture>("assets/maps/imgMaps/testMap.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> WIPEOUTMAP
+            = new AssetDescriptor<Texture>("assets/maps/imgMaps/Wipeout.png", Texture.class);
+
 
 
 
@@ -114,6 +117,7 @@ public class AssMan {
         // MAPS
         manager.load(CHUTEMAP);
         manager.load(TESTMAP);
+        manager.load(WIPEOUTMAP);
 
     }
 

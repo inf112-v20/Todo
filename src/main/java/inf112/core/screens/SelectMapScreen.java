@@ -54,12 +54,14 @@ public class SelectMapScreen implements Screen {
         style.font = font;
         style.fontColor = com.badlogic.gdx.graphics.Color.BLUE;
 
-        mapPreviews = new Texture[2];
-        mapNames = new MapNames[2];
+        mapPreviews = new Texture[3];
+        mapNames = new MapNames[3];
         mapPreviews[0] = AssMan.manager.get(AssMan.CHUTEMAP);
         mapNames[0] = MapNames.GARBAGE_CHUTE;
         mapPreviews[1] = AssMan.manager.get(AssMan.TESTMAP);
         mapNames[1] = MapNames.TESTING_MAP;
+        mapPreviews[2] = AssMan.manager.get(AssMan.WIPEOUTMAP);
+        mapNames[2] = MapNames.WIPEOUT;
         mapPointer = 0;
 
     }
