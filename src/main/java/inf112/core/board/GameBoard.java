@@ -46,10 +46,10 @@ public class GameBoard extends LayeredBoard {
     float unitScale = 1;
 
     public GameBoard() {
-        this(SelectMapScreen.getMap(), new MainGame().getPlayerHandler());
+        this(MapNames.TESTING_MAP,  new MainGame().getPlayerHandler());
     }
 
-    public GameBoard(PlayerHandler playerHandler) {this(SelectMapScreen.getMap(), playerHandler);}
+    public GameBoard(PlayerHandler playerHandler) {this(MapNames.TESTING_MAP, playerHandler);}
 
 
 

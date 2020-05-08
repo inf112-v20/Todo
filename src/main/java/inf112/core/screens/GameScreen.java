@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import inf112.core.board.MapNames;
 import inf112.core.cards.ProgramCard;
 import inf112.core.input.InputBlocker;
 import inf112.core.input.OrthographicCameraController;
@@ -45,8 +46,12 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        this.game = new MainGame();
+        MapNames map = (SelectMapScreen.getMap() == null) ? MapNames.TESTING_MAP : SelectMapScreen.getMap();
+
+        this.game = new MainGame(map);
         this.stage = new Stage();
+
+
 
 
         game.getBoard().instantiateMapRenderer();
