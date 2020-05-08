@@ -61,9 +61,6 @@ public class LaserHandler {
         }
     }
 
-    /**
-     *
-     */
     public void resetHitPlayers() {
         laserPositions.resetHitPlayers();
     }
