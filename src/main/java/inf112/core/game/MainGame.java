@@ -67,7 +67,7 @@ public class MainGame {
     }
 
     public MainGame() {
-        this(MapNames.TESTING_MAP);
+        this(MapNames.WIPEOUT);
     }
 
     public GameBoard getBoard() {

@@ -8,6 +8,7 @@ public enum MapNames {
      * GameMaps
      */
     GARBAGE_CHUTE("maps/gameMaps/GarbageChute.tmx"),
+    WIPEOUT("maps/gameMaps/Wipeout.tmx"),
     /**
      * TestMaps
      */
