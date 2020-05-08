@@ -55,7 +55,7 @@ public class GameBoard extends LayeredBoard {
         this.players = playerHandler.getPlayers();
         //Camera
         zoomSens = tiledMap.getProperties().get("zoomsensitivity", 1f, float.class);
-        zoomMax = tiledMap.getProperties().get("maxzoom", 7f, float.class);
+        zoomMax = tiledMap.getProperties().get("maxzoom", 9f, float.class);
         zoomMin = tiledMap.getProperties().get("minzoom", 1f, float.class);
         //TileLayer Maps
         this.collidablesMap = super.mapCollidables();
