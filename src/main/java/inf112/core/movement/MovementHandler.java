@@ -307,6 +307,14 @@ public class MovementHandler extends InputAdapter {
             }
         }
         conveyorMove(Collections.list(queuedMoves.elements()));
+
+        queuedMoves.clear();
+        for(Player player : players) {
+            if(board.onConveyor(player) && ((MoverTile) board.getConveyors().get(player.getPositionCopy())).getSpeed() == 2) {
+                queueMove(queuedMoves, player);
+            }
+        }
+        conveyorMove(Collections.list(queuedMoves.elements()));
     }
 
     //This is to ensure that no two players are pushed to the same tile
@@ -325,7 +333,7 @@ public class MovementHandler extends InputAdapter {
     private void conveyorMove(List<Player> players) {
         int count = 0;
         //Limits the while loop to the max amount of players repetitions.
-        //This is a very crude fix for certain edge cases and should be fixed.
+        //This is a very crude fix for certain edge cases and should be changed.
         while(!players.isEmpty() && count < game.playerLimit) {
             List<Player> moved = new ArrayList<>();
             for (Player player : players) {
@@ -335,8 +343,9 @@ public class MovementHandler extends InputAdapter {
                     continue;
                 conveyor.moveConveyor(player, movementHandler);
                 MoverTile next = (MoverTile) board.getConveyors().get(player.getPositionCopy());
-                if (next != null)
+                if (next != null) {
                     next.rotate(player);
+                }
                 moved.add(player);
             }
             players.removeAll(moved);
