@@ -1,0 +1,15 @@
+#Referat: 06.05.20
+
+Alvar, Pål og Eskil samlet seg hos Alvar (holdt 1 meters avstand selvfølgelig)
+
+## Dette ble vi enige om
+Dette var stort sett et arbeidsmøte fremfor et planleggingsmøte.
+Vi brukte dette møtet til å oppdatere hverandre på de siste funksjonalitetene vi har laget selv de siste dagene. Videre parprogrammerte Pål og Eskil om multiplayer UI funksjonalitet som “Host game” og “Join game”. Vi spilte også inn lydeffektene.
+Vi ble enige om, til tross for den lille tiden som gjenstår, å ikke gi opp multiplayer foreløpig, og heller prøve å få noe “buggy” men spillbart multiplayer.
+Vi landet også på at temaet til hele prosjektet vårt skal være budget/billig. Dette er forøvrig en tanke som vi har hatt med oss lenge. Menyer og UI skal liksom se shitty ut, og innspilte lydeffekter passer oss midt i blinken.
+
+##Dette har vi gjort siden sist
+
+Eskil har designet en slags “protokoll” (i form av klasser som kan sendes) for kommunikasjon mellom en serverthread og en clientthread, og kommet langt på hvordan serveren som oppføre seg i henhold til denne protokollen.
+Pål har laget masse UI skjermer, og drevet med refaktorering og ellers generell vedlikehold av kode.
+Alvar har vært opptatt med viktige personlige plikter.
