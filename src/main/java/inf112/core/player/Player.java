@@ -85,6 +85,11 @@ public class Player {
         if (damageTokens <= 0) return;
         else damageTokens -= amount;
     }
+    public void setPowerDown(){
+        if(powerDown) powerDown=false;
+        else powerDown=true;
+    }
+    public void removeAllDamageTokens(){damageTokens = 0;}
 
     public void destroy() { this.damageTokens = MainGame.MAX_DAMAGE_TOKENS_LIMIT; }
 

@@ -80,6 +80,10 @@ public class RoundHandler {
             @Override
             public void run() {
                 System.out.println("Controls unblocked");
+                if (game.getActivePlayer().powerDown) {
+                    game.getActivePlayer().setPowerDown();
+                    game.getActivePlayer().removeAllDamageTokens();
+                }
                 playerHandler.clearAllProgramsheets();
                 GameScreen.unblockControls();
 

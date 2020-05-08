@@ -23,6 +23,10 @@ public class InputController extends InputAdapter {
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
+            case Input.Keys.P:
+                game.getActivePlayer().programReady = true;
+                game.getActivePlayer().setPowerDown();
+                game.getRoundHandler().instantiateNextRound();
             case Input.Keys.Z:
                 toggleDebugControls();
                 break;
