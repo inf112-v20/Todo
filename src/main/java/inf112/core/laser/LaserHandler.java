@@ -57,7 +57,7 @@ public class LaserHandler {
     public void dealDamageToAffectedPlayers() {
         for (Player player: laserPositions.getHitPlayersMap().keySet()) {
             player.addDamageTokens(laserPositions.getHitPlayersMap().get(player));
-            System.out.println(player.getName() + " has damage tokens equal to: " + player.getDamageTokens());it
+            System.out.println(player.getName() + " has damage tokens equal to: " + player.getDamageTokens());
         }
     }
 
