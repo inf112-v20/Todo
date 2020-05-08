@@ -7,6 +7,7 @@ public enum SoundStore {
      * Music
      */
     COFFIN_DANCE_MUSIC("assets/music/roboRally_coffindance.mp3"),
+    ROBO_RALLY_MAIN_THEME("assets/music/roborallymain.mp3"),
 
     /**
      * Sounds
