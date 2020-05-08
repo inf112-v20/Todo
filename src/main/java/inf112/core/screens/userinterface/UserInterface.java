@@ -67,10 +67,8 @@ public class UserInterface extends Actor{
     public void showSelectionCards(){
         selectionCards.createcardbuttons();
         ImageCardWrapper[] cards = selectionCards.getSelectionPile();
-        int i = 0;
         for(ImageCardWrapper card : cards) {
             if (card == null) {continue;}
-            System.out.println(i++);
             table.addActor(card.getImage());
         }
 

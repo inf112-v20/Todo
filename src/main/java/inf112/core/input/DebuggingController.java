@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import inf112.core.game.MainGame;
 import inf112.core.movement.MovementHandler;
+import inf112.core.screens.GameScreen;
 
 public class DebuggingController extends InputAdapter {
 
@@ -53,6 +54,7 @@ public class DebuggingController extends InputAdapter {
                 game.getActivePlayer().programReady = true;
                 game.getActivePlayer().setPowerDown();
                 game.getRoundHandler().instantiateNextRound();
+                break;
             default:
                 return false;
         }
@@ -64,6 +66,7 @@ public class DebuggingController extends InputAdapter {
         switch (keycode) {
             case Input.Keys.L:
                 movementHandler.removeLasers();
+                ((GameScreen) game.getGameScreen()).getUi().drawPlayerCondition(game.getActivePlayer());
                 break;
             default:
                 return false;
