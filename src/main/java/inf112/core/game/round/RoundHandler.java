@@ -54,10 +54,6 @@ public class RoundHandler {
             throw new IllegalStateException("All programs must be ready at this stage");
         }
 
-        System.out.println(MainGame.deck.getInUse().size());
-        System.out.println(MainGame.deck.getDiscardDeck().size());
-        System.out.println(MainGame.deck.getActiveDeck().size());
-
 
         //Remove player Control
         GameScreen.blockControls();
@@ -82,12 +78,14 @@ public class RoundHandler {
             @Override
             public void run() {
                 System.out.println("Controls unblocked");
+                if (game.getActivePlayer().powerDown) {
+                    game.getActivePlayer().setPowerDown();
+                    game.getActivePlayer().removeAllDamageTokens();
+                }
 
                 playerHandler.updateRegisterLocks();
                 playerHandler.clearAllProgramsheets();
-
                 GameScreen.unblockControls();
-
 
                 ((GameScreen) game.getGameScreen()).getUi().resetSelectionButtons();
                 screen.getUi().drawPlayerCondition(game.getActivePlayer());
