@@ -49,6 +49,10 @@ public class DebuggingController extends InputAdapter {
             case Input.Keys.L:
                 movementHandler.fireAllLasers();
                 break;
+            case Input.Keys.P:
+                game.getActivePlayer().programReady = true;
+                game.getActivePlayer().setPowerDown();
+                game.getRoundHandler().instantiateNextRound();
             default:
                 return false;
         }
